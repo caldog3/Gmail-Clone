@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "base-64": "^0.1.0",
     "circular-json": "^0.5.4",
     "cors": "^2.8.4",
     "google-auth-library": "^0.12.0",

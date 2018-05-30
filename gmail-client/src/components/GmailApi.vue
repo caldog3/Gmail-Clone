@@ -6,10 +6,12 @@
     
     <ol id="example-1">
     <li v-for="message in messages" :key="message.id">
-      <hr>
-      From: {{ message.from }}
-      To: {{ message.to }}
+      <hr style="height:.3em;background-color:#333;">
+      From: {{ message.from }} <b>|</b>
+      To: {{ message.to }} <b>|</b>
       Subject: {{ message.subject }}
+      <hr>
+      {{ message.snippet }}
     </li>
   </ol>
   </div>
@@ -24,11 +26,12 @@ import base64 from 'base-64';
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
-  baseUrl: 'http://localhost:8080/',  
+  baseUrl: 'http://localhost:8081/',  
   providers: {
     google: {
-      clientId: 'XXXXXXXXXXXX.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080/',
+      clientId: '237263439048-jvpivlg7udbejf58b808n9l865lgdv08.apps.googleusercontent.com',
+      //api_key: 'AIzaSyCbyD3kOV71n_jh7-osWjQ87yXQ_hSPlmE',
+      redirectUri: 'http://localhost:8081/',
       responseType: 'token',
       scope: 'https://www.googleapis.com/auth/gmail.readonly',
     }
@@ -71,11 +74,21 @@ export default {
             Authorization: `Bearer ${this.token}`
           }
         }).then((response) => {
-          let headers = response.data.payload.headers;
 
-          let from = headers[19].value;
-          let to = headers[21].value;
-          let subject = headers[23].value;
+          var headers = response.data.payload.headers;
+          console.log("THIS IS A HEADER");
+          console.log(headers);
+          for (var i = 0; i < headers.length; i++) {
+            if (headers[i].name === "From") {
+              var from = headers[i].value;
+            }
+            else if (headers[i].name === "Delivered-To") {
+              var to = headers[i].value;
+            }
+            else if (headers[i].name === "Subject") {
+              var subject = headers[i].value;
+            }
+          }
           let snippet = response.data.snippet;
 
           this.messages.push({from, to, subject, snippet});

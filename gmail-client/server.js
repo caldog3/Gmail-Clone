@@ -19,4 +19,4 @@ app.post('/auth/google', (req, res) => {
     console.log(responseBody);
 });
 
-app.listen(8082, () => console.log('Server listening on port 8082!'));
+app.listen(8081, () => console.log('Server listening on port 8081!'));
