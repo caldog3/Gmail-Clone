@@ -5,20 +5,34 @@
     <h1>Gmail Client</h1>
     <button @click="getMessages('google')">auth Google</button>
     
-    <table class="table table-striped table-inbox hidden">
-      <thead>
-        <tr>
-          <th>Sender</th>
-          <th>Subject</th>
-          <th>Snippet</th>
-        </tr>
-      </thead>
-      <tbody v-for="message in messages" :key="message.id">
-        <td> {{ message.from }}</td>
-        <td> {{ message.subject }}</td>
-        <td> {{ message.snippet }}</td>
-      </tbody>
-    </table>
+    <div class="mainContainer">
+      <table class ="table table-striped table-inbox hidden">
+        <thead>
+          <tr>
+            <th>Folders</th>
+          </tr>
+        </thead>
+        <tbody v-for="label in labels" id="labelColumn">
+
+          <td> <hr>{{ label.name}} </td>
+        </tbody>
+      </table>
+      <table class="table table-striped table-inbox hidden">
+        <thead>
+          <tr>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Snippet</th>
+          </tr>
+        </thead>
+        <tbody v-for="message in messages" :key="message.id">
+          <td> {{ message.from }}</td>
+          <td> {{ message.subject }}</td>
+          <td> {{ message.snippet }}....</td>
+        <!--   <td> {{ message.body }} </td> -->
+        </tbody>
+      </table>
+    </div>
     <!-- <ol id="example-1">
     <li v-for="message in messages" :key="message.id">
       <hr style="height:.3em;background-color:#333;">
@@ -59,12 +73,14 @@ export default {
   data () {
     return { 
       token: '',
-      messages: []
+      messages: [],
+      labels: []
     }
   },
   methods: {
     getMessages(provider){
       this.authenticate(provider);
+      this.listLabels();
       this.getListOfMessages();
     },
     getListOfMessages(){
@@ -115,23 +131,23 @@ export default {
             }
             let snippet = response.data.snippet;
             //////////////////
-            var message = response.data.payload;
-            var encodedBody = '';
-            if(typeof message.parts === 'undefined')
-            {
-              encodedBody = message.body.data;
-            }
-            else
-            {
-              encodedBody = this. getHTMLPart(message.parts);
-            }
-            encodedBody = encodedBody.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, '');
-            let body = decodeURIComponent(escape(window.atob(encodedBody)));
+            // var message = response.data.payload;
+            // var encodedBody = '';
+            // if(typeof message.parts === 'undefined')
+            // {
+            //   encodedBody = message.body.data;
+            // }
+            // else
+            // {
+            //   encodedBody = this.getHTMLPart(message.parts);
+            // }
+            // encodedBody = encodedBody.replace(/-/g, '+').replace(/_/g, '/').replace(/\s/g, '');
+            // let body = decodeURIComponent(escape(window.atob(encodedBody)));
           
             //Parts[1] is text with all the styling and tags / not sure how to use that though since
                //it is all one string
             //Parts[0] is plain text
-          //  let body = atob(response.data.payload.parts[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
+            let body = atob(response.data.payload.parts[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
             this.messages.push({from, to, subject, snippet, body});
           } 
         }).catch((error) => {
@@ -155,6 +171,31 @@ export default {
       }
       return '';
     },
+    listLabels() {
+      axios.get(`https://www.googleapis.com/gmail/v1/users/me/labels`, 
+      { 
+        headers: { 
+          Authorization: `Bearer ${this.token}`
+        }
+      }).then((response) => {
+        console.log("Labels response");
+        console.log(response);
+        var labels = response.data.labels;
+
+        if (labels && labels.length > 0) {
+          console.log(response.result);
+          for (var i = 0; i < labels.length; i++) {
+            var label = labels[i];
+
+            //console.log(label.name);
+            let name = label.name
+            this.labels.push({name});
+          }
+        } else {
+          console.log('No Labels found.');
+        }
+      });
+    },
     authenticate(provider){
       this.$auth.authenticate(provider)
       .then((result) => {
@@ -167,5 +208,10 @@ export default {
 </script>
 
 <style>
-
+.mainContainer{
+  display: flex;
+}
+#labelColumn{
+  
+}
 </style>
