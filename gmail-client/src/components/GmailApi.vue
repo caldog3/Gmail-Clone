@@ -12,7 +12,8 @@
             <th>Folders</th>
           </tr>
         </thead>
-        <tbody v-for="label in labels" id="labelColumn">
+        <tbody v-for="label in labels" id="labelColumn"
+              :key="label">
 
           <td> <hr>{{ label.name}} </td>
         </tbody>
