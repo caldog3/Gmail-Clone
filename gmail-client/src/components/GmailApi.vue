@@ -1,6 +1,5 @@
 /* eslint-disable */
 <template>
-
   <div>
     <h1>Gmail Client</h1>
     <button @click="getMessages('google')">auth Google</button>
