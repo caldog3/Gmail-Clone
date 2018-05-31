@@ -57,12 +57,11 @@ import base64 from 'base-64';
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
-  baseUrl: 'http://localhost:8081/',  
+  baseUrl: process.env.BASE_URL,  
   providers: {
     google: {
-      clientId: '237263439048-jvpivlg7udbejf58b808n9l865lgdv08.apps.googleusercontent.com',
-      //api_key: 'AIzaSyCbyD3kOV71n_jh7-osWjQ87yXQ_hSPlmE',
-      redirectUri: 'http://localhost:8081/',
+      clientId: process.env.CLIENT_ID,
+      redirectUri: process.env.REDIRECT_URI,
       responseType: 'token',
       scope: 'https://www.googleapis.com/auth/gmail.readonly',
     }
