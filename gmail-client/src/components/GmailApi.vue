@@ -73,12 +73,15 @@ export default {
     return { 
       token: '',
       messages: [],
-      labels: []
+      labels: [],
+      validated: false,
     }
   },
   methods: {
     getMessages(provider){
-      this.authenticate(provider);
+      if(!this.validated){
+        this.authenticate(provider);
+      }
       this.listLabels();
       this.getListOfMessages();
     },
@@ -186,7 +189,7 @@ export default {
           for (var i = 0; i < labels.length; i++) {
             var label = labels[i];
 
-            //console.log(label.name);
+            console.log(label);
             let name = label.name
             this.labels.push({name});
           }
@@ -199,6 +202,7 @@ export default {
       this.$auth.authenticate(provider)
       .then((result) => {
         this.token = result.access_token;
+        this.validated = true;
       })
     },
   }

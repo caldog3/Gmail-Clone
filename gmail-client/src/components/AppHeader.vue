@@ -1,40 +1,68 @@
 <template>
   <div class="header">
-      <div class="logo">
-        <h3>Google</h3>
+    <b-navbar toggleable="md" varaiant="faded" type="light">
+      <div class="menu">
+        <font-awesome-icon icon="bars" size="lg"/>
       </div>
-<b-navbar toggleable="md" type="dark" variant="info">
-
-  <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-
-  <b-navbar-brand href="#">NavBar</b-navbar-brand>
-
-  <b-collapse is-nav id="nav_collapse">
-
-    <b-navbar-nav>
-      <b-nav-item href="#">Link</b-nav-item>
-      <b-nav-item href="#" disabled>Disabled</b-nav-item>
-    </b-navbar-nav>
-
-  </b-collapse>
-</b-navbar>  
+      <div class="brand">
+        <b-navbar-brand href="#">
+          <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV">
+          Gmail
+        </b-navbar-brand>
+      </div>
+      
+      <div class="search">
+          <font-awesome-icon icon="search" size="lg"/>
+          <input type="text" placeholder="Search mail">     
+      </div>
+      <b-navbar-nav class="ml-auto">
+        <svg width="60" height="60">
+          <defs>
+            <clipPath id="myCircle">
+               <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
+            </clipPath>
+          </defs>
+          <image width="60" height="60" xlink:href="./../assets/logo.png" clip-path="url(#myCircle)" />
+        </svg>
+      </b-navbar-nav>
+    </b-navbar>
+    
   </div>
 </template>
 
 <style scoped>
-.logo {
-  float: left;
-  width: 150px;
-  margin: 0 20px 0 0;
+.header {
+  /* height: 64px; */
+  background-color: white;
+}
+.menu {
+  padding-left: 10px;
+  padding-right: 25px;
+}
+img {
+  padding-right: 10px;
+}
+.brand{
+  padding-right: 9%;
+}
+.search {
+  border-style: solid;
+  border-width: 1px;
+  border-color: red;
+  background-color: grey;  
+}
+.search > input{
+  min-width: 310px;
 }
 </style>
 
 <script>
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'AppHeader',
   components: {
-
+    FontAwesomeIcon
   },
   data() {
     return {
