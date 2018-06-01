@@ -11,9 +11,9 @@
           </b-navbar-brand>
         </div>
       <div class="search">
-        <div class="icon">
+        <span class="icon">
           <font-awesome-icon icon="search" size="lg"/>
-        </div>
+        </span>
         <input type="text" placeholder="Search Mail">     
       </div>
       <b-navbar-nav class="ml-auto">
@@ -53,19 +53,23 @@ img {
   /* border-style: solid; */
   /* border-width: 1px; */
   /* border-color: red; */
+  border-radius: 5px;
   background-color: #BDBDBD;  
   width: 60%;
 }
 .search > input{
   /* min-width: 310px; */
-  float: right;
-  width: 90%;
+  float: none;
+  width: 80%;
+  border: none;
   background-color: #BDBDBD;
   -webkit-appearance: none;
 }
 .icon {
   float: left;
   width: 10%;
+  cursor: pointer;
+  padding: 4px;
 }
 @media screen and (max-width : 760px) {
   .search {
