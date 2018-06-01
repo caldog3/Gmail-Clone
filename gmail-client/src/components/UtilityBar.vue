@@ -1,25 +1,22 @@
 <template>
   <div class="body">
-    <label class="container">Check All
-        <input type="checkbox">
-        <span class="checkmark"></span>
-    </label>
-    <font-awesome-icon icon="angle-down" size="lg"/>
-    <!-- <h5>More Items here</h5> -->
+    <input type="checkbox">
+    Utility bar. To be filled
+    <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
   </div>
 </template>
 
 <style scoped>
-.container {
-    display: block;
-    cursor: pointer;
-    font-size: 22px;
-    background-color: azure;
-    width: 100px;
-}
 .body {
-    background-color:rgb(98, 181, 184);
+  background-color:white;
+  height: 40px;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #d3d3d3;
 } 
+input {
+  float: left;
+}
 </style>
 
 <script>

@@ -1,19 +1,20 @@
 <template>
   <div class="header">
     <b-navbar toggleable="md" varaiant="faded" type="light">
-      <div class="menu">
-        <font-awesome-icon icon="bars" size="lg"/>
-      </div>
-      <div class="brand">
-        <b-navbar-brand href="#">
-          <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV">
-          Gmail
-        </b-navbar-brand>
-      </div>
-      
+        <div class="menu">
+          <font-awesome-icon icon="bars" size="lg"/>
+        </div>
+        <div class="brand">
+          <b-navbar-brand href="#">
+            <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV">
+            Gmail
+          </b-navbar-brand>
+        </div>
       <div class="search">
+        <div class="icon">
           <font-awesome-icon icon="search" size="lg"/>
-          <input type="text" placeholder="Search mail">     
+        </div>
+        <input type="text" placeholder="Search Mail">     
       </div>
       <b-navbar-nav class="ml-auto">
         <svg width="60" height="60">
@@ -46,16 +47,43 @@ img {
   padding-right: 10px;
 }
 .brand{
-  padding-right: 9%;
+  padding-right: 85px;
 }
 .search {
-  border-style: solid;
-  border-width: 1px;
-  border-color: red;
-  background-color: grey;  
+  /* border-style: solid; */
+  /* border-width: 1px; */
+  /* border-color: red; */
+  background-color: #BDBDBD;  
+  width: 60%;
 }
 .search > input{
-  min-width: 310px;
+  /* min-width: 310px; */
+  float: right;
+  width: 90%;
+  background-color: #BDBDBD;
+  -webkit-appearance: none;
+}
+.icon {
+  float: left;
+  width: 10%;
+}
+@media screen and (max-width : 760px) {
+  .search {
+    border-style: solid;
+    border-width: 1px;
+    border-color: blue;
+    background-color: grey;  
+    width: 300px;
+    
+  }
+  .search > input{
+    /* min-width: 310px; */
+    display: flex;
+    width: 268px;
+  }
+  .icon {
+    margin-left: 0px;
+  }
 }
 </style>
 

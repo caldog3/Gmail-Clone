@@ -5,7 +5,10 @@
       <message-sidebar/>
     </div>
     <div class="mainView">
-      <router-view/>
+      <utility-bar/>
+      <div class="emailList">
+        <router-view/>
+      </div>
     </div>
     
   </div>
@@ -14,12 +17,14 @@
 <script>
 import AppHeader from './components/AppHeader';
 import MessageSidebar from './components/MessageSidebar';
+import UtilityBar from './components/UtilityBar'
 
 export default {
   name: 'App',
   components: { 
     AppHeader,
-    MessageSidebar
+    MessageSidebar,
+    UtilityBar
  }
 }
 </script>
@@ -31,10 +36,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 body {
-  background-color: #eeeeee;
   overflow: hidden;
 }
 .sideBar {
@@ -42,9 +45,8 @@ body {
   height: 860px;
   float: left;
 }
-.mainView {
+.emailList {
   overflow-y: auto;
   height: 800px;
-  /* overflow-x: hidden; */
 }
 </style>
