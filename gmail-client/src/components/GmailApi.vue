@@ -1,11 +1,13 @@
 /* eslint-disable */
 <template>
   <div>
-    <h1>Gmail Client</h1>
-    <button @click="getMessages('google')">auth Google</button>
-    
+    <!-- <h1>Gmail Client</h1> -->
+    <div class="fixedBar">
+      <utility-bar/>
+    </div>
     <div class="mainContainer">
-      <table class ="table table-striped table-inbox hidden">
+      <button @click="getMessages('google')">auth Google</button>
+      <!-- <table class ="table table-striped table-inbox hidden">
         <thead>
           <tr>
             <th>Folders</th>
@@ -16,7 +18,7 @@
 
           <td> <hr>{{ label.name}} </td>
         </tbody>
-      </table>
+      </table> -->
       <table class="table table-striped table-inbox hidden">
         <thead>
           <tr>
@@ -48,12 +50,29 @@
   </div>
 </template>
 
+<style scoped>
+.mainContainer{
+  /* display: flex; */
+  margin-top: 40px;
+}
+#labelColumn{
+  
+}
+.fixedBar {
+  /* position: fixed; */
+  width: 100%;
+  /* margin-top: 100px; */
+}
+</style>
+
+
 <script>
 import Vue from 'vue'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios';
 import base64 from 'base-64';
+import UtilityBar from './UtilityBar'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
@@ -76,6 +95,9 @@ export default {
       labels: [],
       validated: false,
     }
+  },
+  components: {
+    UtilityBar
   },
   methods: {
     getMessages(provider){
@@ -209,12 +231,3 @@ export default {
 }
 
 </script>
-
-<style>
-.mainContainer{
-  display: flex;
-}
-#labelColumn{
-  
-}
-</style>

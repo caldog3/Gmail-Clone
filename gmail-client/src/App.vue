@@ -1,15 +1,26 @@
 <template>
   <div id="app">
     <app-header/>
-    <!-- <router-view/> -->
+    <div class="sideBar">
+      <message-sidebar/>
+    </div>
+    <div class="mainView">
+      <router-view/>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader';
+import MessageSidebar from './components/MessageSidebar';
+
 export default {
   name: 'App',
-  components: { AppHeader }
+  components: { 
+    AppHeader,
+    MessageSidebar
+ }
 }
 </script>
 
@@ -24,5 +35,16 @@ export default {
 }
 body {
   background-color: #eeeeee;
+  overflow: hidden;
+}
+.sideBar {
+  min-width: 270px;
+  height: 860px;
+  float: left;
+}
+.mainView {
+  overflow-y: auto;
+  height: 800px;
+  /* overflow-x: hidden; */
 }
 </style>

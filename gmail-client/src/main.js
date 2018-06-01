@@ -14,6 +14,7 @@ Vue.use(BootstrapVue);
 import fontawesome from "@fortawesome/fontawesome";
 import faBars from "@fortawesome/fontawesome-free-solid/faBars";
 import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
+import faAngleDown from "@fortawesome/fontawesome-free-solid/faAngleDown";
 fontawesome.library.add(faBars, faSearch);
 
 Vue.config.productionTip = false

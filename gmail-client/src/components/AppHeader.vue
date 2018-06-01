@@ -22,7 +22,7 @@
                <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
             </clipPath>
           </defs>
-          <image width="60" height="60" xlink:href="./../assets/logo.png" clip-path="url(#myCircle)" />
+          <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
         </svg>
       </b-navbar-nav>
     </b-navbar>
@@ -34,6 +34,9 @@
 .header {
   /* height: 64px; */
   background-color: white;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #d3d3d3;
 }
 .menu {
   padding-left: 10px;
