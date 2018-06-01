@@ -1,11 +1,9 @@
 /* eslint-disable */
 <template>
   <div>
-    <h1>Gmail Client</h1>
-    <button @click="getMessages('google')">auth Google</button>
-    
     <div class="mainContainer">
-      <table class ="table table-striped table-inbox hidden">
+      <button @click="getMessages('google')">auth Google</button>
+      <!-- <table class ="table table-striped table-inbox hidden">
         <thead>
           <tr>
             <th>Folders</th>
@@ -16,7 +14,7 @@
 
           <td> <hr>{{ label.name}} </td>
         </tbody>
-      </table>
+      </table> -->
       <table class="table table-striped table-inbox hidden">
         <thead>
           <tr>
@@ -48,6 +46,22 @@
   </div>
 </template>
 
+<style scoped>
+.mainContainer{
+  /* display: flex; */
+  margin-top: 40px;
+}
+#labelColumn{
+  
+}
+.fixedBar {
+  /* position: fixed; */
+  width: 100%;
+  /* margin-top: 100px; */
+}
+</style>
+
+
 <script>
 import Vue from 'vue'
 import VueAxios from 'vue-axios'
@@ -73,12 +87,15 @@ export default {
     return { 
       token: '',
       messages: [],
-      labels: []
+      labels: [],
+      validated: false,
     }
   },
   methods: {
     getMessages(provider){
-      this.authenticate(provider);
+      if(!this.validated){
+        this.authenticate(provider);
+      }
       this.listLabels();
       this.getListOfMessages();
     },
@@ -186,7 +203,7 @@ export default {
           for (var i = 0; i < labels.length; i++) {
             var label = labels[i];
 
-            //console.log(label.name);
+            console.log(label);
             let name = label.name
             this.labels.push({name});
           }
@@ -199,18 +216,10 @@ export default {
       this.$auth.authenticate(provider)
       .then((result) => {
         this.token = result.access_token;
+        this.validated = true;
       })
     },
   }
 }
 
 </script>
-
-<style>
-.mainContainer{
-  display: flex;
-}
-#labelColumn{
-  
-}
-</style>

@@ -1,15 +1,31 @@
 <template>
   <div id="app">
     <app-header/>
-    <router-view/>
+    <div class="sideBar">
+      <message-sidebar/>
+    </div>
+    <div class="mainView">
+      <utility-bar/>
+      <div class="emailList">
+        <router-view/>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import AppHeader from './components/AppHeader';
+import MessageSidebar from './components/MessageSidebar';
+import UtilityBar from './components/UtilityBar'
+
 export default {
   name: 'App',
-  components: { AppHeader }
+  components: { 
+    AppHeader,
+    MessageSidebar,
+    UtilityBar
+ }
 }
 </script>
 
@@ -20,6 +36,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+body {
+  overflow: hidden;
+}
+.sideBar {
+  min-width: 270px;
+  height: 860px;
+  float: left;
+}
+.emailList {
+  overflow-y: auto;
+  height: 800px;
 }
 </style>
