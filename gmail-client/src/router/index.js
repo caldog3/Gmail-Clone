@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import GmailApi from '@/components/GmailApi'
+import InboxList from '@/components/InboxList'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '/',
-      name: 'GmailApi',
-      component: GmailApi
+      path: "/",
+      name: "InboxList",
+      component: InboxList
     }
   ]
-})
+});

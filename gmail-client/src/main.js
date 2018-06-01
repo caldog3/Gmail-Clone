@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from "./store";
 
 //Bootstrap Import
 import BootstrapVue from "bootstrap-vue/dist/bootstrap-vue.esm"
@@ -21,8 +22,12 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: "#app",
   router,
+  store,
   components: { App },
-  template: '<App/>'
-})
+  render: h => h(App),
+  // beforeCreate() {
+  //   this.$store.dispatch("initialize");
+  // }
+});

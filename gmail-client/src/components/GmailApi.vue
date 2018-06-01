@@ -221,5 +221,4 @@ export default {
     },
   }
 }
-
 </script>

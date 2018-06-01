@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <app-header/>
-    <div class="sideBar">
-      <message-sidebar/>
-    </div>
-    <div class="mainView">
-      <utility-bar/>
-      <div class="emailList">
-        <router-view/>
+    <div v-if="loggedIn">
+      <app-header/>
+
+      <div class="sideBar"><message-sidebar/></div>
+      
+      <div class="mainView">
+        <utility-bar/>
+        <div class="emailList">
+          <router-view/>
+        </div>
       </div>
     </div>
-    
+
+    <div v-else>
+      <login-page/>
+    </div>
   </div>
 </template>
 
@@ -18,14 +23,21 @@
 import AppHeader from './components/AppHeader';
 import MessageSidebar from './components/MessageSidebar';
 import UtilityBar from './components/UtilityBar'
+import LoginPage from './components/LoginPage'
 
 export default {
   name: 'App',
   components: { 
     AppHeader,
     MessageSidebar,
-    UtilityBar
- }
+    UtilityBar,
+    LoginPage
+  },
+  computed: {
+    loggedIn: function() {
+     return this.$store.getters.loggedIn;
+    },
+  },
 }
 </script>
 

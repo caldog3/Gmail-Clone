@@ -17,6 +17,7 @@
         <input type="text" placeholder="Search Mail">     
       </div>
       <b-navbar-nav class="ml-auto">
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>
         <svg width="60" height="60">
           <defs>
             <clipPath id="myCircle">
@@ -81,7 +82,6 @@ img {
     
   }
   .search > input{
-    /* min-width: 310px; */
     display: flex;
     width: 268px;
   }
@@ -99,15 +99,10 @@ export default {
   components: {
     FontAwesomeIcon
   },
-  data() {
-    return {
-      currentUser: window.currentUser
-    }
-  },
   methods: {
-    // search(event) {
-    //   this.$store.dispatch('search', event.target.value)
-    // }
+    signOut(){
+      this.$store.dispatch('signOut');
+    }
   }
 }
 </script>
