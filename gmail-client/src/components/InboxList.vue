@@ -9,11 +9,13 @@
                   <tr>
                     <th>Sender</th>
                     <th>Subject</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody v-for="message in messages" :key="message.from">
                   <td> {{ message.from }} </td>
                   <td> {{message.subject}} - <i> {{message.snippet}} </i></td>
+                  <td> TBD </td>
                 </tbody>
               </table>
             </div>
@@ -33,10 +35,16 @@
 <style scoped>
 #email {
   width: 100%;
+  overflow: hidden;
+}
+#email tr {
+  line-height: 5px;
 }
 td:nth-child(1) {
   width:200px;
 }
+
+
 </style>
 
 <script>
