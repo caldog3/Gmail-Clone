@@ -6,8 +6,10 @@
             <div v-if="loadedMessage">
                 <ul id="example-1">
                     <li v-for="message in messages" :key="message.from">
-                        {{ message.from }}
-                        {{message.to}}
+                        {{ message.from }} |
+                        {{ message.subject }}|
+                        {{ message.snippet }}...|
+                        {{ message.time }}
                     </li>
                 </ul>
             </div>
@@ -90,10 +92,13 @@ export default {
               else if (headers[i].name === "Subject") {
                 var subject = headers[i].value;
               }
+              else if (headers[i].name === "Date") {
+                var time = headers[i].value;
+              }
             }
             let snippet = response.data.snippet;
             let body = atob(response.data.payload.parts[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
-            this.messages.push({from, to, subject, snippet, body});
+            this.messages.push({from, to, subject, snippet, body, time});
           } 
         }).catch((error) => {
           console.log(error);
