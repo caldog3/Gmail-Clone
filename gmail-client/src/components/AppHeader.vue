@@ -69,6 +69,11 @@ img {
   -webkit-appearance: none;
   height: 100%;
 }
+
+input:focus {
+  outline-width: 0;
+}
+
 .icon {
   float: left;
   cursor: pointer;
