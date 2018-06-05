@@ -57,33 +57,33 @@ img {
   border-radius: 5px;
   background-color: #BDBDBD;  
   width: 60%;
+  height: 35px;
 }
 .search > input{
   /* min-width: 310px; */
-  float: none;
+  float: left;
+  margin-left: 5px;
   width: 80%;
   border: none;
   background-color: #BDBDBD;
   -webkit-appearance: none;
+  height: 100%;
 }
 .icon {
   float: left;
-  width: 10%;
   cursor: pointer;
-  padding: 4px;
+  padding: 7px;
 }
 @media screen and (max-width : 760px) {
   .search {
-    border-style: solid;
-    border-width: 1px;
-    border-color: blue;
-    background-color: grey;  
+    background-color: #BDBDBD;    
     width: 300px;
     
   }
   .search > input{
     display: flex;
-    width: 268px;
+    width: 250px;
+    background-color: #BDBDBD;  
   }
   .icon {
     margin-left: 0px;

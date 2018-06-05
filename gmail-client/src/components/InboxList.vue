@@ -4,12 +4,20 @@
     <b-tabs>
         <b-tab title="Primary">
             <div v-if="loadedMessage">
-                <ul id="example-1">
-                    <li v-for="message in messages" :key="message.from">
-                        {{ message.from }}
-                        {{message.to}}
-                    </li>
-                </ul>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sender</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody v-for="message in messages" :key="message.from">
+                  <td> {{ message.from }} </td>
+                  <td> {{message.subject}} - <i> {{message.snippet}} </i></td>
+                  <td> TBD </td>
+                </tbody>
+              </table>
             </div>
             <div v-else>
                 <button type="submit" @click="getListOfMessages">Get Emails</button>
@@ -25,6 +33,18 @@
 </template>
 
 <style scoped>
+#email {
+  width: 100%;
+  overflow: hidden;
+}
+#email tr {
+  line-height: 5px;
+}
+td:nth-child(1) {
+  width:200px;
+}
+
+
 </style>
 
 <script>
