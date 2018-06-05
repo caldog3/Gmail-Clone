@@ -7,16 +7,16 @@
                 <table class="table table-striped table-inbox hidden" id="example-1">
                   <thead>
                     <tr>
-                      <th>Sender</th>
-                      <th>Subject - Snippet</th>
-                      <th>Time</th>
+                      <th class="OneTH">Sender</th>
+                      <th class="TwoTH">Subject - Snippet</th>
+                      <th class="ThreeTH">Time</th>
                     </tr>
                   </thead>
                     <tbody v-for="message in messages" :key="message.id">
-                        <td>{{ message.conciseFrom }}</td>
+                        <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b></td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td>{{ message.subject }} - <span v-html="message.snippet"></span>...</td>
-                        <td>{{ message.time }}</td>
+                        <td class="Two"><span class="leftAlign"><b>{{ message.subject }} </b>- <i><span v-html="message.snippet"></span></i></span>...</td>
+                        <td class="Three"><span class="leftAlign">{{ message.time }}</span></td>
 
                     </tbody>
                 </table>
@@ -30,16 +30,16 @@
               <table class="table table-striped table-inbox hidden" id="example-1">
                 <thead>
                   <tr>
-                    <th>Sender</th>
-                    <th>Subject - Snippet</th>
-                    <th>Time</th>
+                    <th class="OneTH">Sender</th>
+                    <th class="TwoTH">Subject - Snippet</th>
+                    <th class="ThreeTH">Time</th>
                   </tr>
                 </thead>
                   <tbody v-for="socialM in socialMs" :key="socialM.id">
-                      <td>{{ socialM.conciseFrom }}</td>
+                      <td class="One"><b><span class="leftAlign">{{ socialM.conciseFrom }}</span></b></td>
                  <!-- <td>{{ socialM. body}}</td> -->
-                      <td>{{ socialM.subject }} - <span v-html="socialM.snippet"></span>...</td>
-                      <td>{{ socialM.time }}</td>
+                      <td class="Two"><span class="leftAlign"><b>{{ socialM.subject }}</b> - <i><span v-html="socialM.snippet"></span></i></span>...</td>
+                      <td class="Three"><span class="leftAlign">{{ socialM.time }}</span></td>
 
                   </tbody>
               </table>
@@ -53,16 +53,16 @@
             <table class="table table-striped table-inbox hidden" id="example-1">
               <thead>
                 <tr>
-                  <th>Sender</th>
-                  <th>Subject - Snippet</th>
-                  <th>Time</th>
+                  <th class="OneTH">Sender</th>
+                  <th class="TwoTH">Subject - Snippet</th>
+                  <th class="ThreeTH">Time</th>
                 </tr>
               </thead>
                 <tbody v-for="promoM in promoMs" :key="promoM.id">
-                    <td>{{ promoM.conciseFrom }}</td>
+                    <td class="One"><b><span class="leftAlign">{{ promoM.conciseFrom }}</span></b></td>
                <!-- <td>{{ promoM. body}}</td> -->
-                    <td>{{ promoM.subject }} - <span v-html="promoM.snippet"></span>...</td>
-                    <td>{{ promoM.time }}</td>
+                    <td class="Two"><span class="leftAlign"><b>{{ promoM.subject }}</b> - <i><span v-html="promoM.snippet"></span></i></span>...</td>
+                    <td class="Three">><span class="leftAlign">{{ promoM.time }}</span></td>
 
                 </tbody>
             </table>
@@ -76,17 +76,93 @@
 </template>
 
 <style scoped>
-#email {
+table {
   width: 100%;
   overflow: hidden;
-}
-#email tr {
-  line-height: 5px;
-}
-td:nth-child(1) {
-  width:200px;
+  table-layout: fixed;
 }
 
+td { 
+  overflow:hidden;
+  white-space:nowrap;  
+} 
+
+.One {
+  width: 15%;
+  min-width: 15%;
+  max-width: 15%;
+}
+
+.OneTH {
+  width: 15%;
+  min-width: 15%;
+  max-width: 15%;
+}
+
+.Two {
+  width: 79%;
+  min-width: 79%;
+  max-width: 79%;
+  overflow: hidden;
+}
+
+.TwoTH {
+  width: 79%;
+  min-width: 79%;
+  max-width: 79%;
+}
+
+.Three {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+.ThreeTH {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+.leftAlign {
+  float: left;
+}
+
+tbody {
+  line-height: 5px;
+}
+
+@media screen and (max-width : 858px) {
+
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .One {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .Two {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden; 
+  }
+
+  .Three {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;    
+  }
+}
 
 </style>
 

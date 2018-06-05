@@ -69,12 +69,17 @@ img {
   -webkit-appearance: none;
   height: 100%;
 }
+
+input:focus {
+  outline-width: 0;
+}
+
 .icon {
   float: left;
   cursor: pointer;
   padding: 7px;
 }
-@media screen and (max-width : 760px) {
+@media screen and (max-width : 858px) {
   .search {
     background-color: #BDBDBD;    
     width: 300px;
