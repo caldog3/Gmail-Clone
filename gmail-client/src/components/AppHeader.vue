@@ -74,7 +74,7 @@ img {
   cursor: pointer;
   padding: 7px;
 }
-@media screen and (max-width : 760px) {
+@media screen and (max-width : 858px) {
   .search {
     background-color: #BDBDBD;    
     width: 300px;

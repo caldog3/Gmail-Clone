@@ -15,7 +15,7 @@
                     <tbody v-for="message in messages" :key="message.id">
                         <td class="One"><span>{{ message.conciseFrom }}</span></td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td class="Two"><span>{{ message.subject }} </span>- <span v-html="message.snippet"></span>...</td>
+                        <td class="Two"><span>{{ message.subject }} - <i><span v-html="message.snippet"></span></i></span>...</td>
                         <td class="Three"><span>{{ message.time }}</span></td>
 
                     </tbody>
@@ -82,6 +82,11 @@ table {
   table-layout: fixed;
 }
 
+td { 
+  overflow:hidden;
+  white-space:nowrap;  
+} 
+
 .One {
   width: 15%;
   min-width: 15%;
@@ -92,6 +97,19 @@ table {
   width: 15%;
   min-width: 15%;
   max-width: 15%;
+}
+
+.Two {
+  width: 79%;
+  min-width: 79%;
+  max-width: 79%;
+  overflow: hidden;
+}
+
+.TwoTH {
+  width: 79%;
+  min-width: 79%;
+  max-width: 79%;
 }
 
 .Three {
@@ -106,14 +124,11 @@ table {
   max-width: 10%;
 }
 
+
 tbody {
   line-height: 5px;
 }
 
-span {
-  width: 99%;
-  overflow: hidden;
-}
 
 
 </style>
