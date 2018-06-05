@@ -10,7 +10,6 @@ import BootstrapVue from "bootstrap-vue/dist/bootstrap-vue.esm"
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 Vue.use(BootstrapVue);
-
 //Font Awesome Icons
 import fontawesome from "@fortawesome/fontawesome";
 import faBars from "@fortawesome/fontawesome-free-solid/faBars";
