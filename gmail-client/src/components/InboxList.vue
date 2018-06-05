@@ -13,10 +13,10 @@
                     </tr>
                   </thead>
                     <tbody v-for="message in messages" :key="message.id">
-                        <td class="One"><span>{{ message.conciseFrom }}</span></td>
+                        <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b></td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td class="Two"><span>{{ message.subject }} - <i><span v-html="message.snippet"></span></i></span>...</td>
-                        <td class="Three"><span>{{ message.time }}</span></td>
+                        <td class="Two"><span class="leftAlign"><b>{{ message.subject }} </b>- <i><span v-html="message.snippet"></span></i></span>...</td>
+                        <td class="Three"><span class="leftAlign">{{ message.time }}</span></td>
 
                     </tbody>
                 </table>
@@ -30,16 +30,16 @@
               <table class="table table-striped table-inbox hidden" id="example-1">
                 <thead>
                   <tr>
-                    <th>Sender</th>
-                    <th>Subject - Snippet</th>
-                    <th>Time</th>
+                    <th class="OneTH">Sender</th>
+                    <th class="TwoTH">Subject - Snippet</th>
+                    <th class="ThreeTH">Time</th>
                   </tr>
                 </thead>
                   <tbody v-for="socialM in socialMs" :key="socialM.id">
-                      <td><span>{{ socialM.conciseFrom }}</span></td>
+                      <td class="One"><b><span class="leftAlign">{{ socialM.conciseFrom }}</span></b></td>
                  <!-- <td>{{ socialM. body}}</td> -->
-                      <td><span>{{ socialM.subject }} </span>- <span v-html="socialM.snippet"></span>...</td>
-                      <td><span>{{ socialM.time }}</span></td>
+                      <td class="Two"><span class="leftAlign"><b>{{ socialM.subject }}</b> - <i><span v-html="socialM.snippet"></span></i></span>...</td>
+                      <td class="Three"><span class="leftAlign">{{ socialM.time }}</span></td>
 
                   </tbody>
               </table>
@@ -53,16 +53,16 @@
             <table class="table table-striped table-inbox hidden" id="example-1">
               <thead>
                 <tr>
-                  <th>Sender</th>
-                  <th>Subject - Snippet</th>
-                  <th>Time</th>
+                  <th class="OneTH">Sender</th>
+                  <th class="TwoTH">Subject - Snippet</th>
+                  <th class="ThreeTH">Time</th>
                 </tr>
               </thead>
                 <tbody v-for="promoM in promoMs" :key="promoM.id">
-                    <td>{{ promoM.conciseFrom }}</td>
+                    <td class="One"><b><span class="leftAlign">{{ promoM.conciseFrom }}</span></b></td>
                <!-- <td>{{ promoM. body}}</td> -->
-                    <td>{{ promoM.subject }} - <span v-html="promoM.snippet"></span>...</td>
-                    <td>{{ promoM.time }}</td>
+                    <td class="Two"><span class="leftAlign"><b>{{ promoM.subject }}</b> - <i><span v-html="promoM.snippet"></span></i></span>...</td>
+                    <td class="Three">><span class="leftAlign">{{ promoM.time }}</span></td>
 
                 </tbody>
             </table>
@@ -124,6 +124,9 @@ td {
   max-width: 10%;
 }
 
+.leftAlign {
+  float: left;
+}
 
 tbody {
   line-height: 5px;
