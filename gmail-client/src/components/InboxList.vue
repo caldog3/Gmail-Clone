@@ -83,6 +83,7 @@ import Vue from 'vue'
 import VueAxios from 'vue-axios'
 import axios from 'axios';
 import base64 from 'base-64';
+import moment from 'moment';
 
 Vue.use(require('vue-moment'))
 Vue.use(VueAxios, axios)
@@ -154,6 +155,7 @@ export default {
               var time = headers[i].value;
             }
           }
+          //response.data.internalDate gives UNIX time (we should use that instead of the header maybe)
           let snippet = response.data.snippet;
           let id = response.data.id;
           var body = "";
@@ -179,6 +181,7 @@ export default {
           if (isPromo) {
             this.promoMs.push({from, conciseFrom, to, subject, snippet, body, time, id});
           }
+          let testTime = response.data.internalDate;
           console.log(moment().calendar());
         }).catch((error) => {
           console.log(error);
