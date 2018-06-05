@@ -247,15 +247,8 @@ export default {
             else if (headers[i].name === "Subject") {
               var subject = headers[i].value;
             }
-            // else if (headers[i].name === "Date") {
-            //   var time = headers[i].value;
-            // }
           }
-          // 3 formats
           var unix = moment.unix(response.data.internalDate/1000);
-          // console.log(unix.format("DD/MM/YY"));
-          // console.log(unix.format("h:mm a"));
-          // console.log(unix.format("MMM D"));
           var currentUnix = moment().unix();
           currentUnix = moment.unix(currentUnix);
           var time = "";
