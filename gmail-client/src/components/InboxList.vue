@@ -76,6 +76,18 @@
 </template>
 
 <style scoped>
+#email {
+  width: 100%;
+  overflow: hidden;
+}
+#email tr {
+  line-height: 5px;
+}
+td:nth-child(1) {
+  width:200px;
+}
+
+
 </style>
 
 <script>

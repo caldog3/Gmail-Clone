@@ -1,7 +1,8 @@
 <template>
   <div class="column">
     <h1>Gmail Clone</h1>
-    <img src="./../assets/logo.png" alt="">
+    <img src="./../assets/logo1.png" alt="">
+    <br>
     <gmail-auth/>
   </div>
 </template>
