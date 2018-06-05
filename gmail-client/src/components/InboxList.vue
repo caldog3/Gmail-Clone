@@ -111,13 +111,21 @@ export default {
       conciseFrom: false,
     }
   },
+  computed: {
+    token() {
+      return this.$store.getters.getToken;
+    }
+  },
   methods: {
     getListOfMessages(){
+      console.log("AAA");
+      console.log(this.token);
       axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages`, 
         { 
           headers: { 
             Authorization: `Bearer ${this.token}`
           }
+
         }).then((response) => {
             this.loadedMessage = true;
           return response.data.messages;
@@ -138,8 +146,8 @@ export default {
             Authorization: `Bearer ${this.token}`
           }
         }).then((response) => {
-          console.log("MAIN RESPONSE JSON");
-          console.log(response);
+         // console.log("MAIN RESPONSE JSON");
+         // console.log(response);
           var headers = response.data.payload.headers;
           var isSocial = false;
           var isPromo = false;
@@ -194,7 +202,7 @@ export default {
             this.promoMs.push({from, conciseFrom, to, subject, snippet, body, time, id});
           }
           let testTime = response.data.internalDate;
-          console.log(moment().calendar());
+        //  console.log(moment().calendar());
         }).catch((error) => {
           console.log(error);
         });
