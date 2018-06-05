@@ -132,7 +132,37 @@ tbody {
   line-height: 5px;
 }
 
+@media screen and (max-width : 858px) {
 
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .One {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .Two {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    overflow: hidden; 
+  }
+
+  .Three {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;    
+  }
+}
 
 </style>
 
