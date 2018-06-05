@@ -38,7 +38,7 @@
                   <tbody v-for="socialM in socialMs" :key="socialM.id">
                       <td>{{ socialM.conciseFrom }}</td>
                  <!-- <td>{{ socialM. body}}</td> -->
-                      <td>{{ socialM.subject }} - {{ socialM.snippet }}...</td>
+                      <td>{{ socialM.subject }} - <span v-html="socialM.snippet"></span>...</td>
                       <td>{{ socialM.time }}</td>
 
                   </tbody>
@@ -61,7 +61,7 @@
                 <tbody v-for="promoM in promoMs" :key="promoM.id">
                     <td>{{ promoM.conciseFrom }}</td>
                <!-- <td>{{ promoM. body}}</td> -->
-                    <td>{{ promoM.subject }} - {{ promoM.snippet }}...</td>
+                    <td>{{ promoM.subject }} - <span v-html="promoM.snippet"></span>...</td>
                     <td>{{ promoM.time }}</td>
 
                 </tbody>
@@ -146,8 +146,8 @@ export default {
             Authorization: `Bearer ${this.token}`
           }
         }).then((response) => {
-         // console.log("MAIN RESPONSE JSON");
-         // console.log(response);
+          console.log("MAIN RESPONSE JSON");
+          console.log(response);
           var headers = response.data.payload.headers;
           var isSocial = false;
           var isPromo = false;
