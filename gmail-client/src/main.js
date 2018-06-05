@@ -27,7 +27,7 @@ new Vue({
   store,
   components: { App },
   render: h => h(App),
-  // beforeCreate() {
-  //   this.$store.dispatch("initialize");
-  // }
+  beforeCreate() {
+    this.$store.dispatch("initialize");
+  }
 });
