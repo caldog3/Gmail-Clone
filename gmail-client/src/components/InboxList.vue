@@ -15,7 +15,7 @@
                     <tbody v-for="message in messages" :key="message.id">
                         <td>{{ message.conciseFrom }}</td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td>{{ message.subject }} - {{ message.snippet }}...</td>
+                        <td>{{ message.subject }} - <span v-html="message.snippet"></span>...</td>
                         <td>{{ message.time }}</td>
 
                     </tbody>
