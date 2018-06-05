@@ -197,8 +197,8 @@ export default {
   },
   methods: {
     getListOfMessages(){
-      console.log("AAA");
-      console.log(this.token);
+      //console.log("AAA");
+     // console.log(this.token);
       axios.get(`https://www.googleapis.com/gmail/v1/users/me/messages`, 
         { 
           headers: { 
@@ -230,6 +230,7 @@ export default {
           var headers = response.data.payload.headers;
           var isSocial = false;
           var isPromo = false;
+          console.log(response.data.labelIds);
           for (var i = 0; i < response.data.labelIds.length; i++) {
             let indexSpot = response.data.labelIds[i];
             if (indexSpot === "CATEGORY_SOCIAL") {
