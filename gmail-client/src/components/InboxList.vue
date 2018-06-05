@@ -247,10 +247,23 @@ export default {
             else if (headers[i].name === "Subject") {
               var subject = headers[i].value;
             }
-            else if (headers[i].name === "Date") {
-              var time = headers[i].value;
-            }
           }
+          var unix = moment.unix(response.data.internalDate/1000);
+          var currentUnix = moment().unix();
+          currentUnix = moment.unix(currentUnix);
+          var time = "";
+          console.log(unix);
+          console.log(currentUnix);
+          if (currentUnix.format("MMM D") === unix.format("MMM D")) {
+            time = unix.format("h:mm a");
+          }
+          else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
+            time = unix.format("MMM D");
+          }
+          else {
+            time = unix.format("DD/MM/YY");
+          }
+
           //response.data.internalDate gives UNIX time (we should use that instead of the header maybe)
           let snippet = response.data.snippet;
           let id = response.data.id;
@@ -259,7 +272,7 @@ export default {
             body = atob(response.data.payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
           }
           else {
-            body = atob(response.data.payload.parts[0].body.data.replace(/-/g, '+').replace(/_/g, '/'));
+            body = atob(response.data.payload.parts[1].body.data.replace(/-/g, '+').replace(/_/g, '/'));
           }
 
 
