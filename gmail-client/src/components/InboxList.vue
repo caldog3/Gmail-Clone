@@ -7,16 +7,16 @@
                 <table class="table table-striped table-inbox hidden" id="example-1">
                   <thead>
                     <tr>
-                      <th>Sender</th>
-                      <th>Subject - Snippet</th>
-                      <th>Time</th>
+                      <th class="OneTH">Sender</th>
+                      <th class="TwoTH">Subject - Snippet</th>
+                      <th class="ThreeTH">Time</th>
                     </tr>
                   </thead>
                     <tbody v-for="message in messages" :key="message.id">
-                        <td>{{ message.conciseFrom }}</td>
+                        <td class="One"><span>{{ message.conciseFrom }}</span></td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td>{{ message.subject }} - <span v-html="message.snippet"></span>...</td>
-                        <td>{{ message.time }}</td>
+                        <td class="Two"><span>{{ message.subject }} </span>- <span v-html="message.snippet"></span>...</td>
+                        <td class="Three"><span>{{ message.time }}</span></td>
 
                     </tbody>
                 </table>
@@ -36,10 +36,10 @@
                   </tr>
                 </thead>
                   <tbody v-for="socialM in socialMs" :key="socialM.id">
-                      <td>{{ socialM.conciseFrom }}</td>
+                      <td><span>{{ socialM.conciseFrom }}</span></td>
                  <!-- <td>{{ socialM. body}}</td> -->
-                      <td>{{ socialM.subject }} - <span v-html="socialM.snippet"></span>...</td>
-                      <td>{{ socialM.time }}</td>
+                      <td><span>{{ socialM.subject }} </span>- <span v-html="socialM.snippet"></span>...</td>
+                      <td><span>{{ socialM.time }}</span></td>
 
                   </tbody>
               </table>
@@ -76,15 +76,43 @@
 </template>
 
 <style scoped>
-#email {
+table {
   width: 100%;
   overflow: hidden;
+  table-layout: fixed;
 }
-#email tr {
+
+.One {
+  width: 15%;
+  min-width: 15%;
+  max-width: 15%;
+}
+
+.OneTH {
+  width: 15%;
+  min-width: 15%;
+  max-width: 15%;
+}
+
+.Three {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+.ThreeTH {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+tbody {
   line-height: 5px;
 }
-td:nth-child(1) {
-  width:200px;
+
+span {
+  width: 99%;
+  overflow: hidden;
 }
 
 
