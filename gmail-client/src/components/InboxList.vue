@@ -16,7 +16,7 @@
                         <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b></td>
                    <!-- <td>{{ message. body}}</td> -->
                         <td class="Two"><span class="leftAlign"><b>{{ message.subject }} </b>- <i><span v-html="message.snippet"></span></i></span>...</td>
-                        <td class="Three"><span class="leftAlign">{{ message.time }}</span></td>
+                        <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
 
                     </tbody>
                 </table>
@@ -39,7 +39,7 @@
                       <td class="One"><b><span class="leftAlign">{{ socialM.conciseFrom }}</span></b></td>
                  <!-- <td>{{ socialM. body}}</td> -->
                       <td class="Two"><span class="leftAlign"><b>{{ socialM.subject }}</b> - <i><span v-html="socialM.snippet"></span></i></span>...</td>
-                      <td class="Three"><span class="leftAlign">{{ socialM.time }}</span></td>
+                      <td class="Three"><span class="rightAlign">{{ socialM.time }}</span></td>
 
                   </tbody>
               </table>
@@ -62,7 +62,7 @@
                     <td class="One"><b><span class="leftAlign">{{ promoM.conciseFrom }}</span></b></td>
                <!-- <td>{{ promoM. body}}</td> -->
                     <td class="Two"><span class="leftAlign"><b>{{ promoM.subject }}</b> - <i><span v-html="promoM.snippet"></span></i></span>...</td>
-                    <td class="Three">><span class="leftAlign">{{ promoM.time }}</span></td>
+                    <td class="Three"><span class="rightAlign">{{ promoM.time }}</span></td>
 
                 </tbody>
             </table>
@@ -126,6 +126,9 @@ td {
 
 .leftAlign {
   float: left;
+}
+.rightAlign {
+  float: right;
 }
 
 tbody {
