@@ -18,7 +18,7 @@
                         </td>
                    <!-- <td>{{ message. body}}</td> -->
                         <td class="Two"><div class="leftAlign1"><b>{{ message.subject }} </b>
-                          <!-- <br class="rwd-break"> -->
+                          <br class="rwd-break">
                           - <i><span v-html="message.snippet">...</span></i></div></td>
                         <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
 
@@ -144,6 +144,7 @@ td {
   visibility: visible;
 }
 .smallOnly {
+  display: none;
   visibility: hidden;
   float: right;
 }
@@ -151,9 +152,9 @@ tbody {
   line-height: 5px;
 }
 
-/* .rwd-break {
+.rwd-break {
   display: none;
-} */
+}
 
 @media screen and (max-width : 950px) {
 
@@ -173,7 +174,7 @@ tbody {
     max-width: 100%;
   }
 
-  tbody .Two {
+  .Two {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
@@ -185,21 +186,27 @@ tbody {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+    display: none;
     visibility: hidden;  
   }
-  /* .rwd-break {
+  .rwd-break {
     display: block;
-  } */
+  }
   .smallOnly {
     display: block;
     visibility: visible;
   }
   .rightAlign {
     visibility: hidden;
+    display: none;
   }
   .leftAlign1 {
-  float: left;
+    float: left;
+    text-align: left;
   } 
+  tbody {
+    line-height: unset;
+}
 }
 
 </style>
