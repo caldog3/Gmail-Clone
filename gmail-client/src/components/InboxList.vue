@@ -206,7 +206,7 @@ tbody {
   } 
   tbody {
     line-height: unset;
-}
+  }
 }
 
 </style>
