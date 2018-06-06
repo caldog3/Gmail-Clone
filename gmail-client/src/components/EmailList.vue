@@ -4,9 +4,13 @@
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id">
             <template v-if="message.labelIds.includes(labelId)">
-                <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b></td>
-                <td class="Two"><span class="leftAlign">
-                    <b>{{ message.subject }} </b>- <i><span v-html="message.snippet"></span></i></span>...
+                <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+                  <span class="smallOnly">{{ message.time }}</span>
+                </td>
+                <td class="Two"><div class="leftAlign1">
+                    <b>{{ message.subject }} </b>- 
+                    <br class="rwd-break">
+                    <i><span v-html="message.snippet">...</span></i></div>
                 </td>
                 <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
             </template>                      
@@ -49,14 +53,25 @@ td {
 .leftAlign {
   float: left;
 }
+.leftAlign1 {
+  float: left;
+}
 .rightAlign {
   float: right;
+  display: block;
+  visibility: visible;
 }
-
+.smallOnly {
+  display: none;
+  visibility: hidden;
+  float: right;
+}
 tbody {
   line-height: 5px;
 }
-
+.rwd-break {
+  display: none;
+}
 @media screen and (max-width : 858px) {
 
   table, thead, tbody, th, td, tr {
@@ -85,7 +100,27 @@ tbody {
   .Three {
     width: 100%;
     min-width: 100%;
-    max-width: 100%;    
+    max-width: 100%;  
+    display: none;
+    visibility: hidden;    
+  }
+  .rwd-break {
+    display: block;
+  }
+  .smallOnly {
+    display: block;
+    visibility: visible;
+  }
+  .rightAlign {
+    visibility: hidden;
+    display: none;
+  }
+  .leftAlign1 {
+    float: left;
+    text-align: left;
+  } 
+  tbody {
+    line-height: unset;
   }
 }
 </style>
