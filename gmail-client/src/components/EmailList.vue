@@ -72,7 +72,7 @@ tbody {
 .rwd-break {
   display: none;
 }
-@media screen and (max-width : 858px) {
+@media screen and (max-width : 950px) {
 
   table, thead, tbody, th, td, tr {
     display: block;
