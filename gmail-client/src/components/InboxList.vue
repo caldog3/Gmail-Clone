@@ -13,9 +13,13 @@
                     </tr>
                   </thead>
                     <tbody v-for="message in messages" :key="message.id">
-                        <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b></td>
+                        <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+                        <span class="smallOnly">{{ message.time }}</span>
+                        </td>
                    <!-- <td>{{ message. body}}</td> -->
-                        <td class="Two"><span class="leftAlign"><b>{{ message.subject }} </b>- <i><span v-html="message.snippet"></span></i></span>...</td>
+                        <td class="Two"><div class="leftAlign1"><b>{{ message.subject }} </b>
+                          <br class="rwd-break">
+                          - <i><span v-html="message.snippet">...</span></i></div></td>
                         <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
 
                     </tbody>
@@ -36,9 +40,11 @@
                   </tr>
                 </thead>
                   <tbody v-for="socialM in socialMs" :key="socialM.id">
-                      <td class="One"><b><span class="leftAlign">{{ socialM.conciseFrom }}</span></b></td>
+                      <td class="One"><b><span class="leftAlign">{{ socialM.conciseFrom }}</span></b>
+                        <span class="smallOnly">{{ socialM.time }}</span>
+                      </td>
                  <!-- <td>{{ socialM. body}}</td> -->
-                      <td class="Two"><span class="leftAlign"><b>{{ socialM.subject }}</b> - <i><span v-html="socialM.snippet"></span></i></span>...</td>
+                      <td class="Two"><span class="leftAlign"><b>{{ socialM.subject }}</b> - <i><span v-html="socialM.snippet">...</span></i></span></td>
                       <td class="Three"><span class="rightAlign">{{ socialM.time }}</span></td>
 
                   </tbody>
@@ -59,9 +65,11 @@
                 </tr>
               </thead>
                 <tbody v-for="promoM in promoMs" :key="promoM.id">
-                    <td class="One"><b><span class="leftAlign">{{ promoM.conciseFrom }}</span></b></td>
+                    <td class="One"><b><span class="leftAlign">{{ promoM.conciseFrom }}</span></b>
+                      <span class="smallOnly">{{ promoM.time }}</span>
+                    </td>
                <!-- <td>{{ promoM. body}}</td> -->
-                    <td class="Two"><span class="leftAlign"><b>{{ promoM.subject }}</b> - <i><span v-html="promoM.snippet"></span></i></span>...</td>
+                    <td class="Two"><span class="leftAlign"><b>{{ promoM.subject }}</b> - <i><span v-html="promoM.snippet">...</span></i></span></td>
                     <td class="Three"><span class="rightAlign">{{ promoM.time }}</span></td>
 
                 </tbody>
@@ -127,15 +135,28 @@ td {
 .leftAlign {
   float: left;
 }
+.leftAlign1 {
+  float: left;
+}
 .rightAlign {
   float: right;
+  display: block;
+  visibility: visible;
 }
-
+.smallOnly {
+  display: none;
+  visibility: hidden;
+  float: right;
+}
 tbody {
   line-height: 5px;
 }
 
-@media screen and (max-width : 858px) {
+.rwd-break {
+  display: none;
+}
+
+@media screen and (max-width : 950px) {
 
   table, thead, tbody, th, td, tr {
     display: block;
@@ -158,12 +179,33 @@ tbody {
     min-width: 100%;
     max-width: 100%;
     overflow: hidden; 
+    /* line-height: 15px; */
   }
 
   .Three {
     width: 100%;
     min-width: 100%;
-    max-width: 100%;    
+    max-width: 100%;
+    display: none;
+    visibility: hidden;  
+  }
+  .rwd-break {
+    display: block;
+  }
+  .smallOnly {
+    display: block;
+    visibility: visible;
+  }
+  .rightAlign {
+    visibility: hidden;
+    display: none;
+  }
+  .leftAlign1 {
+    float: left;
+    text-align: left;
+  } 
+  tbody {
+    line-height: unset;
   }
 }
 
