@@ -15,7 +15,17 @@ import fontawesome from "@fortawesome/fontawesome";
 import faBars from "@fortawesome/fontawesome-free-solid/faBars";
 import faSearch from "@fortawesome/fontawesome-free-solid/faSearch";
 import faAngleDown from "@fortawesome/fontawesome-free-solid/faAngleDown";
-fontawesome.library.add(faBars, faSearch);
+import faInbox from "@fortawesome/fontawesome-free-solid/faInbox";
+import faStar from "@fortawesome/fontawesome-free-solid/faStar";
+import faClockO from "@fortawesome/fontawesome-free-solid/faClock";
+import faArrowRight from "@fortawesome/fontawesome-free-solid/faArrowRight";
+import faPaperPlane from "@fortawesome/fontawesome-free-solid/faPaperPlane";
+import faFile from "@fortawesome/fontawesome-free-solid/faFile";
+import faTrash from "@fortawesome/fontawesome-free-solid/faTrash";
+import faExclamationCircle from "@fortawesome/fontawesome-free-solid/faExclamationCircle";
+
+fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRight, faPaperPlane,
+ faFile, faTrash, faExclamationCircle);
 
 Vue.config.productionTip = false
 
