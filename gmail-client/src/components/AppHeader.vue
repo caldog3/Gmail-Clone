@@ -80,19 +80,26 @@ input:focus {
   cursor: pointer;
   padding: 7px;
 }
-@media screen and (max-width : 858px) {
-  .search {
-    background-color: #BDBDBD;    
-    width: 300px;
-    
-  }
-  .search > input{
-    display: flex;
-    width: 250px;
-    background-color: #BDBDBD;  
-  }
+@media screen and (max-width : 930px) {
+  .search { 
+  width: 40%;
+  height: 35px;
+}
+.search > input{
+}
   .icon {
     margin-left: 0px;
+  }
+  @media screen and (max-width : 858px) and (min-width : 750px) {
+    .search {
+      background-color: #BDBDBD;    
+      width: 300px; 
+    }
+    .search > input{
+      display: flex;
+      width: 250px;
+      background-color: #BDBDBD;  
+    }
   }
 }
 </style>

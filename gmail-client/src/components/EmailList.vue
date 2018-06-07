@@ -74,6 +74,10 @@ tbody {
 .rwd-break {
   display: none;
 }
+
+a {
+  color: black;
+}
 @media screen and (max-width : 950px) {
 
   table, thead, tbody, th, td, tr {
