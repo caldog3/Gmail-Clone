@@ -84,6 +84,8 @@ export default new Vuex.Store({
 
             axios.get(url, getAuthHeader())
             .then((response) => {
+                    console.log("JSON");
+                    console.log(response.data.labelIds);
                     let headers = response.data.payload.headers;
                     let from, to, subject;
                     for (let i = 0; i < headers.length; i++) {
