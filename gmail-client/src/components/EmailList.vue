@@ -4,6 +4,7 @@
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id">
             <template v-if="message.labelIds.includes(labelId)">
+              <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">              
                 <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
                   <span class="smallOnly">{{ message.time }}</span>
                 </td>
@@ -13,6 +14,7 @@
                     <i><span v-html="message.snippet">...</span></i></div>
                 </td>
                 <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
+              </router-link>  
             </template>                      
         </tbody>
     </table>        
@@ -128,12 +130,7 @@ tbody {
 <script>
 export default {
   name: 'EmailList',
-  props: {
-      labelId: {
-          type: String, 
-          required: false
-      }
-  },
+  props: ['labelId'],
   computed: {
     messages() {
       return this.$store.getters.messages;
