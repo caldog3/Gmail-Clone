@@ -3,18 +3,28 @@
   <div>
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id">
-            <template v-if="message.labelIds.includes(labelId)">
-              <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">              
-                <td class="One"><b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+            <template v-if="message.labelIds.includes(labelId)">            
+                <td class="One">
+                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+                  </router-link>  
+                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="smallOnly">{{ message.time }}</span>
+                  </router-link>
                 </td>
-                <td class="Two"><div class="leftAlign1">
+                <td class="Two">
+                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                    <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
                     <i><span v-html="message.snippet">...</span></i></div>
+                  </router-link>
                 </td>
-                <td class="Three"><span class="rightAlign">{{ message.time }}</span></td>
-              </router-link>  
+                <td class="Three">
+                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <span class="rightAlign">{{ message.time }}</span>
+                  </router-link>
+                </td>  
             </template>                      
         </tbody>
     </table>        
@@ -26,6 +36,11 @@ table {
   width: 100%;
   overflow: hidden;
   table-layout: fixed;
+  border-top: none;
+}
+
+.table tbody + tbody {
+    border-top: 0px
 }
 
 td { 
@@ -40,16 +55,16 @@ td {
 }
 
 .Two {
-  width: 79%;
-  min-width: 79%;
-  max-width: 79%;
+  width: 78%;
+  min-width: 78%;
+  max-width: 78%;
   overflow: hidden;
 }
 
 .Three {
-  width: 10%;
-  min-width: 10%;
-  max-width: 10%;
+  width: 12%;
+  min-width: 12%;
+  max-width: 12%;
 }
 
 .leftAlign {
@@ -74,6 +89,13 @@ tbody {
 .rwd-break {
   display: none;
 }
+
+a {
+  color: black;
+  display: inline-block;
+}
+
+
 @media screen and (max-width : 950px) {
 
   table, thead, tbody, th, td, tr {
@@ -123,6 +145,10 @@ tbody {
   } 
   tbody {
     line-height: unset;
+  }
+  a {
+    width: 100%;
+    display: block;
   }
 }
 </style>
