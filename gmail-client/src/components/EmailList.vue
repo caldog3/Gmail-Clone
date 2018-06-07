@@ -6,7 +6,9 @@
             <template v-if="message.labelIds.includes(labelId)">            
                 <td class="One">
                   <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>  
+                  <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+                  </router-link>  
+                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="smallOnly">{{ message.time }}</span>
                   </router-link>
                 </td>
@@ -53,16 +55,16 @@ td {
 }
 
 .Two {
-  width: 79%;
-  min-width: 79%;
-  max-width: 79%;
+  width: 78%;
+  min-width: 78%;
+  max-width: 78%;
   overflow: hidden;
 }
 
 .Three {
-  width: 10%;
-  min-width: 10%;
-  max-width: 10%;
+  width: 12%;
+  min-width: 12%;
+  max-width: 12%;
 }
 
 .leftAlign {
@@ -143,6 +145,10 @@ a {
   } 
   tbody {
     line-height: unset;
+  }
+  a {
+    width: 100%;
+    display: block;
   }
 }
 </style>
