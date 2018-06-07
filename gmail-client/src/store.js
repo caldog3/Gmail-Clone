@@ -129,6 +129,11 @@ export default new Vuex.Store({
                     }
 
                     let labelIds = response.data.labelIds;
+
+                    if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")){
+                        labelIds.push("CATEGORY_PRIMARY");
+                    }
+
                     let message = { from, conciseFrom, to, subject, snippet, body, time, id, labelIds };
                     context.commit('addMessage', message);
                 }).catch((error) => {
