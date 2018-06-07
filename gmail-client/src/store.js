@@ -137,16 +137,16 @@ export default new Vuex.Store({
                     }
                     let unread = true;
                     if (labelIds.includes("UNREAD")) {
-                        console.log("Is READ");
+                        //console.log("Is READ");
                         unread = false;
                     }
                     else {
-                        console.log("Is unread");
+                        //console.log("Is unread");
                     }
 
                     let message = { from, conciseFrom, to, subject, snippet, body, time, id, labelIds, unread };
                     context.commit('addMessage', message);
-                    console.log(message);
+                    //console.log(message);
                 }).catch((error) => {
                     console.log(error);
                 });

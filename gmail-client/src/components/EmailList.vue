@@ -168,7 +168,7 @@ export default {
   methods: {
     classChanger(message){
       var theClass = 'readClass';
-      console.log(message.unread);
+      //console.log(message.unread);
       if(message.unread == true){
           theClass = 'unreadClass';
       }
