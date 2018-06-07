@@ -3,29 +3,29 @@
     <button disabled="disabled">Compose</button>
     <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
-        <font-awesome-icon icon="inbox" size="md"/>  Inbox
+        <font-awesome-icon icon="inbox"/>  Inbox
         <b-badge variant="primary" pill class="notificationPill">3</b-badge>
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="star" size="md"/>  Starred
+        <font-awesome-icon icon="star"/>  Starred
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="clock" size="md"/>  Snoozed
+        <font-awesome-icon icon="clock"/>  Snoozed
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="arrow-right" size="md"/>  Important
+        <font-awesome-icon icon="arrow-right"/>  Important
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="paper-plane" size="md"/>  Sent
+        <font-awesome-icon icon="paper-plane"/>  Sent
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="file" size="md"/>  Drafts
+        <font-awesome-icon icon="file"/>  Drafts
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="exclamation-circle" size="md"/>  Spam
+        <font-awesome-icon icon="exclamation-circle"/>  Spam
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="trash" size="md"/>  Trash
+        <font-awesome-icon icon="trash"/>  Trash
       </b-list-group-item>
     </b-list-group> 
   </div>

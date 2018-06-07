@@ -7,7 +7,6 @@ import base64 from "base-64";
 Vue.use(require("vue-moment"));
 Vue.use(Vuex);
 
-
 const getAuthHeader = () => {
     return { 
         headers: { 
@@ -59,25 +58,21 @@ export default new Vuex.Store({
                 context.commit("setToken", token);
             }
         },
-        initialize(context) {
-            let token = localStorage.getItem('token');
-            if (token) {
-                context.commit("setToken", token);
-            }
-        },
         getListOfMessages(context) {
             let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
-
-            axios.get(url, getAuthHeader())
-            .then((response) => {
-                return response.data.messages;
-            }).then((messages) => {
-                messages.forEach(message => {
-                   context.dispatch('getMessageContent', message.id);
-                });
-            }).catch((error) => {
-                console.log(error);
-            });
+            console.log(context.getters.loggedIn);
+            if(context.getters.loggedIn){
+                axios.get(url, getAuthHeader())
+                    .then((response) => {
+                        return response.data.messages;
+                    }).then((messages) => {
+                        messages.forEach(message => {
+                            context.dispatch('getMessageContent', message.id);
+                        });
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+            }            
         },
         getMessageContent(context, id) {
             let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${id}`;
