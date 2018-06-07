@@ -4,7 +4,7 @@
   <div>
     <b-tabs>
       <b-tab title="Primary">
-        <email-list labelId="INBOX"/>
+        <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
         <email-list labelId="CATEGORY_SOCIAL"/>
