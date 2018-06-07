@@ -23,9 +23,16 @@ import faPaperPlane from "@fortawesome/fontawesome-free-solid/faPaperPlane";
 import faFile from "@fortawesome/fontawesome-free-solid/faFile";
 import faTrash from "@fortawesome/fontawesome-free-solid/faTrash";
 import faExclamationCircle from "@fortawesome/fontawesome-free-solid/faExclamationCircle";
+import faArchive from "@fortawesome/fontawesome-free-solid/faArchive";
+import faEnvelopeOpen from "@fortawesome/fontawesome-free-solid/faEnvelopeOpen";
+import faArrowCircleRight from "@fortawesome/fontawesome-free-solid/faArrowCircleRight";
+import faTag from "@fortawesome/fontawesome-free-solid/faTag";
+import faRetweet from "@fortawesome/fontawesome-free-solid/faRetweet";
+import faSquareO from "@fortawesome/fontawesome-free-solid/faSquare";
+import faCheckSquareO from "@fortawesome/fontawesome-free-solid/faCheckSquare";
 
 fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRight, faPaperPlane,
- faFile, faTrash, faExclamationCircle);
+  faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag, faRetweet, faSquareO, faCheckSquareO);
 
 Vue.config.productionTip = false
 

@@ -25,6 +25,7 @@
             </clipPath>
           </defs>
           <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
+          <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
         </svg>
       </b-navbar-nav>
     </b-navbar>
@@ -79,19 +80,26 @@ input:focus {
   cursor: pointer;
   padding: 7px;
 }
-@media screen and (max-width : 858px) {
-  .search {
-    background-color: #BDBDBD;    
-    width: 300px;
-    
-  }
-  .search > input{
-    display: flex;
-    width: 250px;
-    background-color: #BDBDBD;  
-  }
+@media screen and (max-width : 930px) {
+  .search { 
+  width: 40%;
+  height: 35px;
+}
+.search > input{
+}
   .icon {
     margin-left: 0px;
+  }
+  @media screen and (max-width : 858px) and (min-width : 750px) {
+    .search {
+      background-color: #BDBDBD;    
+      width: 300px; 
+    }
+    .search > input{
+      display: flex;
+      width: 250px;
+      background-color: #BDBDBD;  
+    }
   }
 }
 </style>

@@ -2,9 +2,9 @@
   <div class="sideBar">
     <button disabled="disabled">Compose</button>
     <b-list-group id="bootstrap-overrides">
-      <b-list-group-item class="dflex justify-content-between align-items-center" href="#" variant="dark">
+      <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
         <font-awesome-icon icon="inbox" size="md"/>  Inbox
-        <b-badge variant="primary" pill>3</b-badge>
+        <b-badge variant="primary" pill class="notificationPill">3</b-badge>
       </b-list-group-item>
       <b-list-group-item href="#">
         <font-awesome-icon icon="star" size="md"/>  Starred
@@ -43,6 +43,9 @@
 }
 button {
   margin: 30px;
+}
+.notificationPill b-badge {
+  text-align: right;
 }
 </style>
 
