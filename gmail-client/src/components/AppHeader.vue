@@ -80,13 +80,25 @@ input:focus {
   cursor: pointer;
   padding: 7px;
 }
+
+@media screen and (max-width : 1000px) {
+  .search { 
+    width: 50%;
+    height: 35px;
+  }
+
+  .icon {
+    margin-left: 0px;
+  }
+  
+}
+
 @media screen and (max-width : 930px) {
   .search { 
   width: 40%;
   height: 35px;
-}
-.search > input{
-}
+  }
+
   .icon {
     margin-left: 0px;
   }
