@@ -1,13 +1,13 @@
 <template>
   <div class="body">
     <div id="spacing">
-      <span v-if=messageBody>
+      <span v-if=!messageBody>
         <font-awesome-icon icon="square" size="md"/>
         |
         <font-awesome-icon icon="check-square" size="md"/>
       </span>
       
-      <span v-if=!messageBody>
+      <span v-if=messageBody>
         <font-awesome-icon icon="retweet" size="md"/>
         <font-awesome-icon icon="archive" size="md"/> 
         <font-awesome-icon icon="exclamation-circle" size="md"/> 

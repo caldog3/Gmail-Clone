@@ -25,6 +25,7 @@
             </clipPath>
           </defs>
           <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
+          <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
         </svg>
       </b-navbar-nav>
     </b-navbar>
