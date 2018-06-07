@@ -17,8 +17,7 @@
         <input type="text" placeholder="Search Mail">     
       </div>
       <b-navbar-nav class="ml-auto">
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>
-        <svg width="60" height="60">
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        <svg width="60" height="60">
           <defs>
             <clipPath id="myCircle">
                <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
@@ -26,6 +25,8 @@
           </defs>
           <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
           <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
+        
+          <imgage width="60" height="60" xlink:href="'https://img.devidentify.com/amugimu@gmail.com'"/>
         </svg>
       </b-navbar-nav>
     </b-navbar>
@@ -115,9 +116,23 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  data() {
+    return {
+      profileJSON: {},
+    }
+  },
   methods: {
     signOut(){
       this.$store.dispatch('signOut');
+    },
+    getProfile() {
+      var devIdentify = require("dev-identify")
+      var email = "amugimu@gmail.com"
+      devIdentify(email)
+      .then(function(result) {
+      console.log(result)
+      this.profileJSON = result;
+      });
     }
   }
 }

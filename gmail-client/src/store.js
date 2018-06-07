@@ -84,8 +84,10 @@ export default new Vuex.Store({
 
             axios.get(url, getAuthHeader())
             .then((response) => {
-                    console.log("JSON");
-                    console.log(response.data.labelIds);
+
+
+                    //console.log("JSON");
+                    //console.log(response.data.labelIds);
                     let headers = response.data.payload.headers;
                     let from, to, subject;
                     for (let i = 0; i < headers.length; i++) {
@@ -133,9 +135,18 @@ export default new Vuex.Store({
                     if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")){
                         labelIds.push("CATEGORY_PRIMARY");
                     }
+                    let unread = true;
+                    if (labelIds.includes("UNREAD")) {
+                        console.log("Is READ");
+                        unread = false;
+                    }
+                    else {
+                        console.log("Is unread");
+                    }
 
-                    let message = { from, conciseFrom, to, subject, snippet, body, time, id, labelIds };
+                    let message = { from, conciseFrom, to, subject, snippet, body, time, id, labelIds, unread };
                     context.commit('addMessage', message);
+                    console.log(message);
                 }).catch((error) => {
                     console.log(error);
                 });
