@@ -11,13 +11,18 @@
           </b-navbar-brand>
         </div>
       <div class="search">
-        <span class="icon">
-          <font-awesome-icon icon="search" size="lg"/>
-        </span>
-        <input type="text" placeholder="Search Mail">     
+        <div class="flex">
+          <div>
+            <font-awesome-icon icon="search" size="lg"/>
+          </div>
+          <div class="searchBar">
+            <input type="text" placeholder="Search Mail">  
+          </div>
+        </div>  
       </div>
       <b-navbar-nav class="ml-auto">
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        <svg width="60" height="60">
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
+        <svg width="60" height="60">
           <defs>
             <clipPath id="myCircle">
                <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
@@ -52,59 +57,44 @@ img {
 .brand{
   padding-right: 85px;
 }
+
 .search {
-  /* border-style: solid; */
-  /* border-width: 1px; */
-  /* border-color: red; */
   border-radius: 5px;
   background-color: #BDBDBD;  
   width: 60%;
+  margin: 10px;
   height: 35px;
 }
-.search > input{
-  /* min-width: 310px; */
-  float: left;
-  margin-left: 5px;
-  width: 80%;
-  border: none;
+
+input {
   background-color: #BDBDBD;
+  width: 100%;
   -webkit-appearance: none;
-  height: 100%;
+  border: none;
 }
 
-input:focus {
-  outline-width: 0;
+.flex {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
 }
 
-.icon {
-  float: left;
-  cursor: pointer;
-  padding: 7px;
+.flex > div {
+  margin: 4px;
 }
-@media screen and (max-width : 930px) {
+
+.searchBar {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+
+@media screen and (max-width : 700px) {
   .search { 
   width: 40%;
-  height: 35px;
-}
-.search > input{
-}
-  .icon {
-    margin-left: 0px;
   }
-  
-}
-
-@media screen and (max-width : 858px) and (min-width : 750px) {
-  .search {
-    background-color: #BDBDBD;    
-    width: 300px; 
-  }
-  .search > input{
-    display: flex;
-    width: 250px;
-    background-color: #BDBDBD;  
-  }
-}
+} 
 
 </style>
 
