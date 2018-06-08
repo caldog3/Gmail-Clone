@@ -21,7 +21,8 @@
         </div>  
       </div>
       <b-navbar-nav class="ml-auto">
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        <svg width="60" height="60">
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
+        <svg width="60" height="60">
           <defs>
             <clipPath id="myCircle">
                <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
