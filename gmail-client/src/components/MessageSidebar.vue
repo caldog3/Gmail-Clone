@@ -3,20 +3,20 @@
     <button disabled="disabled">Compose</button>
     <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
-        <font-awesome-icon icon="inbox"/>  Inbox
+        <font-awesome-icon icon="inbox" />  Inbox
         <b-badge variant="primary" pill class="notificationPill">3</b-badge>
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="star"/>  Starred
+        <font-awesome-icon icon="star" />  Starred
       </b-list-group-item>
       <b-list-group-item href="#">
         <font-awesome-icon icon="clock"/>  Snoozed
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="arrow-right"/>  Important
+        <font-awesome-icon icon="arrow-right" />  Important
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="paper-plane"/>  Sent
+        <font-awesome-icon icon="paper-plane" />  Sent
       </b-list-group-item>
       <b-list-group-item href="#">
         <font-awesome-icon icon="file"/>  Drafts
@@ -25,7 +25,7 @@
         <font-awesome-icon icon="exclamation-circle"/>  Spam
       </b-list-group-item>
       <b-list-group-item href="#">
-        <font-awesome-icon icon="trash"/>  Trash
+        <font-awesome-icon icon="trash" />  Trash
       </b-list-group-item>
     </b-list-group> 
   </div>

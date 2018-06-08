@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <b-navbar toggleable="md" varaiant="faded" type="light">
+      <div class="flexBox">
         <div class="menu">
           <font-awesome-icon icon="bars" size="lg"/>
         </div>
@@ -11,13 +12,18 @@
           </b-navbar-brand>
         </div>
       <div class="search">
-        <span class="icon">
-          <font-awesome-icon icon="search" size="lg"/>
-        </span>
-        <input type="text" placeholder="Search Mail">     
+        <div class="flex">
+          <div class="searchIcon">
+            <font-awesome-icon icon="search" size="lg"/>
+          </div>
+          <div class="searchBar">
+            <input type="text" placeholder="Search Mail">  
+          </div>
+        </div>  
       </div>
+      <div>
       <b-navbar-nav class="ml-auto">
-        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>
+        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
         <svg width="60" height="60">
           <defs>
             <clipPath id="myCircle">
@@ -26,14 +32,29 @@
           </defs>
           <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
           <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
+        
+          <image width="60" height="60" v-bind:href="'https://img.devidentify.com/caldogwoods@gmail.com'"/>
         </svg>
       </b-navbar-nav>
+      </div>
+      </div>
     </b-navbar>
     
   </div>
 </template>
 
 <style scoped>
+
+.flexBox {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+}
+.flexBox div:last-child {
+  margin-left: auto;
+}
 .header {
   /* height: 64px; */
   background-color: white;
@@ -44,66 +65,62 @@
 .menu {
   padding-left: 10px;
   padding-right: 25px;
+  /* margin-top: 17px;
+  margin-bottom: 5px; */
 }
 img {
   padding-right: 10px;
 }
 .brand{
   padding-right: 85px;
+  /* margin-top: 5px; */
 }
+
 .search {
-  /* border-style: solid; */
-  /* border-width: 1px; */
-  /* border-color: red; */
   border-radius: 5px;
-  background-color: #BDBDBD;  
+  background-color: #F5F7F7;  
   width: 60%;
-  height: 35px;
+  margin-right: 10px;
+  height: 45px;
+  /* margin-top:2px;
+  margin-bottom: 2px; */
 }
-.search > input{
-  /* min-width: 310px; */
-  float: left;
-  margin-left: 5px;
-  width: 80%;
+
+.searchBar {
   border: none;
-  background-color: #BDBDBD;
+}
+input {
+  background-color: #F5F7F7;
+  width: 100%;
   -webkit-appearance: none;
-  height: 100%;
+  border: none;
+  outline: none;
 }
 
-input:focus {
-  outline-width: 0;
+.flex {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  height: 100%
 }
 
-.icon {
-  float: left;
-  cursor: pointer;
-  padding: 7px;
+.flex > div {
+  margin: 4px;
 }
-@media screen and (max-width : 930px) {
+
+.searchBar {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+
+@media screen and (max-width : 700px) {
   .search { 
   width: 40%;
-  height: 35px;
-}
-.search > input{
-}
-  .icon {
-    margin-left: 0px;
   }
-  
-}
-
-@media screen and (max-width : 858px) and (min-width : 750px) {
-  .search {
-    background-color: #BDBDBD;    
-    width: 300px; 
-  }
-  .search > input{
-    display: flex;
-    width: 250px;
-    background-color: #BDBDBD;  
-  }
-}
+} 
 
 </style>
 
@@ -115,9 +132,23 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  data() {
+    return {
+      profileJSON: {},
+    }
+  },
   methods: {
     signOut(){
       this.$store.dispatch('signOut');
+    },
+    getProfile() {
+      var devIdentify = require("dev-identify")
+      var email = "amugimu@gmail.com"
+      devIdentify(email)
+      .then(function(result) {
+      console.log(result)
+      this.profileJSON = result;
+      });
     }
   }
 }
