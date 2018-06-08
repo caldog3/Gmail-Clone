@@ -13,7 +13,7 @@
         </div>
       <div class="search">
         <div class="flex">
-          <div>
+          <div class="searchIcon">
             <font-awesome-icon icon="search" size="lg"/>
           </div>
           <div class="searchBar">
@@ -50,6 +50,7 @@
   width: 100%;
   flex-direction: row;
   align-content: stretch;
+  align-items: center;
 }
 .flexBox div:last-child {
   margin-left: auto;
@@ -64,27 +65,40 @@
 .menu {
   padding-left: 10px;
   padding-right: 25px;
+  /* margin-top: 17px;
+  margin-bottom: 5px; */
 }
 img {
   padding-right: 10px;
 }
 .brand{
   padding-right: 85px;
+  /* margin-top: 5px; */
 }
 
 .search {
   border-radius: 5px;
-  background-color: #BDBDBD;  
+  background-color: #F5F7F7;  
   width: 60%;
   margin-right: 10px;
-  height: 35px;
+  height: 55px;
+  /* margin-top:2px;
+  margin-bottom: 2px; */
+}
+.searchIcon {
+  margin-right: 3px;
+  margin-left: 3px;
 }
 
+.searchBar {
+  border: none;
+}
 input {
-  background-color: #BDBDBD;
+  background-color: #F5F7F7;
   width: 100%;
   -webkit-appearance: none;
   border: none;
+  outline: none;
 }
 
 .flex {
@@ -92,6 +106,8 @@ input {
   width: 100%;
   flex-direction: row;
   align-content: stretch;
+  align-items: center;
+  height: 100%
 }
 
 .flex > div {

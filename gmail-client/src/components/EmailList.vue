@@ -36,8 +36,8 @@
   background-color: none;
 }
 .unreadClass {
-  color: lightgray;
-  background-color: lightgray;
+  color: #F5F7F7;
+  background-color: #F5F7F7;
 }
 table {
   width: 100%;
