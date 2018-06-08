@@ -1,6 +1,12 @@
 <template>
   <div class="sideBar">
-    <button disabled="disabled">Compose</button>
+    <button v-on:click.stop="composeShow()">Compose</button>
+    <!-- <b-modal v-model="composeShow">
+      Test compose block
+    </b-modal> -->
+
+
+
     <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
         <font-awesome-icon icon="inbox" />  Inbox
@@ -50,6 +56,9 @@ button {
 </style>
 
 <script>
+
+import eventBus from '../event_bus'
+
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
@@ -62,6 +71,9 @@ export default {
     }
   },
   methods: {
+    composeShow() {
+      eventBus.$emit('COMPOSE_OPEN');
+    }
   }
 }
 </script>

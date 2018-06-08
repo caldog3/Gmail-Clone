@@ -11,6 +11,7 @@
           <router-view/>
         </div>
       </div>
+      <Compose/>
     </div>
 
     <div v-else>
@@ -20,6 +21,10 @@
 </template>
 
 <script>
+import eventBus from './event_bus'
+
+import Compose from './components/Compose';
+
 import AppHeader from './components/AppHeader';
 import MessageSidebar from './components/MessageSidebar';
 import UtilityBar from './components/UtilityBar'
@@ -31,7 +36,8 @@ export default {
     AppHeader,
     MessageSidebar,
     UtilityBar,
-    LoginPage
+    LoginPage,
+    Compose
   },
   computed: {
     loggedIn: function() {
