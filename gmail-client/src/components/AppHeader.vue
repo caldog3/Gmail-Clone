@@ -76,7 +76,7 @@ img {
   border-radius: 5px;
   background-color: #BDBDBD;  
   width: 60%;
-  margin: 10px;
+  margin-right: 10px;
   height: 35px;
 }
 
