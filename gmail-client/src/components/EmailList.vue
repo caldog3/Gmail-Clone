@@ -78,6 +78,7 @@ td {
 
 .leftAlign {
   float: left;
+  text-align: left;
 }
 .leftAlign1 {
   float: left;
@@ -102,6 +103,8 @@ tbody {
 a {
   color: black;
   display: inline-block;
+  text-align: left;
+  float: left;
 }
 
 
