@@ -3,7 +3,8 @@
 <template>
   <div>
     <b-tabs>
-      <b-tab title="Primary">
+
+      <b-tab icon='inbox' title="Primary">
         <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
@@ -21,11 +22,13 @@
 
 <script>
 import EmailList from './EmailList';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'InboxList',
   components: {
-    EmailList
+    EmailList,
+    FontAwesomeIcon
   }
 }
 </script>
