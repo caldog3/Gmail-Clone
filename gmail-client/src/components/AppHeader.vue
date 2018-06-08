@@ -33,7 +33,7 @@
           <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
           <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
         
-          <imgage width="60" height="60" xlink:href="'https://img.devidentify.com/amugimu@gmail.com'"/>
+          <image width="60" height="60" v-bind:href="'https://img.devidentify.com/caldogwoods@gmail.com'"/>
         </svg>
       </b-navbar-nav>
       </div>
