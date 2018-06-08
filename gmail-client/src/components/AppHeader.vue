@@ -81,13 +81,9 @@ img {
   background-color: #F5F7F7;  
   width: 60%;
   margin-right: 10px;
-  height: 55px;
+  height: 45px;
   /* margin-top:2px;
   margin-bottom: 2px; */
-}
-.searchIcon {
-  margin-right: 3px;
-  margin-left: 3px;
 }
 
 .searchBar {
