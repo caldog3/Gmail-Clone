@@ -7,8 +7,6 @@
                 <td class="One">
                   <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
-                  </router-link>  
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="smallOnly">{{ message.time }}</span>
                   </router-link>
                 </td>
@@ -129,6 +127,7 @@ a {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+    /* height: 15px; */
   }
 
   .Two {
