@@ -5,7 +5,7 @@
         <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
             <template v-if="message.labelIds.includes(labelId)">            
                 <td class="One">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
                   </router-link>  
                   <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
@@ -13,7 +13,7 @@
                   </router-link>
                 </td>
                 <td class="Two">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                     <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
@@ -21,7 +21,7 @@
                   </router-link>
                 </td>
                 <td class="Three">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="rightAlign">{{ message.time }}</span>
                   </router-link>
                 </td>  
@@ -103,10 +103,15 @@ tbody {
 a {
   color: black;
   display: inline-block;
-  text-align: left;
+}
+
+.left {
   float: left;
 }
 
+.right {
+  float: right;
+}
 
 @media screen and (max-width : 950px) {
 
