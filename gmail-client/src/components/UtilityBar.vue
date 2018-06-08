@@ -2,20 +2,20 @@
   <div class="body">
     <div id="spacing">
       <span v-if=!messageBody>
-        <font-awesome-icon icon="square" size="md"/>
+        <font-awesome-icon icon="square" />
         |
-        <font-awesome-icon icon="check-square" size="md"/>
+        <font-awesome-icon icon="check-square"/>
       </span>
       
       <span v-if=messageBody>
-        <font-awesome-icon icon="retweet" size="md"/>
-        <font-awesome-icon icon="archive" size="md"/> 
-        <font-awesome-icon icon="exclamation-circle" size="md"/> 
-        <font-awesome-icon icon="trash" size="md"/> 
-        <font-awesome-icon icon="envelope-open" size="md"/> 
-        <font-awesome-icon icon="clock" size="md"/> | 
-        <font-awesome-icon icon="arrow-circle-right" size="md"/> 
-        <font-aweomse-icon icon="tag" size="md"/>
+        <font-awesome-icon icon="retweet"/>
+        <font-awesome-icon icon="archive"/> 
+        <font-awesome-icon icon="exclamation-circle" /> 
+        <font-awesome-icon icon="trash" /> 
+        <font-awesome-icon icon="envelope-open" /> 
+        <font-awesome-icon icon="clock" /> | 
+        <font-awesome-icon icon="arrow-circle-right" /> 
+        <font-aweomse-icon icon="tag"/>
       </span>
     </div>
     <button v-on:click="utilityToggle">Toggle</button>

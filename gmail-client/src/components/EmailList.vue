@@ -2,7 +2,7 @@
 <template>
   <div>
     <table class="table table-striped table-inbox hidden" id="example-1">
-        <tbody v-for="message in messages" :key="message.id">
+        <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
             <template v-if="message.labelIds.includes(labelId)">            
                 <td class="One">
                   <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
@@ -32,6 +32,14 @@
 </template>
 
 <style scoped>
+.readClass {
+  color: none;
+  background-color: none;
+}
+.unreadClass {
+  color: lightgray;
+  background-color: lightgray;
+}
 table {
   width: 100%;
   overflow: hidden;
@@ -157,10 +165,21 @@ a {
 export default {
   name: 'EmailList',
   props: ['labelId'],
+  methods: {
+    classChanger(message){
+      var theClass = 'readClass';
+      //console.log(message.unread);
+      if(message.unread == true){
+          theClass = 'unreadClass';
+      }
+      return theClass;
+    }
+  },
   computed: {
     messages() {
       return this.$store.getters.messages;
-    }
+    },
+
   }
 }
 </script>
