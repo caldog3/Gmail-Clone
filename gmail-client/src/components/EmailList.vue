@@ -31,6 +31,7 @@
   </div>
 </template>
 
+
 <style scoped>
 .readClass {
   color: none;
