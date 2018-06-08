@@ -8,6 +8,7 @@
       </span>
       
       <span v-if=messageBody>
+        <div class="CenterIt">
         <font-awesome-icon icon="retweet"/>
         <font-awesome-icon icon="archive"/> 
         <font-awesome-icon icon="exclamation-circle" /> 
@@ -16,6 +17,7 @@
         <font-awesome-icon icon="clock" /> | 
         <font-awesome-icon icon="arrow-circle-right" /> 
         <font-aweomse-icon icon="tag"/>
+        </div>
       </span>
     </div>
     <button v-on:click="utilityToggle">Toggle</button>
