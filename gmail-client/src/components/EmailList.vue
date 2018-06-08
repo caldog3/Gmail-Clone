@@ -56,22 +56,16 @@ td {
 } 
 
 .One {
-  width: 15%;
-  min-width: 15%;
-  max-width: 15%;
+  width: 200px;
 }
 
 .Two {
-  width: 78%;
-  min-width: 78%;
-  max-width: 78%;
+  width: auto;
   overflow: hidden;
 }
 
 .Three {
-  width: 12%;
-  min-width: 12%;
-  max-width: 12%;
+  width: 100px;
 }
 
 .leftAlign {
