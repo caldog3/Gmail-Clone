@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <b-navbar toggleable="md" varaiant="faded" type="light">
+      <div class="flexBox">
         <div class="menu">
           <font-awesome-icon icon="bars" size="lg"/>
         </div>
@@ -20,6 +21,7 @@
           </div>
         </div>  
       </div>
+      <div>
       <b-navbar-nav class="ml-auto">
         <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
         <svg width="60" height="60">
@@ -34,12 +36,24 @@
           <imgage width="60" height="60" xlink:href="'https://img.devidentify.com/amugimu@gmail.com'"/>
         </svg>
       </b-navbar-nav>
+      </div>
+      </div>
     </b-navbar>
     
   </div>
 </template>
 
 <style scoped>
+
+.flexBox {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+}
+.flexBox div:last-child {
+  margin-left: auto;
+}
 .header {
   /* height: 64px; */
   background-color: white;
@@ -62,7 +76,7 @@ img {
   border-radius: 5px;
   background-color: #BDBDBD;  
   width: 60%;
-  margin: 10px;
+  margin-right: 10px;
   height: 35px;
 }
 

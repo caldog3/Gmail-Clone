@@ -5,15 +5,13 @@
         <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
             <template v-if="message.labelIds.includes(labelId)">            
                 <td class="One">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
-                  </router-link>  
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="smallOnly">{{ message.time }}</span>
                   </router-link>
                 </td>
                 <td class="Two">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                     <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
@@ -21,7 +19,7 @@
                   </router-link>
                 </td>
                 <td class="Three">
-                  <router-link :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="rightAlign">{{ message.time }}</span>
                   </router-link>
                 </td>  
@@ -30,6 +28,7 @@
     </table>        
   </div>
 </template>
+
 
 <style scoped>
 .readClass {
@@ -57,26 +56,21 @@ td {
 } 
 
 .One {
-  width: 15%;
-  min-width: 15%;
-  max-width: 15%;
+  width: 200px;
 }
 
 .Two {
-  width: 78%;
-  min-width: 78%;
-  max-width: 78%;
+  width: auto;
   overflow: hidden;
 }
 
 .Three {
-  width: 12%;
-  min-width: 12%;
-  max-width: 12%;
+  width: 100px;
 }
 
 .leftAlign {
   float: left;
+  text-align: left;
 }
 .leftAlign1 {
   float: left;
@@ -103,6 +97,13 @@ a {
   display: inline-block;
 }
 
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
 
 @media screen and (max-width : 950px) {
 
@@ -120,6 +121,7 @@ a {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+    /* height: 15px; */
   }
 
   .Two {
