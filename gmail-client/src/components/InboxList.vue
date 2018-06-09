@@ -3,7 +3,6 @@
 <template>
   <div>
     <b-tabs>
-
       <b-tab icon='inbox' title="Primary">
         <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
