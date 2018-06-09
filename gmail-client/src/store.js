@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
-import base64 from "base-64";
+import base64js from 'base64-js';
 
 Vue.use(require("vue-moment"));
 Vue.use(Vuex);
@@ -13,6 +13,80 @@ const getAuthHeader = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}` 
         }
     };
+}
+
+const Base64Decode = (str, encoding = "utf-8") => {
+  var bytes = base64js.toByteArray(str);
+  return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
+}
+
+const getTimeFormat = (internalDate) => {
+    let unix = moment.unix(internalDate / 1000);
+    let currentUnix = moment().unix();
+    currentUnix = moment.unix(currentUnix);
+    let time;
+    if (currentUnix.format("MMM D") === unix.format("MMM D")) {
+        time = unix.format("h:mm a");
+    }
+    else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
+        time = unix.format("MMM D");
+    }
+    else {
+        time = unix.format("DD/MM/YY");
+    }
+    return time;
+}
+
+const getBody = (payload) => {
+    let body;
+    if (payload.parts === undefined) {
+        body = Base64Decode(payload.body.data);
+    }
+    else {
+        let htmlPart = payload.parts[1];
+        if (htmlPart !== undefined) {
+            let htmlBodyData = htmlPart.body.data;
+            if (htmlBodyData !== undefined) {
+                body = Base64Decode(htmlBodyData);
+            }
+        }
+    }
+    return body;
+}
+
+const resolveLabels = (tempLabelIds) => {
+    let labelIds = tempLabelIds;
+
+    if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")) {
+        labelIds.push("CATEGORY_PRIMARY");
+    }
+
+    let unread = true;
+    if (labelIds.includes("UNREAD")) {
+        unread = false;
+    }
+    return {labelIds, unread};
+}
+
+const getEmailInfo = (headers) => {
+    let from, to, subject;
+    for (let i = 0; i < headers.length; i++) {
+        if (headers[i].name === "From") {
+            let tempFrom = headers[i].value;
+            
+            from = tempFrom.substr(0, tempFrom.indexOf('<'));
+            if (from === "") {
+                from = tempFrom;
+            }
+        }
+        else if (headers[i].name === "Delivered-To") {
+            to = headers[i].value;
+        }
+        else if (headers[i].name === "Subject") {
+            subject = headers[i].value;
+        }
+    }
+    return {from, to, subject};
 }
 
 export default new Vuex.Store({
@@ -79,72 +153,18 @@ export default new Vuex.Store({
 
             axios.get(url, getAuthHeader())
             .then((response) => {
+                const { from, to, subject } = getEmailInfo(response.data.payload.headers);
+                const { labelIds, unread } = resolveLabels(response.data.labelIds);
+                const time = getTimeFormat(response.data.internalDate);
+                const snippet = response.data.snippet;
+                const id = response.data.id;
+                const body = getBody(response.data.payload);                
 
-
-                    //console.log("JSON");
-                    //console.log(response.data.labelIds);
-                    let headers = response.data.payload.headers;
-                    let from, to, subject;
-                    for (let i = 0; i < headers.length; i++) {
-                        if (headers[i].name === "From") {
-                            from = headers[i].value;
-                        }
-                        else if (headers[i].name === "Delivered-To") {
-                            to = headers[i].value;
-                        }
-                        else if (headers[i].name === "Subject") {
-                            subject = headers[i].value;
-                        }
-                    }
-                    let unix = moment.unix(response.data.internalDate / 1000);
-                    let currentUnix = moment().unix();
-                    currentUnix = moment.unix(currentUnix);
-                    let time;
-                    if (currentUnix.format("MMM D") === unix.format("MMM D")) {
-                        time = unix.format("h:mm a");
-                    }
-                    else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
-                        time = unix.format("MMM D");
-                    }
-                    else {
-                        time = unix.format("DD/MM/YY");
-                    }
-
-                    let snippet = response.data.snippet;
-                    let id = response.data.id;
-                    let body;
-                    if (response.data.payload.parts === undefined) {
-                        body = atob(response.data.payload.body.data.replace(/-/g, '+').replace(/_/g, '/'));
-                    }
-                    else {
-                        body = atob(response.data.payload.parts[1].body.data.replace(/-/g, '+').replace(/_/g, '/'));
-                    }
-
-                    var conciseFrom = from.substr(0, from.indexOf('<'));
-                    if (conciseFrom === "") {
-                        conciseFrom = from;
-                    }
-
-                    let labelIds = response.data.labelIds;
-
-                    if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")){
-                        labelIds.push("CATEGORY_PRIMARY");
-                    }
-                    let unread = true;
-                    if (labelIds.includes("UNREAD")) {
-                        //console.log("Is READ");
-                        unread = false;
-                    }
-                    else {
-                        //console.log("Is unread");
-                    }
-
-                    let message = { from, conciseFrom, to, subject, snippet, body, time, id, labelIds, unread };
-                    context.commit('addMessage', message);
-                    //console.log(message);
-                }).catch((error) => {
-                    console.log(error);
-                });
+                const message = { from, to, subject, snippet, body, time, id, labelIds, unread };
+                context.commit('addMessage', message);
+            }).catch((error) => {
+                console.log(error);
+            });
         }        
     }
 });
