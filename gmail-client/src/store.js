@@ -34,7 +34,9 @@ const getTimeFormat = (internalDate) => {
     else {
         time = unix.format("DD/MM/YY");
     }
-    return time;
+    let unixTime = internalDate / 1000;
+
+    return {time, unixTime};
 }
 
 const getBody = (payload) => {
@@ -90,81 +92,114 @@ const getEmailInfo = (headers) => {
 }
 
 export default new Vuex.Store({
-    state: {
-        messages: [],
-        token: '',
-    },
-    getters: {
-        user: state => state.user,
-        messages: state => state.messages,
-        getToken: state => state.token,
-        loggedIn: state => {
-            if (state.token === ''){
-                return false;
-            }    
-            return true;
-        }
-    },
-    mutations: {
-        setToken(state, token) {
-            state.token = token;
-            if (token === ''){
-                localStorage.removeItem("token");
-            }
-            else{
-                localStorage.setItem("token", token);
-            } 
-        },
-        addMessage(state, message) {
-            state.messages.push(message);
-        },
-    },
-    actions: {
-        setToken(context, token) {
-            context.commit('setToken', token);
-        },
-        signOut(context) {
-            context.commit('setToken', '');
-        },
-        initialize(context) {
-            let token = localStorage.getItem('token');
-            if (token) {
-                context.commit("setToken", token);
-            }
-        },
-        getListOfMessages(context) {
-            let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
-            console.log(context.getters.loggedIn);
-            if(context.getters.loggedIn){
-                axios.get(url, getAuthHeader())
-                    .then((response) => {
-                        return response.data.messages;
-                    }).then((messages) => {
-                        messages.forEach(message => {
-                            context.dispatch('getMessageContent', message.id);
-                        });
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-            }            
-        },
-        getMessageContent(context, id) {
-            let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${id}`;
-
-            axios.get(url, getAuthHeader())
-            .then((response) => {
-                const { from, to, subject } = getEmailInfo(response.data.payload.headers);
-                const { labelIds, unread } = resolveLabels(response.data.labelIds);
-                const time = getTimeFormat(response.data.internalDate);
-                const snippet = response.data.snippet;
-                const id = response.data.id;
-                const body = getBody(response.data.payload);                
-
-                const message = { from, to, subject, snippet, body, time, id, labelIds, unread };
-                context.commit('addMessage', message);
-            }).catch((error) => {
-                console.log(error);
-            });
-        }        
+  state: {
+    messages: [],
+    token: ""
+  },
+  getters: {
+    user: state => state.user,
+    messages: state => state.messages,
+    getToken: state => state.token,
+    loggedIn: state => {
+      if (state.token === "") {
+        return false;
+      }
+      return true;
     }
+  },
+  mutations: {
+    setToken(state, token) {
+      state.token = token;
+      if (token === "") {
+        localStorage.removeItem("token");
+      } else {
+        localStorage.setItem("token", token);
+      }
+    },
+    addMessage(state, message) {
+      state.messages.push(message);
+    },
+    setMessagesArray(state, newMessageArray) {
+      state.messages = newMessageArray;
+    }
+  },
+  actions: {
+    setToken(context, token) {
+      context.commit("setToken", token);
+    },
+    signOut(context) {
+      context.commit("setToken", "");
+    },
+    initialize(context) {
+      let token = localStorage.getItem("token");
+      if (token) {
+        context.commit("setToken", token);
+      }
+    },
+    getListOfMessages(context) {
+      let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
+      console.log(context.getters.loggedIn);
+      if (context.getters.loggedIn) {
+        axios
+          .get(url, getAuthHeader())
+          .then(response => {
+            return response.data.messages;
+          })
+          .then(messages => {
+            messages.forEach(message => {
+              context.dispatch("getMessageContent", message.id);
+            });
+          })
+        //   .then(() => {
+        //     let messagesFinal = context.getters.messages;
+        //     messagesFinal.slice().sort((firstMessage, secondMessage) => {
+        //         return secondMessage.unixTime - firstMessage.unixTime;
+        //     });
+        //     if(JSON.stringify(context.getters.messages) === JSON.stringify(messagesFinal)){
+        //         console.log("Sorting didn't happen");
+        //         return;
+        //     }
+        //     context.commit("setMessagesArray", messagesFinal);
+        //   })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    },
+    getMessageContent(context, id) {
+      let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${id}`;
+
+      axios
+        .get(url, getAuthHeader())
+        .then(response => {
+          const { from, to, subject } = getEmailInfo(
+            response.data.payload.headers
+          );
+
+          const { labelIds, unread } = resolveLabels(response.data.labelIds);
+          const { time, unixTime } = getTimeFormat(response.data.internalDate);
+          const snippet = response.data.snippet;
+          const id = response.data.id;
+          const body = getBody(response.data.payload);
+
+          const message = {
+            from,
+            to,
+            subject,
+            snippet,
+            body,
+            time,
+            id,
+            labelIds,
+            unread,
+            unixTime
+          };
+
+          context.commit("addMessage", message);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 });
