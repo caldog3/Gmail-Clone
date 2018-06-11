@@ -81,7 +81,6 @@
   flex-direction: column;
   align-content: stretch;
   align-items: center;
-  /* padding: 3px; */
 }
 .flexFrom {
   display: flex;
@@ -165,13 +164,10 @@ textarea {
   overflow: hidden;
   width: 510px;
   padding: 4px;
-  /* position: fixed;
-  bottom: 0; */
 }
 .sendButton {
   float: left;
   margin: 4px;
-  /* background-color: blue; */
   color: white;
   padding: 3px;
 }
@@ -182,66 +178,6 @@ textarea {
   border: none;
   outline: none;
 }
-
-/* .header {
-  background: #404040;
-  border-color: #404040;
-  height: auto;
-} */
-/* .close {
-  float: right;
-  color: #b2b2b2;
-  font: 16px/27px sans-serif;
-  height: 28px;
-  width: 28px;
-  margin-top: -6px;
-  margin-right: -6px;
-  text-align: center;
-  text-decoration: none;
-} */
-/* .close:hover {
-  color: #fff;
-  background: #737373;
-} */
-/* h2 {
-  font: inherit;
-  color: #fff;
-  margin: 0;
-  float: left;
-} */
-/* .section {
-  border: 1px solid #CFCFCF;
-  border-bottom: none;
-  padding: 10px;
-}
-label {
-  float: left;
-  width: 40px;
-}
-.input {
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: 8px;
-}
-.cc, .bcc {
-  float: right;
-  margin-left: 5px;
-}
-.fit {
-  overflow: hidden;
-}
-.from-address {
-  display: inline-block;
-  color: #777;
-}
-.from-address:hover {
-  color: #222;
-}
-
-.footer {
-  overflow: hidden;
-  background: #F5F5F5;
-} */
 </style>
 
 <script>
