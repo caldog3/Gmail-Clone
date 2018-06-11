@@ -62,7 +62,7 @@
     </div>
     <div class="footerSection">
       <div class="sendButton">
-      <input type="submit" class="SendButton1" value="Send" @click="send">
+        <input type="submit" class="SendButton1" value="Send" @click="send">
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   position: fixed;
-  bottom: 0;
+  bottom: 1px;
   right: 10px;
   width: 510px;
   display: flex;
@@ -163,8 +163,8 @@ textarea {
 .footerSection {
   overflow: hidden;
   width: 510px;
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
 }
 .sendButton {
   float: left;
