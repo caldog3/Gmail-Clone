@@ -3,6 +3,8 @@
 <template>
   <div class="compose" v-if="active" @click.stop>
     <div class="headerSection">
+      <a class="minimize" @click="minimize">_</a>
+      <a class="full-screen" @click="fullScreen">/</a>
       <a class="close" @click="close">×</a>
       <h2>New Message</h2>
     </div>
@@ -110,6 +112,13 @@ a:not([href]):not([tabindex]) {
   color: #b2b2b2;
   height: 100%;
 }
+.minimize {
+  float: right;
+  font: 16px/27px sans-serif;
+  height: 100%;
+  width: 28px;
+  text-align: center;
+}
 .close {
   float: right;
   font: 16px/27px sans-serif;
@@ -117,7 +126,14 @@ a:not([href]):not([tabindex]) {
   width: 28px;
   text-align: center;
 }
-.close:hover {
+.full-screen {
+  float: right;
+  font: 16px/27px sans-serif;
+  height: 100%;
+  width: 28px;
+  text-align: center;
+}
+.close:hover .full-screen:hover .minimize:hover {
   color: #fff;
   background: #737373;
 } 
@@ -219,6 +235,12 @@ export default {
     },
     close() {
       this.active = false
+    },
+    minimize() {
+// here we'll minimize this somehow....
+    },
+    fullScreen() {
+// here we'll full screen this somehow...
     },
     send() {
       this.close()
