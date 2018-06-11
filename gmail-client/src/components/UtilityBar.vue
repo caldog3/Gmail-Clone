@@ -11,7 +11,7 @@
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <font-awesome-icon class="Icon" icon="arrow-left"/>
+          <font-awesome-icon v-on:click.stop="back()" class="Icon" icon="arrow-left"/>
           <font-awesome-icon class="Icon" icon="retweet"/>
           <font-awesome-icon class="Icon" icon="archive"/> 
           <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
@@ -76,10 +76,13 @@ export default {
     },
     false() {
       this.messageBody = false;
+    },
+    back() {
+      //Need to route it back to EmailList
+      eventBus.$emit('MESSAGE_LIST');
     }
   },
   created() {
-    console.log("arrived in utility bar event bus");
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false)
   }

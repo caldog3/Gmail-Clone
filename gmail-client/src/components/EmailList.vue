@@ -182,9 +182,7 @@ export default {
       return theClass;
     },
     enterMessage() {
-      console.log("Arrived in enterMessage");
       eventBus.$emit('ENTER_MESSAGE');
-      console.log("Passed enterMessage");
     }
   },
   computed: {
