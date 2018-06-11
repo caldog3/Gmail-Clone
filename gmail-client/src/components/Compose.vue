@@ -30,7 +30,7 @@
           <div class="fit">
             <input v-model="message.bcc" class="full" v-focus>
           </div>
-        </div>
+        </div> 
         <div class="flexFrom">
           <div class="From">
             <label>From</label>
