@@ -12,10 +12,12 @@
       </div>
       <div v-if="activeSection == 'to'">
         <div class="input">
+          <span class="TO">
           <label for="message_to">To</label>
-          <div class="fit">
+          </span>
+          <span class="fit">
             <input v-model="message.to" class="full" v-focus>
-          </div>
+          </span>
         </div>
         <div class="input" v-if="ccActive">
           <label for="message_cc">Cc</label>
@@ -66,28 +68,51 @@
   bottom: 0;
   right: 10px;
   width: 510px;
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: center;
 }
 .headerSection {
   background: #404040;
+  width: 100%;
 }
 h2 {
   color: white;
   font-size: 13px;
   padding: 8px;
   text-align: left;
+  margin: 0px;
 }
 a:not([href]):not([tabindex]) {
   color: #b2b2b2;
+  height: 100%;
 }
 .close {
   float: right;
   font: 16px/27px sans-serif;
-  height: 28px;
+  height: 100%;
   width: 28px;
   text-align: center;
 }
-
-
+.close:hover {
+  color: #fff;
+  background: #737373;
+} 
+.section {
+  width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 10px;
+}
+.TO {
+  width: 15px;
+}
+input {
+  width: 460px;
+  border: none;
+  outline: none;
+}
 
 /* .header {
   background: #404040;
