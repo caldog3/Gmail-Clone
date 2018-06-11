@@ -16,7 +16,7 @@
           <label for="message_to">To</label>
           </span>
           <span class="fit">
-            <input v-model="message.to" class="full" v-focus>
+            <input v-model="message.to" class="full1" v-focus>
           </span>
         </div>
         <div class="input" v-if="ccActive">
@@ -49,13 +49,15 @@
       </div>
     </div>
     <div class="section">
-      <input class="full" placeholder="Subject" @focus="focusOnSection('subject')">
+      <input class="full2" placeholder="Subject" @focus="focusOnSection('subject')">
     </div>
-    <div class="section">
+    <div class="sectionText">
       <textarea placeholder="Body" @focus="focusOnSection('body')"></textarea>
     </div>
-    <div class="footer section">
-      <input type="submit" class="btn primary-btn" value="Send" @click="send">
+    <div class="footerSection">
+      <div class="sendButton">
+      <input type="submit" class="SendButton1" value="Send" @click="send">
+      </div>
     </div>
   </div>
 </template>
@@ -103,13 +105,58 @@ a:not([href]):not([tabindex]) {
 .section {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
-  padding: 10px;
+  padding: 4px;
+}
+.sectionText {
+  width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 .TO {
   width: 15px;
 }
-input {
+.full1 {
   width: 460px;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+.full2 {
+  width: 100%;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+.full {
+  width: 100%;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  height: 100%;
+}
+.footerSection {
+  overflow: hidden;
+  width: 510px;
+  position: fixed;
+  bottom: 0;
+}
+.sendButton {
+  float: left;
+  margin: 4px;
+  background-color: blue;
+  color: white;
+  padding: 3px;
+}
+.SendButton1 {
+  background-color: blue;
+  color: white;
   border: none;
   outline: none;
 }
