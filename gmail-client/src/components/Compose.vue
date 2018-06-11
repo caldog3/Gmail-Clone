@@ -31,11 +31,12 @@
             <input v-model="message.bcc" class="full" v-focus>
           </div>
         </div>
-        <div>
-          <label>From</label>
-          <a class="bcc" @click="bccActive = true" v-if="!bccActive">Bcc</a>
-          <a class="cc" @click="ccActive = true" v-if="!ccActive">Cc</a>
-          <DropDown class="from-address">
+        <div class="flexFrom">
+          <div class="From">
+            <label>From</label>
+          </div>
+          <div class="dropDown">
+            <DropDown class="from-address">
             <span>{{ message.from | nameAndEmail }}</span>
             <Icon name="down" />
             <!-- This is commented out because we don't have the object accounts that he uses 
@@ -45,6 +46,11 @@
               </li>
             </ul> -->
           </DropDown>
+          </div>
+          <div class="right">
+            <a class="bcc" @click="bccActive = true" v-if="!bccActive">Bcc</a>
+            <a class="cc" @click="ccActive = true" v-if="!ccActive">Cc</a>
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +81,19 @@
   flex-direction: column;
   align-content: stretch;
   align-items: center;
+}
+.flexFrom {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+}
+.From {
+  width: 50px;
+}
+.dropDown {
+  width: 390px;
 }
 .headerSection {
   background: #404040;
