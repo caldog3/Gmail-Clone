@@ -2,7 +2,7 @@
 
 <template>
   <div class="compose" v-if="active" @click.stop>
-    <div class="header section">
+    <div class="headerSection">
       <a class="close" @click="close">×</a>
       <h2>New Message</h2>
     </div>
@@ -67,11 +67,34 @@
   right: 10px;
   width: 510px;
 }
-.header {
+.headerSection {
   background: #404040;
-  border-color: #404040;
+}
+h2 {
+  color: white;
+  font-size: 13px;
+  padding: 8px;
+  text-align: left;
+}
+a:not([href]):not([tabindex]) {
+  color: #b2b2b2;
 }
 .close {
+  float: right;
+  font: 16px/27px sans-serif;
+  height: 28px;
+  width: 28px;
+  text-align: center;
+}
+
+
+
+/* .header {
+  background: #404040;
+  border-color: #404040;
+  height: auto;
+} */
+/* .close {
   float: right;
   color: #b2b2b2;
   font: 16px/27px sans-serif;
@@ -81,17 +104,18 @@
   margin-right: -6px;
   text-align: center;
   text-decoration: none;
-}
-.close:hover {
+} */
+/* .close:hover {
   color: #fff;
   background: #737373;
-}
-h2 {
+} */
+/* h2 {
   font: inherit;
   color: #fff;
   margin: 0;
-}
-.section {
+  float: left;
+} */
+/* .section {
   border: 1px solid #CFCFCF;
   border-bottom: none;
   padding: 10px;
@@ -123,7 +147,7 @@ label {
 .footer {
   overflow: hidden;
   background: #F5F5F5;
-}
+} */
 </style>
 
 <script>
