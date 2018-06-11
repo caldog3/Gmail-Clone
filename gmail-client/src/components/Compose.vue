@@ -73,7 +73,7 @@
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   position: fixed;
-  bottom: 1px;
+  bottom: 0;
   right: 10px;
   width: 510px;
   display: flex;
@@ -81,6 +81,7 @@
   flex-direction: column;
   align-content: stretch;
   align-items: center;
+  /* padding: 3px; */
 }
 .flexFrom {
   display: flex;
@@ -163,18 +164,20 @@ textarea {
 .footerSection {
   overflow: hidden;
   width: 510px;
+  padding: 4px;
   /* position: fixed;
   bottom: 0; */
 }
 .sendButton {
   float: left;
   margin: 4px;
-  background-color: blue;
+  /* background-color: blue; */
   color: white;
   padding: 3px;
 }
 .SendButton1 {
   background-color: blue;
+  border-radius: 3px;
   color: white;
   border: none;
   outline: none;
