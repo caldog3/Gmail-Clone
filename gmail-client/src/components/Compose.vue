@@ -2,7 +2,7 @@
 
 <template>
   <div class="compose" v-if="active" @click.stop>
-    <div class="header section">
+    <div class="headerSection">
       <a class="close" @click="close">×</a>
       <h2>New Message</h2>
     </div>
@@ -12,10 +12,12 @@
       </div>
       <div v-if="activeSection == 'to'">
         <div class="input">
+          <span class="TO">
           <label for="message_to">To</label>
-          <div class="fit">
-            <input v-model="message.to" class="full" v-focus>
-          </div>
+          </span>
+          <span class="fit">
+            <input v-model="message.to" class="full1" v-focus>
+          </span>
         </div>
         <div class="input" v-if="ccActive">
           <label for="message_cc">Cc</label>
@@ -29,11 +31,12 @@
             <input v-model="message.bcc" class="full" v-focus>
           </div>
         </div>
-        <div>
-          <label>From</label>
-          <a class="bcc" @click="bccActive = true" v-if="!bccActive">Bcc</a>
-          <a class="cc" @click="ccActive = true" v-if="!ccActive">Cc</a>
-          <DropDown class="from-address">
+        <div class="flexFrom">
+          <div class="From">
+            <label>From</label>
+          </div>
+          <div class="dropDown">
+            <DropDown class="from-address">
             <span>{{ message.from | nameAndEmail }}</span>
             <Icon name="down" />
             <!-- This is commented out because we don't have the object accounts that he uses 
@@ -43,17 +46,24 @@
               </li>
             </ul> -->
           </DropDown>
+          </div>
+          <div class="right">
+            <a class="bcc" @click="bccActive = true" v-if="!bccActive">Bcc</a>
+            <a class="cc" @click="ccActive = true" v-if="!ccActive">Cc</a>
+          </div>
         </div>
       </div>
     </div>
     <div class="section">
-      <input class="full" placeholder="Subject" @focus="focusOnSection('subject')">
+      <input class="full2" placeholder="Subject" @focus="focusOnSection('subject')">
     </div>
-    <div class="section">
+    <div class="sectionText">
       <textarea placeholder="Body" @focus="focusOnSection('body')"></textarea>
     </div>
-    <div class="footer section">
-      <input type="submit" class="btn primary-btn" value="Send" @click="send">
+    <div class="footerSection">
+      <div class="sendButton">
+        <input type="submit" class="SendButton1" value="Send" @click="send">
+      </div>
     </div>
   </div>
 </template>
@@ -66,63 +76,107 @@
   bottom: 0;
   right: 10px;
   width: 510px;
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: center;
 }
-.header {
+.flexFrom {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+}
+.From {
+  width: 50px;
+}
+.dropDown {
+  width: 390px;
+}
+.headerSection {
   background: #404040;
-  border-color: #404040;
+  width: 100%;
+}
+h2 {
+  color: white;
+  font-size: 13px;
+  padding: 8px;
+  text-align: left;
+  margin: 0px;
+}
+a:not([href]):not([tabindex]) {
+  color: #b2b2b2;
+  height: 100%;
 }
 .close {
   float: right;
-  color: #b2b2b2;
   font: 16px/27px sans-serif;
-  height: 28px;
+  height: 100%;
   width: 28px;
-  margin-top: -6px;
-  margin-right: -6px;
   text-align: center;
-  text-decoration: none;
 }
 .close:hover {
   color: #fff;
   background: #737373;
-}
-h2 {
-  font: inherit;
-  color: #fff;
-  margin: 0;
-}
+} 
 .section {
-  border: 1px solid #CFCFCF;
-  border-bottom: none;
-  padding: 10px;
-}
-label {
-  float: left;
-  width: 40px;
-}
-.input {
   width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+}
+.sectionText {
+  width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.TO {
+  width: 15px;
+}
+.full1 {
+  width: 460px;
+  border: none;
+  outline: none;
   overflow: hidden;
-  padding-bottom: 8px;
 }
-.cc, .bcc {
-  float: right;
-  margin-left: 5px;
-}
-.fit {
+.full2 {
+  width: 100%;
+  border: none;
+  outline: none;
   overflow: hidden;
 }
-.from-address {
-  display: inline-block;
-  color: #777;
-}
-.from-address:hover {
-  color: #222;
-}
-
-.footer {
+.full {
+  width: 100%;
+  border: none;
+  outline: none;
   overflow: hidden;
-  background: #F5F5F5;
+}
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  height: 100%;
+}
+.footerSection {
+  overflow: hidden;
+  width: 510px;
+  padding: 4px;
+}
+.sendButton {
+  float: left;
+  margin: 4px;
+  color: white;
+  padding: 3px;
+}
+.SendButton1 {
+  background-color: blue;
+  border-radius: 3px;
+  color: white;
+  border: none;
+  outline: none;
 }
 </style>
 
