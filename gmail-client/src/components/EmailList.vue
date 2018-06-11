@@ -6,7 +6,7 @@
             <template v-if="message.labelIds.includes(labelId)">            
                 <td class="One">
                   <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <b><span class="leftAlign">{{ message.conciseFrom }}</span></b>
+                  <b><span class="leftAlign">{{ message.from }}</span></b>
                   <span class="smallOnly">{{ message.time }}</span>
                   </router-link>
                 </td>

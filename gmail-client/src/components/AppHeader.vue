@@ -30,10 +30,10 @@
                 <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
               </clipPath>
             </defs>
-            <image width="60" height="60" xlink:href="./../assets/ammon.jpg" clip-path="url(#myCircle)" />
+            <image width="60" height="60" xlink:href="https://img.devidentify.com/caldogwoods@gmail.com" clip-path="url(#myCircle)" />
             <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
           
-            <image width="60" height="60" v-bind:href="'https://img.devidentify.com/caldogwoods@gmail.com'"/>
+            <!-- <image width="60" height="60" v-bind:href="'https://img.devidentify.com/caldogwoods@gmail.com'"/> -->
           </svg>
         </b-navbar-nav>
         </div>
