@@ -23,7 +23,7 @@
         </div>
       </span>
     </div>
-    <button v-on:click="utilityToggle">Toggle</button>
+    <!-- <button v-on:click="utilityToggle">Toggle</button> -->
     <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
   
   </div>
@@ -56,6 +56,8 @@ button {
 </style>
 
 <script>
+import eventBus from '../event_bus'
+
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
@@ -69,9 +71,17 @@ export default {
     }
   },
   methods: {
-    utilityToggle: function() {
-      this.messageBody = !this.messageBody;
+    true() {
+      this.messageBody = true;
+    },
+    false() {
+      this.messageBody = false;
     }
+  },
+  created() {
+    console.log("arrived in utility bar event bus");
+    eventBus.$on('ENTER_MESSAGE', this.true);
+    eventBus.$on('MESSAGE_LIST', this.false)
   }
 }
 </script>

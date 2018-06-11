@@ -3,15 +3,15 @@
   <div>
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
-            <template v-if="message.labelIds.includes(labelId)">            
+            <template v-if="message.labelIds.includes(labelId)" >            
                 <td class="One">
-                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.from }}</span></b>
                   <span class="smallOnly">{{ message.time }}</span>
                   </router-link>
                 </td>
                 <td class="Two">
-                  <router-link class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                     <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
@@ -19,7 +19,7 @@
                   </router-link>
                 </td>
                 <td class="Three">
-                  <router-link class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link v-on:click.native="enterMessage()" class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <span class="rightAlign">{{ message.time }}</span>
                   </router-link>
                 </td>  
@@ -164,9 +164,14 @@ a {
 </style>
 
 <script>
+import eventBus from '../event_bus'
+
 export default {
   name: 'EmailList',
   props: ['labelId'],
+  // components: {
+  //   eventBus
+  // },
   methods: {
     classChanger(message){
       var theClass = 'readClass';
@@ -175,13 +180,20 @@ export default {
           theClass = 'unreadClass';
       }
       return theClass;
+    },
+    enterMessage() {
+      console.log("Arrived in enterMessage");
+      eventBus.$emit('ENTER_MESSAGE');
+      console.log("Passed enterMessage");
     }
   },
   computed: {
     messages() {
       return this.$store.getters.messages;
     },
-
+  },
+  created() {
+    eventBus.$emit('MESSAGE_LIST');
   }
 }
 </script>
