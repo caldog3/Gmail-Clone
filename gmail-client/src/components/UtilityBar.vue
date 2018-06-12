@@ -5,14 +5,15 @@
         <div>
           <font-awesome-icon class="Icon" icon="square" />
           |
-          <font-awesome-icon class="Icon" icon="check-square"/>
+          <font-awesome-icon class="Icon" icon="check-square"/> 
+          <font-awesome-icon class="Icon" icon="retweet"/>
+          <font-awesome-icon class="Icon" icon="ellipsis-v"/>
         </div>
       </span>
       
       <span v-if=messageBody>
         <div class="CenterIt">
           <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
-          <font-awesome-icon class="Icon" icon="retweet"/>
           <font-awesome-icon class="Icon" icon="archive"/> 
           <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
           <font-awesome-icon class="Icon" icon="trash" /> 
