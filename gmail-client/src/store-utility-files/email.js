@@ -26,7 +26,8 @@ const Base64Decode = (str, encoding = "utf-8") => {
   }
   
   const getBody = (payload) => {
-      let body;
+      let body, attachmentId;
+
       if (payload.parts === undefined) {
           body = Base64Decode(payload.body.data);
       }
@@ -36,10 +37,20 @@ const Base64Decode = (str, encoding = "utf-8") => {
               let htmlBodyData = htmlPart.body.data;
               if (htmlBodyData !== undefined) {
                   body = Base64Decode(htmlBodyData);
+              }else{
+                attachmentId = htmlPart.body.attachmentId;
+              }
+          }else{
+              let multipartAlternativeBody = payload.parts[0].body.data;
+              if(multipartAlternativeBody !== undefined){
+                  body = Base64Decode(multipartAlternativeBody);
+              }else{
+                let multipartMixedBody = payload.parts[0].parts[0].body.data;
+                body = Base64Decode(multipartMixedBody);
               }
           }
       }
-      return body;
+      return {body, attachmentId};
   }
   
   const resolveLabels = (tempLabelIds) => {
