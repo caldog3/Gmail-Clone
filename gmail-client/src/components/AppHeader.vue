@@ -24,14 +24,17 @@
       <div>
         <b-navbar-nav class="ml-auto">
           <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
-          <svg width="60" height="60">
+          
+          <svg width="60" height="60" viewBox="0 0 100 100" 
+              preserveAspectRatio="xMidYMid meet"
+              >
             <defs>
               <clipPath id="myCircle">
-                <circle cx="30" cy="30" r="30" fill="#FFFFFF" />
+                <circle cx="50" cy="50" r="40"/>
               </clipPath>
             </defs>
             <!-- <image width="60" height="60" xlink:href="{{ emailPic }}"/> -->
-            <image width="60" height="60" xlink:href="https://lh5.googleusercontent.com/-ebIkXc5Lq3M/AAAAAAAAAAI/AAAAAAAABUw/3E4p89NPZZ8/s96/photo.jpg" clip-path="url(#myCircle)" />
+            <image width="90" height="90" xlink:href="https://lh5.googleusercontent.com/-ebIkXc5Lq3M/AAAAAAAAAAI/AAAAAAAABUw/3E4p89NPZZ8/s96/photo.jpg" clip-path="url(#myCircle)" />
             <!-- We need to make the image smaller but keep the amount of image that's visible in the picture currently -->
           </svg>
         </b-navbar-nav>
@@ -74,7 +77,6 @@ img {
   padding-right: 85px;
   /* margin-top: 5px; */
 }
-
 .search {
   border-radius: 5px;
   background-color: #F5F7F7;  
@@ -84,7 +86,6 @@ img {
   /* margin-top:2px;
   margin-bottom: 2px; */
 }
-
 .searchBar {
   border: none;
 }
