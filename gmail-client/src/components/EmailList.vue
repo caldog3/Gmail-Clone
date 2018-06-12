@@ -3,7 +3,8 @@
   <div>
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
-            <template v-if="message.labelIds.includes(labelId)" >            
+            <template v-if="message.labelIds.includes(labelId)" >   
+              <!--v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()"-->         
                 <td class="One">
                   <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.from }}</span></b>
@@ -31,6 +32,9 @@
 
 
 <style scoped>
+.tableRow:hover {
+  /* not done yet */
+}
 .readClass {
   color: none;
   background-color: none;
@@ -172,6 +176,10 @@ export default {
   // components: {
   //   eventBus
   // },
+  data() {
+    return {
+    }
+  },
   methods: {
     classChanger(message){
       var theClass = 'readClass';
@@ -183,7 +191,7 @@ export default {
     },
     enterMessage() {
       eventBus.$emit('ENTER_MESSAGE');
-    }
+    },
   },
   computed: {
     messages() {

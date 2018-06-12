@@ -27,13 +27,12 @@
           <svg width="60" height="60">
             <defs>
               <clipPath id="myCircle">
-                <circle cx="30" cy="30" r="20" fill="#FFFFFF" />
+                <circle cx="30" cy="30" r="30" fill="#FFFFFF" />
               </clipPath>
             </defs>
-            <image width="60" height="60" xlink:href="https://img.devidentify.com/caldogwoods@gmail.com" clip-path="url(#myCircle)" />
-            <!-- <img :src="currentUserProfile.photoURL" alt="Avatar"> -->
-          
-            <!-- <image width="60" height="60" v-bind:href="'https://img.devidentify.com/caldogwoods@gmail.com'"/> -->
+            <!-- <image width="60" height="60" xlink:href="{{ emailPic }}"/> -->
+            <image width="60" height="60" xlink:href="https://lh5.googleusercontent.com/-ebIkXc5Lq3M/AAAAAAAAAAI/AAAAAAAABUw/3E4p89NPZZ8/s96/photo.jpg" clip-path="url(#myCircle)" />
+            <!-- We need to make the image smaller but keep the amount of image that's visible in the picture currently -->
           </svg>
         </b-navbar-nav>
         </div>
@@ -124,7 +123,9 @@ input {
 
 </style>
 
+
 <script>
+
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
@@ -150,6 +151,9 @@ export default {
       this.profileJSON = result;
       });
     }
+  },
+  created() {
+    
   }
 }
 </script>
