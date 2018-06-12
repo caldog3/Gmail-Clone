@@ -50,6 +50,7 @@ button {
 }
 .Icon {
   display:inline-block;
+  cursor: pointer;
 }
 .Icon:hover {
   background-color: darkgray;  
