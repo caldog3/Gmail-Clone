@@ -3,57 +3,22 @@
 <template>
   <div class="compose" v-if="active" @click.stop>
     <div class="headerSection">
-      <a class="minimize" @click="minimize">_</a>
-      <a class="full-screen" @click="fullScreen">/</a>
-      <a class="close" @click="close">×</a>
-      <h2>New Message</h2>
+      <div class="head">
+        <h2>New Message</h2>
+      </div>
+      <div class="alterCompose">
+        <a class="close" @click="minimize">_</a>
+      </div>
+      <div class="alterCompose">
+        <a class="close" @click="fullScreen">/</a>
+      </div>
+      <div class="alterCompose">
+        <a class="close" @click="close">×</a>
+      </div>
     </div>
     <div class="section">
-      <div v-if="activeSection != 'to'">
+      <div>
         <input class="full" v-model="message.to" placeholder="Recipients" @focus="focusOnSection('to')">
-      </div>
-      <div v-if="activeSection == 'to'">
-        <div class="input">
-          <span class="TO">
-          <label for="message_to">To</label>
-          </span>
-          <span class="fit">
-            <input v-model="message.to" class="full1" v-focus>
-          </span>
-        </div>
-        <div class="input" v-if="ccActive">
-          <label for="message_cc">Cc</label>
-          <div class="fit">
-            <input v-model="message.cc" class="full" v-focus>
-          </div>
-        </div>
-        <div class="input" v-if="bccActive">
-          <label for="message_bcc">Bcc</label>
-          <div class="fit">
-            <input v-model="message.bcc" class="full" v-focus>
-          </div>
-        </div> 
-        <div class="flexFrom">
-          <div class="From">
-            <label>From</label>
-          </div>
-          <div class="dropDown">
-            <DropDown class="from-address">
-            <span>{{ message.from | nameAndEmail }}</span>
-            <Icon name="down" />
-            <!-- This is commented out because we don't have the object accounts that he uses 
-                <ul class="align-right">
-              <li v-for="account in currentUser.accounts">
-                <a @click="message.from = account">{{ account | nameAndEmail }}</a>
-              </li>
-            </ul> -->
-          </DropDown>
-          </div>
-          <div class="right">
-            <a class="bcc" @click="bccActive = true" v-if="!bccActive">Bcc</a>
-            <a class="cc" @click="ccActive = true" v-if="!ccActive">Cc</a>
-          </div>
-        </div>
       </div>
     </div>
     <div class="section">
@@ -91,52 +56,37 @@
   align-content: stretch;
   align-items: center;
 }
-.From {
-  width: 50px;
-}
-.dropDown {
-  width: 390px;
+.head {
+  width: 460px;
 }
 .headerSection {
   background: #404040;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
 }
 h2 {
   color: white;
-  font-size: 13px;
+  font-size: 15px;
   padding: 8px;
   text-align: left;
   margin: 0px;
+  font-weight: bold;
 }
 a:not([href]):not([tabindex]) {
   color: #b2b2b2;
   height: 100%;
 }
-.minimize {
-  float: right;
+.alterCompose {
+  margin-right: auto;
   font: 16px/27px sans-serif;
   height: 100%;
-  width: 28px;
-  text-align: center;
+  margin-left: 5px;
+  margin-right: 4px;
 }
-.close {
-  float: right;
-  font: 16px/27px sans-serif;
-  height: 100%;
-  width: 28px;
-  text-align: center;
-}
-.full-screen {
-  float: right;
-  font: 16px/27px sans-serif;
-  height: 100%;
-  width: 28px;
-  text-align: center;
-}
-.close:hover .full-screen:hover .minimize:hover {
-  color: #fff;
-  background: #737373;
-} 
 .section {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
