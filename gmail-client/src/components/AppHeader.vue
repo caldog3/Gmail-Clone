@@ -24,10 +24,12 @@
       <div>
         <b-navbar-nav class="ml-auto">
           <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
-          <svg width="60" height="60">
+          
+          <svg width="60" height="60" viewBox="0 0 100 100" 
+              preserveAspectRatio="xMidYMid meet">
             <defs>
               <clipPath id="myCircle">
-                <circle cx="30" cy="30" r="30" fill="#FFFFFF" />
+                <circle cx="50" cy="50" r="50" style="stroke: #000000; fill:none;"/>
               </clipPath>
             </defs>
             <!-- <image width="60" height="60" xlink:href="{{ emailPic }}"/> -->
@@ -74,7 +76,6 @@ img {
   padding-right: 85px;
   /* margin-top: 5px; */
 }
-
 .search {
   border-radius: 5px;
   background-color: #F5F7F7;  
@@ -84,7 +85,9 @@ img {
   /* margin-top:2px;
   margin-bottom: 2px; */
 }
-
+svg {
+  padding: 4px;
+}
 .searchBar {
   border: none;
 }
