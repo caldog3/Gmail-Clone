@@ -21,7 +21,7 @@ Vue.use(VueAuthenticate, {
       clientId: process.env.CLIENT_ID,
       redirectUri: process.env.REDIRECT_URI,
       responseType: 'token',
-      scope: 'https://www.googleapis.com/auth/gmail.readonly',
+      scope: 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send',
     }
   }
 })
