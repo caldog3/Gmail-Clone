@@ -18,14 +18,14 @@
     </div>
     <div class="section">
       <div>
-        <input class="full" v-model="message.to" placeholder="Recipients" @focus="focusOnSection('to')">
+        <input class="full" type="email" v-model="composeTo"  placeholder="Recipients" @focus="focusOnSection('to')">
       </div>
     </div>
     <div class="section">
-      <input class="full2" placeholder="Subject" @focus="focusOnSection('subject')">
+      <input class="full2" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="sectionText">
-      <textarea placeholder="Body" @focus="focusOnSection('body')"></textarea>
+      <textarea placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
     </div>
     <div class="footerSection">
       <div class="sendButton">
@@ -169,6 +169,9 @@ export default {
   },
   data() {
     return {
+      composeTo: '',
+      composeSubject: '',
+      composeMessage: '',
         
       currentUser: window.currentUser,
       message: getInitialMessage(),
@@ -192,11 +195,41 @@ export default {
     fullScreen() {
 // here we'll full screen this somehow...
     },
+    sendMessage(headers_obj, message, callback) {
+        var email = '';
+        for(var header in headers_obj) {
+            email += header += ": "+headers_obj[header]+"\r\n";
+        }
+        email += "\r\n" + message;
+
+        //This is where I need a url instead of a gapi message
+        var sendRequest = gapi.client.gmail.users.messages.send({
+            'userId': 'me',
+            'resource': {
+                'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+            }
+        });
+        return sendRequest.execute(callback);
+    },
     send() {
       this.close()
-      this.message = getInitialMessage()
-      this.$store.dispatch('flash', 'Sending...')
+      this.sendMessage(
+          {
+            'To': this.composeTo,
+            'Subject': this.composeSubject
+          },
+          this.composeMessage,
+          this.composeTidy
+      );
+      return false;
     },
+    composeTidy() {
+        this.composeTo = '';
+        this.composeSubject = '';
+        // $('#send-button').removeClass('disabled');
+    },
+
+
     focusOnSection(section) {
       this.activeSection = section
       this.ccActive = this.message.cc !== ''

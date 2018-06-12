@@ -146,5 +146,17 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    sendMessage() {
+      //at some point this will work
+      let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send"
+
+      axios.send(url, getAuthHeader())
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
   }
 });
