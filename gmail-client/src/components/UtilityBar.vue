@@ -11,7 +11,7 @@
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <font-awesome-icon v-on:click.stop="back()" class="Icon" icon="arrow-left"/>
+          <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
           <font-awesome-icon class="Icon" icon="retweet"/>
           <font-awesome-icon class="Icon" icon="archive"/> 
           <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
@@ -19,7 +19,7 @@
           <font-awesome-icon class="Icon" icon="envelope-open" /> 
           <font-awesome-icon class="Icon" icon="clock" /> | 
           <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
-          <font-aweomse-icon class="Icon" icon="tag"/>
+          <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
         </div>
       </span>
     </div>
