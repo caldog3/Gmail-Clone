@@ -29,7 +29,7 @@ export default {
       return this.$route.params.message.body;
     },
     from(){
-      return this.$route.params.message.from;
+      return this.$route.params.message.detailedFrom;
     },
     to(){
       return this.$route.params.message.to;

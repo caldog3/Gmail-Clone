@@ -68,14 +68,14 @@ const Base64Decode = (str, encoding = "utf-8") => {
   }
   
   const getEmailInfo = (headers) => {
-      let from, to, subject;
+      let from, to, subject, detailedFrom;
       for (let i = 0; i < headers.length; i++) {
           if (headers[i].name === "From") {
-              let tempFrom = headers[i].value;
+              detailedFrom = headers[i].value;
               
-              from = tempFrom.substr(0, tempFrom.indexOf('<'));
+              from = detailedFrom.substr(0, detailedFrom.indexOf('<'));
               if (from === "") {
-                  from = tempFrom;
+                  from = detailedFrom;
               }
           }
           else if (headers[i].name === "Delivered-To") {
@@ -85,7 +85,7 @@ const Base64Decode = (str, encoding = "utf-8") => {
               subject = headers[i].value;
           }
       }
-      return {from, to, subject};
+      return {from, to, subject, detailedFrom};
   }
 
   export {

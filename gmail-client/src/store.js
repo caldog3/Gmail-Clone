@@ -99,7 +99,7 @@ export default new Vuex.Store({
 
       axios.get(url, getAuthHeader())
       .then(response => {
-        const { from, to, subject } = getEmailInfo(
+        const { from, to, subject, detailedFrom } = getEmailInfo(
           response.data.payload.headers
         );
         console.log(response);
@@ -117,6 +117,7 @@ export default new Vuex.Store({
         }
         const message = {
           from,
+          detailedFrom,
           to,
           subject,
           snippet,
