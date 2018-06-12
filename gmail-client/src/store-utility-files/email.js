@@ -68,16 +68,20 @@ const Base64Decode = (str, encoding = "utf-8") => {
   }
   
   const getEmailInfo = (headers) => {
-      let from, to, subject;
+      let from, to, subject, detailedFrom;
       for (let i = 0; i < headers.length; i++) {
           if (headers[i].name === "From") {
-              let tempFrom = headers[i].value;
+              detailedFrom = headers[i].value;
               
-              from = tempFrom.substr(0, tempFrom.indexOf('<'));
+              from = detailedFrom.substr(0, detailedFrom.indexOf('<') - 1);
               if (from === "") {
-                  from = tempFrom;
+                  from = detailedFrom;
               }
-          }
+              if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
+                
+                from = from.substring(1, from.length-1);
+              }
+            }
           else if (headers[i].name === "Delivered-To") {
               to = headers[i].value;
           }
@@ -85,7 +89,7 @@ const Base64Decode = (str, encoding = "utf-8") => {
               subject = headers[i].value;
           }
       }
-      return {from, to, subject};
+      return {from, to, subject, detailedFrom};
   }
 
   export {

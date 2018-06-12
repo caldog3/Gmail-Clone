@@ -99,10 +99,10 @@ export default new Vuex.Store({
 
       axios.get(url, getAuthHeader())
       .then(response => {
-        const { from, to, subject } = getEmailInfo(
+        const { from, to, subject, detailedFrom } = getEmailInfo(
           response.data.payload.headers
         );
-        console.log(response);
+        //console.log(response);
         const { labelIds, unread } = resolveLabels(response.data.labelIds);
         const { time, unixTime } = getTimeFormat(response.data.internalDate);
         const snippet = response.data.snippet;
@@ -117,6 +117,7 @@ export default new Vuex.Store({
         }
         const message = {
           from,
+          detailedFrom,
           to,
           subject,
           snippet,
