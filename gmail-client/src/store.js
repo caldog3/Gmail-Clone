@@ -102,7 +102,7 @@ export default new Vuex.Store({
         const { from, to, subject, detailedFrom } = getEmailInfo(
           response.data.payload.headers
         );
-        console.log(response);
+        //console.log(response);
         const { labelIds, unread } = resolveLabels(response.data.labelIds);
         const { time, unixTime } = getTimeFormat(response.data.internalDate);
         const snippet = response.data.snippet;

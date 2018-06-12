@@ -73,11 +73,15 @@ const Base64Decode = (str, encoding = "utf-8") => {
           if (headers[i].name === "From") {
               detailedFrom = headers[i].value;
               
-              from = detailedFrom.substr(0, detailedFrom.indexOf('<'));
+              from = detailedFrom.substr(0, detailedFrom.indexOf('<') - 1);
               if (from === "") {
                   from = detailedFrom;
               }
-          }
+              if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
+                
+                from = from.substring(1, from.length-1);
+              }
+            }
           else if (headers[i].name === "Delivered-To") {
               to = headers[i].value;
           }
