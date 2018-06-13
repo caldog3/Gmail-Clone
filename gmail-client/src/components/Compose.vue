@@ -150,6 +150,8 @@ textarea {
 import eventBus from '../event_bus.js'
 import DropDown from './drop-down'
 import Icon from './icon'
+//Temporarily here until the method is moved to the store
+import axios from 'axios';
 
 
 
@@ -203,13 +205,17 @@ export default {
         email += "\r\n" + message;
 
         //This is where I need a url instead of a gapi message
-        var sendRequest = gapi.client.gmail.users.messages.send({
-            'userId': 'me',
+        let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
+        
+        var sendRequest = axios.send(url, this.$store.state.getAuthHeader(), {
+            'userid': 'me',
             'resource': {
                 'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
             }
-        });
+        })
+        .then(response => {
         return sendRequest.execute(callback);
+        });
     },
     send() {
       this.close()
