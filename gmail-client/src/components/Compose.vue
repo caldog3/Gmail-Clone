@@ -6,12 +6,12 @@
       <div class="head">
         <h2>New Message</h2>
       </div>
-      <div class="alterCompose">
+      <!-- <div class="alterCompose">
         <a class="close" @click="minimize">_</a>
       </div>
       <div class="alterCompose">
         <a class="close" @click="fullScreen">/</a>
-      </div>
+      </div> -->
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
@@ -57,7 +57,7 @@
   align-items: center;
 }
 .head {
-  width: 460px;
+  width: 470px;
 }
 .headerSection {
   background: #404040;
