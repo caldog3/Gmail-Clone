@@ -12,7 +12,8 @@
             <font-awesome-icon icon="inbox" />  Inbox
           </div>
           <div>
-            <b-badge variant="primary" pill class="notificationPill">3</b-badge>
+            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+
           </div>
         </div>
       </b-list-group-item>
@@ -78,12 +79,20 @@ export default {
   },
   data() {
     return {
+      unreadCount: 4,
     }
   },
   methods: {
     composeShow() {
       eventBus.$emit('COMPOSE_OPEN');
-    }
-  }
+    },
+    updateUnread(num) {
+      this.unreadCount = num;
+    },
+  },
+  created() {
+    eventBus.$on('UNREAD_COUNT', this.updateUnread(num));
+  },
+  
 }
 </script>
