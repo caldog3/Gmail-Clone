@@ -168,7 +168,8 @@ a {
 </style>
 
 <script>
-import eventBus from '../event_bus'
+import eventBus from '../event_bus';
+import _ from 'lodash';
 
 export default {
   name: 'EmailList',
