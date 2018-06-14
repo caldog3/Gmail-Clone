@@ -6,16 +6,24 @@
             <template v-if="message.labelIds.includes(labelId)" >
               <!--v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()"-->
                 <td class="One">
-                  <span v-if=!checked v-on:click="check()" class="highlightArea left">
-                    <font-awesome-icon class="Icon" icon="square" />
-                  </span>
-                  <span v-if=checked v-on:click="check()" class="highlightArea left">
-                    <font-awesome-icon class="Icon" icon="check-square"/>
-                  </span>
-                  <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <b><span class="leftAlign">{{ message.from }}</span></b>
-                  <span class="smallOnly">{{ message.time }}</span>
-                  </router-link>
+          
+                    <div id="flexfix">
+                      <div>
+                        <span v-if=!checked v-on:click="check()" class="highlightArea left">
+                          <font-awesome-icon class="Icon" icon="square" />
+                        </span>
+                        <span v-if=checked v-on:click="check()" class="highlightArea left">
+                          <font-awesome-icon class="Icon" icon="check-square"/>
+                        </span>
+                      </div>
+                      <div>
+                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <b><span class="leftAlign">{{ message.from }}</span></b>
+                        <span class="smallOnly">{{ message.time }}</span>
+                        </router-link>
+                      </div>
+                    </div>
+                  
                 </td>
                 <td class="Two">
                   <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
@@ -42,6 +50,10 @@
   overflow-y: scroll;
   height: auto;
 } */
+#flexfix {
+  display: flex;
+  flex-direction: row;
+}
 .tableRow:hover {
   /* not done yet */
 }
@@ -190,8 +202,9 @@ a {
 </style>
 
 <script>
-import eventBus from '../event_bus'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import eventBus from '../event_bus';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import _ from 'lodash';
 
 export default {
   name: 'EmailList',

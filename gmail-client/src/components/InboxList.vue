@@ -23,6 +23,7 @@
 } */
 
 .nav {
+  display: flex;
   flex-wrap: nowrap;
 }
 </style>
@@ -36,6 +37,12 @@ export default {
   components: {
     EmailList,
     FontAwesomeIcon
+  },
+  beforeCreate(){
+    let messages = this.$store.getters.messages;
+    if(messages.length === 0){
+      this.$store.dispatch("getListOfMessages");
+    }
   }
 }
 </script>

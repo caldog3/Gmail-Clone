@@ -1,9 +1,22 @@
 import moment from 'moment';
 import base64js from 'base64-js';
 
+const getAuthHeader = () => {
+  return { 
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}` 
+    }
+  };
+}
+
 const Base64Decode = (str, encoding = "utf-8") => {
-    var bytes = base64js.toByteArray(str);
+    let bytes = base64js.toByteArray(str);
     return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
+}
+
+const Base64Encode = (str, encoding = 'utf-8') => {
+  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
+  return base64js.fromByteArray(bytes);
 }
   
 const getTimeFormat = (internalDate) => {
@@ -102,9 +115,10 @@ const getEmailInfo = (headers) => {
 }
 
 export {
-  Base64Decode,
+  getAuthHeader,
   getTimeFormat,
   getBody,
   resolveLabels,
-  getEmailInfo
+  getEmailInfo,
+  Base64Encode
 };
