@@ -57,7 +57,6 @@ export default new Vuex.Store({
     getListOfMessages(context) {
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
 
-      //console.log(context.getters.loggedIn);
       if (context.getters.loggedIn) {
         axios.get(url, getAuthHeader())
         .then(response => {
