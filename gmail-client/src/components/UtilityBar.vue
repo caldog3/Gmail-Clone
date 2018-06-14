@@ -2,49 +2,79 @@
   <div class="body">
     <div id="spacing">
       <span v-if=!messageBody>
-        <div>
-          <span v-if=!checked v-on:click="check()" class="highlightArea">
-          <font-awesome-icon class="Icon" icon="square" />
-          </span>
-          <span v-if=checked v-on:click="check()" class="highlightArea">
-            <font-awesome-icon class="Icon" icon="check-square"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="retweet"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-          </span>
+        <div class="flexIcons">
+          <div class="item">
+            <div class="highlightArea">
+            <div v-if=!checked v-on:click="check()" >
+              <font-awesome-icon class="Icon" icon="square" />
+            </div>
+            <div v-if=checked v-on:click="check()" >
+              <font-awesome-icon class="Icon" icon="check-square"/>
+            </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+            <div>
+              <font-awesome-icon class="Icon" icon="retweet"/>
+            </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+            <div>
+              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+            </div>
+            </div>
+          </div>
         </div>
       </span>
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <span class="highlightArea">
-            <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="archive"/> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="trash" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="envelope-open" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="clock" /> 
-          </span>
-          |
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-          </span>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="archive"/> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="trash" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="envelope-open" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="clock" /> 
+            </div>
+          </div>
+          <div class="item">
+            |
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+            </div>
+          </div>
           <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
         </div>
       </span>
@@ -63,8 +93,30 @@
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
 } 
+.flexIcons {
+  display: flex;
+  flex-direction: row;
+}
+
+.flexIcons svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+
+.CenterIt {
+  display: flex;
+  flex-direction: row;
+}
+.CenterIt svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+
+.item {
+  width: 30px;
+  height: 30px;
+}
 #spacing {
   float:left;
+  padding: 4px;
 }
 input {
   float: left;
@@ -81,9 +133,9 @@ button {
   /* background-color: darkgray;   */
 }
 .highlightArea {
-  padding:5px;
-  width:100%;
-  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
 }
 .highlightArea:hover {
   background-color: lightgray;
