@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div v-if="loggedIn">
-      <app-header/>
+
+      <div id="header"><app-header/></div>
 
       <div class="sideBar"><message-sidebar/></div>
       
@@ -54,6 +55,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position: relative;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+}
+#header {
+  height: 80px;
 }
 body {
   overflow: hidden;
@@ -65,6 +73,6 @@ body {
 }
 .emailList {
   overflow-y: auto;
-  height: 800px;
+  height: 600px;
 }
 </style>

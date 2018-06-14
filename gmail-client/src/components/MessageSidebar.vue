@@ -9,8 +9,14 @@
 
     <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
-        <font-awesome-icon icon="inbox" />  Inbox
-        <b-badge variant="primary" pill class="notificationPill">3</b-badge>
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon icon="inbox" />  Inbox
+          </div>
+          <div>
+            <b-badge variant="primary" pill class="notificationPill">3</b-badge>
+          </div>
+        </div>
       </b-list-group-item>
       <b-list-group-item href="#">
         <font-awesome-icon icon="star" />  Starred
@@ -39,6 +45,11 @@
 </template>
 
 <style scoped>
+#sidebarFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
 .sideBar {
   /* max-width: 270px; */
   background-color: white;
