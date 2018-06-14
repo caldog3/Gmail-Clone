@@ -53,6 +53,7 @@ button {
 .notificationPill b-badge {
   text-align: right;
 }
+
 </style>
 
 <script>
