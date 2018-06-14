@@ -7,7 +7,7 @@
       <p><b>{{from}}</b></p>
       <p>to {{to}}</p>
     </div>
-    <div v-html="body" ></div>
+    <div v-html="body" class="leftAlign"></div>
   </div>
 </template>
 
@@ -34,6 +34,6 @@ export default {
     to(){
       return this.$route.params.message.to;
     }
-  }
+  },
 }
 </script>
