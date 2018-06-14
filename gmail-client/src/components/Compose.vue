@@ -152,7 +152,7 @@ import DropDown from './drop-down'
 import Icon from './icon'
 //Temporarily here until the method is moved to the store
 import axios from 'axios';
-
+import { getAuthHeader } from './../store-utility-files/email'
 
 
 const getInitialMessage = () => ({
@@ -207,12 +207,15 @@ export default {
         //This is where I need a url instead of a gapi message
         let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
         
-        var sendRequest = axios.post(url, this.$store.getAuthHeader(), {
+// <<<<<<< HEAD
+//         var sendRequest = axios.post(url, this.$store.getAuthHeader(), {
+// =======
+        console.log(window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'));
+        var sendRequest = axios.post(url, {
             'userid': 'me',
             'resource': {
                 'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
-            }
-        })
+            }}, getAuthHeader())
         .then(response => {
         return sendRequest.execute(callback);
         });

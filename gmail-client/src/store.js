@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import _ from 'lodash';
 import {
+  getAuthHeader,
   getTimeFormat,
   getBody, 
   resolveLabels, 
@@ -11,14 +11,6 @@ import {
 
 Vue.use(require("vue-moment"));
 Vue.use(Vuex);
-
-const getAuthHeader = () => {
-  return { 
-    headers: { 
-        Authorization: `Bearer ${localStorage.getItem("token")}` 
-    }
-};
-}
 
 export default new Vuex.Store({
   state: {
@@ -48,9 +40,6 @@ export default new Vuex.Store({
     addMessage(state, message) {
       state.messages.push(message);
     },
-    setMessagesArray(state, newMessageArray) {
-      state.messages = newMessageArray;
-    }
   },
   actions: {
     setToken(context, token) {
@@ -68,7 +57,6 @@ export default new Vuex.Store({
     getListOfMessages(context) {
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
 
-      //console.log(context.getters.loggedIn);
       if (context.getters.loggedIn) {
         axios.get(url, getAuthHeader())
         .then(response => {
@@ -80,9 +68,6 @@ export default new Vuex.Store({
           messages.forEach(message => {
             context.dispatch("getMessageContent", message.id);
           });
-        })
-        .then(() => {
-          context.commit("setMessagesArray", messagesFinal);
         })
         .catch(error => {
           console.log(error);
@@ -105,10 +90,10 @@ export default new Vuex.Store({
         const {body, attachmentId} = getBody(response.data.payload);
 
         if(attachmentId !== undefined){
-          context.dispatch('getMessageAttachment', { 
-            messageId: messageId, 
-            attachmentId: attachmentId 
-          });
+          // context.dispatch('getMessageAttachment', { 
+          //   messageId: messageId, 
+          //   attachmentId: attachmentId 
+          // });
         }
         const message = {
           from,
