@@ -5,8 +5,6 @@
       Test compose block
     </b-modal> -->
 
-
-
     <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
         <div id="sidebarFlex">
