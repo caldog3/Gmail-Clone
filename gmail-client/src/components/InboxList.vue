@@ -1,7 +1,7 @@
 
 /* eslint-disable */
 <template>
-  <div>
+  <div id="setWidth">
     <b-tabs>
       <b-tab icon='inbox' title="Primary">
         <email-list labelId="CATEGORY_PRIMARY"/>
@@ -17,6 +17,11 @@
 </template>
 
 <style scoped>
+/* #setWidth {
+  min-width: 400px;
+  overflow: hidden;
+} */
+
 </style>
 
 <script>

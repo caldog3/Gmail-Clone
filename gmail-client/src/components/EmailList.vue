@@ -114,7 +114,10 @@ a {
 }
 
 @media screen and (max-width : 950px) {
-
+  /* .everything {
+    min-width: 770px;
+    overflow: hidden;
+  } */
   table, thead, tbody, th, td, tr {
     display: block;
   }
