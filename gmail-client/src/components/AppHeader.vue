@@ -142,6 +142,7 @@ export default {
   methods: {
     signOut(){
       this.$store.dispatch('signOut');
+      this.$router.push({ path: '/' })
     },
     getProfile() {
       var devIdentify = require("dev-identify")
