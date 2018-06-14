@@ -2,19 +2,31 @@
   <div class="body">
     <div id="spacing">
       <span v-if=!messageBody>
-        <div>
-          <span v-if=!checked v-on:click="check()" class="highlightArea">
-          <font-awesome-icon class="Icon" icon="square" />
-          </span>
-          <span v-if=checked v-on:click="check()" class="highlightArea">
-            <font-awesome-icon class="Icon" icon="check-square"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="retweet"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-          </span>
+        <div class="flexIcons">
+          <div class="item">
+            <div class="highlightArea">
+            <span v-if=!checked v-on:click="check()" >
+              <font-awesome-icon class="Icon" icon="square" />
+            </span>
+            <span v-if=checked v-on:click="check()" >
+              <font-awesome-icon class="Icon" icon="check-square"/>
+            </span>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+            <span>
+              <font-awesome-icon class="Icon" icon="retweet"/>
+            </span>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+            <span>
+              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+            </span>
+            </div>
+          </div>
         </div>
       </span>
       
@@ -63,6 +75,14 @@
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
 } 
+.flexIcons {
+  display: flex;
+  flex-direction: row;
+}
+.item {
+  width: 30px;
+  height: 30px;
+}
 #spacing {
   float:left;
   padding: 4px;
@@ -82,8 +102,7 @@ button {
   /* background-color: darkgray;   */
 }
 .highlightArea {
-  padding:5px;
-  width:100%;
+  width: 30px;
   border-radius: 30px;
 }
 .highlightArea:hover {
