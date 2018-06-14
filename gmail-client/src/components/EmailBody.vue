@@ -22,17 +22,28 @@
 export default {
   name: 'EmailBody',
   computed: {
+    message(){
+      let messageId =this.$route.params.id;
+      let messages = this.$store.getters.messages;
+      
+      let counter = 0;
+      while(messages[counter].id !== messageId){
+        counter++;
+      }
+
+      return messages[counter];
+    },
     subject(){
-      return this.$route.params.message.subject;
+      return this.message.subject;
     },
     body(){
-      return this.$route.params.message.body;
+      return this.message.body;
     },
     from(){
-      return this.$route.params.message.detailedFrom;
+      return this.message.detailedFrom;
     },
     to(){
-      return this.$route.params.message.to;
+      return this.message.to;
     }
   },
 }
