@@ -47,7 +47,6 @@ new Vue({
   components: { App },
   render: h => h(App),
   beforeCreate() {
-    this.$store.dispatch("initialize");
-    this.$store.dispatch("getListOfMessages");
+      this.$store.dispatch("initialize");
   }
 });
