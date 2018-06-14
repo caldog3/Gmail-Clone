@@ -91,10 +91,10 @@ export default new Vuex.Store({
         const {body, attachmentId} = getBody(response.data.payload);
 
         if(attachmentId !== undefined){
-          context.dispatch('getMessageAttachment', { 
-            messageId: messageId, 
-            attachmentId: attachmentId 
-          });
+          // context.dispatch('getMessageAttachment', { 
+          //   messageId: messageId, 
+          //   attachmentId: attachmentId 
+          // });
         }
         const message = {
           from,
