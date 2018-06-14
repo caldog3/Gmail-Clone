@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import _ from 'lodash';
 import {
-  Base64Decode,
   getTimeFormat,
   getBody, 
   resolveLabels, 
@@ -81,17 +81,9 @@ export default new Vuex.Store({
             context.dispatch("getMessageContent", message.id);
           });
         })
-        // .then(() => {
-        //   let messagesFinal = context.getters.messages;
-        //   messagesFinal.slice().sort((firstMessage, secondMessage) => {
-        //       return secondMessage.unixTime - firstMessage.unixTime;
-        //   });
-        //   if(JSON.stringify(context.getters.messages) === JSON.stringify(messagesFinal)){
-        //       console.log("Sorting didn't happen");
-        //       return;
-        //   }
-        //   context.commit("setMessagesArray", messagesFinal);
-        // })
+        .then(() => {
+          context.commit("setMessagesArray", messagesFinal);
+        })
         .catch(error => {
           console.log(error);
         });

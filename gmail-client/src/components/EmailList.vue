@@ -217,7 +217,11 @@ export default {
   },
   computed: {
     messages() {
-      return this.$store.getters.messages;
+      let messagesFinal = _.sortBy(this.$store.getters.messages, [function(messages){
+        return messages.unixTime;
+      }]).reverse();
+      
+      return messagesFinal;
     },
   },
   created() {
