@@ -6,12 +6,12 @@
             <template v-if="message.labelIds.includes(labelId)" >
               <!--v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()"-->
                 <td class="One">
-                  <span v-if=!checked v-on:click="check()" class="highlightArea left">
+                  <!-- <span v-if=!checked v-on:click="check()" class="highlightArea left">
                     <font-awesome-icon class="Icon" icon="square" />
                   </span>
                   <span v-if=checked v-on:click="check()" class="highlightArea left">
                     <font-awesome-icon class="Icon" icon="check-square"/>
-                  </span>
+                  </span> -->
                   <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                   <b><span class="leftAlign">{{ message.from }}</span></b>
                   <span class="smallOnly">{{ message.time }}</span>
@@ -46,7 +46,7 @@
   background-color: none;
 }
 .unreadClass {
-  color: #F5F7F7;
+  /* color: #F5F7F7; */
   background-color: #F5F7F7;
 }
 table {
@@ -123,7 +123,7 @@ a {
   background-color: lightgray !important;
 }
 .Icon {
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 @media screen and (max-width : 950px) {
