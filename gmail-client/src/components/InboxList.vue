@@ -22,6 +22,9 @@
   overflow: hidden;
 } */
 
+.nav {
+  flex-wrap: nowrap;
+}
 </style>
 
 <script>

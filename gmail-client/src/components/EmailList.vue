@@ -116,7 +116,7 @@ a {
 @media screen and (max-width : 950px) {
   table, thead, tbody, th, td, tr {
     display: block;
-    min-width: 400px;
+    min-width: 480px;
     overflow: hidden;
   }
 
