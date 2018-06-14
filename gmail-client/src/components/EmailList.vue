@@ -19,7 +19,11 @@
                       <div>
                         <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <b><span class="leftAlign">{{ message.from }}</span></b>
-                        <span class="smallOnly">{{ message.time }}</span>
+                        </router-link>
+                      </div>
+                      <div class="smallOnly">
+                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <span>{{ message.time }}</span>
                         </router-link>
                       </div>
                     </div>
@@ -53,6 +57,11 @@
 #flexfix {
   display: flex;
   flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+}
+#flexfix div:last-child {
+  margin-left: auto;
 }
 .tableRow:hover {
   /* not done yet */
@@ -94,6 +103,14 @@ td {
   width: 100px;
 }
 
+.Two a {
+  margin-top: 11px;
+}
+
+.Three a {
+  margin-top: 11px;
+}
+
 .leftAlign {
   float: left;
   text-align: left;
@@ -121,7 +138,7 @@ tbody {
 a {
   color: black;
   display: inline-block;
-  margin-top: 12px;
+  margin-top: 0px;
 }
 
 .left {
@@ -191,7 +208,6 @@ a {
   .leftAlign1 {
     float: left;
     text-align: left;
-    width: auto;
   } 
   tbody {
     line-height: unset;
@@ -199,7 +215,10 @@ a {
   a {
     width: 100%;
     display: block;
-    margin-top: 4px;
+    margin-top: 0px;
+  }
+  .Two a {
+    margin-top: 0px;
   }
 }
 </style>
