@@ -67,10 +67,13 @@ export default new Vuex.Store({
     },
     getListOfMessages(context) {
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
-      console.log(context.getters.loggedIn);
+
+      //console.log(context.getters.loggedIn);
       if (context.getters.loggedIn) {
         axios.get(url, getAuthHeader())
         .then(response => {
+          console.log("TESTS!!!!");
+          console.log(response);
           return response.data.messages;
         })
         .then(messages => {
@@ -131,6 +134,18 @@ export default new Vuex.Store({
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${payload.messageId}/attachments/${payload.attachmentId}`;
       
       axios.get(url, getAuthHeader())
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    sendMessage(email) {
+      //at some point this will work
+      let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send"
+
+      axios.send(url, getAuthHeader())
         .then(response => {
           console.log(response);
         })
