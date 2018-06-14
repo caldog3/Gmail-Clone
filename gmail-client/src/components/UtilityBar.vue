@@ -65,6 +65,7 @@
 } 
 #spacing {
   float:left;
+  padding: 4px;
 }
 input {
   float: left;
