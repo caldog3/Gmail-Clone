@@ -24,7 +24,7 @@
 
 .nav {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap !important;
 }
 </style>
 

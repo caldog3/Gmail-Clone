@@ -61,7 +61,7 @@ export default {
   bottom: 0;
 }
 #header {
-  height: 80px;
+  height: 91px;
 }
 body {
   overflow: hidden;
