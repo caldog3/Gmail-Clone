@@ -203,13 +203,24 @@ export default {
         email += "\r\n" + message;
 
         //This is where I need a url instead of a gapi message
+        var url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
+        axios.send(url, getAuthHeader())
+        .then(response => {
+            return response;
+        }
+        .then(response => )
+
         var sendRequest = gapi.client.gmail.users.messages.send({
             'userId': 'me',
             'resource': {
                 'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
             }
         });
-        return sendRequest.execute(callback);
+        return response.execute(callback);
+        })
+        .catch(error => {
+            console.log(error);
+        });
     },
     send() {
       this.close()
