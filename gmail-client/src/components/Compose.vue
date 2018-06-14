@@ -203,11 +203,11 @@ export default {
             email += header += ": "+headers_obj[header]+"\r\n";
         }
         email += "\r\n" + message;
-
+        //this.$store.sendMessage(email)
         //This is where I need a url instead of a gapi message
         let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
         
-        var sendRequest = axios.send(url, this.$store.state.getAuthHeader(), {
+        var sendRequest = axios.send(url, this.$store.getAuthHeader(), {
             'userid': 'me',
             'resource': {
                 'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')

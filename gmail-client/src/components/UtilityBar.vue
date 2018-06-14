@@ -3,11 +3,10 @@
     <div id="spacing">
       <span v-if=!messageBody>
         <div>
-          <span class="highlightArea">
+          <span v-if=!checked v-on:click="check()" class="highlightArea">
           <font-awesome-icon class="Icon" icon="square" />
           </span>
-          |
-          <span class="highlightArea">
+          <span v-if=checked v-on:click="check()" class="highlightArea">
             <font-awesome-icon class="Icon" icon="check-square"/>
           </span>
           <span class="highlightArea">
@@ -104,6 +103,7 @@ export default {
   data() {
     return {
       messageBody: false,
+      checked: false,
     }
   },
   methods: {
@@ -112,6 +112,9 @@ export default {
     },
     false() {
       this.messageBody = false;
+    },
+    check() {
+      this.checked = !this.checked;
     },
     back() {
       //Need to route it back to EmailList
