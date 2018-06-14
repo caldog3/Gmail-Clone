@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div>
+  <div class="everything">
     <table class="table table-striped table-inbox hidden" id="example-1">
         <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
             <template v-if="message.labelIds.includes(labelId)" >   
@@ -32,6 +32,10 @@
 
 
 <style scoped>
+/* .everything {
+  overflow-y: scroll;
+  height: auto;
+} */
 .tableRow:hover {
   /* not done yet */
 }
