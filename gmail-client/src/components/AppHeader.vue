@@ -69,7 +69,7 @@
   border-bottom-color: #d3d3d3;
   min-width: 770px;
   overflow: hidden;
-  height: 80px;
+  height: 91px;
 }
 .menu {
   padding-left: 10px;
