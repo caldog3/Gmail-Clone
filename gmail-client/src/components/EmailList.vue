@@ -121,6 +121,7 @@ tbody {
 a {
   color: black;
   display: inline-block;
+  margin-top: 12px;
 }
 
 .left {
@@ -190,6 +191,7 @@ a {
   .leftAlign1 {
     float: left;
     text-align: left;
+    width: auto;
   } 
   tbody {
     line-height: unset;
@@ -197,6 +199,7 @@ a {
   a {
     width: 100%;
     display: block;
+    margin-top: 4px;
   }
 }
 </style>
