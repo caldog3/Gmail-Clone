@@ -32,31 +32,49 @@
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <span class="highlightArea">
-            <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="archive"/> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="trash" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="envelope-open" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="clock" /> 
-          </span>
-          |
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
-          </span>
-          <span class="highlightArea">
-            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-          </span>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="archive"/> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="trash" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="envelope-open" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="clock" /> 
+            </div>
+          </div>
+          <div class="item">
+            |
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
+            </div>
+          </div>
+          <div class="item">
+            <div class="highlightArea">
+              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+            </div>
+          </div>
           <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
         </div>
       </span>
@@ -79,6 +97,19 @@
   display: flex;
   flex-direction: row;
 }
+
+.flexIcons svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+
+.CenterIt {
+  display: flex;
+  flex-direction: row;
+}
+.CenterIt svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+
 .item {
   width: 30px;
   height: 30px;
