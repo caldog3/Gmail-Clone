@@ -5,26 +5,26 @@
         <div class="flexIcons">
           <div class="item">
             <div class="highlightArea">
-            <span v-if=!checked v-on:click="check()" >
+            <div v-if=!checked v-on:click="check()" >
               <font-awesome-icon class="Icon" icon="square" />
-            </span>
-            <span v-if=checked v-on:click="check()" >
+            </div>
+            <div v-if=checked v-on:click="check()" >
               <font-awesome-icon class="Icon" icon="check-square"/>
-            </span>
+            </div>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-            <span>
+            <div>
               <font-awesome-icon class="Icon" icon="retweet"/>
-            </span>
+            </div>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-            <span>
+            <div>
               <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-            </span>
+            </div>
             </div>
           </div>
         </div>
@@ -103,7 +103,8 @@ button {
 }
 .highlightArea {
   width: 30px;
-  border-radius: 30px;
+  height: 30px;
+  border-radius: 35px;
 }
 .highlightArea:hover {
   background-color: lightgray;
