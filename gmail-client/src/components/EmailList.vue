@@ -190,8 +190,9 @@ a {
 </style>
 
 <script>
-import eventBus from '../event_bus'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import eventBus from '../event_bus';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import _ from 'lodash';
 
 export default {
   name: 'EmailList',
