@@ -3,23 +3,49 @@
     <div id="spacing">
       <span v-if=!messageBody>
         <div>
+          <span class="highlightArea">
           <font-awesome-icon class="Icon" icon="square" />
+          </span>
           |
-          <font-awesome-icon class="Icon" icon="check-square"/> 
-          <font-awesome-icon class="Icon" icon="retweet"/>
-          <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="check-square"/>
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="retweet"/>
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+          </span>
         </div>
       </span>
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
-          <font-awesome-icon class="Icon" icon="archive"/> 
-          <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
-          <font-awesome-icon class="Icon" icon="trash" /> 
-          <font-awesome-icon class="Icon" icon="envelope-open" /> 
-          <font-awesome-icon class="Icon" icon="clock" /> | 
-          <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
+          <span class="highlightArea">
+            <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="archive"/> 
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="trash" /> 
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="envelope-open" /> 
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="clock" /> 
+          </span>
+          |
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
+          </span>
+          <span class="highlightArea">
+            <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+          </span>
           <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
         </div>
       </span>
@@ -53,7 +79,15 @@ button {
   cursor: pointer;
 }
 .Icon:hover {
-  background-color: darkgray;  
+  /* background-color: darkgray;   */
+}
+.highlightArea {
+  padding:5px;
+  width:100%;
+  border-radius: 30px;
+}
+.highlightArea:hover {
+  background-color: lightgray;
 }
 </style>
 
