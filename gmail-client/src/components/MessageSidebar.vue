@@ -12,7 +12,8 @@
             <font-awesome-icon icon="inbox" />  Inbox
           </div>
           <div>
-            <b-badge variant="primary" pill class="notificationPill">3</b-badge>
+            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+
           </div>
         </div>
       </b-list-group-item>
@@ -74,16 +75,37 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 export default {
   name: 'MessageSidebar',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    eventBus
   },
   data() {
     return {
+      unreadCount: 4,
     }
   },
   methods: {
     composeShow() {
       eventBus.$emit('COMPOSE_OPEN');
-    }
-  }
+    },
+    updateUnread(num) {
+      this.unreadCount = num;
+    },
+  },
+  created() {
+    eventBus.$on('UNREAD_COUNT', unreads => {
+      console.log("was this received");
+      this.unreadCount = unreads; 
+    }),
+    this.$store.dispatch("getLabelsForUnread");    
+    console.log("afer the fact?");
+  },
+  mounted() {
+    eventBus.$on('UNREAD_COUNT', unreads => {
+      console.log("was this received");
+      this.unreadCount = unreads; 
+    });
+    console.log("after the fact? 2");
+  },
+  
 }
 </script>
