@@ -61,6 +61,7 @@
   flex-direction: row;
   align-content: stretch;
   align-items: center;
+  padding-right: 2px;
 }
 #flexfix div:last-child {
   margin-left: auto;
@@ -115,11 +116,11 @@ td {
 }
 
 .Two a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .Three a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .leftAlign {
