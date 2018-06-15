@@ -281,6 +281,7 @@ export default {
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
+    eventBus.$on('CHECK_ALL', this.check);
   }
 }
 </script>
