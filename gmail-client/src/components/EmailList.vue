@@ -116,11 +116,11 @@ td {
 }
 
 .Two a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .Three a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .leftAlign {
