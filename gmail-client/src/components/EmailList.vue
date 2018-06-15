@@ -61,6 +61,7 @@
   flex-direction: row;
   align-content: stretch;
   align-items: center;
+  padding-right: 2px;
 }
 #flexfix div:last-child {
   margin-left: auto;
