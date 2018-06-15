@@ -87,17 +87,12 @@ export default {
     composeShow() {
       eventBus.$emit('COMPOSE_OPEN');
     },
-    updateUnread(num) {
-      this.unreadCount = num;
-    },
   },
   created() {
     eventBus.$on('UNREAD_COUNT', unreads => {
-      console.log("was this received");
       this.unreadCount = unreads; 
     }),
-    this.$store.dispatch("getLabelsForUnread");    
-    console.log("afer the fact?");
+    this.$store.dispatch("getLabelsForUnread");
   },
   
 }
