@@ -3,12 +3,12 @@
     <div id="spacing">
       <span v-if=!messageBody>
         <div class="flexIcons">
-          <div class="item">
+          <div v-on:click="check()" class="item">
             <div class="highlightArea">
-            <div v-if=!checked v-on:click="check()" >
+            <div v-if=!checked>
               <font-awesome-icon class="Icon" icon="square" />
             </div>
-            <div v-if=checked v-on:click="check()" >
+            <div v-if=checked>
               <font-awesome-icon class="Icon" icon="check-square"/>
             </div>
             </div>
@@ -32,9 +32,9 @@
       
       <span v-if=messageBody>
         <div class="CenterIt">
-          <div class="item">
+          <div v-on:click.stop="back()" class="item">
             <div class="highlightArea">
-              <font-awesome-icon v-on:click.stop="back()" class="Icon"  icon="arrow-left"/>
+              <font-awesome-icon class="Icon"  icon="arrow-left"/>
             </div>
           </div>
           <div class="item">
@@ -113,6 +113,7 @@
 .item {
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 #spacing {
   float:left;
