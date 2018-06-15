@@ -50,7 +50,7 @@ export default {
     },
   },
   methods: {
-    getEmailListEight() {
+    getEmailListHeight() {
       let verticalPadding = 40; //This made it possible to scroll to the bottom of the screen
       let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
       // console.log(`${height}px`);
@@ -58,7 +58,7 @@ export default {
     }  
   },
     mounted() {
-      this.getEmailListEight();
+      this.getEmailListHeight();
     }
 }
 </script>
