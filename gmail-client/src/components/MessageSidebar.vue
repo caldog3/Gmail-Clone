@@ -75,7 +75,8 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 export default {
   name: 'MessageSidebar',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    eventBus
   },
   data() {
     return {
@@ -91,7 +92,19 @@ export default {
     },
   },
   created() {
-    eventBus.$on('UNREAD_COUNT', this.updateUnread(num));
+    eventBus.$on('UNREAD_COUNT', unreads => {
+      console.log("was this received");
+      this.unreadCount = unreads; 
+    }),
+    this.$store.dispatch("getLabelsForUnread");    
+    console.log("afer the fact?");
+  },
+  mounted() {
+    eventBus.$on('UNREAD_COUNT', unreads => {
+      console.log("was this received");
+      this.unreadCount = unreads; 
+    });
+    console.log("after the fact? 2");
   },
   
 }
