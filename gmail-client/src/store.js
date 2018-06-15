@@ -65,7 +65,9 @@ export default new Vuex.Store({
         eventBus.$emit('UNREAD_COUNT', unreadCount);
       })
     },
-    //This is where the magic happens! But it's not exactly what we want....
+    //This is where the magic happens! But it's not exactly what we want yet
+    //..we need more conditionals
+  
     getLabelsForUnread() {
       let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/UNREAD';
       axios.get(url, getAuthHeader())
@@ -73,6 +75,7 @@ export default new Vuex.Store({
         console.log("Unread Labels");
         console.log(response);
         let unreadCount = response.data.messagesUnread;
+        // can easily be changed to threadsUnread
         eventBus.$emit('UNREAD_COUNT', unreadCount);
       })
     },
