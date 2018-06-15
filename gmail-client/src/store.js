@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import eventBus from './event_bus.js'
 import {
   getAuthHeader,
   getTimeFormat,
@@ -54,19 +55,46 @@ export default new Vuex.Store({
         context.commit("setToken", token);
       }
     },
+    getLabels() {
+      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels';
+      axios.get(url, getAuthHeader())
+      .then(response => {
+        console.log("Labels");
+        console.log(response);
+        let unreadCount = response.data.messagesUnread;
+        eventBus.$emit('UNREAD_COUNT', unreadCount);
+      })
+    },
+    //This is where the magic happens! But it's not exactly what we want yet
+    //..we need more conditionals
+  
+    getLabelsForUnread() {
+      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PERSONAL';
+      axios.get(url, getAuthHeader())
+      .then(response => {
+        console.log("Unread Labels");
+        console.log(response);
+        let unreadCount = response.data.messagesUnread;
+        //I want to filter out archived messages' unreads but haven't found an api call for that yet
+        let nextURL = '';
+
+        eventBus.$emit('UNREAD_COUNT', unreadCount);
+      })
+    },
     getListOfMessages(context) {
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
 
       if (context.getters.loggedIn) {
         axios.get(url, getAuthHeader())
         .then(response => {
-          console.log("TESTS!!!!");
-          console.log(response);
+          //console.log("TESTS!!!!");
+          //console.log(response);
           return response.data.messages;
         })
         .then(messages => {
           messages.forEach(message => {
             context.dispatch("getMessageContent", message.id);
+
           });
         })
         .catch(error => {

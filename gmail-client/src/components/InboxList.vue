@@ -22,7 +22,7 @@
   overflow: hidden;
 } */
 
-.nav {
+ul .nav {
   display: flex;
   flex-wrap: nowrap !important;
 }

@@ -6,13 +6,14 @@
     </b-modal> -->
 
     <b-list-group id="bootstrap-overrides">
-      <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
+      <b-list-group-item class="dflex justify-content-between" @click="loadInbox()" href="#" variant="dark">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon icon="inbox" />  Inbox
           </div>
           <div>
-            <b-badge variant="primary" pill class="notificationPill">3</b-badge>
+            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+
           </div>
         </div>
       </b-list-group-item>
@@ -74,16 +75,29 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 export default {
   name: 'MessageSidebar',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    eventBus
   },
   data() {
     return {
+      unreadCount: 0  ,
     }
   },
   methods: {
     composeShow() {
       eventBus.$emit('COMPOSE_OPEN');
-    }
-  }
+    },
+    loadInbox() {
+      console.log("HERE???????");
+      //this.$store.dispatch("getListOfMessages");
+    },
+  },
+  created() {
+    eventBus.$on('UNREAD_COUNT', unreads => {
+      this.unreadCount = unreads; 
+    }),
+    this.$store.dispatch("getLabelsForUnread");
+  },
+  
 }
 </script>

@@ -8,19 +8,22 @@
                 <td class="One">
           
                     <div id="flexfix">
-                      <div>
-                        <span v-if=!checked v-on:click="check()" class="highlightArea left">
-                          <font-awesome-icon class="Icon" icon="square" />
-                        </span>
-                        <span v-if=checked v-on:click="check()" class="highlightArea left">
-                          <font-awesome-icon class="Icon" icon="check-square"/>
-                        </span>
+                      <div class="item">
+                        <div class="highlightArea">
+                          <div v-if=!checked v-on:click="check()">
+                            <font-awesome-icon class="Icon" icon="square" />
+                          </div>
+                          <div v-if=checked v-on:click="check()">
+                            <font-awesome-icon class="Icon" icon="check-square"/>
+                          </div>
+                        </div>
                       </div>
                       <div>
                         <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <b><span class="leftAlign">{{ message.from }}</span></b>
                         </router-link>
                       </div>
+                      
                       <div class="smallOnly">
                         <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <span>{{ message.time }}</span>
@@ -59,9 +62,13 @@
   flex-direction: row;
   align-content: stretch;
   align-items: center;
+  padding-right: 2px;
 }
 #flexfix div:last-child {
   margin-left: auto;
+}
+#flexfix svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
 }
 .tableRow:hover {
   /* not done yet */
@@ -80,9 +87,12 @@ table {
   table-layout: fixed;
   border-top: none;
 }
-
+.item {
+  width: 30px;
+  height: 30px;
+}
 .table tbody + tbody {
-    border-top: 0px
+  border-top: 0px
 }
 
 td { 
@@ -92,23 +102,26 @@ td {
 
 .One {
   width: 200px;
+  padding: 0px;
 }
 
 .Two {
   width: auto;
   overflow: hidden;
+  padding: 0px;
 }
 
 .Three {
   width: 100px;
+  padding: 0px;
 }
 
 .Two a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .Three a {
-  margin-top: 11px;
+  margin-top: 13px;
 }
 
 .leftAlign {
@@ -117,6 +130,7 @@ td {
 }
 .leftAlign1 {
   float: left;
+  padding-left: 25px;
 }
 .rightAlign {
   float: right;
@@ -149,9 +163,9 @@ a {
   float: right;
 }
 .highlightArea {
-  padding:5px;
-  width:100%;
-  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
 }
 .highlightArea:hover {
   background-color: lightgray !important;
@@ -185,6 +199,7 @@ a {
     min-width: 100%;
     max-width: 100%;
     overflow: hidden; 
+    padding: 3px;
   }
 
   .Three {
