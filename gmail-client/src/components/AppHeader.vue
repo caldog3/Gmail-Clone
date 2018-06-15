@@ -114,7 +114,7 @@ input {
 }
 
 .flex > div {
-  margin: 4px;
+  margin: 10px;
 }
 
 .searchBar {
