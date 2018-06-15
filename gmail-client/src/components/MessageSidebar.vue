@@ -6,7 +6,7 @@
     </b-modal> -->
 
     <b-list-group id="bootstrap-overrides">
-      <b-list-group-item class="dflex justify-content-between" href="#" variant="dark">
+      <b-list-group-item class="dflex justify-content-between" @click="loadInbox()" href="#" variant="dark">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon icon="inbox" />  Inbox
@@ -80,12 +80,16 @@ export default {
   },
   data() {
     return {
-      unreadCount: 4,
+      unreadCount: 0  ,
     }
   },
   methods: {
     composeShow() {
       eventBus.$emit('COMPOSE_OPEN');
+    },
+    loadInbox() {
+      console.log("HERE???????");
+      //this.$store.dispatch("getListOfMessages");
     },
   },
   created() {

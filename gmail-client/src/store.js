@@ -75,6 +75,7 @@ export default new Vuex.Store({
         console.log("Unread Labels");
         console.log(response);
         let unreadCount = response.data.messagesUnread;
+        //I want to filter out archived messages' unreads but haven't found an api call for that yet
         let nextURL = '';
 
         eventBus.$emit('UNREAD_COUNT', unreadCount);
