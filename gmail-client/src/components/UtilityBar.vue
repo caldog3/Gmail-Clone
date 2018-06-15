@@ -117,6 +117,7 @@
 #spacing {
   float:left;
   padding: 4px;
+  padding-left: 0px;
 }
 input {
   float: left;

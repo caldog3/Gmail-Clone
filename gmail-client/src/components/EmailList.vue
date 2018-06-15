@@ -90,7 +90,7 @@ table {
   height: 30px;
 }
 .table tbody + tbody {
-    border-top: 0px
+  border-top: 0px
 }
 
 td { 
@@ -100,15 +100,18 @@ td {
 
 .One {
   width: 200px;
+  padding: 0px;
 }
 
 .Two {
   width: auto;
   overflow: hidden;
+  padding: 0px;
 }
 
 .Three {
   width: 100px;
+  padding: 0px;
 }
 
 .Two a {
@@ -193,6 +196,7 @@ a {
     min-width: 100%;
     max-width: 100%;
     overflow: hidden; 
+    padding: 3px;
   }
 
   .Three {
