@@ -2,13 +2,13 @@
   <div id="app">
     <div v-if="loggedIn">
 
-      <div id="header"><app-header/></div>
+      <div id="header" ref="appHeader"><app-header/></div>
 
       <div class="sideBar"><message-sidebar/></div>
       
       <div class="mainView">
         <utility-bar/>
-        <div class="emailList">
+        <div class="emailList" :style="emailListHeight">
           <router-view/>
         </div>
       </div>
@@ -22,17 +22,21 @@
 </template>
 
 <script>
-import eventBus from './event_bus'
-
+import Vue from 'vue';
+import eventBus from './event_bus';
 import Compose from './components/Compose';
-
 import AppHeader from './components/AppHeader';
 import MessageSidebar from './components/MessageSidebar';
-import UtilityBar from './components/UtilityBar'
-import LoginPage from './components/LoginPage'
+import UtilityBar from './components/UtilityBar';
+import LoginPage from './components/LoginPage';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      emailListHeight: {}
+    }
+  },
   components: { 
     AppHeader,
     MessageSidebar,
@@ -45,6 +49,17 @@ export default {
      return this.$store.getters.loggedIn;
     },
   },
+  methods: {
+    getEmailListEight() {
+      let verticalPadding = 40; //This made it possible to scroll to the bottom of the screen
+      let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
+      // console.log(`${height}px`);
+      Vue.set(this.emailListHeight, 'height', `${height}px`); 
+    }  
+  },
+    mounted() {
+      this.getEmailListEight();
+    }
 }
 </script>
 
@@ -73,6 +88,5 @@ body {
 }
 .emailList {
   overflow-y: auto;
-  height: 600px;
 }
 </style>
