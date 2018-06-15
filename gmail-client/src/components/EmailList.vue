@@ -10,12 +10,12 @@
                     <div id="flexfix">
                       <div class="item">
                         <div class="highlightArea">
-                        <div v-if=!checked v-on:click="check()">
-                          <font-awesome-icon class="Icon" icon="square" />
-                        </div>
-                        <div v-if=checked v-on:click="check()">
-                          <font-awesome-icon class="Icon" icon="check-square"/>
-                        </div>
+                          <div v-if=!checked v-on:click="check()">
+                            <font-awesome-icon class="Icon" icon="square" />
+                          </div>
+                          <div v-if=checked v-on:click="check()">
+                            <font-awesome-icon class="Icon" icon="check-square"/>
+                          </div>
                         </div>
                       </div>
                       <div>
@@ -23,6 +23,7 @@
                         <b><span class="leftAlign">{{ message.from }}</span></b>
                         </router-link>
                       </div>
+                      
                       <div class="smallOnly">
                         <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <span>{{ message.time }}</span>
@@ -129,6 +130,7 @@ td {
 }
 .leftAlign1 {
   float: left;
+  padding-left: 25px;
 }
 .rightAlign {
   float: right;
