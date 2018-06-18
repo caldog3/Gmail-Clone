@@ -59,6 +59,7 @@
 }
 button {
   margin: 30px;
+  cursor: pointer; 
 }
 .notificationPill b-badge {
   text-align: right;

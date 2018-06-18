@@ -35,9 +35,8 @@
                   <circle cx="50" cy="50" r="40"/>
                 </clipPath>
               </defs>
-            <!-- <image width="60" height="60" xlink:href="{{ emailPic }}"/> -->
-            <image width="90" height="90" xlink:href="https://lh5.googleusercontent.com/-ebIkXc5Lq3M/AAAAAAAAAAI/AAAAAAAABUw/3E4p89NPZZ8/s96/photo.jpg" clip-path="url(#myCircle)" />
-            <!-- We need to make the image smaller but keep the amount of image that's visible in the picture currently -->
+            <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+            <image width="100" height="100" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
@@ -103,7 +102,6 @@ input {
   border: none;
   outline: none;
 }
-
 .flex {
   display: flex;
   width: 100%;
@@ -112,16 +110,13 @@ input {
   align-items: center;
   height: 100%
 }
-
 .flex > div {
   margin: 10px;
 }
-
 .searchBar {
   flex-grow: 1;
   flex-basis: 0;
 }
-
 
 @media screen and (max-width : 700px) {
   .search { 
@@ -135,6 +130,7 @@ input {
 <script>
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import axios from 'axios';
 
 export default {
   name: 'AppHeader',
@@ -144,6 +140,7 @@ export default {
   data() {
     return {
       profileJSON: {},
+      photoUrl: '',
     }
   },
   methods: {
@@ -151,17 +148,24 @@ export default {
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
     },
-    getProfile() {
-      var devIdentify = require("dev-identify")
-      var email = "amugimu@gmail.com"
-      devIdentify(email)
-      .then(function(result) {
-      console.log(result)
-      this.profileJSON = result;
-      });
-    }
+    // getProfile() {
+    //   var devIdentify = require("dev-identify")
+    //   var email = "amugimu@gmail.com"
+    //   devIdentify(email)
+    //   .then(function(result) {
+    //   console.log(result)
+    //   this.profileJSON = result;
+    //   });
+    // }
   },
-  created() {
+  created () {
+    let tempID = 'amugimu@gmail.com';
+    axios.get(`https://picasaweb.google.com/data/entry/api/user/${tempID}?alt=json`)
+    .then(response => {
+      this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+    })
+  },
+  mounted() {
     
   }
 }

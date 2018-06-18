@@ -19,13 +19,16 @@
                         </div>
                       </div>
                       <div>
-                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <b><span class="leftAlign">{{ message.from }}</span></b>
                         </router-link>
                       </div>
-                      
+                      <div class="emptySpace">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        </router-link>
+                      </div>
                       <div class="smallOnly">
-                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <span>{{ message.time }}</span>
                         </router-link>
                       </div>
@@ -33,7 +36,7 @@
                   
                 </td>
                 <td class="Two">
-                  <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                     <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
@@ -42,7 +45,7 @@
                 </td>
                 <td class="Three">
                   <router-link v-on:click.native="enterMessage()" class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <span class="rightAlign">{{ message.time }}</span>
+                  <div class="rightAlign">{{ message.time }}</div>
                   </router-link>
                 </td>  
             </template>                      
@@ -123,7 +126,10 @@ td {
 .Three a {
   margin-top: 13px;
 }
-
+.emptySpace {
+  width: 100%;
+  height: 30px;
+}
 .leftAlign {
   float: left;
   text-align: left;
@@ -136,6 +142,7 @@ td {
   float: right;
   display: block;
   visibility: visible;
+  padding-right: 5px;
 }
 .smallOnly {
   display: none;
@@ -166,6 +173,7 @@ a {
   width: 30px;
   height: 30px;
   border-radius: 35px;
+  cursor: pointer; 
 }
 .highlightArea:hover {
   background-color: lightgray !important;
@@ -215,6 +223,7 @@ a {
   .smallOnly {
     display: block;
     visibility: visible;
+    margin-right: 3px;
   }
   .rightAlign {
     visibility: hidden;
@@ -263,8 +272,9 @@ export default {
       }
       return theClass;
     },
-    enterMessage() {
+    enterMessage(id) {
       eventBus.$emit('ENTER_MESSAGE');
+      //this.$store.markAsRead(id);
     },
     check() {
       this.checked = !this.checked;
@@ -281,6 +291,7 @@ export default {
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
+    eventBus.$on('CHECK_ALL', this.check);
   }
 }
 </script>
