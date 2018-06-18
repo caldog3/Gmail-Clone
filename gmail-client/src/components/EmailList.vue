@@ -19,13 +19,13 @@
                         </div>
                       </div>
                       <div>
-                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <b><span class="leftAlign">{{ message.from }}</span></b>
                         </router-link>
                       </div>
                       
                       <div class="smallOnly">
-                        <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <span>{{ message.time }}</span>
                         </router-link>
                       </div>
@@ -33,7 +33,7 @@
                   
                 </td>
                 <td class="Two">
-                  <router-link v-on:click.native="enterMessage()" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                  <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                     <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
@@ -265,8 +265,9 @@ export default {
       }
       return theClass;
     },
-    enterMessage() {
+    enterMessage(id) {
       eventBus.$emit('ENTER_MESSAGE');
+      //this.$store.markAsRead(id);
     },
     check() {
       this.checked = !this.checked;
@@ -283,6 +284,7 @@ export default {
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
+    eventBus.$on('CHECK_ALL', this.check);
   }
 }
 </script>

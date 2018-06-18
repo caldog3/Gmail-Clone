@@ -166,5 +166,13 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    markAsRead(messageId) {
+      let url = `https://www.googleapis.com/gmail/v1/users/me/threads/${messageId}/modify`;
+      axios.post(url, getAuthHeader())
+      .then(response => {
+        console.log(response);
+      })
+
+    },
   }
 });
