@@ -163,14 +163,10 @@ export default {
     // }
   },
   created () {
-    let tempID = 'caldogwoods@gmail.com';
+    let tempID = 'clairecate13@gmail.com';
     axios.get(`https://picasaweb.google.com/data/entry/api/user/${tempID}?alt=json`)
     .then(response => {
-      console.log("photo json");
-      console.log(response.data.entry.gphoto$thumbnail.$t);
       this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
-      console.log("tris photo.url");
-      console.log(this.photoUrl);
     })
   },
   mounted() {
