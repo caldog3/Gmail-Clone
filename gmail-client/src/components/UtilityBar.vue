@@ -3,7 +3,7 @@
     <div id="spacing">
       <span v-if=!messageBody>
         <div class="flexIcons">
-          <div v-on:click="check()" class="item">
+          <div v-on:click="checkAll()" class="item">
             <div class="highlightArea">
             <div v-if=!checked>
               <font-awesome-icon class="Icon" icon="square" />
@@ -167,8 +167,9 @@ export default {
     false() {
       this.messageBody = false;
     },
-    check() {
+    checkAll() {
       this.checked = !this.checked;
+      eventBus.$emit('CHECK_ALL');
     },
     back() {
       //Need to route it back to EmailList
