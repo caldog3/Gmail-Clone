@@ -23,7 +23,10 @@
                         <b><span class="leftAlign">{{ message.from }}</span></b>
                         </router-link>
                       </div>
-                      
+                      <div class="emptySpace">
+                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
+                        </router-link>
+                      </div>
                       <div class="smallOnly">
                         <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <span>{{ message.time }}</span>
@@ -123,7 +126,10 @@ td {
 .Three a {
   margin-top: 13px;
 }
-
+.emptySpace {
+  width: 100%;
+  height: 30px;
+}
 .leftAlign {
   float: left;
   text-align: left;

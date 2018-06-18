@@ -36,7 +36,7 @@
                 </clipPath>
               </defs>
             <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
-            <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
+            <image width="100" height="100" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default {
     // }
   },
   created () {
-    let tempID = 'clairecate13@gmail.com';
+    let tempID = 'amugimu@gmail.com';
     axios.get(`https://picasaweb.google.com/data/entry/api/user/${tempID}?alt=json`)
     .then(response => {
       this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
