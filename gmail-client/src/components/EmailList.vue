@@ -167,6 +167,7 @@ a {
   width: 30px;
   height: 30px;
   border-radius: 35px;
+  cursor: pointer; 
 }
 .highlightArea:hover {
   background-color: lightgray !important;
