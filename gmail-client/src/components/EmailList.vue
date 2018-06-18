@@ -42,7 +42,7 @@
                 </td>
                 <td class="Three">
                   <router-link v-on:click.native="enterMessage()" class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <span class="rightAlign">{{ message.time }}</span>
+                  <div class="rightAlign">{{ message.time }}</div>
                   </router-link>
                 </td>  
             </template>                      
@@ -136,6 +136,7 @@ td {
   float: right;
   display: block;
   visibility: visible;
+  padding-right: 5px;
 }
 .smallOnly {
   display: none;
