@@ -130,6 +130,7 @@ input {
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import axios from 'axios';
+import eventBus from '../event_bus'
 
 export default {
   name: 'AppHeader',
@@ -156,12 +157,18 @@ export default {
     //   this.profileJSON = result;
     //   });
     // }
+    retrievePhotoURL(userEmail) {
+      axios.get(`https://picasaweb.google.com/data/entry/api/user/${userEmail}?alt=json`)
+      .then(response => {
+        this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+      })
+    },
   },
+
   created () {
-    let tempID = 'amugimu@gmail.com';
-    axios.get(`https://picasaweb.google.com/data/entry/api/user/${tempID}?alt=json`)
-    .then(response => {
-      this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+    this.$store.dispatch("getProfileEmail");
+    eventBus.$on('PROFILE_EMAIL', email => {
+      this.retrievePhotoURL(email);
     })
   },
   mounted() {
