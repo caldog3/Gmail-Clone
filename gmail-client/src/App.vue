@@ -53,7 +53,7 @@ export default {
     getEmailListHeight() {
       let verticalPadding = 40; //This made it possible to scroll to the bottom of the screen
       let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
-      // console.log(`${height}px`);
+       console.log(`${height}px`);
       Vue.set(this.emailListHeight, 'height', `${height}px`); 
     }  
   },
