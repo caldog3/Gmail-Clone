@@ -216,6 +216,7 @@ a {
   .smallOnly {
     display: block;
     visibility: visible;
+    margin-right: 3px;
   }
   .rightAlign {
     visibility: hidden;

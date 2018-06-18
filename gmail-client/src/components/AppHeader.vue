@@ -103,7 +103,6 @@ input {
   border: none;
   outline: none;
 }
-
 .flex {
   display: flex;
   width: 100%;
@@ -112,16 +111,13 @@ input {
   align-items: center;
   height: 100%
 }
-
 .flex > div {
   margin: 10px;
 }
-
 .searchBar {
   flex-grow: 1;
   flex-basis: 0;
 }
-
 
 @media screen and (max-width : 700px) {
   .search { 
