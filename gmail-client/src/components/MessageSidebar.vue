@@ -90,7 +90,7 @@ export default {
     },
     loadInbox() {
       console.log("HERE???????");
-      //this.$store.dispatch("getListOfMessages");
+      this.$router.push({ path: '/' });
     },
   },
   created() {
