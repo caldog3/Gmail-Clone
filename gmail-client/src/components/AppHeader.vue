@@ -35,9 +35,8 @@
                   <circle cx="50" cy="50" r="40"/>
                 </clipPath>
               </defs>
-            <!-- <image width="60" height="60" xlink:href="{{ emailPic }}"/> -->
-            <image width="90" height="90" xlink:href="https://lh5.googleusercontent.com/-ebIkXc5Lq3M/AAAAAAAAAAI/AAAAAAAABUw/3E4p89NPZZ8/s96/photo.jpg" clip-path="url(#myCircle)" />
-            <!-- We need to make the image smaller but keep the amount of image that's visible in the picture currently -->
+            <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+            <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
@@ -135,6 +134,7 @@ input {
 <script>
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import axios from 'axios';
 
 export default {
   name: 'AppHeader',
@@ -144,6 +144,7 @@ export default {
   data() {
     return {
       profileJSON: {},
+      photoUrl: '',
     }
   },
   methods: {
@@ -151,17 +152,28 @@ export default {
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
     },
-    getProfile() {
-      var devIdentify = require("dev-identify")
-      var email = "amugimu@gmail.com"
-      devIdentify(email)
-      .then(function(result) {
-      console.log(result)
-      this.profileJSON = result;
-      });
-    }
+    // getProfile() {
+    //   var devIdentify = require("dev-identify")
+    //   var email = "amugimu@gmail.com"
+    //   devIdentify(email)
+    //   .then(function(result) {
+    //   console.log(result)
+    //   this.profileJSON = result;
+    //   });
+    // }
   },
-  created() {
+  created () {
+    let tempID = 'caldogwoods@gmail.com';
+    axios.get(`https://picasaweb.google.com/data/entry/api/user/${tempID}?alt=json`)
+    .then(response => {
+      console.log("photo json");
+      console.log(response.data.entry.gphoto$thumbnail.$t);
+      this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+      console.log("tris photo.url");
+      console.log(this.photoUrl);
+    })
+  },
+  mounted() {
     
   }
 }
