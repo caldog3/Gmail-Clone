@@ -16,7 +16,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     messages: [],
-    token: ""
+    token: "",
+    profileEmail: "",
   },
   getters: {
     user: state => state.user,
@@ -72,8 +73,6 @@ export default new Vuex.Store({
       let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PERSONAL';
       axios.get(url, getAuthHeader())
       .then(response => {
-        console.log("Unread Labels");
-        console.log(response);
         let unreadCount = response.data.messagesUnread;
         //I want to filter out archived messages' unreads but haven't found an api call for that yet
         let nextURL = '';
@@ -172,7 +171,17 @@ export default new Vuex.Store({
       .then(response => {
         console.log(response);
       })
-
     },
+    getProfileEmail() {
+      let url = `https://www.googleapis.com/gmail/v1/users/me/profile`;
+      axios.get(url, getAuthHeader())
+      .then(response => {
+        //console.log(response.data.emailAddress);
+        eventBus.$emit("PROFILE_EMAIL", response.data.emailAddress);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
   }
 });
