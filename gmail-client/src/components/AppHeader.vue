@@ -49,7 +49,6 @@
 </template>
 
 <style scoped>
-
 .flexBox {
   display: flex;
   width: 100%;
