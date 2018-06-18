@@ -28,15 +28,15 @@
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
             <div>
-              <svg width="60" height="60" viewBox="0 0 100 100" 
+              <svg width="70" height="70" viewBox="0 0 100 100" 
                 preserveAspectRatio="xMidYMid meet">
               <defs>
                 <clipPath id="myCircle">
-                  <circle cx="50" cy="50" r="40"/>
+                  <circle cx="45" cy="44" r="40"/>
                 </clipPath>
               </defs>
             <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
-            <image width="100" height="100" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
+            <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
