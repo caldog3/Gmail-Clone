@@ -174,6 +174,7 @@ export default {
     back() {
       //Need to route it back to EmailList
       eventBus.$emit('MESSAGE_LIST');
+      this.$router.push({ path: '/' });
     }
   },
   created() {
