@@ -4,7 +4,7 @@
 
       <div id="header" ref="appHeader"><app-header/></div>
 
-      <div class="sideBar" ref="sideBarWidth"><message-sidebar/></div>
+      <div class="sideBar"><message-sidebar/></div>
       
       <div class="mainView">
         <utility-bar/>
