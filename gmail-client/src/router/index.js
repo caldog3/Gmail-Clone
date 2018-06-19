@@ -18,5 +18,13 @@ export default new Router({
       name: "EmailBody",
       component: EmailBody
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      console.log('scroll stuff');
+      return { x: 0, y: 0 }
+    }
+  }
 });
