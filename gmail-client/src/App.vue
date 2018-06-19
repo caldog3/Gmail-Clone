@@ -9,9 +9,7 @@
       <div class="mainView">
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
-          <div :style="emailListWidth">
-            <router-view/>
-          </div>
+          <router-view/>
         </div>
       </div>
       <Compose/>
@@ -37,7 +35,6 @@ export default {
   data() {
     return {
       emailListHeight: {},
-      emailListWidth: {}
     }
   },
   components: { 
@@ -59,24 +56,14 @@ export default {
        console.log(`Height: ${height}px`);
       Vue.set(this.emailListHeight, 'height', `${height}px`); 
     },
-    setEmailListWidth() {
-      let verticalPadding = 0;
-      let width = window.innerWidth - this.$refs.sideBarWidth.clientWidth - verticalPadding;
-       console.log(`Width: ${width}px`);
-      Vue.set(this.emailListwidth, 'width', `${width}px`); 
-    }    
   },
   beforeUpdate(){
     this.$nextTick(function() {
       window.addEventListener('resize', this.setEmailListHeight);
-    }); 
-    // this.$nextTick(function() {
-    //   window.addEventListener('resize', this.setEmailListWidth);
-    // }); 
+    });
   },
   mounted() {
     this.setEmailListHeight();
-    // this.setEmailListWidth();
   }
 }
 </script>
@@ -106,8 +93,5 @@ body {
 }
 .emailList {
   overflow-y: auto;
-}
-.mainView {
-  /* width: 1000px; */
 }
 </style>
