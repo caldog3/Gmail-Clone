@@ -40,7 +40,8 @@ const getTimeFormat = (internalDate) => {
 }
 
 const getBody = (payload) => {
-  let body, attachmentId;
+  let body;
+  let attachmentIds = [];
 
   if (payload.parts === undefined) {
     body = Base64Decode(payload.body.data);
@@ -51,21 +52,37 @@ const getBody = (payload) => {
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
       } else {
-        attachmentId = htmlPart.body.attachmentId;
+        let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
+        body = Base64Decode(multipartMixedAlternativeBody);
+
+        let bodyAndAttachmentArray = payload.parts;
+        for (let part of bodyAndAttachmentArray){
+          if (part.mimeType.includes('image')){
+            attachmentIds.push(part.body.attachmentId);
+          }
+        }
       }
     } else {
       let multipartAlternativeBody = payload.parts[0].body.data;
       if (multipartAlternativeBody !== undefined) {
         body = Base64Decode(multipartAlternativeBody);
       } else {
-        let multipartMixedBody = payload.parts[0].parts[0].body.data;
-        body = Base64Decode(multipartMixedBody);
+        let multipartMixedRelatedBody = payload.parts[0].parts[0].body.data;
+        if (multipartMixedRelatedBody !== undefined){
+          body = Base64Decode(multipartMixedRelatedBody);
+        }
+        else {
+          let multipartMixedRelatedAlternativeBody = payload.parts[0].parts[0].parts[1].body.data;
+          if (multipartMixedRelatedAlternativeBody !== undefined) {
+            body = Base64Decode(multipartMixedRelatedAlternativeBody);
+          }
+        }
       }
     }
   }
   return {
     body,
-    attachmentId
+    attachmentIds
   };
 }
 
