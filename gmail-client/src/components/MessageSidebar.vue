@@ -29,7 +29,7 @@
       <b-list-group-item href="#">
         <font-awesome-icon icon="paper-plane" />  Sent
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item @click="loadDrafts()" href="#">
         <font-awesome-icon icon="file"/>  Drafts
       </b-list-group-item>
       <b-list-group-item href="#">
@@ -89,8 +89,12 @@ export default {
       eventBus.$emit('COMPOSE_OPEN');
     },
     loadInbox() {
-      console.log("HERE???????");
+      //console.log("HERE???????");
       this.$router.push({ path: '/' });
+    },
+    loadDrafts() {
+      //not sure how to route this properly yet
+      this.$router.push({ path: '/'})
     },
   },
   created() {
