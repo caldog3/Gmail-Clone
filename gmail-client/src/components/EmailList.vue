@@ -1,65 +1,45 @@
 /* eslint-disable */
 <template>
   <div class="everything">
-    <table class="table table-striped table-inbox hidden" id="example-1">
-        <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
-            <template v-if="message.labelIds.includes(labelId)" >
-              <!--v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()"-->
-                <td class="One">
-          
-                    <div id="flexfix">
-                      <div class="item">
-                        <div class="highlightArea">
-                          <div v-if=!checked v-on:click="check()">
-                            <font-awesome-icon class="Icon" icon="square" />
-                          </div>
-                          <div v-if=checked v-on:click="check()">
-                            <font-awesome-icon class="Icon" icon="check-square"/>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        <b><span class="leftAlign">{{ message.from }}</span></b>
-                        </router-link>
-                      </div>
-                      <div class="emptySpace">
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        </router-link>
-                      </div>
-                      <div class="smallOnly">
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        <span>{{ message.time }}</span>
-                        </router-link>
-                      </div>
-                    </div>
-                  
-                </td>
-                <td class="Two">
-                  <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                    <div class="leftAlign1">
-                    <b>{{ message.subject }} </b>- 
-                    <br class="rwd-break">
-                    <i><span v-html="message.snippet">...</span></i></div>
-                  </router-link>
-                </td>
-                <td class="Three">
-                  <router-link v-on:click.native="enterMessage()" class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <div class="rightAlign">{{ message.time }}</div>
-                  </router-link>
-                </td>  
-            </template>                      
-        </tbody>
-    </table>        
+    <section style="display: table;" class="table table-striped table-inbox hidden">
+      <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
+        <template v-if="message.labelIds.includes(labelId)">
+          <!-- v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()" -->
+          <div style="display: table-row; cursor: pointer;" v-on:click="enterMessage(message)">
+            <div class="One tableColumn">
+              <div id="flexfix">
+                <div class="highlightArea">
+                  <div v-if=!checked v-on:click="check()">
+                    <font-awesome-icon class="Icon" icon="square" />
+                  </div>
+                  <div v-if=checked v-on:click="check()">
+                    <font-awesome-icon class="Icon" icon="check-square"/>
+                  </div>
+                </div>
+                <b><span class="leftAlign">{{ message.from }}</span></b>
+              </div>
+            </div>
+            <span class="Two tableColumn">
+              <b>{{ message.subject }} </b>- 
+              <br class="rwd-break">
+              <span v-html="message.snippet">...</span>
+            </span>
+            <span class="Three tableColumn rightAlign">{{ message.time }}</span>
+          </div>
+        </template>
+      </div>
+    </section>
   </div>
 </template>
 
 
 <style scoped>
-/* .everything {
-  overflow-y: scroll;
-  height: auto;
-} */
+.everything {
+  /* overflow-y: scroll; */
+  /* height: auto; */
+  /* table-layout: fixed; */
+  border-top: none;
+}
 #flexfix {
   display: flex;
   flex-direction: row;
@@ -73,6 +53,9 @@
 #flexfix svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
+.tableColumn {
+  display: table-cell;
+}
 .tableRow:hover {
   /* not done yet */
 }
@@ -84,47 +67,43 @@
   /* color: #F5F7F7; */
   background-color: #F5F7F7;
 }
-table {
+/* table {
   width: 100%;
   overflow: hidden;
   table-layout: fixed;
   border-top: none;
-}
+} */
 .item {
   width: 30px;
   height: 30px;
 }
-.table tbody + tbody {
+/* .table tbody + tbody {
   border-top: 0px
-}
+} */
 
-td { 
+/* td { 
   overflow:hidden;
   white-space:nowrap;  
-} 
+}  */
 
 .One {
   width: 200px;
   padding: 0px;
+  /* overflow-x: hidden; */
 }
 
 .Two {
-  width: auto;
-  overflow: hidden;
+  max-width: 1200px;
+  overflow-x: hidden;
+  white-space: nowrap ;
   padding: 0px;
 }
 
 .Three {
   width: 100px;
-  padding: 0px;
-}
+  padding: 0px;  overflow: hidden;
 
-.Two a {
-  margin-top: 13px;
-}
-
-.Three a {
-  margin-top: 13px;
+  white-space: nowrap;
 }
 .emptySpace {
   width: 100%;
@@ -136,7 +115,7 @@ td {
 }
 .leftAlign1 {
   float: left;
-  padding-left: 25px;
+  /* padding-left: 25px; */
 }
 .rightAlign {
   float: right;
@@ -150,7 +129,7 @@ td {
   float: right;
 }
 tbody {
-  line-height: 5px;
+  /* line-height: 5px; */
 }
 .rwd-break {
   display: none;
@@ -272,9 +251,10 @@ export default {
       }
       return theClass;
     },
-    enterMessage(id) {
+    enterMessage(message) {
       eventBus.$emit('ENTER_MESSAGE');
-      //this.$store.markAsRead(id);
+      this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }});
+      //this.$store.markAsRead(message.id);
     },
     check() {
       this.checked = !this.checked;

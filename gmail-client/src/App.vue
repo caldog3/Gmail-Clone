@@ -4,12 +4,14 @@
 
       <div id="header" ref="appHeader"><app-header/></div>
 
-      <div class="sideBar"><message-sidebar/></div>
+      <div class="sideBar" ref="sideBarWidth"><message-sidebar/></div>
       
       <div class="mainView">
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
-          <router-view/>
+          <div :style="emailListWidth">
+            <router-view/>
+          </div>
         </div>
       </div>
       <Compose/>
@@ -34,7 +36,8 @@ export default {
   name: 'App',
   data() {
     return {
-      emailListHeight: {}
+      emailListHeight: {},
+      emailListWidth: {}
     }
   },
   components: { 
@@ -50,21 +53,30 @@ export default {
     },
   },
   methods: {
-    getEmailListHeight() {
+    setEmailListHeight() {
       let verticalPadding = 40; //This made it possible to scroll to the bottom of the screen
       let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
-       console.log(`${height}px`);
+       console.log(`Height: ${height}px`);
       Vue.set(this.emailListHeight, 'height', `${height}px`); 
-    }  
+    },
+    setEmailListWidth() {
+      let verticalPadding = 0;
+      let width = window.innerWidth - this.$refs.sideBarWidth.clientWidth - verticalPadding;
+       console.log(`Width: ${width}px`);
+      Vue.set(this.emailListwidth, 'width', `${width}px`); 
+    }    
   },
   beforeUpdate(){
-    this.getEmailListHeight(); 
     this.$nextTick(function() {
-      window.addEventListener('resize', this.getEmailListHeight);
+      window.addEventListener('resize', this.setEmailListHeight);
     }); 
+    // this.$nextTick(function() {
+    //   window.addEventListener('resize', this.setEmailListWidth);
+    // }); 
   },
   mounted() {
-    this.getEmailListHeight();
+    this.setEmailListHeight();
+    // this.setEmailListWidth();
   }
 }
 </script>
@@ -94,5 +106,8 @@ body {
 }
 .emailList {
   overflow-y: auto;
+}
+.mainView {
+  /* width: 1000px; */
 }
 </style>
