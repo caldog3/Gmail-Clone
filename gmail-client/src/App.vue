@@ -57,9 +57,15 @@ export default {
       Vue.set(this.emailListHeight, 'height', `${height}px`); 
     }  
   },
-    mounted() {
-      this.getEmailListHeight();
-    }
+  beforeUpdate(){
+    this.getEmailListHeight(); 
+    this.$nextTick(function() {
+      window.addEventListener('resize', this.getEmailListHeight);
+    }); 
+  },
+  mounted() {
+    this.getEmailListHeight();
+  }
 }
 </script>
 

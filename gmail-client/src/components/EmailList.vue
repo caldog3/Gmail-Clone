@@ -18,6 +18,16 @@
                           </div>
                         </div>
                       </div>
+                      <div class="item">
+                        <div class="highlightArea">
+                          <div>
+                            <font-awesome-icon class="Icon" icon="star" />
+                          </div>
+                          <div>
+                            <font-awesome-icon class="Icon" icon="star" />
+                          </div>
+                        </div>
+                      </div>
                       <div>
                         <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
                         <b><span class="leftAlign">{{ message.from }}</span></b>
