@@ -159,7 +159,8 @@ svg:not(:root).svg-inline--fa {
   .emailLink {
     display: flex;
     flex-direction: column;
-    height: 70px;
+    height: 75px;
+    padding-bottom: 4px;
   }
   .from {
     width: 100%;
