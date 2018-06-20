@@ -61,13 +61,12 @@
             </template>                      
         </tbody>
     </table>         -->
-    <section style="display: table;" class="table table-striped table-inbox hidden">
       <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
         <template v-if="message.labelIds.includes(labelId)">
           <!-- v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()" -->
-          <div style="display: table-row; cursor: pointer;" v-on:click="enterMessage(message)">
-            <div class="One tableColumn">
-              <div id="flexfix">
+          <div class="FlexTable">
+            <div class="checkboxes">
+              <div class="item">
                 <div class="highlightArea">
                   <div v-if=!checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="square" />
@@ -76,19 +75,37 @@
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div>
                 </div>
-                <b><span class="leftAlign">{{ message.from }}</span></b>
+              </div>
+              <div class="star">
+
               </div>
             </div>
-            <span class="Two tableColumn">
-              <b>{{ message.subject }} </b>- 
-              <br class="rwd-break">
-              <span v-html="message.snippet">...</span>
-            </span>
-            <span class="Three tableColumn rightAlign">{{ message.time }}</span>
+
+            <div class="emailLink" v-on:click="enterMessage(message)">
+
+              <div class="from"> 
+                  <b><span class="leftAlign">{{ message.from }}</span></b>
+                  <div class="smallOnly">
+                    <span>{{ message.time }}</span>
+                  </div>
+              </div>
+
+              <div class="snippit">
+                <div class="leftAlign1">
+                    <b>{{ message.subject }} </b>- 
+                    <br class="rwd-break">
+                    <i><span v-html="message.snippet">...</span></i>
+                </div>
+              </div>
+
+              <div class="dateTime"> 
+                <div class="rightAlign">{{ message.time }}</div>
+              </div>
+            </div>
+
           </div>
         </template>
       </div>
-    </section>
   </div>
 </template>
 
@@ -113,12 +130,47 @@
 #flexfix svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
+.FlexTable {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+.checkboxes {
+  width: 60px;
+}
+.emailLink {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  width: auto;
+  height: 30px;
+}
+.from {
+  width: 200px;
+  overflow: hidden;
+  white-space:nowrap; 
+}
+.dateTime {
+  width: 100px;
+  overflow: hidden;
+  white-space:nowrap; 
+}
+.snippit {
+  /* width: auto; */
+  overflow: hidden;
+  white-space:nowrap; 
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
 .tableColumn {
   display: table-cell;
 }
-.tableRow:hover {
-  /* not done yet */
-}
+/* .tableRow:hover {
+   not done yet
+} */
 .readClass {
   color: none;
   background-color: none;
