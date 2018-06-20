@@ -5,12 +5,12 @@
         <div class="flexIcons">
           <div v-on:click="checkAll()" class="item">
             <div class="highlightArea">
-            <div v-if=!checked>
-              <font-awesome-icon class="Icon" icon="square" />
-            </div>
-            <div v-if=checked>
-              <font-awesome-icon class="Icon" icon="check-square"/>
-            </div>
+              <div v-if=!checked>
+                <font-awesome-icon class="Icon" icon="square" />
+              </div>
+              <div v-if=checked>
+                <font-awesome-icon class="Icon" icon="check-square"/>
+              </div>
             </div>
           </div>
           <div class="item">
@@ -20,11 +20,22 @@
             </div>
             </div>
           </div>
-          <div class="item">
-            <div class="highlightArea">
-            <div>
-              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-            </div>
+          <div>
+            <div class="highlightArea item"  v-on:click="ellipsisList()" role="menu" aria-haspopup="true">
+              <div>
+                <!-- <font-awesome-icon class="Icon" icon="ellipsis-v"/> -->
+                <b-dropdown  no-caret>
+                    <template slot="button-content">
+                     <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+                    </template>
+                  <b-dropdown-item>Mark all as read</b-dropdown-item>
+                  <b-dropdown-item disabled>Select messages to see more actions</b-dropdown-item>
+                </b-dropdown>
+
+              </div>
+              <div>  
+
+              </div>
             </div>
           </div>
         </div>
@@ -142,6 +153,7 @@ button {
 .highlightArea:hover {
   background-color: lightgray;
 }
+
 </style>
 
 <script>
@@ -175,7 +187,11 @@ export default {
       //Need to route it back to EmailList
       eventBus.$emit('MESSAGE_LIST');
       this.$router.push({ path: '/' });
-    }
+    },
+    ellipsisList() {
+      console.log("routing?");
+    },
+
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
