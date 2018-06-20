@@ -50,21 +50,21 @@ export default {
     },
   },
   methods: {
-    getEmailListHeight() {
-      let verticalPadding = 40; //This made it possible to scroll to the bottom of the screen
-      let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
-       console.log(`${height}px`);
-      Vue.set(this.emailListHeight, 'height', `${height}px`); 
+    setEmailListHeight() {
+      let verticalPadding = 40;
+      if (this.$refs.appHeader !== undefined){
+        let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
+        Vue.set(this.emailListHeight, 'height', `${height}px`); 
+      }
     }  
   },
   beforeUpdate(){
-    this.getEmailListHeight(); 
     this.$nextTick(function() {
-      window.addEventListener('resize', this.getEmailListHeight);
+      window.addEventListener('resize', this.setEmailListHeight);
     }); 
   },
   mounted() {
-    this.getEmailListHeight();
+    this.setEmailListHeight();
   }
 }
 </script>
