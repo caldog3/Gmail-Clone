@@ -77,7 +77,9 @@
                 </div>
               </div>
               <div class="star">
-
+                <div class="highlightArea">
+                  <font-awesome-icon class="Icon" icon="star" />
+                </div>
               </div>
             </div>
 
@@ -115,6 +117,7 @@
   /* overflow-y: scroll; */
   /* height: auto; */
   /* table-layout: fixed; */
+  width: 100%;
   border-top: none;
 }
 #flexfix {
@@ -137,6 +140,8 @@
   align-content: stretch;
 }
 .checkboxes {
+  display: flex;
+  flex-direction: row;
   width: 60px;
 }
 .emailLink {
@@ -144,25 +149,30 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  width: auto;
   height: 30px;
+  flex-grow: 1;
+  flex-basis: 0;
+  overflow: hidden
 }
 .from {
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
+  flex: initial;
 }
 .dateTime {
   width: 100px;
   overflow: hidden;
   white-space:nowrap; 
+  justify-content: flex-end;
+  flex: initial;
+  margin-left: auto;
 }
 .snippit {
   /* width: auto; */
   overflow: hidden;
   white-space:nowrap; 
-  flex-grow: 1;
-  flex-basis: 0;
+  /* width: 400px; */
 }
 
 .tableColumn {
@@ -174,10 +184,12 @@
 .readClass {
   color: none;
   background-color: none;
+  width: 100%;
 }
 .unreadClass {
   /* color: #F5F7F7; */
   background-color: #F5F7F7;
+  width: 100%;
 }
 /* table {
   width: 100%;
