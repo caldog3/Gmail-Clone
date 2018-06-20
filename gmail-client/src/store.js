@@ -10,7 +10,6 @@ import {
   getEmailInfo
 } from './store-utility-files/email';
 
-Vue.use(require("vue-moment"));
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -18,6 +17,7 @@ export default new Vuex.Store({
     messages: [],
     token: "",
     profileEmail: "",
+    messagesWithAttchments: []
   },
   getters: {
     user: state => state.user,
@@ -28,7 +28,8 @@ export default new Vuex.Store({
         return false;
       }
       return true;
-    }
+    },
+    messagesWithAttchments: state => state.messagesWithAttchments,
   },
   mutations: {
     setToken(state, token) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     addMessage(state, message) {
       state.messages.push(message);
+    },
+    addMessageWithAttachments(state, message) {
+      state.messagesWithAttchments.push(message);
     },
   },
   actions: {
@@ -93,7 +97,6 @@ export default new Vuex.Store({
         .then(messages => {
           messages.forEach(message => {
             context.dispatch("getMessageContent", message.id);
-
           });
         })
         .catch(error => {
@@ -114,15 +117,9 @@ export default new Vuex.Store({
         const { time, unixTime } = getTimeFormat(response.data.internalDate);
         const snippet = response.data.snippet;
         const id = response.data.id;
-        const {body, attachmentId} = getBody(response.data.payload);
-
-        if(attachmentId !== undefined){
-          // context.dispatch('getMessageAttachment', { 
-          //   messageId: messageId, 
-          //   attachmentId: attachmentId 
-          // });
-        }
+        const {body, attachmentIds} = getBody(response.data.payload);
         const message = {
+          messageId,
           from,
           detailedFrom,
           to,
@@ -133,9 +130,9 @@ export default new Vuex.Store({
           id,
           labelIds,
           unread,
-          unixTime
+          unixTime,
+          attachmentIds
         };
-
         context.commit("addMessage", message);
       })
       .catch(error => {
@@ -182,6 +179,25 @@ export default new Vuex.Store({
       .catch(error => {
         console.log(error);
       });
+    },
+    getAttachments(context, message) {
+      if (message.attachmentIds.length !== 0) {
+        const messageId = message.messageId;
+
+        message.attachmentIds.map(attachmentId => {
+          let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
+
+          axios.get(url, getAuthHeader())
+          .then(response => {
+            let attachmentData = response.data;
+            context.commit('addMessageWithAttachments', attachmentData);
+            return attachmentData;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        })
+      }
     }
   }
 });
