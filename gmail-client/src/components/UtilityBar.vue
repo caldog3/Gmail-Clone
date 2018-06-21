@@ -21,20 +21,12 @@
             </div>
           </div>
           <div>
-            <div class="highlightArea item"  v-on:click="ellipsisList()" role="menu" aria-haspopup="true">
-              <div>
-                <!-- <font-awesome-icon class="Icon" icon="ellipsis-v"/> -->
-                <b-dropdown  no-caret>
-                    <template slot="button-content">
-                     <font-awesome-icon class="Icon" icon="ellipsis-v"/>
-                    </template>
-                  <b-dropdown-item>Mark all as read</b-dropdown-item>
-                  <b-dropdown-item disabled>Select messages to see more actions</b-dropdown-item>
-                </b-dropdown>
-
-              </div>
-              <div>  
-
+            <div class="highlightArea item">
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
+              <div id="myDropdown" class="dropdown-content">
+                <p>Mark all as read</p>
+                <hr>
+                <p disabled>Select messages to see more actions</p>
               </div>
             </div>
           </div>
@@ -83,7 +75,22 @@
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="ellipsis-v"/>
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
+              <div id="myDropdown" class="dropdown-content">
+                <p>Mark as read</p>
+                <hr>
+                <p>Mark as important</p>
+                <hr>
+                <p>Add to tasks</p>
+                <hr>
+                <p>Add star</p>
+                <hr>
+                <p>Create Event</p>
+                <hr>
+                <p>Filter messages like these</p>
+                <hr>
+                <p>Mute</p>
+              </div>  
             </div>
           </div>
           <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
@@ -154,6 +161,44 @@ button {
   background-color: lightgray;
 }
 
+/* lets see */
+.dropbtn {
+    /* background-color: #3498DB; */
+    color: black;
+    padding: 0px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.0);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+/* lets see end */
+
+
 </style>
 
 <script>
@@ -191,6 +236,29 @@ export default {
     ellipsisList() {
       console.log("routing?");
     },
+    markAllAsRead() {
+      console.log("marking once we figure out axios.post stuff");
+    },
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    },
+
+    // Close the dropdown if the user clicks outside of it
+    window:onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
 
   },
   created() {
