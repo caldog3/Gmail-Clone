@@ -27,9 +27,6 @@
 
               <div class="from"> 
                   <b><span class="leftAlign">{{ message.from }}</span></b>
-                  <div class="smallOnly">
-                    <span>{{ message.time }}</span>
-                  </div>
               </div>
 
               <div class="snippit">
@@ -45,7 +42,15 @@
               </div>
             </div>
 
+            <div class="smallOnly">
+              <span>{{ message.time }}</span>
+              <div class="highlightArea">              
+                <font-awesome-icon class="Icon" icon="star" />
+              </div>
+            </div>
+
           </div>
+          
         </template>
       </div>
   </div>
@@ -61,7 +66,6 @@
   border-top: none;
 }
 .FlexTable {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-content: stretch;
@@ -172,6 +176,11 @@ svg:not(:root).svg-inline--fa {
     display: block;
     visibility: visible;
     margin-right: 3px;
+    margin-left: 6px;
+    width: 50px;
+  }
+  .smallOnly > div {
+    float: right;
   }
   .rightAlign {
     visibility: hidden;
