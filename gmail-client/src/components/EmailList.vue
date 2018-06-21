@@ -17,8 +17,10 @@
                 </div>
               </div>
               <div class="star">
-                <div class="highlightArea">
-                  <font-awesome-icon class="Icon" icon="star" />
+                <div class="largeOnly">
+                  <div class="highlightArea">
+                    <font-awesome-icon class="Icon" icon="star" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,6 +140,7 @@
   display: none;
   visibility: hidden;
   float: right;
+  margin-top: 4px;
 }
 .rwd-break {
   display: none;
@@ -181,6 +184,13 @@ svg:not(:root).svg-inline--fa {
   }
   .smallOnly > div {
     float: right;
+  }
+  .largeOnly {
+    display: none;
+    visibility: hidden;
+  }
+  .checkboxes {
+    width: 30px;
   }
   .rightAlign {
     visibility: hidden;
