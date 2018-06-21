@@ -6,12 +6,6 @@
       <div class="head">
         <h2>New Message</h2>
       </div>
-      <!-- <div class="alterCompose">
-        <a class="close" @click="minimize">_</a>
-      </div>
-      <div class="alterCompose">
-        <a class="close" @click="fullScreen">/</a>
-      </div> -->
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
@@ -148,21 +142,9 @@ textarea {
 
 <script>
 import { sendMessage } from './../store-utility-files/gmail-api-calls';
-import eventBus from '../event_bus.js'
-import DropDown from './drop-down'
-import Icon from './icon'
-//Temporarily here until the method is moved to the store
-import axios from 'axios';
-
-
-
-const getInitialMessage = () => ({
-  to: '',
-  cc: '',
-  bcc: '',
-  body: '',
-  from: window.currentUser
-})
+import eventBus from '../event_bus.js';
+import DropDown from './drop-down';
+import Icon from './icon';
 
 export default {
   name: 'Compose',
@@ -177,7 +159,6 @@ export default {
       composeMessage: '',
         
       currentUser: window.currentUser,
-      message: getInitialMessage(),
       active: false,
       activeSection: 'to',
       ccActive: false,
@@ -185,42 +166,29 @@ export default {
     }
   },
   methods: {
-      
     open() {
       this.active = true
     },
     close() {
       this.active = false
     },
-    minimize() {
-// here we'll minimize this somehow....
-    },
-    fullScreen() {
-// here we'll full screen this somehow...
-    },
     send() {
       this.close();
-      sendMessage(
-          {
-            'To': this.composeTo,
-            'Subject': this.composeSubject
-          },
-          this.composeMessage
-      );
-      this.composeTidy
-      return false;
+      let headerSection = {
+        'To': this.composeTo,
+        'Subject': this.composeSubject
+      }
+      sendMessage(headerSection, this.composeMessage);
+      this.composeTidy;
     },
     composeTidy() {
         this.composeTo = '';
         this.composeSubject = '';
-        // $('#send-button').removeClass('disabled');
     },
-
-
     focusOnSection(section) {
-      this.activeSection = section
-      this.ccActive = this.message.cc !== ''
-      this.bccActive = this.message.bcc !== ''
+      this.activeSection = section;
+      // this.ccActive = this.message.cc !== '';
+      // this.bccActive = this.message.bcc !== '';
     }
   },
   created() {
