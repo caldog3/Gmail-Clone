@@ -126,10 +126,10 @@ input {
 
 
 <script>
-
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { getProfileEmail } from './../store-utility-files/gmail-api-calls';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import eventBus from './../event_bus';
 import axios from 'axios';
-import eventBus from '../event_bus'
 
 export default {
   name: 'AppHeader',
@@ -165,7 +165,7 @@ export default {
   },
 
   created () {
-    this.$store.dispatch("getProfileEmail");
+    getProfileEmail();
     eventBus.$on('PROFILE_EMAIL', email => {
       this.retrievePhotoURL(email);
     })

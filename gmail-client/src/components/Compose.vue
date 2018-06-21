@@ -6,12 +6,6 @@
       <div class="head">
         <h2>New Message</h2>
       </div>
-      <!-- <div class="alterCompose">
-        <a class="close" @click="minimize">_</a>
-      </div>
-      <div class="alterCompose">
-        <a class="close" @click="fullScreen">/</a>
-      </div> -->
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
@@ -22,10 +16,10 @@
       </div>
     </div>
     <div class="section">
-      <input class="full2" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
+      <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="sectionText">
-      <textarea placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+      <textarea v-model="composeMessage" placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
     </div>
     <div class="footerSection">
       <div class="sendButton">
@@ -147,21 +141,10 @@ textarea {
 </style>
 
 <script>
-import eventBus from '../event_bus.js'
-import DropDown from './drop-down'
-import Icon from './icon'
-//Temporarily here until the method is moved to the store
-import axios from 'axios';
-import { getAuthHeader } from './../store-utility-files/email'
-
-
-const getInitialMessage = () => ({
-  to: '',
-  cc: '',
-  bcc: '',
-  body: '',
-  from: window.currentUser
-})
+import { sendMessage } from './../store-utility-files/gmail-api-calls';
+import eventBus from '../event_bus.js';
+import DropDown from './drop-down';
+import Icon from './icon';
 
 export default {
   name: 'Compose',
@@ -176,7 +159,6 @@ export default {
       composeMessage: '',
         
       currentUser: window.currentUser,
-      message: getInitialMessage(),
       active: false,
       activeSection: 'to',
       ccActive: false,
@@ -184,65 +166,29 @@ export default {
     }
   },
   methods: {
-      
     open() {
       this.active = true
     },
     close() {
       this.active = false
     },
-    minimize() {
-// here we'll minimize this somehow....
-    },
-    fullScreen() {
-// here we'll full screen this somehow...
-    },
-    sendMessage(headers_obj, message, callback) {
-        var email = '';
-        for(var header in headers_obj) {
-            email += header += ": "+headers_obj[header]+"\r\n";
-        }
-        email += "\r\n" + message;
-        //this.$store.sendMessage(email)
-        //This is where I need a url instead of a gapi message
-        let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
-        
-
-//         var sendRequest = axios.post(url, this.$store.getAuthHeader(), {
-
-        console.log(window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'));
-        var sendRequest = axios.post(url, {
-            'userid': 'me',
-            'resource': {
-                'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
-            }}, getAuthHeader())
-        .then(response => {
-        return sendRequest.execute(callback);
-        });
-    },
     send() {
-      this.close()
-      this.sendMessage(
-          {
-            'To': this.composeTo,
-            'Subject': this.composeSubject
-          },
-          this.composeMessage,
-          this.composeTidy
-      );
-      return false;
+      this.close();
+      let headerSection = {
+        'To': this.composeTo,
+        'Subject': this.composeSubject
+      }
+      sendMessage(headerSection, this.composeMessage);
+      this.composeTidy;
     },
     composeTidy() {
         this.composeTo = '';
         this.composeSubject = '';
-        // $('#send-button').removeClass('disabled');
     },
-
-
     focusOnSection(section) {
-      this.activeSection = section
-      this.ccActive = this.message.cc !== ''
-      this.bccActive = this.message.bcc !== ''
+      this.activeSection = section;
+      // this.ccActive = this.message.cc !== '';
+      // this.bccActive = this.message.bcc !== '';
     }
   },
   created() {
