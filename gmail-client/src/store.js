@@ -69,32 +69,34 @@ export default new Vuex.Store({
     //..we need more conditionals
   
     getLabelsForUnread() {
-      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/INBOX';
+      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PERSONAL';
       axios.get(url, getAuthHeader())
       .then(response => {
         let unreadCount = response.data.threadsUnread;
-        console.log("INBOX UNREAD TOTAL");
-        console.log(unreadCount);
-        //I want to filter out archived messages' unreads but haven't found an api call for that yet
-        let socialURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_SOCIAL';
-        axios.get(socialURL, getAuthHeader())
-        .then(response => {
-          let socialUnread = response.data.threadsUnread;
-          console.log("SOCIAL UNREAD");
-          console.log(socialUnread);
-          unreadCount -= socialUnread;
-          let promoURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PROMOTIONS';
-          axios.get(promoURL, getAuthHeader())
-          .then(response => {
-            let promoUnread = response.data.threadsUnread;
-            console.log("PROMO UNREAD");
-            console.log(promoUnread);
-            unreadCount -= promoUnread;
-            console.log("UNREAD COUNT");
-            console.log(unreadCount);
-            eventBus.$emit('UNREAD_COUNT', unreadCount);
-          })
-        })
+        eventBus.$emit('UNREAD_COUNT', unreadCount);
+        //Attemps to get the correct number of unread....didn't work...gave me numbers just barely in the negatives
+        // console.log("INBOX UNREAD TOTAL");
+        // console.log(unreadCount);
+        // //I want to filter out archived messages' unreads but haven't found an api call for that yet
+        // let socialURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_SOCIAL';
+        // axios.get(socialURL, getAuthHeader())
+        // .then(response => {
+        //   let socialUnread = response.data.threadsUnread;
+        //   console.log("SOCIAL UNREAD");
+        //   console.log(socialUnread);
+        //   unreadCount -= socialUnread;
+        //   let promoURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PROMOTIONS';
+        //   axios.get(promoURL, getAuthHeader())
+        //   .then(response => {
+        //     let promoUnread = response.data.threadsUnread;
+        //     console.log("PROMO UNREAD");
+        //     console.log(promoUnread);
+        //     unreadCount -= promoUnread;
+        //     console.log("UNREAD COUNT");
+        //     console.log(unreadCount);
+        //     eventBus.$emit('UNREAD_COUNT', unreadCount);
+        //   })
+        // })
 
       })
     },
