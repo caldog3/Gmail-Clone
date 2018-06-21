@@ -26,7 +26,8 @@ export default new Vuex.Store({
         return false;
       }
       return true;
-    }
+    },
+    messagesWithAttchments: state => state.messagesWithAttchments,
   },
   mutations: {
     setToken(state, token) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     addMessage(state, message) {
       state.messages.push(message);
+    },
+    addMessageWithAttachments(state, message) {
+      state.messagesWithAttchments.push(message);
     },
   },
   actions: {
@@ -156,7 +160,6 @@ export default new Vuex.Store({
           unixTime,
           attachmentIds
         };
-
         context.commit("addMessage", message);
       })
       .catch(error => {

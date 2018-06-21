@@ -1,143 +1,125 @@
 /* eslint-disable */
 <template>
   <div class="everything">
-    <table class="table table-striped table-inbox hidden" id="example-1">
-        <tbody v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
-            <template v-if="message.labelIds.includes(labelId)" >
-              <!--v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()"-->
-                <td class="One">
-          
-                    <div id="flexfix">
-                      <div class="item">
-                        <div class="highlightArea">
-                          <div v-if=!checked v-on:click="check()">
-                            <font-awesome-icon class="Icon" icon="square" />
-                          </div>
-                          <div v-if=checked v-on:click="check()">
-                            <font-awesome-icon class="Icon" icon="check-square"/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="item">
-                        <div class="highlightArea">
-                          <div>
-                            <font-awesome-icon class="Icon" icon="star" />
-                          </div>
-                          <div>
-                            <font-awesome-icon class="Icon" icon="star" />
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        <b><span class="leftAlign">{{ message.from }}</span></b>
-                        </router-link>
-                      </div>
-                      <div class="emptySpace">
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        </router-link>
-                      </div>
-                      <div class="smallOnly">
-                        <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                        <span>{{ message.time }}</span>
-                        </router-link>
-                      </div>
-                    </div>
-                  
-                </td>
-                <td class="Two">
-                  <router-link v-on:click.native="enterMessage(message.id)" class="left" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                    <div class="leftAlign1">
+      <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
+        <template v-if="message.labelIds.includes(labelId)">
+          <div class="FlexTable">
+
+
+            <div class="checkboxes">
+
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-if=!checked v-on:click="check()">
+                    <font-awesome-icon class="Icon" icon="square" />
+                  </div>
+                  <div v-if=checked v-on:click="check()">
+                    <font-awesome-icon class="Icon" icon="check-square"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="star">
+                <div class="largeOnly">
+                  <div class="highlightArea">
+                    <font-awesome-icon class="Icon" icon="star" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="emailLink" v-on:click="enterMessage(message)">
+
+              <div class="from"> 
+                  <b><span class="leftAlign">{{ message.from }}</span></b>
+              </div>
+
+              <div class="snippit">
+                <div class="leftAlign1">
                     <b>{{ message.subject }} </b>- 
                     <br class="rwd-break">
-                    <i><span v-html="message.snippet">...</span></i></div>
-                  </router-link>
-                </td>
-                <td class="Three">
-                  <router-link v-on:click.native="enterMessage()" class="right" :to="{ name: 'EmailBody', params: { id: message.id, message: message }}">
-                  <div class="rightAlign">{{ message.time }}</div>
-                  </router-link>
-                </td>  
-            </template>                      
-        </tbody>
-    </table>        
+                    <i><span v-html="message.snippet">...</span></i>
+                </div>
+              </div>
+
+              <div class="dateTime"> 
+                <div class="rightAlign">{{ message.time }}</div>
+              </div>
+
+            </div>
+
+
+            <div class="smallOnly">
+              <span>{{ message.time }}</span>
+              <div class="highlightArea">              
+                <font-awesome-icon class="Icon" icon="star" />
+              </div>
+            </div>
+
+          </div>     
+        </template>
+      </div>
   </div>
 </template>
 
 
 <style scoped>
-/* .everything {
-  overflow-y: scroll;
-  height: auto;
-} */
-#flexfix {
+.everything {
+  width: 100%;
+  border-top: none;
+}
+.FlexTable {
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  align-items: center;
-  padding-right: 2px;
 }
-#flexfix div:last-child {
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+  width: 60px;
+}
+.emailLink {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  height: 30px;
+  flex-grow: 1;
+  flex-basis: 0;
+  overflow: hidden;
+  padding-top: 4px;
+}
+.from {
+  width: 200px;
+  overflow: hidden;
+  white-space:nowrap; 
+}
+.dateTime {
+  width: 100px;
+  overflow: hidden;
+  white-space:nowrap; 
+  justify-content: flex-end;
   margin-left: auto;
 }
-#flexfix svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.tableRow:hover {
-  /* not done yet */
+.snippit {
+  overflow: hidden;
+  white-space:nowrap; 
+  flex-grow: 1;
+  flex-basis: 0;
 }
 .readClass {
   color: none;
   background-color: none;
+  width: 100%;
 }
 .unreadClass {
-  /* color: #F5F7F7; */
   background-color: #F5F7F7;
-}
-table {
   width: 100%;
-  overflow: hidden;
-  table-layout: fixed;
-  border-top: none;
 }
 .item {
   width: 30px;
-  height: 30px;
-}
-.table tbody + tbody {
-  border-top: 0px
-}
-
-td { 
-  overflow:hidden;
-  white-space:nowrap;  
-} 
-
-.One {
-  width: 200px;
-  padding: 0px;
-}
-
-.Two {
-  width: auto;
-  overflow: hidden;
-  padding: 0px;
-}
-
-.Three {
-  width: 100px;
-  padding: 0px;
-}
-
-.Two a {
-  margin-top: 13px;
-}
-
-.Three a {
-  margin-top: 13px;
-}
-.emptySpace {
-  width: 100%;
   height: 30px;
 }
 .leftAlign {
@@ -146,7 +128,6 @@ td {
 }
 .leftAlign1 {
   float: left;
-  padding-left: 25px;
 }
 .rightAlign {
   float: right;
@@ -158,26 +139,15 @@ td {
   display: none;
   visibility: hidden;
   float: right;
-}
-tbody {
-  line-height: 5px;
+  margin-top: 4px;
 }
 .rwd-break {
   display: none;
 }
-
 a {
   color: black;
   display: inline-block;
   margin-top: 0px;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
 }
 .highlightArea {
   width: 30px;
@@ -188,44 +158,19 @@ a {
 .highlightArea:hover {
   background-color: lightgray !important;
 }
-.Icon {
-  /* border: 1px solid black; */
+svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
 }
 
 @media screen and (max-width : 950px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-    min-width: 480px;
-    overflow: hidden;
+  .emailLink {
+    display: flex;
+    flex-direction: column;
+    height: 75px;
+    padding-bottom: 4px;
   }
-
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
-  .One {
+  .from {
     width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    /* height: 15px; */
-  }
-
-  .Two {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    overflow: hidden; 
-    padding: 3px;
-  }
-
-  .Three {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;  
-    display: none;
-    visibility: hidden;    
   }
   .rwd-break {
     display: block;
@@ -234,6 +179,18 @@ a {
     display: block;
     visibility: visible;
     margin-right: 3px;
+    margin-left: 6px;
+    width: 50px;
+  }
+  .smallOnly > div {
+    float: right;
+  }
+  .largeOnly {
+    display: none;
+    visibility: hidden;
+  }
+  .checkboxes {
+    width: 30px;
   }
   .rightAlign {
     visibility: hidden;
@@ -249,9 +206,6 @@ a {
   a {
     width: 100%;
     display: block;
-    margin-top: 0px;
-  }
-  .Two a {
     margin-top: 0px;
   }
 }
@@ -282,9 +236,10 @@ export default {
       }
       return theClass;
     },
-    enterMessage(id) {
+    enterMessage(message) {
       eventBus.$emit('ENTER_MESSAGE');
-      //this.$store.markAsRead(id);
+      this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }});
+      //this.$store.markAsRead(message.id);
     },
     check() {
       this.checked = !this.checked;
