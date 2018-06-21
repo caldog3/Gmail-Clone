@@ -10,7 +10,6 @@ import {
   getEmailInfo
 } from './store-utility-files/email';
 
-Vue.use(require("vue-moment"));
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -144,15 +143,9 @@ export default new Vuex.Store({
         const { time, unixTime } = getTimeFormat(response.data.internalDate);
         const snippet = response.data.snippet;
         const id = response.data.id;
-        const {body, attachmentId} = getBody(response.data.payload);
-
-        if(attachmentId !== undefined){
-          // context.dispatch('getMessageAttachment', { 
-          //   messageId: messageId, 
-          //   attachmentId: attachmentId 
-          // });
-        }
+        const {body, attachmentIds} = getBody(response.data.payload);
         const message = {
+          messageId,
           from,
           detailedFrom,
           to,
@@ -163,7 +156,8 @@ export default new Vuex.Store({
           id,
           labelIds,
           unread,
-          unixTime
+          unixTime,
+          attachmentIds
         };
 
         context.commit("addMessage", message);
@@ -171,17 +165,6 @@ export default new Vuex.Store({
       .catch(error => {
         console.log(error);
       });
-    },
-    getMessageAttachment(context, payload) {
-      let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${payload.messageId}/attachments/${payload.attachmentId}`;
-      
-      axios.get(url, getAuthHeader())
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
     },
     sendMessage(email) {
       //at some point this will work
@@ -212,6 +195,24 @@ export default new Vuex.Store({
       .catch(error => {
         console.log(error);
       });
+    },
+    getAttachments(context, message) {
+      if (message.attachmentIds.length !== 0) {
+        const messageId = message.messageId;
+        message.attachmentIds.map(attachmentId => {
+          let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
+
+          axios.get(url, getAuthHeader())
+          .then(response => {
+            let attachmentData = response.data;
+            // context.commit('addMessageWithAttachments', attachmentData); 
+            return attachmentData;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        })
+      }
     }
   }
 });
