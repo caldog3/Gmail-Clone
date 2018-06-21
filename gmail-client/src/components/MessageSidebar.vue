@@ -68,10 +68,9 @@ button {
 </style>
 
 <script>
-
-import eventBus from '../event_bus'
-
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { getLabelsForUnread } from './../store-utility-files/gmail-api-calls';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import eventBus from '../event_bus';
 
 export default {
   name: 'MessageSidebar',
@@ -97,7 +96,7 @@ export default {
     eventBus.$on('UNREAD_COUNT', unreads => {
       this.unreadCount = unreads; 
     }),
-    this.$store.dispatch("getLabelsForUnread");
+    getLabelsForUnread();
   },
   
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import eventBus from './event_bus.js'
+
 import {
   getAuthHeader,
   getTimeFormat,
@@ -16,7 +16,6 @@ export default new Vuex.Store({
   state: {
     messages: [],
     token: "",
-    profileEmail: "",
   },
   getters: {
     user: state => state.user,
@@ -55,44 +54,17 @@ export default new Vuex.Store({
         context.commit("setToken", token);
       }
     },
-    getLabels() {
-      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels';
-      axios.get(url, getAuthHeader())
-      .then(response => {
-        console.log("Labels");
-        console.log(response);
-        let unreadCount = response.data.messagesUnread;
-        eventBus.$emit('UNREAD_COUNT', unreadCount);
-      })
-    },
-    //This is where the magic happens! But it's not exactly what we want yet
-    //..we need more conditionals
-  
-    getLabelsForUnread() {
-      let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PERSONAL';
-      axios.get(url, getAuthHeader())
-      .then(response => {
-        let unreadCount = response.data.messagesUnread;
-        //I want to filter out archived messages' unreads but haven't found an api call for that yet
-        let nextURL = '';
-
-        eventBus.$emit('UNREAD_COUNT', unreadCount);
-      })
-    },
     getListOfMessages(context) {
       let url = `https://www.googleapis.com/gmail/v1/users/me/messages`;
 
       if (context.getters.loggedIn) {
         axios.get(url, getAuthHeader())
         .then(response => {
-          //console.log("TESTS!!!!");
-          //console.log(response);
           return response.data.messages;
         })
         .then(messages => {
           messages.forEach(message => {
             context.dispatch("getMessageContent", message.id);
-
           });
         })
         .catch(error => {
@@ -108,7 +80,6 @@ export default new Vuex.Store({
         const { from, to, subject, detailedFrom } = getEmailInfo(
           response.data.payload.headers
         );
-        //console.log(response);
         const { labelIds, unread } = resolveLabels(response.data.labelIds);
         const { time, unixTime } = getTimeFormat(response.data.internalDate);
         const snippet = response.data.snippet;
@@ -136,53 +107,5 @@ export default new Vuex.Store({
         console.log(error);
       });
     },
-    sendMessage(email) {
-      //at some point this will work
-      let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send"
-
-      axios.send(url, getAuthHeader())
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    markAsRead(messageId) {
-      let url = `https://www.googleapis.com/gmail/v1/users/me/threads/${messageId}/modify`;
-      axios.post(url, getAuthHeader())
-      .then(response => {
-        console.log(response);
-      })
-    },
-    getProfileEmail() {
-      let url = `https://www.googleapis.com/gmail/v1/users/me/profile`;
-      axios.get(url, getAuthHeader())
-      .then(response => {
-        //console.log(response.data.emailAddress);
-        eventBus.$emit("PROFILE_EMAIL", response.data.emailAddress);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    },
-    getAttachments(context, message) {
-      if (message.attachmentIds.length !== 0) {
-        const messageId = message.messageId;
-        message.attachmentIds.map(attachmentId => {
-          let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
-
-          axios.get(url, getAuthHeader())
-          .then(response => {
-            let attachmentData = response.data;
-            // context.commit('addMessageWithAttachments', attachmentData); 
-            return attachmentData;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        })
-      }
-    }
   }
 });
