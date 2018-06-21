@@ -4,7 +4,30 @@ import eventBus from './../event_bus.js';
 import axios from 'axios';
 
 const sendMessage = (headers, message) => {
-  // const url = "https://www.googleapis.com/gmail/v1/users/me/messages/send"
+  let email = '';
+  for (let header in headers){
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  const token = localStorage.getItem("token");
+  const rawEmail = Base64Encode(email);
+
+  const dataObject = {
+    raw: rawEmail, //We'll use message: { raw: rawEmail } when we send attachments.
+    headers: {
+      'Content-Type': 'message/rfc822',
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
+  axios.post(url, dataObject)
+    .then((response) => {
+      console.log(`RESPONSE!!: ${response}`);
+  }).catch((err) => {
+    console.log(err);
+  });
+  
 
   // let transporter = nodemailer.createTransport({
   //   host: 'smtp.gmail.com',
@@ -17,22 +40,6 @@ const sendMessage = (headers, message) => {
   //   }
   // });
 
-  // let mailOptions = {
-  //   from: '"Ammon" <foo@example.com>', // sender address
-  //   to: 'amugimu@example.com',
-  //   subject: 'Hello ✔',
-  //   text: 'Hello world? sadf', // plain text body
-  //   html: '<b>Hello world?</b>' // html body
-  // };
-
-  // // send mail with defined transport object
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     return console.log(error);
-  //   }
-  //   console.log('Message sent: %s', info.messageId);
-  //   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  // });
 }
 
 const markAsRead = (messageId) => {
