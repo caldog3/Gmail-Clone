@@ -22,10 +22,10 @@
       </div>
     </div>
     <div class="section">
-      <input class="full2" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
+      <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="sectionText">
-      <textarea placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+      <textarea v-model="composeMessage" placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
     </div>
     <div class="footerSection">
       <div class="sendButton">
@@ -147,12 +147,13 @@ textarea {
 </style>
 
 <script>
+import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import eventBus from '../event_bus.js'
 import DropDown from './drop-down'
 import Icon from './icon'
 //Temporarily here until the method is moved to the store
 import axios from 'axios';
-import { getAuthHeader } from './../store-utility-files/email'
+
 
 
 const getInitialMessage = () => ({
@@ -197,39 +198,16 @@ export default {
     fullScreen() {
 // here we'll full screen this somehow...
     },
-    sendMessage(headers_obj, message, callback) {
-        var email = '';
-        for(var header in headers_obj) {
-            email += header += ": "+headers_obj[header]+"\r\n";
-        }
-        email += "\r\n" + message;
-        //this.$store.sendMessage(email)
-        //This is where I need a url instead of a gapi message
-        let url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
-        
-
-//         var sendRequest = axios.post(url, this.$store.getAuthHeader(), {
-
-        console.log(window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_'));
-        var sendRequest = axios.post(url, {
-            'userid': 'me',
-            'resource': {
-                'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
-            }}, getAuthHeader())
-        .then(response => {
-        return sendRequest.execute(callback);
-        });
-    },
     send() {
-      this.close()
-      this.sendMessage(
+      this.close();
+      sendMessage(
           {
             'To': this.composeTo,
             'Subject': this.composeSubject
           },
-          this.composeMessage,
-          this.composeTidy
+          this.composeMessage
       );
+      this.composeTidy
       return false;
     },
     composeTidy() {
