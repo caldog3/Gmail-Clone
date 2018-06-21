@@ -10,6 +10,7 @@ const sendMessage = (headers, message) => {
   }
   email += "\r\n" + message;
   const token = localStorage.getItem("token");
+  console.log(token);
   const rawEmail = Base64Encode(email);
 
   const dataObject = {
@@ -40,7 +41,7 @@ const getProfileEmail = () => {
   let url = `https://www.googleapis.com/gmail/v1/users/me/profile`;
   axios.get(url, getAuthHeader())
     .then(response => {
-      //console.log(response.data.emailAddress);
+      console.log(response.data.emailAddress);
       eventBus.$emit("PROFILE_EMAIL", response.data.emailAddress);
     })
     .catch(error => {

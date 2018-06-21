@@ -53,15 +53,38 @@ const getBody = (payload) => {
         body = Base64Decode(htmlBodyData);
       } else {
         let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
-        body = Base64Decode(multipartMixedAlternativeBody);
+        if (multipartMixedAlternativeBody !== undefined){
+          body = Base64Decode(multipartMixedAlternativeBody);
 
-        let bodyAndAttachmentArray = payload.parts;
-        for (let part of bodyAndAttachmentArray) {
-
-          if (part.mimeType.includes('image')) {
-            attachmentIds.push(part.body.attachmentId);
+          let bodyAndAttachmentArray = payload.parts;
+          for (let part of bodyAndAttachmentArray) {
+            if (part.mimeType.includes('image')) {
+              attachmentIds.push(part.body.attachmentId);
+            }
           }
         }
+        else{
+          let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
+          if (multipartMixedAlternativeBodyEdge !== undefined) {
+            body = Base64Decode(multipartMixedAlternativeBodyEdge);
+            let bodyAndAttachmentObject = payload.parts;
+            for (let part of bodyAndAttachmentObject) {
+            //  console.log(part);
+              if (part.mimeType.includes('application')) {
+                attachmentIds.push(part.body.attachmentId);
+                console.log(part.body);
+              }
+              else if (part.mimeType.includes('image')) {
+                attachmentIds.push(part.body.attachmentId);
+                console.log(part.body);
+              }
+            }
+          }
+          //console.log(payload.parts[0].parts[0].parts[1].body.data);
+          //console.log(payload.parts[0].parts[1].body.attachmentId) // chipmunk
+        }
+
+        
       }
     } else {
       let multipartAlternativeBody = payload.parts[0].body.data;

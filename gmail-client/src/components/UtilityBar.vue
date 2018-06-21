@@ -242,7 +242,8 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+      console.log("entered the function");
+      document.getElementById("myDropdown").classList.toggle("show");
     },
 
     // Close the dropdown if the user clicks outside of it
