@@ -3,9 +3,11 @@
   <div class="everything">
       <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
         <template v-if="message.labelIds.includes(labelId)">
-          <!-- v-bind:class="{tableRow: noHover, tableRowHover: tableRowClass}" v-on:hover="hovering()" -->
           <div class="FlexTable">
+
+
             <div class="checkboxes">
+
               <div class="item">
                 <div class="highlightArea">
                   <div v-if=!checked v-on:click="check()">
@@ -16,6 +18,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
@@ -23,7 +26,9 @@
                   </div>
                 </div>
               </div>
+
             </div>
+
 
             <div class="emailLink" v-on:click="enterMessage(message)">
 
@@ -42,7 +47,9 @@
               <div class="dateTime"> 
                 <div class="rightAlign">{{ message.time }}</div>
               </div>
+
             </div>
+
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
@@ -51,8 +58,7 @@
               </div>
             </div>
 
-          </div>
-          
+          </div>     
         </template>
       </div>
   </div>
@@ -61,9 +67,6 @@
 
 <style scoped>
 .everything {
-  /* overflow-y: scroll; */
-  /* height: auto; */
-  /* table-layout: fixed; */
   width: 100%;
   border-top: none;
 }
@@ -101,12 +104,10 @@
   margin-left: auto;
 }
 .snippit {
-  /* width: auto; */
   overflow: hidden;
   white-space:nowrap; 
   flex-grow: 1;
   flex-basis: 0;
-  /* width: 400px; */
 }
 .readClass {
   color: none;
@@ -114,7 +115,6 @@
   width: 100%;
 }
 .unreadClass {
-  /* color: #F5F7F7; */
   background-color: #F5F7F7;
   width: 100%;
 }
@@ -128,7 +128,6 @@
 }
 .leftAlign1 {
   float: left;
-  /* padding-left: 25px; */
 }
 .rightAlign {
   float: right;
@@ -162,6 +161,7 @@ a {
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
+
 @media screen and (max-width : 950px) {
   .emailLink {
     display: flex;
