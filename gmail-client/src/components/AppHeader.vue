@@ -168,6 +168,7 @@ export default {
   },
 
   created() {
+    
     getProfileEmail();
     eventBus.$on('PROFILE_EMAIL', email => {
       //console.log("did I get here");
