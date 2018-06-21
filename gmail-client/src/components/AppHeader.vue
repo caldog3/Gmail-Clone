@@ -160,6 +160,8 @@ export default {
       axios.get(`https://picasaweb.google.com/data/entry/api/user/${userEmail}?alt=json`)
       .then(response => {
         this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+      }).catch(error => {
+        console.log(error);
       })
     },
   },
