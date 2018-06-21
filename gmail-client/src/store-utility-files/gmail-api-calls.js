@@ -1,6 +1,5 @@
 import { getAuthHeader, Base64Encode } from './email';
 import eventBus from './../event_bus.js';
-// import nodemailer from 'nodemailer';
 import axios from 'axios';
 
 const sendMessage = (headers, message) => {
@@ -27,19 +26,6 @@ const sendMessage = (headers, message) => {
   }).catch((err) => {
     console.log(err);
   });
-  
-
-  // let transporter = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     type: 'OAuth2',
-  //     user: 'me',
-  //     accessToken: localStorage.getItem("token")
-  //   }
-  // });
-
 }
 
 const markAsRead = (messageId) => {
