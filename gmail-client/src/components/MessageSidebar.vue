@@ -29,7 +29,7 @@
       <b-list-group-item href="#">
         <font-awesome-icon icon="paper-plane" />  Sent
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item @click="loadDrafts()" href="#">
         <font-awesome-icon icon="file"/>  Drafts
       </b-list-group-item>
       <b-list-group-item href="#">
@@ -68,10 +68,9 @@ button {
 </style>
 
 <script>
-
-import eventBus from '../event_bus'
-
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { getLabelsForUnread } from './../store-utility-files/gmail-api-calls';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import eventBus from '../event_bus';
 
 export default {
   name: 'MessageSidebar',
@@ -89,15 +88,19 @@ export default {
       eventBus.$emit('COMPOSE_OPEN');
     },
     loadInbox() {
-      console.log("HERE???????");
+      //console.log("HERE???????");
       this.$router.push({ path: '/' });
+    },
+    loadDrafts() {
+      //not sure how to route this properly yet
+      this.$router.push({ path: '/'})
     },
   },
   created() {
     eventBus.$on('UNREAD_COUNT', unreads => {
       this.unreadCount = unreads; 
     }),
-    this.$store.dispatch("getLabelsForUnread");
+    getLabelsForUnread();
   },
   
 }

@@ -41,7 +41,7 @@ const getTimeFormat = (internalDate) => {
 
 const getBody = (payload) => {
   let body;
-  let attachmentIds = [];
+  let attachmentIds = [];  
 
   if (payload.parts === undefined) {
     body = Base64Decode(payload.body.data);
@@ -56,8 +56,9 @@ const getBody = (payload) => {
         body = Base64Decode(multipartMixedAlternativeBody);
 
         let bodyAndAttachmentArray = payload.parts;
-        for (let part of bodyAndAttachmentArray){
-          if (part.mimeType.includes('image')){
+        for (let part of bodyAndAttachmentArray) {
+
+          if (part.mimeType.includes('image')) {
             attachmentIds.push(part.body.attachmentId);
           }
         }
@@ -68,10 +69,9 @@ const getBody = (payload) => {
         body = Base64Decode(multipartAlternativeBody);
       } else {
         let multipartMixedRelatedBody = payload.parts[0].parts[0].body.data;
-        if (multipartMixedRelatedBody !== undefined){
+        if (multipartMixedRelatedBody !== undefined) {
           body = Base64Decode(multipartMixedRelatedBody);
-        }
-        else {
+        } else {
           let multipartMixedRelatedAlternativeBody = payload.parts[0].parts[0].parts[1].body.data;
           if (multipartMixedRelatedAlternativeBody !== undefined) {
             body = Base64Decode(multipartMixedRelatedAlternativeBody);
