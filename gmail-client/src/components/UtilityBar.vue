@@ -26,7 +26,7 @@
               <div id="myDropdown" class="dropdown-content">
                 <p>Mark all as read</p>
                 <hr>
-                <p disabled>Select messages to see more actions</p>
+                <p class="noHighligt" disabled>Select messages to see more actions</p>
               </div>
             </div>
           </div>
@@ -163,39 +163,51 @@ button {
 
 /* lets see */
 .dropbtn {
-    /* background-color: #3498DB; */
-    color: black;
-    padding: 0px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    background-color: rgba(255, 0, 0, 0.0);
+  /* background-color: #3498DB; */
+  color: black;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.0);
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+p {
+  margin: 4px;
+}
+
+p:hover {background-color: #ddd;}
+
+.noHighligt p:hover {background-color: #f1f1f1;}
+
+hr {
+  margin: 0px;
+}
 /* lets see end */
 
 
