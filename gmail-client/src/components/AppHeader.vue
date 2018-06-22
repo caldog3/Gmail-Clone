@@ -169,7 +169,7 @@ export default {
 
   created() {
     
-    getProfileEmail();
+    getProfileEmail(),
     eventBus.$on('PROFILE_EMAIL', email => {
       //console.log("did I get here");
       this.retrievePhotoURL(email);
