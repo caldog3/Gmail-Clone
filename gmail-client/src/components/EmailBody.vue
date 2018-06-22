@@ -9,6 +9,11 @@
     </div>
     <p>Attachments: {{attachments}}</p>
     <div v-html="body" class="leftAlign"></div>
+    <div class="response-buttons"> 
+      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+      &emsp;
+      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+    </div>
   </div>
 </template>
 
@@ -17,11 +22,21 @@
   text-align: left;
   margin-left: 2%;
 }
+.response-buttons {
+  margin: 40px;
+  text-align: left;
+  margin-left: 2%;
+}
 </style>
 
 <script>
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 export default {
   name: 'EmailBody',
+  components: {
+    FontAwesomeIcon
+  },
   computed: {
     message(){
       let messageId =this.$route.params.id;

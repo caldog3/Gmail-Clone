@@ -32,10 +32,12 @@ import faSquareO from "@fortawesome/fontawesome-free-solid/faSquare";
 import faCheckSquareO from "@fortawesome/fontawesome-free-solid/faCheckSquare";
 import faArrowLeft from "@fortawesome/fontawesome-free-solid/faArrowLeft";
 import faEllipsisV from "@fortawesome/fontawesome-free-solid/faEllipsisV";
+import faReply from "@fortawesome/fontawesome-free-solid/faReply";
+import faLongArrowAltRight from "@fortawesome/fontawesome-free-solid/faLongArrowAltRight";
 
 fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,
-  faRetweet, faSquareO, faCheckSquareO, faArrowLeft, faEllipsisV);
+  faRetweet, faSquareO, faCheckSquareO, faArrowLeft, faEllipsisV, faReply, faLongArrowAltRight);
 
 Vue.config.productionTip = false
 
