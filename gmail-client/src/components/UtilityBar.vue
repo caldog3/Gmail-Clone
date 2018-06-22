@@ -26,7 +26,7 @@
               <div id="myDropdown" class="dropdown-content">
                 <p>Mark all as read</p>
                 <hr>
-                <p class="noHighligt" disabled>Select messages to see more actions</p>
+                <p disabled>Select messages to see more actions</p>
               </div>
             </div>
           </div>
@@ -203,7 +203,6 @@ p {
 
 p:hover {background-color: #ddd;}
 
-.noHighligt p:hover {background-color: #f1f1f1;}
 
 hr {
   margin: 0px;
