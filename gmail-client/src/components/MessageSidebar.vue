@@ -9,7 +9,7 @@
       <b-list-group-item class="dflex justify-content-between" @click="loadInbox()" href="#" variant="dark">
         <div id="sidebarFlex">
           <div>
-            <font-awesome-icon icon="inbox" />  Inbox
+            <font-awesome-icon style="color:white;" icon="inbox" />  Inbox
           </div>
           <div>
             <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
@@ -17,26 +17,26 @@
           </div>
         </div>
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="star" />  Starred
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="star" />  Starred
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="clock"/>  Snoozed
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="clock"/>  Snoozed
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="arrow-right" />  Important
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="arrow-right" />  Important
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="paper-plane" />  Sent
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="paper-plane" />  Sent
       </b-list-group-item>
-      <b-list-group-item @click="loadDrafts()" href="#">
-        <font-awesome-icon icon="file"/>  Drafts
+      <b-list-group-item @click="loadDrafts()" href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="file"/>  Drafts
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="exclamation-circle"/>  Spam
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="exclamation-circle"/>  Spam
       </b-list-group-item>
-      <b-list-group-item href="#">
-        <font-awesome-icon icon="trash" />  Trash
+      <b-list-group-item href="#" variant="light">
+        <font-awesome-icon style="color:white;" icon="trash" />  Trash
       </b-list-group-item>
     </b-list-group> 
   </div>
@@ -47,11 +47,10 @@
 #sidebarFlex {
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
 }
 .sideBar {
   /* max-width: 270px; */
-  background-color: white;
   float: left;
 }
 #bootstrap-overrides {
@@ -64,7 +63,14 @@ button {
 .notificationPill b-badge {
   text-align: right;
 }
-
+.list-group-item-dark {
+  background-color: inherit;
+  color: white;
+}
+.list-group-item-action {
+  background-color: inherit;
+  color: white;
+}
 </style>
 
 <script>
