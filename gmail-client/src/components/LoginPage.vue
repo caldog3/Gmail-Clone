@@ -4,6 +4,9 @@
     <img src="./../assets/logo1.png" alt="">
     <br>
     <gmail-auth/>
+    <div class="whiteSpace">
+
+    </div>
   </div>
 </template>
 
@@ -11,6 +14,10 @@
 .column {
   background-color: white;
   height: 100%;
+}
+.whiteSpace {
+  height: 9999px;
+  /* not sure if this is the best strategy for solving this but I mean it works.... */
 }
 </style>
 
