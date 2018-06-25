@@ -62,7 +62,6 @@
 }
 .header {
   /* height: 64px; */
-  background-color: white;
   border-bottom: 1px;
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
