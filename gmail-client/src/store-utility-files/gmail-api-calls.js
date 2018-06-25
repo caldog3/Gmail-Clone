@@ -17,10 +17,11 @@ const sendMessage = (headers, message) => {
     raw: rawEmail, //We'll use message: { raw: rawEmail } when we send attachments.
     headers: {
       'Content-Type': 'message/rfc822',
+      'Content-Length': rawEmail.length,
       Authorization: `Bearer ${token}`
     }
   }
-  const url = "https://www.googleapis.com/gmail/v1/users/me/messages/send";
+  const url = "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send?uploadType=media";
   axios.post(url, dataObject)
     .then((response) => {
       console.log(`RESPONSE!!: ${response}`);

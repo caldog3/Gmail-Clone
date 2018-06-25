@@ -12,6 +12,10 @@
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
+      <span class="respond-all">
+        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        &emsp;
+      </span>
       <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
@@ -26,6 +30,9 @@
   margin: 40px;
   text-align: left;
   margin-left: 2%;
+}
+.respond-all {
+  display: inline;
 }
 </style>
 
