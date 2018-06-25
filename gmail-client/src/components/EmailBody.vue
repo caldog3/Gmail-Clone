@@ -12,7 +12,7 @@
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
-      <span class="respond-all">
+      <span v-bind:class="ifGroupMessage()">
         <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
         &emsp;
       </span>
@@ -35,8 +35,11 @@
   text-align: left;
   margin-left: 2%;
 }
-.respond-all {
+.group-message {
   display: inline;
+}
+.not-group-message {
+  display: none;
 }
 </style>
 
@@ -80,11 +83,21 @@ export default {
   methods: {
     getAttachments(){
       this.$store.dispatch('getAttachments', this.message);
-    }
+    },
+    ifGroupMessage() {
+      let to = this.message.to;
+      //console.log(to);
+      var theClass = 'not-group-message';
+      //console.log(message.unread);
+      if(to.includes(",")){
+          theClass = 'group-message';
+      }
+      return theClass;
+    },
   },
   mounted(){
     let messages = this.$store.getters.messagesWithAttachment;
-    console.log(messages);
+    //console.log(messages);
     if (messages !== undefined){
       this.getAttachments();
     }
