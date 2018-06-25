@@ -44,6 +44,8 @@
 }
 .body {
   background-color: white;
+  padding-top: 2%;
+  padding-left: 5%;
 }
 </style>
 
