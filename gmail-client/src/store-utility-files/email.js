@@ -131,6 +131,9 @@ const getEmailInfo = (headers) => {
   for (let i = 0; i < headers.length; i++) {
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
+      // console.log(detailedFrom);
+      // console.log("Emergency headers");
+      // console.log(headers);
 
       from = detailedFrom.substr(0, detailedFrom.indexOf('<') - 1);
       if (from === "") {
@@ -140,10 +143,15 @@ const getEmailInfo = (headers) => {
 
         from = from.substring(1, from.length - 1);
       }
-    } else if (headers[i].name === "Delivered-To") {
+    } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
+      // console.log(headers[i].value);
+      // console.log("SPACE");
+      // console.log(headers);
+
       to = headers[i].value;
     } else if (headers[i].name === "Subject") {
       subject = headers[i].value;
+      // console.log(subject);
     }
   }
   return {
