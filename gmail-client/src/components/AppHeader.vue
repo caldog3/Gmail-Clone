@@ -68,7 +68,7 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: white;
+  color: black;
 }
 .menu {
   padding-left: 10px;
@@ -81,11 +81,10 @@ img {
 }
 .brand{
   padding-right: 85px;
-  color: white;
   /* margin-top: 5px; */
 }
 .navbar-light .navbar-brand {
-  color: white;
+  color: black;
 }
 .search {
   border-radius: 5px;
