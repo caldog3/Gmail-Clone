@@ -21,10 +21,7 @@
   min-width: 400px;
   overflow: hidden;
 } */
-.setWdith {
-  background-color: white;
-  opacity: 0.7;
-}
+
 ul > .nav {
   display: flex;
   flex-wrap: nowrap !important;
