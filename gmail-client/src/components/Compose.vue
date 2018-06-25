@@ -38,10 +38,11 @@
   right: 10px;
   width: 510px;
   display: flex;
-  height: 400px;
+  height: 500px;
   flex-direction: column;
   align-content: stretch;
   align-items: center;
+  margin-right: 20px;
 }
 .flexFrom {
   display: flex;

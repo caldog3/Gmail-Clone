@@ -22,7 +22,12 @@
               <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <font-awesome-icon class="Icon" icon="star" />
+                    <div v-if=!starCheck v-on:click="checkStar()">
+                      <font-awesome-icon class="Icon" icon="star" />
+                    </div>
+                    <div v-if=starCheck v-on:click="checkStar()">
+                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -54,7 +59,12 @@
             <div class="smallOnly">
               <span>{{ message.time }}</span>
               <div class="highlightArea">              
-                <font-awesome-icon class="Icon" icon="star" />
+                <div v-if=!starCheck v-on:click="checkStar()">
+                    <font-awesome-icon class="Icon" icon="star" />
+                </div>
+                <div v-if=starCheck v-on:click="checkStar()">
+                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                </div>
               </div>
             </div>
 
@@ -225,6 +235,7 @@ export default {
   data() {
     return {
       checked: false,
+      starCheck: false,
     }
   },
   methods: {
@@ -243,6 +254,9 @@ export default {
     },
     check() {
       this.checked = !this.checked;
+    },
+    checkStar() {
+      this.starCheck = !this.starCheck;
     },
   },
   computed: {
