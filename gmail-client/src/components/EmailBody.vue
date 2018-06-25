@@ -7,7 +7,6 @@
       <p><b>{{from}}</b></p>
       <p>to {{to}}</p>
     </div>
-    <p>Attachments: {{attachments}}</p>
     <div v-html="body" class="leftAlign"></div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
@@ -80,6 +79,10 @@ export default {
     },
     to(){
       return this.message.to;
+<<<<<<< HEAD
+    }
+  },
+=======
     },
     attachments(){
       console.log("Checking on attachments");
@@ -108,5 +111,6 @@ export default {
       this.getAttachments();
     }
   }
+>>>>>>> 98243c697de22d7c6a356dd15c7592c06f99248c
 }
 </script>

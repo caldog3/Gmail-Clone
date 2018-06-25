@@ -1,6 +1,5 @@
-import { getAuthHeader, Base64Encode } from './email';
+import { Base64Encode } from './email';
 import eventBus from './../event_bus.js';
-import axios from 'axios';
 
 const sendMessage = (headers, message) => {
   let email = '';
@@ -9,22 +8,14 @@ const sendMessage = (headers, message) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
-  const token = localStorage.getItem("token");
-  //console.log(token);
-  const rawEmail = Base64Encode(email);
 
-  const dataObject = {
-    raw: rawEmail, //We'll use message: { raw: rawEmail } when we send attachments.
-    headers: {
-      'Content-Type': 'message/rfc822',
-      'Content-Length': rawEmail.length,
-      Authorization: `Bearer ${token}`
+  gapi.client.gmail.users.messages.send({
+    'userId': 'me',
+    'resource': {
+      'raw': Base64Encode(email)
     }
-  }
-  const url = "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send?uploadType=media";
-  axios.post(url, dataObject)
-    .then((response) => {
-      console.log(`RESPONSE!!: ${response}`);
+  }).then((response) => {
+    console.log(`Email Sent. Response =>:`, response);
   }).catch((err) => {
     console.log(err);
   });
@@ -32,67 +23,94 @@ const sendMessage = (headers, message) => {
 
 const markAsRead = (messageId) => {
   let url = `https://www.googleapis.com/gmail/v1/users/me/threads/${messageId}/modify`;
-  axios.post(url, getAuthHeader())
-    .then(response => {
-      //console.log(response);
-    })
+  gapi.client.gmail.users.messages.modify({
+    'userId': 'me',
+    'id': messageId,
+    'removeLabelIds': ['UNREAD']
+  }).catch((err) => {
+    console.log(err);
+  });
 }
 
-const getProfileEmail = () => {
-  let url = `https://www.googleapis.com/gmail/v1/users/me/profile`;
-  axios.get(url, getAuthHeader())
-    .then(response => {
-     // console.log(response.data.emailAddress);
-      eventBus.$emit("PROFILE_EMAIL", response.data.emailAddress);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
-
-const getLabels = () => {
-  let url = 'https://www.googleapis.com/gmail/v1/users/me/labels';
-  axios.get(url, getAuthHeader())
-    .then(response => {
-      console.log("Labels");
-      console.log(response);
-      let unreadCount = response.data.messagesUnread;
-      eventBus.$emit('UNREAD_COUNT', unreadCount);
-    })
-}
+// const getLabels = () => {
+//   let url = 'https://www.googleapis.com/gmail/v1/users/me/labels';
+//   axios.get(url, getAuthHeader())
+//     .then(response => {
+//       console.log("Labels");
+//       console.log(response);
+//       let unreadCount = response.data.messagesUnread;
+//       eventBus.$emit('UNREAD_COUNT', unreadCount);
+//     })
+// }
 
 //This is where the magic happens! But it's not exactly what we want yet
 //..we need more conditionals
 
 const getLabelsForUnread = () => {
-  let url = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PERSONAL';
-  axios.get(url, getAuthHeader())
-    .then(response => {
-      let unreadCount = response.data.messagesUnread;
-      //I want to filter out archived messages' unreads but haven't found an api call for that yet
-      let nextURL = '';
-
+  gapi.client.load('gmail', 'v1').then(() => {
+    gapi.client.gmail.users.labels.get({
+    'userId': 'me',
+    'id': 'CATEGORY_PERSONAL',
+    }).then((response) => {
+      let unreadCount = response.result.threadsUnread;
       eventBus.$emit('UNREAD_COUNT', unreadCount);
-    })
+
+      //Attemps to get the correct number of unread....didn't work...gave me numbers just barely in the negatives
+      // console.log("INBOX UNREAD TOTAL");
+      // console.log(unreadCount);
+      // //I want to filter out archived messages' unreads but haven't found an api call for that yet
+      // let socialURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_SOCIAL';
+      // axios.get(socialURL, getAuthHeader())
+      // .then(response => {
+      //   let socialUnread = response.data.threadsUnread;
+      //   console.log("SOCIAL UNREAD");
+      //   console.log(socialUnread);
+      //   unreadCount -= socialUnread;
+      //   let promoURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PROMOTIONS';
+      //   axios.get(promoURL, getAuthHeader())
+      //   .then(response => {
+      //     let promoUnread = response.data.threadsUnread;
+      //     console.log("PROMO UNREAD");
+      //     console.log(promoUnread);
+      //     unreadCount -= promoUnread;
+      //     console.log("UNREAD COUNT");
+      //     console.log(unreadCount);
+      //     eventBus.$emit('UNREAD_COUNT', unreadCount);
+      //   })
+      // })
+    });
+  });
 }
 
-const getAttachments = (message) => {
-  if (message.attachmentIds.length !== 0) {
-    const messageId = message.messageId;
-    message.attachmentIds.map(attachmentId => {
-      let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
+// const getListOfDrafts =() => {
+//   let url = "https://www.googleapis.com/gmail/v1/users/me/drafts";
+//   axios.get(url, getAuthHeader())
+//     .then(response => {
+//       console.log("DRAFTS OBJ");
+//       console.log(response);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// }
 
-      axios.get(url, getAuthHeader())
-        .then(response => {
-          let attachmentData = response.data;
-          return attachmentData;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    })
-  }
-}
+// const getAttachments = (message) => {
+//   if (message.attachmentIds.length !== 0) {
+//     const messageId = message.messageId;
+//     message.attachmentIds.map(attachmentId => {
+//       let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
+
+//       axios.get(url, getAuthHeader())
+//         .then(response => {
+//           let attachmentData = response.data;
+//           return attachmentData;
+//         })
+//         .catch(error => {
+//           console.log(error);
+//         });
+//     })
+//   }
+// }
 
 export {
   sendMessage,
