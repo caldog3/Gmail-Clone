@@ -3,9 +3,8 @@
     <h1>Gmail Clone</h1>
     <img src="./../assets/logo1.png" alt="">
     <br>
-    <gmail-auth/>
+    <button @click="authenticate()">Sign In</button>
     <div class="whiteSpace">
-
     </div>
   </div>
 </template>
