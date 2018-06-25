@@ -84,10 +84,10 @@ export default {
 #header {
   height: 91px;
 }
-/* body {
+body {
   overflow: hidden;
   background-image: url(assets/Background1.jpg);
-} */
+}
 .sideBar {
   min-width: 270px;
   height: 860px;

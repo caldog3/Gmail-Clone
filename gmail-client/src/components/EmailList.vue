@@ -125,12 +125,12 @@
 .readClass {
   color: none;
   background-color: white;
-  /* opacity: 0.7; */
+  opacity: 0.7;
   width: 100%;
 }
 .unreadClass {
   background-color: #F5F7F7;
-  /* opacity: 0.9; */
+  opacity: 0.9;
   width: 100%;
 }
 .item {
