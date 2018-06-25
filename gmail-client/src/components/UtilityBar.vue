@@ -24,9 +24,9 @@
             <div class="highlightArea item">
               <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
-                <p>Mark all as read</p>
+                <p>  Mark all as read </p>
                 <hr>
-                <p disabled>Select messages to see more actions</p>
+                <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
               </div>
             </div>
           </div>
@@ -163,39 +163,60 @@ button {
 
 /* lets see */
 .dropbtn {
-    /* background-color: #3498DB; */
-    color: black;
-    padding: 0px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    background-color: rgba(255, 0, 0, 0.0);
+  /* background-color: #3498DB; */
+  color: black;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.0);
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: default;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+p {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.noHighlightDiv {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  cursor: default;
+}
+
+p:hover {background-color: #ddd;}
+
+
+hr {
+  margin: 0px;
+}
 /* lets see end */
 
 
@@ -242,7 +263,7 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+      document.getElementById("myDropdown").classList.toggle("show");
     },
 
     // Close the dropdown if the user clicks outside of it
