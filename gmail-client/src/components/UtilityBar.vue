@@ -121,7 +121,8 @@
 
 <style scoped>
 .right-side-utility {
-
+  /* WHAT DO I DO */
+  display:none;
 }
 .body {
   height: 40px;
