@@ -27,6 +27,8 @@ const markAsRead = (messageId) => {
     'userId': 'me',
     'id': messageId,
     'removeLabelIds': ['UNREAD']
+  }).then((response) => {
+    console.log(`Email Sent. Response =>:`, response);
   }).catch((err) => {
     console.log(err);
   });
