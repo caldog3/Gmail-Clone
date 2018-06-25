@@ -79,20 +79,9 @@ export default {
     },
     to(){
       return this.message.to;
-<<<<<<< HEAD
-    }
-  },
-=======
     },
-    attachments(){
-      console.log("Checking on attachments");
-      return this.$store.getters.messagesWithAttachments;
-    }
   },
   methods: {
-    getAttachments(){
-      this.$store.dispatch('getAttachments', this.message);
-    },
     ifGroupMessage() {
       let to = this.message.to;
       //console.log(to);
@@ -104,13 +93,5 @@ export default {
       return theClass;
     },
   },
-  mounted(){
-    let messages = this.$store.getters.messagesWithAttachment;
-    //console.log(messages);
-    if (messages !== undefined){
-      this.getAttachments();
-    }
-  }
->>>>>>> 98243c697de22d7c6a356dd15c7592c06f99248c
 }
 </script>
