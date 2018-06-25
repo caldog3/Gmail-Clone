@@ -205,7 +205,9 @@ p {
 }
 
 .noHighlightDiv {
-  margin: 4px;
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   cursor: default;
 }
 
@@ -261,7 +263,7 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+      document.getElementById("myDropdown").classList.toggle("show");
     },
 
     // Close the dropdown if the user clicks outside of it
