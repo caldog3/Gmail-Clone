@@ -24,9 +24,9 @@
             <div class="highlightArea item">
               <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
-                <p>Mark all as read</p>
+                <p>  Mark all as read </p>
                 <hr>
-                <p disabled>Select messages to see more actions</p>
+                <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
               </div>
             </div>
           </div>
@@ -184,6 +184,7 @@ button {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  cursor: default;
 }
 
 .dropdown-content a {
@@ -198,7 +199,14 @@ button {
 .show {display: block;}
 
 p {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.noHighlightDiv {
   margin: 4px;
+  cursor: default;
 }
 
 p:hover {background-color: #ddd;}
