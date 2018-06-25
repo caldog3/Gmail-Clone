@@ -17,25 +17,25 @@
           </div>
         </div>
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="star" />  Starred
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="clock"/>  Snoozed
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="arrow-right" />  Important
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="paper-plane" />  Sent
       </b-list-group-item>
-      <b-list-group-item @click="loadDrafts()" href="#">
+      <b-list-group-item @click="loadDrafts()" href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="file"/>  Drafts
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="exclamation-circle"/>  Spam
       </b-list-group-item>
-      <b-list-group-item href="#">
+      <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="trash" />  Trash
       </b-list-group-item>
     </b-list-group> 
