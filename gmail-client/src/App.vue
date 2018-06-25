@@ -15,7 +15,7 @@
       <Compose/>
     </div>
 
-    <div v-else>
+    <div class="notLoggedIn" v-else>
       <login-page/>
     </div>
   </div>
@@ -84,10 +84,12 @@ export default {
 #header {
   height: 91px;
 }
-/* body {
+body {
   overflow: hidden;
-  background-image: url(assets/Background1.jpg);
-} */
+  background-image: url(assets/Background6.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
+}
 .sideBar {
   min-width: 270px;
   height: 860px;
@@ -95,5 +97,8 @@ export default {
 }
 .emailList {
   overflow-y: auto;
+}
+.notLoggedIn {
+  height: 100%;
 }
 </style>

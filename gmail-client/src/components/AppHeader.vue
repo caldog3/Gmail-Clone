@@ -68,6 +68,8 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
+  color: white;
+  /* change here ^ */
 }
 .menu {
   padding-left: 10px;
@@ -82,12 +84,17 @@ img {
   padding-right: 85px;
   /* margin-top: 5px; */
 }
+.navbar-light .navbar-brand {
+  color: white;
+  /* change here ^ */
+}
 .search {
   border-radius: 5px;
   background-color: #F5F7F7;  
   width: 60%;
   margin-right: 10px;
   height: 45px;
+  color: black;
   /* margin-top:2px;
   margin-bottom: 2px; */
 }

@@ -8,7 +8,10 @@
 </template>
 
 <style scoped>
-
+.column {
+  background-color: white;
+  height: 100%;
+}
 </style>
 
 <script>
