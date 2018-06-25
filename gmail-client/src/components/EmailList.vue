@@ -84,11 +84,14 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 .checkboxes {
   display: flex;
   flex-direction: row;
   width: 60px;
+  margin-right: 4px;
 }
 .emailLink {
   cursor: pointer;
@@ -121,11 +124,13 @@
 }
 .readClass {
   color: none;
-  background-color: none;
+  background-color: white;
+  /* opacity: 0.7; */
   width: 100%;
 }
 .unreadClass {
   background-color: #F5F7F7;
+  /* opacity: 0.9; */
   width: 100%;
 }
 .item {

@@ -105,7 +105,6 @@
 
 <style scoped>
 .body {
-  background-color:white;
   height: 40px;
   border-bottom: 1px;
   border-bottom-style: solid;
