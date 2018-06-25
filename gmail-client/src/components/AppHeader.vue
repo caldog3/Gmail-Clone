@@ -61,6 +61,7 @@
   margin-left: auto;
 }
 .header {
+  /* height: 64px; */
   border-bottom: 1px;
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
@@ -81,6 +82,7 @@ img {
 }
 .brand{
   padding-right: 85px;
+  /* margin-top: 5px; */
 }
 .navbar-light .navbar-brand {
   color: white;
@@ -93,6 +95,8 @@ img {
   margin-right: 10px;
   height: 45px;
   color: black;
+  /* margin-top:2px;
+  margin-bottom: 2px; */
 }
 .searchBar {
   border: none;
