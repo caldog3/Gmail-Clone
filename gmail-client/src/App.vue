@@ -97,6 +97,7 @@ body {
 }
 .emailList {
   overflow-y: auto;
+  margin-right: 3%;
 }
 .notLoggedIn {
   height: 100%;
