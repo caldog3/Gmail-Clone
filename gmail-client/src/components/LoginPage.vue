@@ -21,12 +21,22 @@
 </style>
 
 <script>
-import GmailAuth from './GmailAuth';
 
  export default {
    name: 'LoginPage',
-   components: {
-     GmailAuth
+   methods: {
+    authenticate(){
+       let googleAuth = this.$store.getters.googleAuth;
+      googleAuth.signIn().then(() => {
+        let currentUser = googleAuth.currentUser.get();
+		    let currentUserProfile = currentUser.getBasicProfile();
+
+        this.$store.commit('currentUser', currentUser);
+        this.$store.commit('currentUserProfile', currentUserProfile);
+        this.$store.commit('setToken', currentUser.Zi.access_token);
+        this.$store.commit('sessionExpiration', currentUser.Zi.expires_at);
+      });
+     }
    }
  }
 </script>
