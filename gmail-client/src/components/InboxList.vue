@@ -7,8 +7,8 @@
         <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
-        <email-list labelId="CATEGORY_SOCIAL"/>
       </b-tab>
+        <email-list labelId="CATEGORY_SOCIAL"/>
       <b-tab title="Promotions">
         <email-list labelId="CATEGORY_PROMOTIONS"/>      
       </b-tab>
@@ -43,6 +43,6 @@ export default {
     if(messages.length === 0){
       this.$store.dispatch("getListOfMessages");
     }
-  }
+  },
 }
 </script>

@@ -39,6 +39,30 @@ fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRigh
 
 Vue.config.productionTip = false
 
+export function initializeGoogleClient() {
+  let scope = "profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify";
+
+  return new Promise((resolve) => {
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://apis.google.com/js/api.js';
+    script.onload = (e) => {
+      gapi.load('client:auth2', () => {
+        gapi.client.init({
+          apiKey: process.env.API_KEY,
+          clientId: process.env.CLIENT_ID,
+          scope: scope,
+        }).then(() => {
+          let googleAuth = gapi.auth2.getAuthInstance();
+          store.commit('googleAuth', googleAuth);
+          resolve();
+        })
+      });
+    }
+    document.getElementsByTagName('head')[0].appendChild(script);
+  })
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",
@@ -47,6 +71,9 @@ new Vue({
   components: { App },
   render: h => h(App),
   beforeCreate() {
-      this.$store.dispatch("initialize");
-  }
+    console.log("init google api");
+    initializeGoogleClient();
+    // this.$store.dispatch("initialize");
+    
+  },
 });

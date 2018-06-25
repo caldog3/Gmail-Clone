@@ -7,7 +7,6 @@
       <p><b>{{from}}</b></p>
       <p>to {{to}}</p>
     </div>
-    <p>Attachments: {{attachments}}</p>
     <div v-html="body" class="leftAlign"></div>
   </div>
 </template>
@@ -45,23 +44,7 @@ export default {
     },
     to(){
       return this.message.to;
-    },
-    attachments(){
-      console.log("Checking on attachments");
-      return this.$store.getters.messagesWithAttachments;
     }
   },
-  methods: {
-    getAttachments(){
-      this.$store.dispatch('getAttachments', this.message);
-    }
-  },
-  mounted(){
-    let messages = this.$store.getters.messagesWithAttachment;
-    console.log(messages);
-    if (messages !== undefined){
-      this.getAttachments();
-    }
-  }
 }
 </script>
