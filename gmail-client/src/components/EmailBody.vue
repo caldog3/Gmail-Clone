@@ -82,9 +82,6 @@ export default {
     },
   },
   methods: {
-    getAttachments(){
-      this.$store.dispatch('getAttachments', this.message);
-    },
     ifGroupMessage() {
       let to = this.message.to;
       //console.log(to);
