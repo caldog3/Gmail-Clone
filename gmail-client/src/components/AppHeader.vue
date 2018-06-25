@@ -157,16 +157,18 @@ export default {
   components: {
     FontAwesomeIcon
   },
-  data() {
-    return {
-      profileJSON: {},
-      photoUrl: '',
+  computed: {
+    photoUrl(){
+      return this.$store.getters.getCurrentUserProfile.Paa;
     }
   },
   methods: {
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
+<<<<<<< HEAD
+    }
+=======
     },
     // getProfile() {
     //   var devIdentify = require("dev-identify")
@@ -198,6 +200,7 @@ export default {
   },
   mounted() {
     
+>>>>>>> 98243c697de22d7c6a356dd15c7592c06f99248c
   }
 }
 </script>
