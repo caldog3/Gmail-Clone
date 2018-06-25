@@ -4,7 +4,6 @@
     <img src="./../assets/logo1.png" alt="">
     <br>
     <button @click="authenticate()">Sign In</button>
-
   </div>
 </template>
 
