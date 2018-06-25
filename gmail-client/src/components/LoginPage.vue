@@ -12,6 +12,10 @@
   background-color: white;
   height: 100%;
 }
+.whiteSpace {
+  height: 9999px;
+  /* not sure if this is the best strategy for solving this but I mean it works.... */
+}
 </style>
 
 <script>
