@@ -10,7 +10,7 @@
         
         <div id="sidebarFlex">
           <div>
-            <font-awesome-icon style="color:white;" icon="inbox" />  Inbox
+            <font-awesome-icon style="color:black;" icon="inbox" />  Inbox
           </div>
           <div>
             <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
@@ -20,77 +20,42 @@
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="star" />  Starred
+          <font-awesome-icon style="color:black;" icon="star" />  Starred
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="clock"/>  Snoozed
+          <font-awesome-icon style="color:black;" icon="clock"/>  Snoozed
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="arrow-right" />  Important
+          <font-awesome-icon style="color:black;" icon="arrow-right" />  Important
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="paper-plane" />  Sent
+          <font-awesome-icon style="color:black;" icon="paper-plane" />  Sent
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="file"/>  Drafts
+          <font-awesome-icon style="color:black;" icon="file"/>  Drafts
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="exclamation-circle"/>  Spam
+          <font-awesome-icon style="color:black;" icon="exclamation-circle"/>  Spam
         </div>
       </div>
       <div>
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="trash" />  Trash
+          <font-awesome-icon style="color:black;" icon="trash" />  Trash
         </div>
       </div>
 
     </div>
 
-
-    <!-- <b-list-group id="bootstrap-overrides">
-      <b-list-group-item class="dflex justify-content-between" @click="loadInbox()" href="#" variant="dark">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="inbox" />  Inbox
-          </div>
-          <div>
-            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
-
-          </div>
-        </div>
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="star" />  Starred
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="clock"/>  Snoozed
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="arrow-right" />  Important
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="paper-plane" />  Sent
-      </b-list-group-item>
-      <b-list-group-item @click="loadDrafts()" href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="file"/>  Drafts
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="exclamation-circle"/>  Spam
-      </b-list-group-item>
-      <b-list-group-item href="#" variant="light">
-        <font-awesome-icon style="color:white;" icon="trash" />  Trash
-      </b-list-group-item>
-    </b-list-group>  -->
   </div>
 
 </template>
@@ -121,7 +86,7 @@ button {
   background: rgba(255, 255, 255, 0.4);
 }
 .options {
-  color: white;
+  color: black;
   margin-right: 10px;
 }
 .options > div {
