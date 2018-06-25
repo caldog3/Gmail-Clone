@@ -36,6 +36,9 @@
   margin-left: 2%;
   /* padding-bottom: 40px; */
 }
+h4 {
+  padding-top: 15px;
+}
 .group-message {
   display: inline;
 }
