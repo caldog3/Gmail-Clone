@@ -12,7 +12,7 @@
           </b-navbar-brand>
         </div>
       <div class="search">
-        <div class="flex">
+        <div class="flex1">
           <div class="searchIcon">
             <font-awesome-icon icon="search" size="lg"/>
           </div>
@@ -27,16 +27,16 @@
             <div>
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
-            <div>
+            <div> 
               <svg width="70" height="70" viewBox="0 0 100 100" 
-                preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <clipPath id="myCircle">
-                  <circle cx="45" cy="44" r="40"/>
-                </clipPath>
-              </defs>
-            <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
-            <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
+                  preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <clipPath id="myCircle">
+                    <circle cx="45" cy="44" r="40"/>
+                  </clipPath>
+                </defs>
+                <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+                <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
@@ -55,6 +55,7 @@
   flex-direction: row;
   align-content: stretch;
   align-items: center;
+  height: 75px;
 }
 .flexBox div:last-child {
   margin-left: auto;
@@ -101,6 +102,21 @@ input {
   border: none;
   outline: none;
 }
+.flex1 {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  height: 100%
+}
+.flex1 > div {
+  margin: 10px;
+}
+.searchBar {
+  flex-grow: 1;
+  flex-basis: 0;
+}
 .flex {
   display: flex;
   width: 100%;
@@ -112,9 +128,8 @@ input {
 .flex > div {
   margin: 10px;
 }
-.searchBar {
-  flex-grow: 1;
-  flex-basis: 0;
+.flex div:last-child {
+  margin-top: 20px;
 }
 
 @media screen and (max-width : 700px) {
