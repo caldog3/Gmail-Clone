@@ -22,6 +22,10 @@
 </template>
 
 <style scoped>
+/* .body {
+  background-color: white;
+  opacity: 0.6;
+} */
 .leftAlign {
   text-align: left;
   margin-left: 2%;
