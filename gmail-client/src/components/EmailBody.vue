@@ -8,19 +8,54 @@
       <p>to {{to}}</p>
     </div>
     <div v-html="body" class="leftAlign"></div>
+    <div class="response-buttons"> 
+      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+      &emsp;
+      <span v-bind:class="ifGroupMessage()">
+        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        &emsp;
+      </span>
+      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
+/* .body {
+  background-color: white;
+  opacity: 0.6;
+} */
 .leftAlign {
   text-align: left;
   margin-left: 2%;
 }
+.response-buttons {
+  padding: 40px;
+  text-align: left;
+  margin-left: 2%;
+  /* padding-bottom: 40px; */
+}
+.group-message {
+  display: inline;
+}
+.not-group-message {
+  display: none;
+}
+.body {
+  background-color: white;
+  padding-top: 2%;
+  padding-left: 5%;
+}
 </style>
 
 <script>
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+
 export default {
   name: 'EmailBody',
+  components: {
+    FontAwesomeIcon
+  },
   computed: {
     message(){
       let messageId =this.$route.params.id;
@@ -44,7 +79,38 @@ export default {
     },
     to(){
       return this.message.to;
+<<<<<<< HEAD
     }
   },
+=======
+    },
+    attachments(){
+      console.log("Checking on attachments");
+      return this.$store.getters.messagesWithAttachments;
+    }
+  },
+  methods: {
+    getAttachments(){
+      this.$store.dispatch('getAttachments', this.message);
+    },
+    ifGroupMessage() {
+      let to = this.message.to;
+      //console.log(to);
+      var theClass = 'not-group-message';
+      //console.log(message.unread);
+      if(to.includes(",")){
+          theClass = 'group-message';
+      }
+      return theClass;
+    },
+  },
+  mounted(){
+    let messages = this.$store.getters.messagesWithAttachment;
+    //console.log(messages);
+    if (messages !== undefined){
+      this.getAttachments();
+    }
+  }
+>>>>>>> 98243c697de22d7c6a356dd15c7592c06f99248c
 }
 </script>

@@ -12,7 +12,7 @@
           </b-navbar-brand>
         </div>
       <div class="search">
-        <div class="flex">
+        <div class="flex1">
           <div class="searchIcon">
             <font-awesome-icon icon="search" size="lg"/>
           </div>
@@ -27,16 +27,16 @@
             <div>
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
-            <div>
+            <div> 
               <svg width="70" height="70" viewBox="0 0 100 100" 
-                preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <clipPath id="myCircle">
-                  <circle cx="45" cy="44" r="40"/>
-                </clipPath>
-              </defs>
-            <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
-            <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
+                  preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <clipPath id="myCircle">
+                    <circle cx="45" cy="44" r="40"/>
+                  </clipPath>
+                </defs>
+                <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+                <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
           </div>
@@ -55,19 +55,21 @@
   flex-direction: row;
   align-content: stretch;
   align-items: center;
+  height: 75px;
 }
 .flexBox div:last-child {
   margin-left: auto;
 }
 .header {
   /* height: 64px; */
-  background-color: white;
   border-bottom: 1px;
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
   min-width: 770px;
   overflow: hidden;
   height: 91px;
+  color: white;
+  /* change here ^ */
 }
 .menu {
   padding-left: 10px;
@@ -82,12 +84,17 @@ img {
   padding-right: 85px;
   /* margin-top: 5px; */
 }
+.navbar-light .navbar-brand {
+  color: white;
+  /* change here ^ */
+}
 .search {
   border-radius: 5px;
   background-color: #F5F7F7;  
   width: 60%;
   margin-right: 10px;
   height: 45px;
+  color: black;
   /* margin-top:2px;
   margin-bottom: 2px; */
 }
@@ -101,6 +108,21 @@ input {
   border: none;
   outline: none;
 }
+.flex1 {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  height: 100%
+}
+.flex1 > div {
+  margin: 10px;
+}
+.searchBar {
+  flex-grow: 1;
+  flex-basis: 0;
+}
 .flex {
   display: flex;
   width: 100%;
@@ -112,9 +134,8 @@ input {
 .flex > div {
   margin: 10px;
 }
-.searchBar {
-  flex-grow: 1;
-  flex-basis: 0;
+.flex div:last-child {
+  margin-top: 20px;
 }
 
 @media screen and (max-width : 700px) {
@@ -145,7 +166,41 @@ export default {
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
+<<<<<<< HEAD
     }
+=======
+    },
+    // getProfile() {
+    //   var devIdentify = require("dev-identify")
+    //   var email = "amugimu@gmail.com"
+    //   devIdentify(email)
+    //   .then(function(result) {
+    //   console.log(result)
+    //   this.profileJSON = result;
+    //   });
+    // }
+    retrievePhotoURL(userEmail) {
+      axios.get(`https://picasaweb.google.com/data/entry/api/user/${userEmail}?alt=json`)
+      .then(response => {
+        this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
+        //console.log("URL thingy" + this.photoUrl);
+      }).catch(error => {
+        console.log(error);
+      })
+    },
+  },
+
+  created() {
+    
+    getProfileEmail(),
+    eventBus.$on('PROFILE_EMAIL', email => {
+      //console.log("did I get here");
+      this.retrievePhotoURL(email);
+    })
+  },
+  mounted() {
+    
+>>>>>>> 98243c697de22d7c6a356dd15c7592c06f99248c
   }
 }
 </script>

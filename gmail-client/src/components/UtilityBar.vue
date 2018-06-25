@@ -6,27 +6,27 @@
           <div v-on:click="checkAll()" class="item">
             <div class="highlightArea">
               <div v-if=!checked>
-                <font-awesome-icon class="Icon" icon="square" />
+                <font-awesome-icon style="color:white;" class="Icon" icon="square" />
               </div>
               <div v-if=checked>
-                <font-awesome-icon class="Icon" icon="check-square"/>
+                <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
               </div>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
             <div>
-              <font-awesome-icon class="Icon" icon="retweet"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
             </div>
             </div>
           </div>
           <div>
             <div class="highlightArea item">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
-                <p>Mark all as read</p>
+                <p>  Mark all as read </p>
                 <hr>
-                <p disabled>Select messages to see more actions</p>
+                <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
               </div>
             </div>
           </div>
@@ -37,32 +37,32 @@
         <div class="CenterIt">
           <div v-on:click.stop="back()" class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon"  icon="arrow-left"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="archive"/> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="exclamation-circle" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="trash" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="envelope-open" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="clock" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
             </div>
           </div>
           <div class="item">
@@ -70,12 +70,12 @@
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon class="Icon" icon="arrow-circle-right" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon class="Icon" icon="ellipsis-v"/></div>
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
                 <p>Mark as read</p>
                 <hr>
@@ -93,7 +93,7 @@
               </div>  
             </div>
           </div>
-          <!-- <font-aweomse-icon class="Icon" icon="tag"/> -->
+          <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
         </div>
       </span>
     </div>
@@ -105,7 +105,6 @@
 
 <style scoped>
 .body {
-  background-color:white;
   height: 40px;
   border-bottom: 1px;
   border-bottom-style: solid;
@@ -163,39 +162,60 @@ button {
 
 /* lets see */
 .dropbtn {
-    /* background-color: #3498DB; */
-    color: black;
-    padding: 0px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    background-color: rgba(255, 0, 0, 0.0);
+  /* background-color: #3498DB; */
+  color: black;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.0);
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  cursor: default;
 }
 
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
+
+p {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.noHighlightDiv {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  cursor: default;
+}
+
+p:hover {background-color: #ddd;}
+
+
+hr {
+  margin: 0px;
+}
 /* lets see end */
 
 
@@ -242,7 +262,7 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+      document.getElementById("myDropdown").classList.toggle("show");
     },
 
     // Close the dropdown if the user clicks outside of it

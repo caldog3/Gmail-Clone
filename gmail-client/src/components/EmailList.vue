@@ -22,7 +22,12 @@
               <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <font-awesome-icon class="Icon" icon="star" />
+                    <div v-if=!starCheck v-on:click="checkStar()">
+                      <font-awesome-icon class="Icon" icon="star" />
+                    </div>
+                    <div v-if=starCheck v-on:click="checkStar()">
+                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -54,7 +59,12 @@
             <div class="smallOnly">
               <span>{{ message.time }}</span>
               <div class="highlightArea">              
-                <font-awesome-icon class="Icon" icon="star" />
+                <div v-if=!starCheck v-on:click="checkStar()">
+                    <font-awesome-icon class="Icon" icon="star" />
+                </div>
+                <div v-if=starCheck v-on:click="checkStar()">
+                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                </div>
               </div>
             </div>
 
@@ -74,11 +84,14 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 .checkboxes {
   display: flex;
   flex-direction: row;
   width: 60px;
+  margin-right: 4px;
 }
 .emailLink {
   cursor: pointer;
@@ -111,11 +124,14 @@
 }
 .readClass {
   color: none;
-  background-color: none;
+  /* background-color: white;
+  opacity: 0.7; */
   width: 100%;
 }
 .unreadClass {
-  background-color: #F5F7F7;
+  /* background-color: #F5F7F7;
+  opacity: 0.9; */
+  background: rgba(255, 255, 255, 0.6);
   width: 100%;
 }
 .item {
@@ -226,6 +242,7 @@ export default {
   data() {
     return {
       checked: false,
+      starCheck: false,
     }
   },
   methods: {
@@ -244,6 +261,9 @@ export default {
     },
     check() {
       this.checked = !this.checked;
+    },
+    checkStar() {
+      this.starCheck = !this.starCheck;
     },
   },
   computed: {
