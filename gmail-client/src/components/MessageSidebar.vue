@@ -8,7 +8,7 @@
     <div class="options">
       <div class="inbox">
         
-        <div id="sidebarFlex">
+        <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
             <font-awesome-icon style="color:white;" icon="inbox" />  Inbox
           </div>
