@@ -5,7 +5,59 @@
       Test compose block
     </b-modal> -->
 
-    <b-list-group id="bootstrap-overrides">
+    <div class="options">
+      <div class="inbox">
+        
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="inbox" />  Inbox
+          </div>
+          <div>
+            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+          </div>
+        </div>
+
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="star" />  Starred
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="clock"/>  Snoozed
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="arrow-right" />  Important
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="paper-plane" />  Sent
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="file"/>  Drafts
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="exclamation-circle"/>  Spam
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="trash" />  Trash
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- <b-list-group id="bootstrap-overrides">
       <b-list-group-item class="dflex justify-content-between" @click="loadInbox()" href="#" variant="dark">
         <div id="sidebarFlex">
           <div>
@@ -38,7 +90,7 @@
       <b-list-group-item href="#" variant="light">
         <font-awesome-icon style="color:white;" icon="trash" />  Trash
       </b-list-group-item>
-    </b-list-group> 
+    </b-list-group>  -->
   </div>
 
 </template>
@@ -48,6 +100,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 5px;
+  padding-right: 10px;
 }
 .sideBar {
   /* max-width: 270px; */
@@ -63,14 +117,35 @@ button {
 .notificationPill b-badge {
   text-align: right;
 }
-.list-group-item-dark {
+.inbox {
+  background: rgba(255, 255, 255, 0.4);
+}
+.options {
+  color: white;
+  margin-right: 10px;
+}
+.options > div {
+  width: 100%;
+  height: 35px;
+  padding-left: 15px;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+}
+.options > div:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+.notInbox {
+  float: left;
+  padding: 5px;
+}
+/* .list-group-item-dark {
   background-color: inherit;
   color: white;
 }
 .list-group-item-action {
   background-color: inherit;
   color: white;
-}
+} */
 </style>
 
 <script>
