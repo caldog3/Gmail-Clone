@@ -21,7 +21,9 @@
   min-width: 400px;
   overflow: hidden;
 } */
-
+#setWidth {
+  background: rgba(255, 255, 255, 0.6);
+}
 ul > .nav {
   display: flex;
   flex-wrap: nowrap !important;
