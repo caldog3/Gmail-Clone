@@ -86,7 +86,7 @@ export default {
 }
 body {
   overflow: hidden;
-  background-image: url(assets/Background6.jpg);
+  background-image: url(assets/Background1.jpg);
   background-repeat:no-repeat;
   background-size:cover;
 }
