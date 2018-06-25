@@ -31,15 +31,19 @@
   margin-left: 2%;
 }
 .response-buttons {
-  margin: 40px;
+  padding: 40px;
   text-align: left;
   margin-left: 2%;
+  /* padding-bottom: 40px; */
 }
 .group-message {
   display: inline;
 }
 .not-group-message {
   display: none;
+}
+.body {
+  background-color: white;
 }
 </style>
 
