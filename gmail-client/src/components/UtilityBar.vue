@@ -1,6 +1,7 @@
 <template>
   <div class="body">
     <div id="spacing">
+      <div>
       <span v-if=!messageBody>
         <div class="flexIcons">
           <div v-on:click="checkAll()" class="item">
@@ -96,8 +97,9 @@
           <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
         </div>
       </span>
+      </div>
       <!-- Start of right side icons -->
-      <span class="right-side-utility">
+      <div class="right-side-utility">
         <div class="flexIcons">
           <div>
             <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
@@ -109,7 +111,7 @@
             <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
           </div>
         </div>
-      </span>
+      </div>
       <!-- End of right side icons -->
 
     </div>
@@ -120,25 +122,24 @@
 </template>
 
 <style scoped>
-.right-side-utility {
-  /* WHAT DO I DO */
+/* .right-side-utility {
+  /* WHAT DO I DO 
   display:none;
-}
+} */
 .body {
   height: 40px;
   border-bottom: 0px;
   color: white;
+  width: 100%;
   /* change this ^ */
 } 
 .flexIcons {
   display: flex;
   flex-direction: row;
 }
-
 .flexIcons svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
-
 .CenterIt {
   display: flex;
   flex-direction: row;
@@ -159,6 +160,9 @@
   float:left;
   padding: 4px;
   padding-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 input {
   float: left;
@@ -206,7 +210,9 @@ button {
   z-index: 1;
   cursor: default;
 }
-
+#myDropdown {
+  color: black;
+}
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
