@@ -65,7 +65,7 @@
               <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
             </div>
           </div>
-          <div class="item">
+          <div class="break">
             |
           </div>
           <div class="item">
@@ -109,6 +109,8 @@
   border-bottom: 1px;
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
+  color: white;
+  /* change this ^ */
 } 
 .flexIcons {
   display: flex;
@@ -126,7 +128,10 @@
 .CenterIt svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
-
+.break {
+  width: 30px;
+  padding-top: 4px;
+}
 .item {
   width: 30px;
   height: 30px;
@@ -157,7 +162,7 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: lightgray;
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 /* lets see */
