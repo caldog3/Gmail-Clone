@@ -229,7 +229,7 @@ button {
   width: 15px;
   height: 30px;
   border-radius: 5px;
-  margin-right: 5px;
+  margin-right: 15px;
 }
 .highlightArea2:hover {
   /* background-color: rgba(153, 153, 153, 0.6); */

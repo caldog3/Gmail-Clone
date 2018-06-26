@@ -109,5 +109,6 @@ body {
 }
 .mainView {
   margin-right: 50px;
+  min-width: 770px;
 }
 </style>
