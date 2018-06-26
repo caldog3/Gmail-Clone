@@ -96,6 +96,22 @@
           <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
         </div>
       </span>
+      <!-- Start of right side icons -->
+      <span class="right-side-utility">
+        <div class="flexIcons">
+          <div>
+            <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+            &emsp;
+            <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+            <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
+            <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+            &emsp;
+            <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+          </div>
+        </div>
+      </span>
+      <!-- End of right side icons -->
+
     </div>
     <!-- <button v-on:click="utilityToggle">Toggle</button> -->
     <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
@@ -104,6 +120,10 @@
 </template>
 
 <style scoped>
+.right-side-utility {
+  /* WHAT DO I DO */
+  display:none;
+}
 .body {
   height: 40px;
   border-bottom: 1px;
