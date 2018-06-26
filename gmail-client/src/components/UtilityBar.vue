@@ -122,10 +122,9 @@
 </template>
 
 <style scoped>
-/* .right-side-utility {
-  /* WHAT DO I DO 
+.right-side-utility {
   display:none;
-} */
+}
 .body {
   height: 40px;
   border-bottom: 0px;
