@@ -68,7 +68,7 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .menu {
@@ -85,39 +85,41 @@ img {
   /* margin-top: 5px; */
 }
 .navbar-light .navbar-brand {
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .search {
   border-radius: 5px;
-  /* background-color: rgba(153, 153, 153, 0.5); */
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.5);
+  /* background-color: rgba(255, 255, 255, 0.5); */
   width: 60%;
   margin-right: 10px;
   height: 45px;
-  color: white;
+  color: black;
   /* change here ^ */
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: white;
+  color: black;
   /* change here ^ */
   opacity: 1; /* Firefox */
+  font-weight: bold;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: white;
+  color: black;
   /* change here ^ */
+  font-weight: bold;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: white;
+  color: black;
   /* change here ^ */
+  font-weight: bold;
 }
 .searchBar {
   border: none;
 }
 input {
-  /* background-color: rgba(153, 153, 153, 0.0); */
   background-color: rgba(255, 255, 255, 0.0);
   color: white;
   width: 100%;
