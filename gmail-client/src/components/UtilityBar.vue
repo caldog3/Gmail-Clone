@@ -169,6 +169,7 @@
 .break {
   width: 30px;
   padding-top: 4px;
+  cursor: default;
 }
 .item {
   width: 30px;
