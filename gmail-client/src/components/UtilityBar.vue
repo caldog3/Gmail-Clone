@@ -1,8 +1,127 @@
 <template>
   <div class="body">
       <div class="iconDiv">
+        <div class="spacing">
 
 
+
+          <div>
+
+            <span v-if=!messageBody>
+              <div class="flexIcons">
+                <div v-on:click="checkAll()" class="item">
+                  <div class="highlightArea">
+                    <div v-if=!checked>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="square" />
+                    </div>
+                    <div v-if=checked>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <div>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="highlightArea item">
+                    <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="myDropdown" class="dropdown-content">
+                        <p>  Mark all as read </p>
+                        <hr>
+                        <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+      
+              <span v-if=messageBody>
+                <div class="CenterIt">
+                  <div v-on:click.stop="back()" class="item">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                    </div>
+                  </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                </div>
+              </div>
+              <div class="break">
+                |
+              </div>
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                </div>
+              </div>
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="myDropdown" class="dropdown-content">
+                    <p>Mark as read</p>
+                    <hr>
+                    <p>Mark as important</p>
+                    <hr>
+                    <p>Add to tasks</p>
+                    <hr>
+                    <p>Add star</p>
+                    <hr>
+                    <p>Create Event</p>
+                    <hr>
+                    <p>Filter messages like these</p>
+                    <hr>
+                    <p>Mute</p>
+                  </div>  
+                </div>
+              </div>
+            </div>
+          </span>
+
+          
+        </div>
+
+        <div class="right-side-utility">
+          <div class="flexIcons">
+            <div>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+                &emsp;
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                &emsp;
+              <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+            </div>
+          </div>
+        </div>
+
+
+        </div>
       </div>
       <!-- <div>
       <span v-if=!messageBody>
@@ -124,9 +243,9 @@
 </template>
 
 <style scoped>
-.right-side-utility {
+/* .right-side-utility {
   display:none;
-}
+} */
 .body {
   height: 40px;
   border-bottom: 0px;
@@ -157,6 +276,11 @@
   height: 30px;
   cursor: pointer;
 }
+.spacing {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 /* #spacing {
   float:left;
   padding: 4px;
@@ -166,7 +290,7 @@
   justify-content: space-between;
 } */
 .iconDiv {
-  width: auto%;
+  width: auto;
   height: 40px;
   margin-left: 270px;
 }
