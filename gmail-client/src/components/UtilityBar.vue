@@ -6,23 +6,23 @@
           <div v-on:click="checkAll()" class="item">
             <div class="highlightArea">
               <div v-if=!checked>
-                <font-awesome-icon style="color:black;" class="Icon" icon="square" />
+                <font-awesome-icon style="color:white;" class="Icon" icon="square" />
               </div>
               <div v-if=checked>
-                <font-awesome-icon style="color:black;" class="Icon" icon="check-square"/>
+                <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
               </div>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
             <div>
-              <font-awesome-icon style="color:black;" class="Icon" icon="retweet"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
             </div>
             </div>
           </div>
           <div>
             <div class="highlightArea item">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:black;" class="Icon" icon="ellipsis-v"/></div>
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
                 <p>  Mark all as read </p>
                 <hr>
@@ -37,32 +37,32 @@
         <div class="CenterIt">
           <div v-on:click.stop="back()" class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="arrow-left"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="archive"/> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="exclamation-circle" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="envelope-open" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="clock" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
             </div>
           </div>
           <div class="break">
@@ -70,12 +70,12 @@
           </div>
           <div class="item">
             <div class="highlightArea">
-              <font-awesome-icon style="color:black;" class="Icon" icon="arrow-circle-right" /> 
+              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
             </div>
           </div>
           <div class="item">
             <div class="highlightArea">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:black;" class="Icon" icon="ellipsis-v"/></div>
+              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
               <div id="myDropdown" class="dropdown-content">
                 <p>Mark as read</p>
                 <hr>
@@ -93,7 +93,7 @@
               </div>  
             </div>
           </div>
-          <!-- <font-aweomse-icon style="color:black;" class="Icon" icon="tag"/> -->
+          <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
         </div>
       </span>
     </div>
@@ -109,7 +109,7 @@
   border-bottom: 1px;
   border-bottom-style: solid;
   border-bottom-color: #d3d3d3;
-  color: black;
+  color: white;
   /* change this ^ */
 } 
 .flexIcons {
@@ -162,7 +162,7 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: rgba(117, 117, 117, 0.6);
+  background-color: rgba(153, 153, 153, 0.6);
 }
 
 /* lets see */

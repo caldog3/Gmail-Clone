@@ -131,7 +131,7 @@
 .unreadClass {
   /* background-color: #F5F7F7;
   opacity: 0.9; */
-  background: rgba(117, 117, 117, 0.6);
+  background: rgba(153, 153, 153, 0.3);
   width: 100%;
 }
 .item {
