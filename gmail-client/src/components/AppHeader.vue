@@ -157,47 +157,16 @@ export default {
   components: {
     FontAwesomeIcon
   },
-  data() {
-    return {
-      profileJSON: {},
-      photoUrl: '',
+  computed: {
+    photoUrl(){
+      return this.$store.getters.getCurrentUserProfile.Paa;
     }
   },
   methods: {
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
-    },
-    // getProfile() {
-    //   var devIdentify = require("dev-identify")
-    //   var email = "amugimu@gmail.com"
-    //   devIdentify(email)
-    //   .then(function(result) {
-    //   console.log(result)
-    //   this.profileJSON = result;
-    //   });
-    // }
-    retrievePhotoURL(userEmail) {
-      axios.get(`https://picasaweb.google.com/data/entry/api/user/${userEmail}?alt=json`)
-      .then(response => {
-        this.photoUrl = response.data.entry.gphoto$thumbnail.$t;
-        //console.log("URL thingy" + this.photoUrl);
-      }).catch(error => {
-        console.log(error);
-      })
-    },
-  },
-
-  created() {
-    
-    getProfileEmail(),
-    eventBus.$on('PROFILE_EMAIL', email => {
-      //console.log("did I get here");
-      this.retrievePhotoURL(email);
-    })
-  },
-  mounted() {
-    
+    }
   }
 }
 </script>

@@ -7,7 +7,6 @@
       <p><b>{{from}}</b></p>
       <p>to {{to}}</p>
     </div>
-    <p>Attachments: {{attachments}}</p>
     <div v-html="body" class="leftAlign"></div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
@@ -47,6 +46,8 @@ h4 {
 }
 .body {
   background-color: white;
+  padding-top: 2%;
+  padding-left: 5%;
 }
 </style>
 
@@ -82,15 +83,8 @@ export default {
     to(){
       return this.message.to;
     },
-    attachments(){
-      console.log("Checking on attachments");
-      return this.$store.getters.messagesWithAttachments;
-    }
   },
   methods: {
-    getAttachments(){
-      this.$store.dispatch('getAttachments', this.message);
-    },
     ifGroupMessage() {
       let to = this.message.to;
       //console.log(to);
@@ -102,12 +96,5 @@ export default {
       return theClass;
     },
   },
-  mounted(){
-    let messages = this.$store.getters.messagesWithAttachment;
-    //console.log(messages);
-    if (messages !== undefined){
-      this.getAttachments();
-    }
-  }
 }
 </script>

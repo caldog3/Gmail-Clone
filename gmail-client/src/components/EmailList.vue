@@ -230,6 +230,7 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { markAsRead } from './../store-utility-files/gmail-api-calls';
 import _ from 'lodash';
 
 export default {
@@ -256,7 +257,7 @@ export default {
     enterMessage(message) {
       eventBus.$emit('ENTER_MESSAGE');
       this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }});
-      //this.$store.markAsRead(message.id);
+      markAsRead(message.id);
     },
     check() {
       this.checked = !this.checked;
