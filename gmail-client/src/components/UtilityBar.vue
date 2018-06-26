@@ -126,9 +126,7 @@
 }
 .body {
   height: 40px;
-  border-bottom: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #d3d3d3;
+  border-bottom: 0px;
   color: white;
   /* change this ^ */
 } 

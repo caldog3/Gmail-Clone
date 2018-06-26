@@ -64,7 +64,7 @@
   /* height: 64px; */
   border-bottom: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #d3d3d3;
+  border-bottom-color: rgba(153, 153, 153, 0.5);
   min-width: 770px;
   overflow: hidden;
   height: 91px;
