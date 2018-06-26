@@ -179,7 +179,8 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: rgba(153, 153, 153, 0.6);
+  /* background-color: rgba(153, 153, 153, 0.6); */
+  background: rgba(255, 255, 255, 0.5);
 }
 
 /* lets see */
