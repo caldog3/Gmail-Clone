@@ -153,9 +153,6 @@ button {
   display:inline-block;
   cursor: pointer;
 }
-.Icon:hover {
-  /* background-color: darkgray;   */
-}
 .highlightArea {
   width: 30px;
   height: 30px;
