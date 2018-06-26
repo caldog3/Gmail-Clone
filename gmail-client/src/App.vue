@@ -86,6 +86,11 @@ export default {
 }
 body {
   overflow: hidden;
+  /* background-image: url(assets/Background1.jpg);
+  background-repeat:no-repeat;
+  background-size:cover; */
+}
+.loggedIn {
   background-image: url(assets/Background1.jpg);
   background-repeat:no-repeat;
   background-size:cover;
