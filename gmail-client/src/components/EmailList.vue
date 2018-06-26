@@ -126,12 +126,13 @@
   color: none;
   /* background-color: white;
   opacity: 0.7; */
+  background: rgba(255, 255, 255, 0.6);
   width: 100%;
 }
 .unreadClass {
   /* background-color: #F5F7F7;
   opacity: 0.9; */
-  background: rgba(255, 255, 255, 0.6);
+
   width: 100%;
 }
 .item {
