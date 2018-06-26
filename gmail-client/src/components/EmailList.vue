@@ -196,7 +196,7 @@ svg:not(:root).svg-inline--fa {
     visibility: visible;
     margin-right: 3px;
     margin-left: 6px;
-    width: 50px;
+    width: 65px;
   }
   .smallOnly > div {
     float: right;
