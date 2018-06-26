@@ -68,7 +68,7 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .menu {
@@ -85,7 +85,7 @@ img {
   /* margin-top: 5px; */
 }
 .navbar-light .navbar-brand {
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .search {

@@ -91,7 +91,7 @@ body {
   background-size:cover; */
 }
 .loggedIn {
-  background-image: url(assets/Background7.jpg);
+  background-image: url(assets/Background8.jpg);
   background-repeat:no-repeat;
   background-size:cover;
 }
