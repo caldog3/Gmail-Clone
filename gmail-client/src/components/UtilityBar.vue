@@ -1,120 +1,142 @@
 <template>
   <div class="body">
-    <div id="spacing">
-      <div>
-      <span v-if=!messageBody>
-        <div class="flexIcons">
-          <div v-on:click="checkAll()" class="item">
-            <div class="highlightArea">
-              <div v-if=!checked>
-                <font-awesome-icon style="color:white;" class="Icon" icon="square" />
-              </div>
-              <div v-if=checked>
-                <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-            <div>
-              <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
-            </div>
-            </div>
-          </div>
+      <div class="iconDiv">
+        <div class="spacing">
+
           <div>
-            <div class="highlightArea item">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-              <div id="myDropdown" class="dropdown-content">
-                <p>  Mark all as read </p>
-                <hr>
-                <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+
+            <span v-if=!messageBody>
+              <div class="flexIcons">
+                <div v-on:click="checkAll()" class="item">
+                  <div class="highlightArea">
+                    <div v-if=!checked>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="square" />
+                    </div>
+                    <div v-if=checked>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <div>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="highlightArea item">
+                    <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="myDropdown" class="dropdown-content">
+                        <p>  Mark all as read </p>
+                        <hr>
+                        <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+      
+              <span v-if=messageBody>
+                <div class="CenterIt">
+                  <div v-on:click.stop="back()" class="item">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                    </div>
+                  </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                </div>
+              </div>
+              <div class="break">
+                |
+              </div>
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                </div>
+              </div>
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="myDropdown" class="dropdown-content">
+                    <p>Mark as read</p>
+                    <hr>
+                    <p>Mark as important</p>
+                    <hr>
+                    <p>Add to tasks</p>
+                    <hr>
+                    <p>Add star</p>
+                    <hr>
+                    <p>Create Event</p>
+                    <hr>
+                    <p>Filter messages like these</p>
+                    <hr>
+                    <p>Mute</p>
+                  </div>  
+                </div>
               </div>
             </div>
-          </div>
+          </span>
+
+          
         </div>
-      </span>
-      
-      <span v-if=messageBody>
-        <div class="CenterIt">
-          <div v-on:click.stop="back()" class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+
+        <div class="right-side-utility">
+          <div class="flexIcons">
+
+            <div class="paddingNeeded">
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+
+            <div class="lessPadding">
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
             </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-            </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
-            </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-            </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-            </div>
-          </div>
-          <div class="break">
-            |
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-            </div>
-          </div>
-          <div class="item">
-            <div class="highlightArea">
-              <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-              <div id="myDropdown" class="dropdown-content">
-                <p>Mark as read</p>
-                <hr>
-                <p>Mark as important</p>
-                <hr>
-                <p>Add to tasks</p>
-                <hr>
-                <p>Add star</p>
-                <hr>
-                <p>Create Event</p>
-                <hr>
-                <p>Filter messages like these</p>
-                <hr>
-                <p>Mute</p>
+
+            <div>
+              <div class="highlightArea1">
+                <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
               </div>  
             </div>
-          </div>
-          <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
-        </div>
-      </span>
-      </div>
-      <!-- Start of right side icons -->
-      <div class="right-side-utility">
-        <div class="flexIcons">
-          <div>
-            <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
-            &emsp;
-            <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
-            <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
-            <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
-            &emsp;
-            <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+            <div>
+              <div class="highlightArea2">
+                <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+              </div>
+            </div>
+            <div>
+              <div class="highlightArea">
+                <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <!-- End of right side icons -->
 
-    </div>
+
+        </div>
+      </div>
+
     <!-- <button v-on:click="utilityToggle">Toggle</button> -->
     <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
   
@@ -122,9 +144,7 @@
 </template>
 
 <style scoped>
-.right-side-utility {
-  display:none;
-}
+
 .body {
   height: 40px;
   border-bottom: 0px;
@@ -155,13 +175,26 @@
   height: 30px;
   cursor: pointer;
 }
-#spacing {
-  float:left;
-  padding: 4px;
-  padding-left: 0px;
+.spacing {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.right-side-utility {
+  margin-right: 10px;
+}
+.iconDiv {
+  width: auto;
+  height: 40px;
+  margin-left: 270px;
+}
+.paddingNeeded {
+  padding-right: 30px;
+}
+.lessPadding {
+  padding-right: 20px;
 }
 input {
   float: left;
@@ -183,7 +216,25 @@ button {
   /* background-color: rgba(153, 153, 153, 0.6); */
   background: rgba(255, 255, 255, 0.5);
 }
-
+.highlightArea1 {
+  width: 25px;
+  height: 30px;
+  border-radius: 5px;
+}
+.highlightArea1:hover {
+  /* background-color: rgba(153, 153, 153, 0.6); */
+  background: rgba(255, 255, 255, 0.5);
+}
+.highlightArea2 {
+  width: 15px;
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+.highlightArea2:hover {
+  /* background-color: rgba(153, 153, 153, 0.6); */
+  background: rgba(255, 255, 255, 0.5);
+}
 /* lets see */
 .dropbtn {
   /* background-color: #3498DB; */
