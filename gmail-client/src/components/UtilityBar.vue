@@ -1,7 +1,10 @@
 <template>
   <div class="body">
-    <div id="spacing">
-      <div>
+      <div class="iconDiv">
+
+
+      </div>
+      <!-- <div>
       <span v-if=!messageBody>
         <div class="flexIcons">
           <div v-on:click="checkAll()" class="item">
@@ -94,11 +97,11 @@
               </div>  
             </div>
           </div>
-          <!-- <font-aweomse-icon style="color:white;" class="Icon" icon="tag"/> -->
+       
         </div>
       </span>
       </div>
-      <!-- Start of right side icons -->
+  
       <div class="right-side-utility">
         <div class="flexIcons">
           <div>
@@ -111,10 +114,9 @@
             <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
           </div>
         </div>
-      </div>
-      <!-- End of right side icons -->
+      </div> -->
 
-    </div>
+
     <!-- <button v-on:click="utilityToggle">Toggle</button> -->
     <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
   
@@ -155,13 +157,18 @@
   height: 30px;
   cursor: pointer;
 }
-#spacing {
+/* #spacing {
   float:left;
   padding: 4px;
   padding-left: 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+} */
+.iconDiv {
+  width: auto%;
+  height: 40px;
+  margin-left: 270px;
 }
 input {
   float: left;
