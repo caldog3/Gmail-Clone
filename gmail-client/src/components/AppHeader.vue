@@ -88,19 +88,38 @@ img {
 }
 .search {
   border-radius: 5px;
-  background-color: #F5F7F7;  
+  /* background-color: rgba(153, 153, 153, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
   width: 60%;
   margin-right: 10px;
   height: 45px;
-  color: black;
-  /* margin-top:2px;
-  margin-bottom: 2px; */
+  color: white;
+  /* change here ^ */
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  /* change here ^ */
+  opacity: 1; /* Firefox */
+  font-weight: bold;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+  /* change here ^ */
+  font-weight: bold;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: white;
+  /* change here ^ */
+  font-weight: bold;
 }
 .searchBar {
   border: none;
 }
 input {
-  background-color: #F5F7F7;
+  background-color: rgba(255, 255, 255, 0.0);
+  color: white;
   width: 100%;
   -webkit-appearance: none;
   border: none;
