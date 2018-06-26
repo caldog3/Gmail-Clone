@@ -223,7 +223,7 @@ button {
 }
 .highlightArea1:hover {
   /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .highlightArea2 {
   width: 15px;
@@ -233,7 +233,7 @@ button {
 }
 .highlightArea2:hover {
   /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 /* lets see */
 .dropbtn {
