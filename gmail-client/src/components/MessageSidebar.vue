@@ -83,7 +83,8 @@ button {
   text-align: right;
 }
 .inbox {
-  background: rgba(153, 153, 153, 0.5);
+  /* background: rgba(153, 153, 153, 0.5); */
+  background: rgba(255, 255, 255, 0.5);
 }
 .options {
   color: white;
@@ -98,7 +99,8 @@ button {
   cursor: pointer;
 }
 .options > div:hover {
-  background: rgba(153, 153, 153, 0.5);
+  /* background: rgba(153, 153, 153, 0.5); */
+  background: rgba(255, 255, 255, 0.5);
 }
 .notInbox {
   float: left;
