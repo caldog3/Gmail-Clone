@@ -106,14 +106,6 @@ button {
   float: left;
   padding: 5px;
 }
-/* .list-group-item-dark {
-  background-color: inherit;
-  color: white;
-}
-.list-group-item-action {
-  background-color: inherit;
-  color: white;
-} */
 </style>
 
 <script>

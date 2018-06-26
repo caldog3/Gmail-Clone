@@ -149,8 +149,8 @@
   height: 40px;
   border-bottom: 0px;
   color: white;
-  width: 100%;
   /* change this ^ */
+  width: 100%;
 } 
 .flexIcons {
   display: flex;
@@ -223,7 +223,7 @@ button {
 }
 .highlightArea1:hover {
   /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .highlightArea2 {
   width: 15px;
@@ -232,12 +232,11 @@ button {
   margin-right: 15px;
 }
 .highlightArea2:hover {
-  /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.6);
+  /* background-color: rgba(255, 255, 255, 0.5); */
 }
 /* lets see */
 .dropbtn {
-  /* background-color: #3498DB; */
   color: black;
   padding: 0px;
   font-size: 16px;
