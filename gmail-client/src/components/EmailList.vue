@@ -131,7 +131,7 @@
 .unreadClass {
   /* background-color: #F5F7F7;
   opacity: 0.9; */
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(153, 153, 153, 0.3);
   width: 100%;
 }
 .item {
@@ -196,7 +196,7 @@ svg:not(:root).svg-inline--fa {
     visibility: visible;
     margin-right: 3px;
     margin-left: 6px;
-    width: 50px;
+    width: 65px;
   }
   .smallOnly > div {
     float: right;
