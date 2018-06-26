@@ -74,9 +74,6 @@
 .menu {
   padding-left: 10px;
   padding-right: 25px;
-  cursor: pointer;
-  /* margin-top: 17px;
-  margin-bottom: 5px; */
 }
 img {
   padding-right: 10px;
