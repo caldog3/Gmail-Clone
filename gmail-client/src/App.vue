@@ -86,12 +86,12 @@ export default {
 }
 body {
   overflow: hidden;
-  background-image: url(assets/Background3.jpg);
+  background-image: url(assets/Background1.jpg);
   background-repeat:no-repeat;
   background-size:cover;
 }
 .loggedIn {
-  background-image: url(assets/Background2.jpg);
+  background-image: url(assets/Background16.jpg);
   background-repeat:no-repeat;
   background-size:cover;
 }
