@@ -68,14 +68,12 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: black;
+  color: white;
   /* change here ^ */
 }
 .menu {
   padding-left: 10px;
   padding-right: 25px;
-  /* margin-top: 17px;
-  margin-bottom: 5px; */
 }
 img {
   padding-right: 10px;
@@ -85,34 +83,34 @@ img {
   /* margin-top: 5px; */
 }
 .navbar-light .navbar-brand {
-  color: black;
+  color: white;
   /* change here ^ */
 }
 .search {
   border-radius: 5px;
-  background-color: rgba(153, 153, 153, 0.5);
-  /* background-color: rgba(255, 255, 255, 0.5); */
+  /* background-color: rgba(153, 153, 153, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
   width: 60%;
   margin-right: 10px;
   height: 45px;
-  color: black;
+  color: white;
   /* change here ^ */
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: black;
+  color: white;
   /* change here ^ */
   opacity: 1; /* Firefox */
   font-weight: bold;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: black;
+  color: white;
   /* change here ^ */
   font-weight: bold;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: black;
+  color: white;
   /* change here ^ */
   font-weight: bold;
 }
