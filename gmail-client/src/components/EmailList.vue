@@ -87,6 +87,14 @@
   width: 100%;
   border-top: none;
 }
+.readClass {
+  color: none;
+  background: rgba(255, 255, 255, 0.6); 
+  width: 100%;
+}
+.unreadClass {
+  width: 100%;
+}
 .FlexTable {
   display: flex;
   flex-direction: row;
@@ -113,7 +121,6 @@
   -ms-user-select: none;
   user-select: none;
 }
-
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -122,7 +129,6 @@
   opacity: 0;
   cursor: pointer;
 }
-
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
@@ -136,29 +142,24 @@
   border-width: 2px;
   border-radius: 4px;
 }
-
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: #ccc;
 }
-
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: black;
 }
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
-
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 4px;
@@ -170,6 +171,10 @@
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+.item {
+  width: 30px;
+  height: 30px;
 }
 .emailLink {
   cursor: pointer;
@@ -200,20 +205,13 @@
   flex-grow: 1;
   flex-basis: 0;
 }
-.readClass {
-  color: none;
-  background: rgba(255, 255, 255, 0.6); 
-  /* for dark backgrounds ^ */
-  /* background: rgba(200, 200, 200, 0.3);  */
-  /* for light backgrounds ^ */
-  width: 100%;
+.rwd-break {
+  display: none;
 }
-.unreadClass {
-  width: 100%;
-}
-.item {
-  width: 30px;
-  height: 30px;
+a {
+  color: black;
+  display: inline-block;
+  margin-top: 0px;
 }
 .leftAlign {
   float: left;
@@ -234,14 +232,6 @@
   float: right;
   margin-top: 4px;
 }
-.rwd-break {
-  display: none;
-}
-a {
-  color: black;
-  display: inline-block;
-  margin-top: 0px;
-}
 .highlightArea {
   width: 30px;
   height: 30px;
@@ -249,7 +239,7 @@ a {
   cursor: pointer; 
 }
 .highlightArea:hover {
-  background-color: rgba(153, 153, 153, 0.6) !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
 }
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
