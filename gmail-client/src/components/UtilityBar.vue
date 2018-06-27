@@ -214,7 +214,7 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: rgba(153, 153, 153, 0.6);
+  background-color: rgba(255, 255, 255, 0.5);
   /* for light backgrounds ^ */
   /* background: rgba(255, 255, 255, 0.5); */
   /* for light backgrounds ^ */
@@ -225,7 +225,7 @@ button {
   border-radius: 5px;
 }
 .highlightArea1:hover {
-  background-color: rgba(153, 153, 153, 0.6);
+  background-color: rgba(255, 255, 255, 0.5);
   /* for dark backgrounds ^ */
   /* background-color: rgba(255, 255, 255, 0.5); */
   /* for light backgrounds ^ */
@@ -237,7 +237,7 @@ button {
   margin-right: 15px;
 }
 .highlightArea2:hover {
-  background-color: rgba(153, 153, 153, 0.6);
+  background-color: rgba(255, 255, 255, 0.5);
   /* background-color: rgba(255, 255, 255, 0.5); */
 }
 /* lets see */

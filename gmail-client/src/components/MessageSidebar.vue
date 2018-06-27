@@ -78,10 +78,12 @@
 button {
   margin: 30px;
   cursor: pointer;
+  outline: none;
 }
 .button {
   padding: 15px 32px;
   border-radius: 40px;
+  outline: none;
 }
 .notificationPill b-badge {
   text-align: right;
@@ -106,8 +108,8 @@ button {
   cursor: pointer;
 }
 .options > div:hover {
-  background: rgba(153, 153, 153, 0.4);
-  /* background: rgba(255, 255, 255, 0.4); */
+  /* background: rgba(153, 153, 153, 0.4); */
+  background: rgba(255, 255, 255, 0.4);
 }
 .notInbox {
   float: left;
