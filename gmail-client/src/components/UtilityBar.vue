@@ -295,7 +295,6 @@ button {
   text-decoration: none;
   display: block;
 } 
-
 .dropdown a:hover {background-color: #ddd;}
 
 .show {display: block;}
