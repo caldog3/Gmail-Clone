@@ -94,6 +94,10 @@ img {
   height: 45px;
   color: white;
 }
+.search:focus-within {
+  background-color: white;
+  color: black
+}
 .flex1 {
   display: flex;
   width: 100%;
@@ -132,6 +136,10 @@ input {
   border: none;
   outline: none;
   padding-top: 0px;
+}
+input:focus {
+  background-color: white;
+  color: black;
 }
 .searchBar {
   flex-grow: 1;
