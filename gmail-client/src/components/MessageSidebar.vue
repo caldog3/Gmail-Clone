@@ -62,7 +62,6 @@
 
 <style scoped>
 .sideBar {
-  /* max-width: 270px; */
   float: left;
 }
 button {
@@ -78,7 +77,6 @@ button {
 .options {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  /* change here ^ */
   margin-right: 10px;
 }
 .options > div {
@@ -101,6 +99,7 @@ button {
   justify-content: space-between;
   padding: 5px;
   padding-right: 10px;
+  text-shadow: none;
 }
 .notInbox {
   float: left;

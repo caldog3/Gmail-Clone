@@ -11,15 +11,18 @@
 
             <div class="checkboxes">
 
-              <div class="item">
-                <div class="highlightArea">
+              <div class="highlightArea">
+                <div class="item">
                   <!-- <div v-if=!checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="square" />
                   </div>
                   <div v-if=checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div> -->
-                  <input type="checkbox" :value="message.id" v-model="checkedEmails">
+                  <label class="container">
+                    <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
+                    <span class="checkmark"></span>
+                  </label>
                 </div>
               </div>
 
@@ -98,6 +101,75 @@
   flex-direction: row;
   width: 60px;
   margin-right: 4px;
+}
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  top: -2px;
+  left: 6px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: -2px;
+  left: 6px;
+  height: 17px;
+  width: 17px;
+  background-color: #eee;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: black;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 .emailLink {
   cursor: pointer;
