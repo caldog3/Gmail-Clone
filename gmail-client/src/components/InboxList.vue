@@ -24,6 +24,9 @@
 } */
 #setWidth {
   background: rgba(255, 255, 255, 0.8);
+  /* for dark backgrounds ^ */
+  /* background: rgba(255, 255, 255, 0.6); */
+  /* for light backgrounds ^ */
 }
 ul > .nav {
   display: flex;

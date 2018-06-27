@@ -90,6 +90,8 @@
   align-content: stretch;
   padding-top: 7px;
   padding-bottom: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
 }
 .checkboxes {
   display: flex;
@@ -128,14 +130,13 @@
 }
 .readClass {
   color: none;
-  /* background-color: white;
-  opacity: 0.7; */
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6); 
+  /* for dark backgrounds ^ */
+  /* background: rgba(200, 200, 200, 0.3);  */
+  /* for light backgrounds ^ */
   width: 100%;
 }
 .unreadClass {
-  /* background-color: #F5F7F7;
-  opacity: 0.9; */
   width: 100%;
 }
 .item {
@@ -176,7 +177,7 @@ a {
   cursor: pointer; 
 }
 .highlightArea:hover {
-  background-color: lightgray !important;
+  background-color: rgba(153, 153, 153, 0.6) !important;
 }
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
