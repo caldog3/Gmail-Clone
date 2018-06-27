@@ -89,7 +89,9 @@ img {
 .search {
   border-radius: 5px;
   /* background-color: rgba(153, 153, 153, 0.5); */
+  /* for light backgrounds ^ */
   background-color: rgba(255, 255, 255, 0.5);
+  /* for dark backgrounds ^ */
   width: 60%;
   margin-right: 10px;
   height: 45px;

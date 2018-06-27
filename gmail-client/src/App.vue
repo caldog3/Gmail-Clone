@@ -91,9 +91,6 @@ export default {
 }
 body {
   overflow: hidden;
-  /* background-image: url(assets/Background1.jpg);
-  background-repeat:no-repeat;
-  background-size:cover; */
 }
 .loggedIn {
     /* background: rgba(255, 255, 255, 0.6); */
@@ -110,7 +107,7 @@ body {
 }
 .emailList {
   overflow-y: auto;
-  /* margin-right: 3%; */
+  padding-right: 5px;
 }
 .notLoggedIn {
   height: 100%;
@@ -118,5 +115,33 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
+}
+/* width */
+.emailList::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.emailList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  /* for dark backgrounds ^ */ 
+  /* background: rgba(153, 153, 153, 0.1); */
+  /* for light backgrounds ^ */
+}
+ 
+/* Handle */
+.emailList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+  /* for dark backgrounds ^ */
+  /* background: rgba(153, 153, 153, 0.5); */
+  /* for light backgrounds ^ */
+}
+
+/* Handle on hover */
+.emailList::-webkit-scrollbar-thumb:hover {
+   background: rgba(255, 255, 255, 0.9);
+   /* for dark backgrounds ^ */
+   /* background: rgba(153, 153, 153, 0.9); */
+  /* for light backgrounds ^ */
 }
 </style>
