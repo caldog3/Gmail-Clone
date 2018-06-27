@@ -22,22 +22,22 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import eventBus from './event_bus';
-import Compose from './components/Compose';
-import AppHeader from './components/AppHeader';
-import MessageSidebar from './components/MessageSidebar';
-import UtilityBar from './components/UtilityBar';
-import LoginPage from './components/LoginPage';
+import Vue from "vue";
+import eventBus from "./event_bus";
+import Compose from "./components/Compose";
+import AppHeader from "./components/AppHeader";
+import MessageSidebar from "./components/MessageSidebar";
+import UtilityBar from "./components/UtilityBar";
+import LoginPage from "./components/LoginPage";
 
 export default {
-  name: 'App',
+  name: "App",
   data() {
     return {
-      emailListHeight: {},
-    }
+      emailListHeight: {}
+    };
   },
-  components: { 
+  components: {
     AppHeader,
     MessageSidebar,
     UtilityBar,
@@ -46,32 +46,37 @@ export default {
   },
   computed: {
     loggedIn: function() {
-     return this.$store.getters.loggedIn;
-    },
+      return this.$store.getters.loggedIn;
+    }
   },
   methods: {
     setEmailListHeight() {
       let verticalPadding = 40;
-      if (this.$refs.appHeader !== undefined){
-        let height = window.innerHeight - this.$refs.appHeader.clientHeight - verticalPadding;
-        Vue.set(this.emailListHeight, 'height', `${height}px`); 
+      if (this.$refs.appHeader !== undefined) {
+        let height =
+          window.innerHeight -
+          this.$refs.appHeader.clientHeight -
+          verticalPadding;
+        Vue.set(this.emailListHeight, "height", `${height}px`);
       }
-    }  
+    }
   },
-  beforeUpdate(){
+  beforeUpdate() {
+    this.setEmailListHeight();
     this.$nextTick(function() {
-      window.addEventListener('resize', this.setEmailListHeight);
-    }); 
+      window.addEventListener("resize", this.setEmailListHeight);
+    });
   },
   mounted() {
+    console.log("Height to be calculated");
     this.setEmailListHeight();
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -92,8 +97,8 @@ body {
 }
 .loggedIn {
   background-image: url(assets/Background16.jpg);
-  background-repeat:no-repeat;
-  background-size:cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .sideBar {
   min-width: 270px;
