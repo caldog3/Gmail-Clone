@@ -277,7 +277,7 @@ button {
 }
 .dropdown a:hover {background-color: #ddd;}
 .show {display: block;}
-myDropdown > p {
+p {
   padding: 4px;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -285,7 +285,7 @@ myDropdown > p {
   padding-left: 40px;
   text-align: left;
 }
-myDropdown > p:hover {background-color: #ddd;}
+p:hover {background-color: #ddd;}
 
 .noHighlightDiv {
   padding: 4px;
@@ -293,6 +293,7 @@ myDropdown > p:hover {background-color: #ddd;}
   margin-bottom: 4px;
   cursor: default;
   width: 150px;
+  height: 50px;
   padding-right: 40px;
   padding-left: 40px;
   text-align: left;
