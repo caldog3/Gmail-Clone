@@ -120,16 +120,25 @@ body {
 
 /* Track */
 .emailList::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1);
+  /* for dark backgrounds ^ */ 
+  /* background: rgba(153, 153, 153, 0.1); */
+  /* for light backgrounds ^ */
 }
  
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5); 
+  /* for dark backgrounds ^ */
+  /* background: rgba(153, 153, 153, 0.5); */
+  /* for light backgrounds ^ */
 }
 
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
    background: rgba(255, 255, 255, 0.9);
+   /* for dark backgrounds ^ */
+   /* background: rgba(153, 153, 153, 0.9); */
+  /* for light backgrounds ^ */
 }
 </style>
