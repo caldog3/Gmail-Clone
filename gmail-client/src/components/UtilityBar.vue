@@ -151,32 +151,12 @@
   height: 40px;
   border-bottom: 0px;
   color: white;
-  /* change this ^ */
   width: 100%;
 } 
-.flexIcons {
-  display: flex;
-  flex-direction: row;
-}
-.flexIcons svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.CenterIt {
-  display: flex;
-  flex-direction: row;
-}
-.CenterIt svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.break {
-  width: 30px;
-  padding-top: 4px;
-  cursor: default;
-}
-.item {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+.iconDiv {
+  width: auto;
+  height: 40px;
+  margin-left: 270px;
 }
 .spacing {
   display: flex;
@@ -185,13 +165,51 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.flexIcons {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2px;
+}
+.flexIcons svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+.item {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.Icon {
+  display:inline-block;
+  cursor: pointer;
+}
+.break {
+  width: 30px;
+  padding-top: 4px;
+  cursor: default;
+}
+.highlightArea {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+}
+.highlightArea:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.noHighlightDiv {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  cursor: default;
+}
+.CenterIt {
+  display: flex;
+  flex-direction: row;
+}
+.CenterIt svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
 .right-side-utility {
   margin-right: 40px;
-}
-.iconDiv {
-  width: auto;
-  height: 40px;
-  margin-left: 270px;
 }
 .paddingNeeded {
   padding-right: 30px;
@@ -206,31 +224,13 @@ button {
   float: right;
   margin-right: 20%;
 }
-.Icon {
-  display:inline-block;
-  cursor: pointer;
-}
-.highlightArea {
-  width: 30px;
-  height: 30px;
-  border-radius: 35px;
-}
-.highlightArea:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* for light backgrounds ^ */
-  /* background: rgba(255, 255, 255, 0.5); */
-  /* for light backgrounds ^ */
-}
 .highlightArea1 {
   width: 25px;
   height: 30px;
   border-radius: 5px;
 }
 .highlightArea1:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* for dark backgrounds ^ */
-  /* background-color: rgba(255, 255, 255, 0.5); */
-  /* for light backgrounds ^ */
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .highlightArea2 {
   width: 15px;
@@ -239,8 +239,7 @@ button {
   margin-right: 15px;
 }
 .highlightArea2:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* background-color: rgba(255, 255, 255, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
 }
 /* lets see */
 .dropbtn {
@@ -251,12 +250,10 @@ button {
   cursor: pointer;
   background-color: rgba(255, 0, 0, 0.0);
 }
-
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -275,32 +272,18 @@ button {
   text-decoration: none;
   display: block;
 }
-
 .dropdown a:hover {background-color: #ddd;}
-
 .show {display: block;}
-
 p {
   padding: 4px;
   margin-top: 4px;
   margin-bottom: 4px;
 }
-
-.noHighlightDiv {
-  padding: 4px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  cursor: default;
-}
-
 p:hover {background-color: #ddd;}
-
-
 hr {
   margin: 0px;
 }
 /* lets see end */
-
 
 </style>
 
