@@ -1,6 +1,9 @@
 <template>
   <div class="sideBar">
-    <button class="button" v-on:click.stop="composeShow()">Compose</button>
+    <button class="button" v-on:click.stop="composeShow()">
+      <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
+      &nbsp; &nbsp; Compose &nbsp; 
+      </button>
     <!-- <b-modal v-model="composeShow">
       Test compose block
     </b-modal> -->
@@ -64,13 +67,16 @@
 .sideBar {
   float: left;
 }
+img {
+  width: 30px;
+}
 button {
   margin: 30px;
   cursor: pointer;
   outline: none;
 }
 .button {
-  padding: 15px 32px;
+  padding: 15px 15px;
   border-radius: 40px;
   outline: none;
 }

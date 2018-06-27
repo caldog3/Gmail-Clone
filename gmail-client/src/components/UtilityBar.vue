@@ -59,6 +59,9 @@
                     <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
                   </div>
                 </div>
+                <div class="break">
+                  |
+                </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
@@ -107,8 +110,8 @@
         <div class="right-side-utility">
           <div class="flexIcons">
             
-            <p>1-50 of {{totalMessages}}</p>
-            &emsp;
+            <div class="rightTopPad">1-50 of {{totalMessages}}</div>
+
             <div class="paddingNeeded">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
@@ -195,12 +198,6 @@
 .highlightArea:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-.noHighlightDiv {
-  padding: 4px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  cursor: default;
-}
 .CenterIt {
   display: flex;
   flex-direction: row;
@@ -211,12 +208,18 @@
 .right-side-utility {
   margin-right: 40px;
 }
+
 .paddingNeeded {
   padding-right: 30px;
 }
 .lessPadding {
   padding-right: 20px;
 }
+.rightTopPad {
+  padding-right: 30px;
+  padding-top: 5px;
+}
+
 input {
   float: left;
 }
@@ -278,8 +281,23 @@ p {
   padding: 4px;
   margin-top: 4px;
   margin-bottom: 4px;
+  padding-right: 40px;
+  padding-left: 40px;
+  text-align: left;
 }
 p:hover {background-color: #ddd;}
+
+.noHighlightDiv {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  cursor: default;
+  width: 150px;
+  height: 50px;
+  padding-right: 40px;
+  padding-left: 40px;
+  text-align: left;
+}
 hr {
   margin: 0px;
 }
