@@ -93,10 +93,8 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-    /* background: rgba(255, 255, 255, 0.6); */
-  background-image: url(assets/Background15.jpg);
+  background-image: url(assets/Background16.jpg);
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
-
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -121,28 +119,16 @@ body {
 .emailList::-webkit-scrollbar {
   width: 12px;
 }
-
 /* Track */
 .emailList::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
-  /* for dark backgrounds ^ */ 
-  /* background: rgba(153, 153, 153, 0.1); */
-  /* for light backgrounds ^ */
 }
- 
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.5); 
-  /* for dark backgrounds ^ */
-  /* background: rgba(153, 153, 153, 0.5); */
-  /* for light backgrounds ^ */
 }
-
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
-   background: rgba(255, 255, 255, 0.9);
-   /* for dark backgrounds ^ */
-   /* background: rgba(153, 153, 153, 0.9); */
-  /* for light backgrounds ^ */
+ background: rgba(255, 255, 255, 0.9);
 }
 </style>
