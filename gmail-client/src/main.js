@@ -84,6 +84,7 @@ new Vue({
     console.log("init google api");
     initializeGoogleClient();
     // this.$store.dispatch("initialize");
+
     
   },
 });

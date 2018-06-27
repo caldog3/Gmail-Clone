@@ -93,7 +93,10 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  background-image: url(assets/Background16.jpg);
+    /* background: rgba(255, 255, 255, 0.6); */
+  background-image: url(assets/Background8.jpg);
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
+
   background-repeat: no-repeat;
   background-size: cover;
 }
