@@ -83,7 +83,8 @@ button {
   text-align: right;
 }
 .inbox {
-  background: rgba(255, 255, 255, 0.4);
+  /* background: rgba(153, 153, 153, 0.5); */
+  background: rgba(255, 255, 255, 0.5);
 }
 .options {
   color: white;
@@ -98,20 +99,13 @@ button {
   cursor: pointer;
 }
 .options > div:hover {
+  /* background: rgba(153, 153, 153, 0.4); */
   background: rgba(255, 255, 255, 0.4);
 }
 .notInbox {
   float: left;
   padding: 5px;
 }
-/* .list-group-item-dark {
-  background-color: inherit;
-  color: white;
-}
-.list-group-item-action {
-  background-color: inherit;
-  color: white;
-} */
 </style>
 
 <script>

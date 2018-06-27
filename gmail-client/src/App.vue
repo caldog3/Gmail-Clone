@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="loggedIn">
+    <div class="loggedIn" v-if="loggedIn">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
@@ -86,7 +86,12 @@ export default {
 }
 body {
   overflow: hidden;
-  background-image: url(assets/Background6.jpg);
+  /* background-image: url(assets/Background1.jpg);
+  background-repeat:no-repeat;
+  background-size:cover; */
+}
+.loggedIn {
+  background-image: url(assets/Background16.jpg);
   background-repeat:no-repeat;
   background-size:cover;
 }
@@ -103,6 +108,7 @@ body {
   height: 100%;
 }
 .mainView {
-  margin-right: 3%;
+  margin-right: 50px;
+  min-width: 770px;
 }
 </style>
