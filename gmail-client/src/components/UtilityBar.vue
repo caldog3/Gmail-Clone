@@ -214,8 +214,10 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.6);
+  /* for light backgrounds ^ */
+  /* background: rgba(255, 255, 255, 0.5); */
+  /* for light backgrounds ^ */
 }
 .highlightArea1 {
   width: 25px;
@@ -223,8 +225,10 @@ button {
   border-radius: 5px;
 }
 .highlightArea1:hover {
-  /* background-color: rgba(153, 153, 153, 0.6); */
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.6);
+  /* for dark backgrounds ^ */
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  /* for light backgrounds ^ */
 }
 .highlightArea2 {
   width: 15px;

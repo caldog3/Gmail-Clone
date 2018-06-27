@@ -130,7 +130,10 @@
 }
 .readClass {
   color: none;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6); 
+  /* for dark backgrounds ^ */
+  /* background: rgba(200, 200, 200, 0.3);  */
+  /* for light backgrounds ^ */
   width: 100%;
 }
 .unreadClass {

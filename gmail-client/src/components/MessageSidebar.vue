@@ -1,6 +1,6 @@
 <template>
   <div class="sideBar">
-    <button v-on:click.stop="composeShow()">Compose</button>
+    <button class="button" v-on:click.stop="composeShow()">Compose</button>
     <!-- <b-modal v-model="composeShow">
       Test compose block
     </b-modal> -->
@@ -77,14 +77,20 @@
 }
 button {
   margin: 30px;
-  cursor: pointer; 
+  cursor: pointer;
+}
+.button {
+  padding: 15px 32px;
+  border-radius: 40px;
 }
 .notificationPill b-badge {
   text-align: right;
 }
 .inbox {
   /* background: rgba(153, 153, 153, 0.5); */
+  /* for light backgrounds ^ */
   background: rgba(255, 255, 255, 0.5);
+  /* for dark backgrounds ^ */
 }
 .options {
   color: white;
@@ -99,8 +105,8 @@ button {
   cursor: pointer;
 }
 .options > div:hover {
-  /* background: rgba(153, 153, 153, 0.4); */
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(153, 153, 153, 0.4);
+  /* background: rgba(255, 255, 255, 0.4); */
 }
 .notInbox {
   float: left;
@@ -109,40 +115,39 @@ button {
 </style>
 
 <script>
-import { getLabelsForUnread } from './../store-utility-files/gmail-api-calls';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import eventBus from '../event_bus';
+import { getLabelsForUnread } from "./../store-utility-files/gmail-api-calls";
+import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
+import eventBus from "../event_bus";
 
 export default {
-  name: 'MessageSidebar',
+  name: "MessageSidebar",
   components: {
     FontAwesomeIcon,
     eventBus
   },
   data() {
     return {
-      unreadCount: 0  ,
-    }
+      unreadCount: 0
+    };
   },
   methods: {
     composeShow() {
-      eventBus.$emit('COMPOSE_OPEN');
+      eventBus.$emit("COMPOSE_OPEN");
     },
     loadInbox() {
       //console.log("HERE???????");
-      this.$router.push({ path: '/' });
+      this.$router.push({ path: "/" });
     },
     loadDrafts() {
       //not sure how to route this properly yet
-      this.$router.push({ path: '/'})
-    },
+      this.$router.push({ path: "/" });
+    }
   },
   created() {
-    eventBus.$on('UNREAD_COUNT', unreads => {
-      this.unreadCount = unreads; 
+    eventBus.$on("UNREAD_COUNT", unreads => {
+      this.unreadCount = unreads;
     }),
-    getLabelsForUnread();
-  },
-  
-}
+      getLabelsForUnread();
+  }
+};
 </script>
