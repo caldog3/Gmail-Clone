@@ -1,8 +1,8 @@
 /* eslint-disable */
 <template>
   <div class="everything">
-    <!-- This is for testing the checkboxes array
-    <span>
+    This is for testing the checkboxes array
+    <!-- <span>
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
       <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
