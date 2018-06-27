@@ -61,19 +61,9 @@
 </template>
 
 <style scoped>
-#sidebarFlex {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5px;
-  padding-right: 10px;
-}
 .sideBar {
   /* max-width: 270px; */
   float: left;
-}
-#bootstrap-overrides {
-  text-align: left;
 }
 button {
   margin: 30px;
@@ -84,15 +74,6 @@ button {
   padding: 15px 32px;
   border-radius: 40px;
   outline: none;
-}
-.notificationPill b-badge {
-  text-align: right;
-}
-.inbox {
-  /* background: rgba(153, 153, 153, 0.5); */
-  /* for light backgrounds ^ */
-  background: rgba(255, 255, 255, 0.5);
-  /* for dark backgrounds ^ */
 }
 .options {
   color: white;
@@ -111,9 +92,25 @@ button {
   /* background: rgba(153, 153, 153, 0.4); */
   background: rgba(255, 255, 255, 0.4);
 }
+.inbox {
+  background: rgba(255, 255, 255, 0.5);
+}
+#sidebarFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+  padding-right: 10px;
+}
 .notInbox {
   float: left;
   padding: 5px;
+}
+#bootstrap-overrides {
+  text-align: left;
+}
+.notificationPill b-badge {
+  text-align: right;
 }
 </style>
 

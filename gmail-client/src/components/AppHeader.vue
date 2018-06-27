@@ -49,17 +49,6 @@
 </template>
 
 <style scoped>
-.flexBox {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  align-content: stretch;
-  align-items: center;
-  height: 75px;
-}
-.flexBox div:last-child {
-  margin-left: auto;
-}
 .header {
   /* height: 64px; */
   border-bottom: 1px;
@@ -71,16 +60,27 @@
   color: white;
   /* change here ^ */
 }
+.flexBox {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  height: 75px;
+}
+.flexBox div:last-child {
+  margin-left: auto;
+}
 .menu {
   padding-left: 10px;
   padding-right: 25px;
 }
-img {
-  padding-right: 10px;
-}
 .brand{
   padding-right: 85px;
   /* margin-top: 5px; */
+}
+img {
+  padding-right: 10px;
 }
 .navbar-light .navbar-brand {
   color: white;
@@ -88,15 +88,22 @@ img {
 }
 .search {
   border-radius: 5px;
-  /* background-color: rgba(153, 153, 153, 0.5); */
-  /* for light backgrounds ^ */
   background-color: rgba(255, 255, 255, 0.5);
-  /* for dark backgrounds ^ */
   width: 60%;
   margin-right: 10px;
   height: 45px;
   color: white;
-  /* change here ^ */
+}
+.flex1 {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  height: 100%
+}
+.flex1 > div {
+  margin: 10px;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
@@ -104,13 +111,11 @@ img {
   opacity: 1; /* Firefox */
   font-weight: bold;
 }
-
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
   color: white;
   /* change here ^ */
   font-weight: bold;
 }
-
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: white;
   /* change here ^ */
@@ -126,17 +131,7 @@ input {
   -webkit-appearance: none;
   border: none;
   outline: none;
-}
-.flex1 {
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  align-content: stretch;
-  align-items: center;
-  height: 100%
-}
-.flex1 > div {
-  margin: 10px;
+  padding-top: 0px;
 }
 .searchBar {
   flex-grow: 1;
