@@ -106,7 +106,9 @@
 
         <div class="right-side-utility">
           <div class="flexIcons">
-
+            
+            <p>1-50 of {{totalMessages}}</p>
+            &emsp;
             <div class="paddingNeeded">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
@@ -169,6 +171,7 @@
 .break {
   width: 30px;
   padding-top: 4px;
+  cursor: default;
 }
 .item {
   width: 30px;
@@ -183,7 +186,7 @@
   margin-bottom: 5px;
 }
 .right-side-utility {
-  margin-right: 10px;
+  margin-right: 40px;
 }
 .iconDiv {
   width: auto;
@@ -213,8 +216,10 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  /* background-color: rgba(153, 153, 153, 0.6); */
-  background: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.6);
+  /* for light backgrounds ^ */
+  /* background: rgba(255, 255, 255, 0.5); */
+  /* for light backgrounds ^ */
 }
 .highlightArea1 {
   width: 25px;
@@ -222,8 +227,10 @@ button {
   border-radius: 5px;
 }
 .highlightArea1:hover {
-  /* background-color: rgba(153, 153, 153, 0.6); */
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(153, 153, 153, 0.6);
+  /* for dark backgrounds ^ */
+  /* background-color: rgba(255, 255, 255, 0.5); */
+  /* for light backgrounds ^ */
 }
 .highlightArea2 {
   width: 15px;
@@ -299,6 +306,7 @@ hr {
 
 <script>
 import eventBus from '../event_bus'
+import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
@@ -311,6 +319,7 @@ export default {
     return {
       messageBody: false,
       checked: false,
+      totalMessages: '0',
     }
   },
   methods: {
@@ -359,7 +368,13 @@ export default {
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
-    eventBus.$on('MESSAGE_LIST', this.false)
-  }
+    eventBus.$on('MESSAGE_LIST', this.false);
+    eventBus.$on('TOTAL_EMAIL_COUNT', messageTotal => {
+      console.log("Reached the email count receiver");
+      messageTotal = messageTotal.toLocaleString('en', {useGrouping:true})
+      this.totalMessages = messageTotal;
+    });
+    getNumberOfMessages();
+  },
 }
 </script>

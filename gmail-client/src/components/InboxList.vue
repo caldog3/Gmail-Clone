@@ -7,8 +7,9 @@
         <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
-      </b-tab>
         <email-list labelId="CATEGORY_SOCIAL"/>
+      </b-tab>
+
       <b-tab title="Promotions">
         <email-list labelId="CATEGORY_PROMOTIONS"/>      
       </b-tab>
@@ -23,6 +24,9 @@
 } */
 #setWidth {
   background: rgba(255, 255, 255, 0.8);
+  /* for dark backgrounds ^ */
+  /* background: rgba(255, 255, 255, 0.6); */
+  /* for light backgrounds ^ */
 }
 ul > .nav {
   display: flex;
