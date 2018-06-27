@@ -106,6 +106,7 @@ body {
 .emailList {
   overflow-y: auto;
   padding-right: 5px;
+  padding-bottom: 100px;
 }
 .notLoggedIn {
   height: 100%;

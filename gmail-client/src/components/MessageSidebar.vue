@@ -146,7 +146,7 @@ export default {
     eventBus.$on("UNREAD_COUNT", unreads => {
       this.unreadCount = unreads;
     }),
-      getLabelsForUnread();
+    getLabelsForUnread();
   }
 };
 </script>

@@ -106,7 +106,9 @@
 
         <div class="right-side-utility">
           <div class="flexIcons">
-
+            
+            <p>1-50 of {{totalMessages}}</p>
+            &emsp;
             <div class="paddingNeeded">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
@@ -287,6 +289,7 @@ hr {
 
 <script>
 import eventBus from '../event_bus'
+import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
@@ -299,6 +302,7 @@ export default {
     return {
       messageBody: false,
       checked: false,
+      totalMessages: '0',
     }
   },
   methods: {
@@ -347,7 +351,13 @@ export default {
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
-    eventBus.$on('MESSAGE_LIST', this.false)
-  }
+    eventBus.$on('MESSAGE_LIST', this.false);
+    eventBus.$on('TOTAL_EMAIL_COUNT', messageTotal => {
+      console.log("Reached the email count receiver");
+      messageTotal = messageTotal.toLocaleString('en', {useGrouping:true})
+      this.totalMessages = messageTotal;
+    });
+    getNumberOfMessages();
+  },
 }
 </script>
