@@ -1,21 +1,25 @@
 /* eslint-disable */
 <template>
   <div class="everything">
+    <!-- This is for testing the checkboxes array
+    <span>
+      <p> works.... {{ checkedEmails }} </p>
+    </span> -->
       <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
         <template v-if="message.labelIds.includes(labelId)">
           <div class="FlexTable">
-
 
             <div class="checkboxes">
 
               <div class="item">
                 <div class="highlightArea">
-                  <div v-if=!checked v-on:click="check()">
+                  <!-- <div v-if=!checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="square" />
                   </div>
                   <div v-if=checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="check-square"/>
-                  </div>
+                  </div> -->
+                  <input type="checkbox" :value="message.id" v-model="checkedEmails">
                 </div>
               </div>
 
@@ -241,6 +245,7 @@ export default {
     return {
       checked: false,
       starCheck: false,
+      checkedEmails: [],
     }
   },
   methods: {
