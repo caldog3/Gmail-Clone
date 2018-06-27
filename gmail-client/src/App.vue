@@ -104,6 +104,7 @@ body {
 }
 .emailList {
   overflow-y: auto;
+  padding-right: 5px;
 }
 .notLoggedIn {
   height: 100%;
@@ -111,5 +112,24 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
+}
+/* width */
+.emailList::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.emailList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); 
+}
+ 
+/* Handle */
+.emailList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+}
+
+/* Handle on hover */
+.emailList::-webkit-scrollbar-thumb:hover {
+   background: rgba(255, 255, 255, 0.9);
 }
 </style>

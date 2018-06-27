@@ -184,7 +184,7 @@
   margin-bottom: 5px;
 }
 .right-side-utility {
-  margin-right: 10px;
+  margin-right: 40px;
 }
 .iconDiv {
   width: auto;
