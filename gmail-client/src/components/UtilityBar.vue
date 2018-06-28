@@ -134,7 +134,7 @@
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
-                  <div id="cogDropdown" class="cog-dropdown-content">
+                  <div id="cogDropdown" class="cog dropdown-content">
                     <p>Background Toggle</p>
                     <hr>
                     <p>Some kind of setting</p>
@@ -281,7 +281,10 @@ button {
   z-index: 1;
   cursor: default;
 }
-.cog-dropdown-content {
+.cog {
+  right: 105px;
+}
+/* .cog-dropdown-content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -289,8 +292,8 @@ button {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   cursor: default;
-  right: 0;
-}
+  right: 105px;
+} */
 #ellipsesDropdown {
   color: black;
   
