@@ -312,7 +312,7 @@ p:hover {background-color: #ddd;}
   margin-top: 4px;
   margin-bottom: 4px;
   cursor: default;
-  width: 150px;
+  width: 250px;
   height: 50px;
   padding-right: 40px;
   padding-left: 40px;
