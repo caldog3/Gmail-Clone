@@ -312,7 +312,7 @@ p:hover {background-color: #ddd;}
   margin-top: 4px;
   margin-bottom: 4px;
   cursor: default;
-  width: 150px;
+  width: 250px;
   height: 50px;
   padding-right: 40px;
   padding-left: 40px;
@@ -357,7 +357,7 @@ export default {
     back() {
       //Need to route it back to EmailList
       eventBus.$emit('MESSAGE_LIST');
-      this.$router.push({ path: '/' });
+      this.$router.go(-1);
     },
     ellipsisList() {
       console.log("routing?");

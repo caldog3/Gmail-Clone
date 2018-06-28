@@ -19,4 +19,15 @@ export default new Router({
       component: EmailBody
     }
   ],
+  // scrollBehavior(to, from, savedPosition) {
+  //   if (savedPosition) {
+  //     return savedPosition;
+  //   }
+  //   console.log(to);
+  //   if (to.hash) {
+  //     console.log(to.hash);
+  //     return { selector: to.hash};
+  //   }
+  //   return {x: 0, y: 0};
+  // }
 });

@@ -52,8 +52,11 @@ const getBody = (payload) => {
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
       } else {
-        let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
-        if (multipartMixedAlternativeBody !== undefined){
+        if (payload.parts[0].body.data !== undefined){
+          body = Base64Decode(payload.parts[0].body.data);
+        }
+        else if (payload.parts[0].parts[1].body.data !== undefined){
+          let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
           body = Base64Decode(multipartMixedAlternativeBody);
 
           let bodyAndAttachmentArray = payload.parts;
@@ -83,8 +86,6 @@ const getBody = (payload) => {
           //console.log(payload.parts[0].parts[0].parts[1].body.data);
           //console.log(payload.parts[0].parts[1].body.attachmentId) // chipmunk
         }
-
-        
       }
     } else {
       let multipartAlternativeBody = payload.parts[0].body.data;
