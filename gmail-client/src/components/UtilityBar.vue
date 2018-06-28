@@ -352,7 +352,7 @@ export default {
     return {
       messageBody: false,
       checked: false,
-      totalMessages: '0',
+      totalMessages: '50',
     }
   },
   methods: {
