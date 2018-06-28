@@ -26,8 +26,8 @@
                 </div>
                 <div>
                   <div class="highlightArea item">
-                    <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                      <div id="myDropdown" class="dropdown-content">
+                    <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="ellipsesDropdown" class="dropdown-content">
                         <p>  Mark all as read </p>
                         <hr>
                         <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
@@ -59,6 +59,9 @@
                     <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
                   </div>
                 </div>
+                <div class="break">
+                  |
+                </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
@@ -80,8 +83,8 @@
               </div>
               <div class="item">
                 <div class="highlightArea">
-                  <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="myDropdown" class="dropdown-content">
+                  <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="ellipsesDropdown" class="dropdown-content">
                     <p>Mark as read</p>
                     <hr>
                     <p>Mark as important</p>
@@ -107,8 +110,8 @@
         <div class="right-side-utility">
           <div class="flexIcons">
             
-            <p>1-50 of {{totalMessages}}</p>
-            &emsp;
+            <div class="rightTopPad">1-50 of {{totalMessages}}</div>
+
             <div class="paddingNeeded">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
@@ -128,8 +131,23 @@
               </div>
             </div>
             <div>
-              <div class="highlightArea">
-                <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                  <div id="cogDropdown" class="dropdown-content">
+                    <p>Background Toggle</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                  </div> 
+                </div>
               </div>
             </div>
           </div>
@@ -151,32 +169,12 @@
   height: 40px;
   border-bottom: 0px;
   color: white;
-  /* change this ^ */
   width: 100%;
 } 
-.flexIcons {
-  display: flex;
-  flex-direction: row;
-}
-.flexIcons svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.CenterIt {
-  display: flex;
-  flex-direction: row;
-}
-.CenterIt svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.break {
-  width: 30px;
-  padding-top: 4px;
-  cursor: default;
-}
-.item {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+.iconDiv {
+  width: auto;
+  height: 40px;
+  margin-left: 270px;
 }
 .spacing {
   display: flex;
@@ -185,30 +183,27 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.right-side-utility {
-  margin-right: 40px;
+.flexIcons {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2px;
 }
-.iconDiv {
-  width: auto;
-  height: 40px;
-  margin-left: 270px;
+.flexIcons svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
 }
-.paddingNeeded {
-  padding-right: 30px;
-}
-.lessPadding {
-  padding-right: 20px;
-}
-input {
-  float: left;
-}
-button {
-  float: right;
-  margin-right: 20%;
+.item {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 .Icon {
   display:inline-block;
   cursor: pointer;
+}
+.break {
+  width: 30px;
+  padding-top: 4px;
+  cursor: default;
 }
 .highlightArea {
   width: 30px;
@@ -216,10 +211,36 @@ button {
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* for light backgrounds ^ */
-  /* background: rgba(255, 255, 255, 0.5); */
-  /* for light backgrounds ^ */
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.CenterIt {
+  display: flex;
+  flex-direction: row;
+}
+.CenterIt svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+.right-side-utility {
+  margin-right: 40px;
+}
+
+.paddingNeeded {
+  padding-right: 30px;
+}
+.lessPadding {
+  padding-right: 20px;
+}
+.rightTopPad {
+  padding-right: 30px;
+  padding-top: 5px;
+}
+
+input {
+  float: left;
+}
+button {
+  float: right;
+  margin-right: 20%;
 }
 .highlightArea1 {
   width: 25px;
@@ -227,10 +248,7 @@ button {
   border-radius: 5px;
 }
 .highlightArea1:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* for dark backgrounds ^ */
-  /* background-color: rgba(255, 255, 255, 0.5); */
-  /* for light backgrounds ^ */
+  background-color: rgba(255, 255, 255, 0.5);
 }
 .highlightArea2 {
   width: 15px;
@@ -239,8 +257,7 @@ button {
   margin-right: 15px;
 }
 .highlightArea2:hover {
-  background-color: rgba(153, 153, 153, 0.6);
-  /* background-color: rgba(255, 255, 255, 0.5); */
+  background-color: rgba(255, 255, 255, 0.5);
 }
 /* lets see */
 .dropbtn {
@@ -251,12 +268,10 @@ button {
   cursor: pointer;
   background-color: rgba(255, 0, 0, 0.0);
 }
-
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -266,8 +281,13 @@ button {
   z-index: 1;
   cursor: default;
 }
-#myDropdown {
+#ellipsesDropdown {
   color: black;
+  
+}
+#cogDropdown {
+  color: black;
+  position: right;
 }
 .dropdown-content a {
   color: black;
@@ -275,32 +295,33 @@ button {
   text-decoration: none;
   display: block;
 }
-
 .dropdown a:hover {background-color: #ddd;}
-
 .show {display: block;}
-
 p {
   padding: 4px;
   margin-top: 4px;
   margin-bottom: 4px;
+  padding-right: 40px;
+  padding-left: 40px;
+  text-align: left;
 }
+p:hover {background-color: #ddd;}
 
 .noHighlightDiv {
   padding: 4px;
   margin-top: 4px;
   margin-bottom: 4px;
   cursor: default;
+  width: 150px;
+  height: 50px;
+  padding-right: 40px;
+  padding-left: 40px;
+  text-align: left;
 }
-
-p:hover {background-color: #ddd;}
-
-
 hr {
   margin: 0px;
 }
 /* lets see end */
-
 
 </style>
 
@@ -346,10 +367,12 @@ export default {
     },
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
-    myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
+    ellipsesDropdownFunction() {
+      document.getElementById("ellipsesDropdown").classList.toggle("show");
     },
-
+    cogDropdownFunction() { 
+      document.getElementById("cogDropdown").classList.toggle("show");
+    },
     // Close the dropdown if the user clicks outside of it
     window:onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
