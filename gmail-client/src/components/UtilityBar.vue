@@ -26,8 +26,8 @@
                 </div>
                 <div>
                   <div class="highlightArea item">
-                    <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                      <div id="myDropdown" class="dropdown-content">
+                    <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="ellipsesDropdown" class="dropdown-content">
                         <p>  Mark all as read </p>
                         <hr>
                         <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
@@ -83,8 +83,8 @@
               </div>
               <div class="item">
                 <div class="highlightArea">
-                  <div v-on:click="myFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="myDropdown" class="dropdown-content">
+                  <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="ellipsesDropdown" class="dropdown-content">
                     <p>Mark as read</p>
                     <hr>
                     <p>Mark as important</p>
@@ -131,8 +131,23 @@
               </div>
             </div>
             <div>
-              <div class="highlightArea">
-                <font-awesome-icon style="color:white;" class="Icon" icon="cog"/>
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                  <div id="cogDropdown" class="dropdown-content">
+                    <p>Background Toggle</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                  </div> 
+                </div>
               </div>
             </div>
           </div>
@@ -266,8 +281,13 @@ button {
   z-index: 1;
   cursor: default;
 }
-#myDropdown {
+#ellipsesDropdown {
   color: black;
+  
+}
+#cogDropdown {
+  color: black;
+  position: right;
 }
 .dropdown-content a {
   color: black;
@@ -337,7 +357,7 @@ export default {
     back() {
       //Need to route it back to EmailList
       eventBus.$emit('MESSAGE_LIST');
-      this.$router.push({ path: '/' });
+      this.$router.go(-1);
     },
     ellipsisList() {
       console.log("routing?");
@@ -347,10 +367,12 @@ export default {
     },
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
-    myFunction() {
-      document.getElementById("myDropdown").classList.toggle("show");
+    ellipsesDropdownFunction() {
+      document.getElementById("ellipsesDropdown").classList.toggle("show");
     },
-
+    cogDropdownFunction() { 
+      document.getElementById("cogDropdown").classList.toggle("show");
+    },
     // Close the dropdown if the user clicks outside of it
     window:onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {

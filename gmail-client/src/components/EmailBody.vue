@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div class="body">
+  <div id="body">
     <div class="leftAlign">
       <h4 >{{subject}}</h4>
       <hr>
@@ -21,7 +21,7 @@
 </template>
 
 <style scoped>
-/* .body {
+/* #body {
   background-color: white;
   opacity: 0.6;
 } */
@@ -96,5 +96,12 @@ export default {
       return theClass;
     },
   },
+  created(){
+    // console.log("Window: ", window);
+    // window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
+    // console.log("EmailBody Scrolling to top");
+    // document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }
 }
 </script>
