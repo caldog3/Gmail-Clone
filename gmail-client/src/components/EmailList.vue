@@ -5,22 +5,19 @@
     <span>
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
-      <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
+      <div v-for="message in messages" :key="message.id" v-bind:class="readClassChanger(message)">
         <template v-if="message.labelIds.includes(labelId)">
           <div class="FlexTable">
 
             <div class="checkboxes">
 
               <div class="first">
-                
                 <label class="container">
                   <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
-      
                 </label>
-
               </div>
               
                   <!-- <div v-if=!checked v-on:click="check()">
@@ -338,7 +335,7 @@ export default {
     }
   },
   methods: {
-    classChanger(message){
+    readClassChanger(message){
       var theClass = 'readClass';
       //console.log(message.unread);
       if(message.unread == true){
