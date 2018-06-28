@@ -324,7 +324,7 @@ export default {
     },
     enterMessage(message) {
       eventBus.$emit('ENTER_MESSAGE');
-      this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }});
+      this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }, hash: '#body'});
       markAsRead(message.id);
     },
     check() {
