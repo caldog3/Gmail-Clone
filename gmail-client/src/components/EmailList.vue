@@ -11,20 +11,26 @@
 
             <div class="checkboxes">
 
-              <div class="highlightArea">
-                <div class="item">
+              <div class="first">
+                
+                <label class="container">
+                  <div class="highlightArea">
+                    <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
+                    <span class="checkmark"></span>
+                  </div>
+      
+                </label>
+
+              </div>
+              
                   <!-- <div v-if=!checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="square" />
                   </div>
                   <div v-if=checked v-on:click="check()">
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div> -->
-                  <label class="container">
-                    <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-              </div>
+                  
+                
 
               <div class="star">
                 <div class="largeOnly">
@@ -104,6 +110,9 @@
   padding-right: 3px;
   padding-left: 3px;
 }
+.first {
+  width: 30px;
+}
 .checkboxes {
   display: flex;
   flex-direction: row;
@@ -124,7 +133,7 @@
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
-  top: -2px;
+  top: 7px;
   left: 6px;
   opacity: 0;
   cursor: pointer;
@@ -132,7 +141,7 @@
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: -2px;
+  top: 7px;
   left: 6px;
   height: 17px;
   width: 17px;
@@ -173,6 +182,10 @@
   transform: rotate(45deg);
 }
 .item {
+  width: 30px;
+  height: 30px;
+}
+.star {
   width: 30px;
   height: 30px;
 }
