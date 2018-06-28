@@ -44,8 +44,8 @@ h4 {
 .not-group-message {
   display: none;
 }
-.body {
-  background-color: white;
+#body {
+  background-color: white !important;
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
@@ -82,8 +82,16 @@ export default {
       return this.message.detailedFrom;
     },
     to(){
-      return this.message.to;
+      let cc = this.message.cc;
+      let to = this.message.to;
+      console.log(cc);
+      if (cc !== null) {
+        to += ", ";
+        to += cc;
+      }
+      return to;
     },
+
   },
   methods: {
     ifGroupMessage() {

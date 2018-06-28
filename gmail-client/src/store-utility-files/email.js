@@ -128,7 +128,7 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getEmailInfo = (headers) => {
-  let from, to, subject, detailedFrom;
+  let from, to, cc = null, subject, detailedFrom;
   for (let i = 0; i < headers.length; i++) {
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
@@ -153,11 +153,15 @@ const getEmailInfo = (headers) => {
     } else if (headers[i].name === "Subject") {
       subject = headers[i].value;
       // console.log(subject);
+    } else if (headers[i].name === "Cc") {
+      cc = headers[i].value;
     }
+
   }
   return {
     from,
     to,
+    cc,
     subject,
     detailedFrom
   };
