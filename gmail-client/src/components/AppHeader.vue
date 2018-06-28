@@ -39,16 +39,14 @@
 
           </div>
 
-
-          <div id="Dropdown" class="dropdown-content">
-            <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
-          </div>
-
-
-
-            
         </div>
+
+        
+
       </div>
+        <div id="Dropdown" class="dropdown-content">
+          <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
+        </div>
     </b-navbar>
     
   </div>
@@ -202,7 +200,11 @@ input:focus {
   display: block;
 }
 .dropdown a:hover {background-color: #ddd;}
-.show {display: block;}
+.show {
+  display: block;
+  position: relative;
+  right: 65px;  
+}
 
 @media screen and (max-width : 700px) {
   .search { 
