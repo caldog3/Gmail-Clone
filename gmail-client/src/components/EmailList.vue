@@ -32,18 +32,11 @@
                   
                 
 
-              <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <div v-if=!starCheck v-on:click="checkStar()">
-                      <font-awesome-icon class="Icon" icon="star" />
-                    </div>
-                    <div v-if=starCheck v-on:click="checkStar()">
-                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
-                    </div>
+                    <input class="star" type="checkbox" title="bookmark page">
                   </div>
                 </div>
-              </div>
 
             </div>
 
@@ -71,13 +64,8 @@
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
-              <div class="highlightArea">              
-                <div v-if=!starCheck v-on:click="checkStar()">
-                    <font-awesome-icon class="Icon" icon="star" />
-                </div>
-                <div v-if=starCheck v-on:click="checkStar()">
-                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
-                </div>
+              <div class="highlightArea">
+                <input class="star" type="checkbox" title="bookmark page">
               </div>
             </div>
 
@@ -145,15 +133,15 @@
   left: 6px;
   height: 17px;
   width: 17px;
-  background-color: #eee;
+  background-color: rgba(255, 255, 255, 0.0); 
   border-color: black;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1.5px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: rgba(255, 255, 255, 0.0); 
 }
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
@@ -181,11 +169,28 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.item {
+.largeOnly {
   width: 30px;
   height: 30px;
 }
 .star {
+  visibility: hidden;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  left: -3px;
+  top: -5px;
+}
+.star:before {
+  content: "\2606";
+  position: absolute;
+  visibility:visible;
+}
+.star:checked:before {
+  content: "\2605";
+  position: absolute;
+}
+.item {
   width: 30px;
   height: 30px;
 }
@@ -298,6 +303,7 @@ svg:not(:root).svg-inline--fa {
   }
   .checkboxes {
     width: 30px;
+    margin-right: 8px;
   }
   .rightAlign {
     visibility: hidden;
