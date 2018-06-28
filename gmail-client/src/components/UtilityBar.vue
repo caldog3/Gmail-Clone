@@ -336,7 +336,7 @@ export default {
     back() {
       //Need to route it back to EmailList
       eventBus.$emit('MESSAGE_LIST');
-      this.$router.push({ path: '/' });
+      this.$router.go(-1);
     },
     ellipsisList() {
       console.log("routing?");
