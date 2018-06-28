@@ -48,6 +48,7 @@ h4 {
   background-color: white;
   padding-top: 2%;
   padding-left: 5%;
+  padding-right: 1%;
 }
 </style>
 
