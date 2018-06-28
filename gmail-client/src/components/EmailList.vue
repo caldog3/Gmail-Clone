@@ -14,7 +14,7 @@
               <div class="first">
                 
                 <label class="container">
-                  <div class="highlightArea">
+                  <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
@@ -252,6 +252,17 @@ a {
   cursor: pointer; 
 }
 .highlightArea:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+.highlightAreaCheck {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+  cursor: pointer; 
+  position: absolute;
+  left: 6px;
+}
+.highlightAreaCheck:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
 }
 svg:not(:root).svg-inline--fa {
