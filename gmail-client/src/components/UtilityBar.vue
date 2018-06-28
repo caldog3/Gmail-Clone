@@ -165,7 +165,6 @@
 </template>
 
 <style scoped>
-
 .body {
   height: 40px;
   border-bottom: 0px;
@@ -235,7 +234,6 @@
   padding-right: 30px;
   padding-top: 5px;
 }
-
 input {
   float: left;
 }
@@ -285,16 +283,6 @@ button {
 .cog {
   right: 105px;
 }
-/* .cog-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  cursor: default;
-  right: 105px;
-} */
 #ellipsesDropdown {
   color: black;
   
