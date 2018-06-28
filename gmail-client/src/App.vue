@@ -34,7 +34,8 @@ export default {
   name: "App",
   data() {
     return {
-      emailListHeight: {}
+      emailListHeight: {},
+      initialHeightCalculated: false,
     };
   },
   components: {
@@ -57,19 +58,26 @@ export default {
           window.innerHeight -
           this.$refs.appHeader.clientHeight -
           verticalPadding;
+          console.log(height)
         Vue.set(this.emailListHeight, "height", `${height}px`);
+
+        if (!this.initialHeightCalculated){
+          this.initialHeightCalculated = true;
+        }
       }
     }
   },
   beforeUpdate() {
-    this.setEmailListHeight();
+    if (!this.initialHeightCalculated){
+      this.setEmailListHeight();
+    }
+    
     this.$nextTick(function() {
       window.addEventListener("resize", this.setEmailListHeight);
     });
   },
   mounted() {
-    console.log("Height to be calculated");
-    this.setEmailListHeight();
+    this.setEmailListHeight();   
   }
 };
 </script>
