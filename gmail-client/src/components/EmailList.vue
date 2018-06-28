@@ -6,7 +6,7 @@
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
       <div v-for="message in messages" :key="message.id" v-bind:class="readClassChanger(message)">
-        <template v-if="message.labelIds.includes(labelId)">
+        <!-- <template v-if="message.labelIds.includes(labelId)"> -->
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
@@ -77,7 +77,7 @@
             </div>
 
           </div>     
-        </template>
+        <!-- </template> -->
       </div>
   </div>
 </template>
@@ -355,7 +355,9 @@ export default {
   },
   computed: {
     messages() {
-      let messagesFinal = _.sortBy(this.$store.getters.messages, [function(messages){
+      let labelId = this.labelId;
+      const labelMessages = this.$store.getters.getLabelMessages[labelId];
+      let messagesFinal = _.sortBy(labelMessages, [function(messages){
         return messages.unixTime;
       }]).reverse();
       

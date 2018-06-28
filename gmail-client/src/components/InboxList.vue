@@ -3,12 +3,12 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <b-tab icon='inbox' title="Primary">
+      <!-- <b-tab icon='inbox' title="Primary">
         <email-list labelId="CATEGORY_PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
         <email-list labelId="CATEGORY_SOCIAL"/>
-      </b-tab>
+      </b-tab> -->
 
       <b-tab title="Promotions">
         <email-list labelId="CATEGORY_PROMOTIONS"/>      
@@ -38,10 +38,10 @@ export default {
     FontAwesomeIcon
   },
   beforeCreate(){
-    let messages = this.$store.getters.messages;
-    if(messages.length === 0){
-      this.$store.dispatch("getListOfMessages");
-    }
+    // let messages = this.$store.getters.messages;
+    // if(messages.length === 0){
+      this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
+    // }
   },
 }
 </script>

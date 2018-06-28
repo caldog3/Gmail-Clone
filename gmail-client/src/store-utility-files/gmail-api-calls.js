@@ -22,7 +22,6 @@ const sendMessage = (headers, message) => {
 }
 
 const markAsRead = (messageId) => {
-  let url = `https://www.googleapis.com/gmail/v1/users/me/threads/${messageId}/modify`;
   gapi.client.gmail.users.messages.modify({
     'userId': 'me',
     'id': messageId,
@@ -34,16 +33,18 @@ const markAsRead = (messageId) => {
   });
 }
 
-// const getLabels = () => {
-//   let url = 'https://www.googleapis.com/gmail/v1/users/me/labels';
-//   axios.get(url, getAuthHeader())
-//     .then(response => {
-//       console.log("Labels");
-//       console.log(response);
-//       let unreadCount = response.data.messagesUnread;
-//       eventBus.$emit('UNREAD_COUNT', unreadCount);
-//     })
-// }
+const getLabels = () => {
+  gapi.client.load('gmail', 'v1').then(() => {
+  gapi.client.gmail.users.labels.list({
+    'userId': 'me'
+  }).then(response => {
+      console.log("Labels");
+      console.log(response);
+      // let unreadCount = response.data.messagesUnread;
+      // eventBus.$emit('UNREAD_COUNT', unreadCount);
+    })
+  });
+}
 //This is where the magic happens! But it's not exactly what we want yet
 //..we need more conditionals
 
@@ -55,13 +56,11 @@ const getNumberOfMessages = () => {
       'id': 'INBOX',
     }).then((response) => {
       let totalInboxEmailCount = response.result.threadsTotal;
-      gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.labels.get({
           'userId': 'me',
           'id': 'CATEGORY_PROMOTIONS',
         }).then((response) => {
           let totalEmailCount = totalInboxEmailCount - response.result.threadsTotal;
-          gapi.client.load('gmail', 'v1').then(() => {
             gapi.client.gmail.users.labels.get({
               'userId': 'me',
               'id': 'CATEGORY_SOCIAL',
@@ -69,9 +68,7 @@ const getNumberOfMessages = () => {
               totalEmailCount = totalEmailCount - response.result.threadsTotal;
               eventBus.$emit('TOTAL_EMAIL_COUNT', totalEmailCount);
             });
-          });
         });
-      });
     });
   });
 }
