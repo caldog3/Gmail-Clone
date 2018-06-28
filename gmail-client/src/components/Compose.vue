@@ -19,7 +19,7 @@
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="sectionText">
-      <textarea v-model="composeMessage" placeholder="Body" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+      <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
     </div>
     <div class="footerSection">
       <div class="sendButton">
@@ -133,11 +133,14 @@ textarea {
   padding: 3px;
 }
 .SendButton1 {
-  background-color: blue;
-  border-radius: 3px;
+  background-color: #297be6;
+  border-radius: 5px;
   color: white;
   border: none;
   outline: none;
+  width: 4.5em;
+  height: 2.2em;
+
 }
 </style>
 

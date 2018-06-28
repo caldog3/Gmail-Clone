@@ -108,7 +108,8 @@ export default new Vuex.Store({
           'userId': 'me',
           'id': messageId,
         }).then((response) => {
-          const { from, to, subject, detailedFrom } = getEmailInfo(
+          console.log(response.result.payload.headers);
+          const { from, to, cc, subject, detailedFrom } = getEmailInfo(
             response.result.payload.headers
           );
           const { labelIds, unread } = resolveLabels(response.result.labelIds);
@@ -121,6 +122,7 @@ export default new Vuex.Store({
             from,
             detailedFrom,
             to,
+            cc,
             subject,
             snippet,
             body,
