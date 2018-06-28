@@ -32,18 +32,11 @@
                   
                 
 
-              <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <div v-if=!starCheck v-on:click="checkStar()">
-                      <font-awesome-icon class="Icon" icon="star" />
-                    </div>
-                    <div v-if=starCheck v-on:click="checkStar()">
-                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
-                    </div>
+                    <input class="star" type="checkbox" title="bookmark page">
                   </div>
                 </div>
-              </div>
 
             </div>
 
@@ -181,11 +174,26 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.item {
+.largeOnly {
   width: 30px;
   height: 30px;
 }
 .star {
+  visibility: hidden;
+  font-size: 20px;
+  cursor: pointer;
+  padding-bottom: 6px;
+}
+.star:before {
+  content: "\2606";
+  position: absolute;
+  visibility:visible;
+}
+.star:checked:before {
+  content: "\2605";
+  position: absolute;
+}
+.item {
   width: 30px;
   height: 30px;
 }
@@ -298,6 +306,7 @@ svg:not(:root).svg-inline--fa {
   }
   .checkboxes {
     width: 30px;
+    margin-right: 8px;
   }
   .rightAlign {
     visibility: hidden;
