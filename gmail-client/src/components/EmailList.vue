@@ -8,9 +8,7 @@
       <div v-for="message in messages" :key="message.id" v-bind:class="readClassChanger(message)">
         <template v-if="message.labelIds.includes(labelId)">
           <div class="FlexTable">
-
             <div class="checkboxes">
-
               <div class="first">
                 <label class="container">
                   <div class="highlightAreaCheck">
@@ -29,11 +27,18 @@
                   
                 
 
+              <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <input class="star" type="checkbox" title="bookmark page">
+                    <div v-if=!starCheck v-on:click="checkStar()">
+                      <font-awesome-icon class="Icon" icon="star" />
+                    </div>
+                    <div v-if=starCheck v-on:click="checkStar()">
+                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                    </div>
                   </div>
                 </div>
+              </div>
 
             </div>
 
@@ -61,8 +66,13 @@
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
-              <div class="highlightArea">
-                <input class="star" type="checkbox" title="bookmark page">
+              <div class="highlightArea">              
+                <div v-if=!starCheck v-on:click="checkStar()">
+                    <font-awesome-icon class="Icon" icon="star" />
+                </div>
+                <div v-if=starCheck v-on:click="checkStar()">
+                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                </div>
               </div>
             </div>
 
@@ -130,15 +140,15 @@
   left: 6px;
   height: 17px;
   width: 17px;
-  background-color: rgba(255, 255, 255, 0.0); 
+  background-color: #eee;
   border-color: black;
   border-style: solid;
-  border-width: 1.5px;
+  border-width: 2px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: rgba(255, 255, 255, 0.0); 
+  background-color: #ccc;
 }
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
@@ -166,28 +176,11 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.largeOnly {
+.item {
   width: 30px;
   height: 30px;
 }
 .star {
-  visibility: hidden;
-  font-size: 20px;
-  cursor: pointer;
-  position: relative;
-  left: -3px;
-  top: -5px;
-}
-.star:before {
-  content: "\2606";
-  position: absolute;
-  visibility:visible;
-}
-.star:checked:before {
-  content: "\2605";
-  position: absolute;
-}
-.item {
   width: 30px;
   height: 30px;
 }
@@ -300,7 +293,6 @@ svg:not(:root).svg-inline--fa {
   }
   .checkboxes {
     width: 30px;
-    margin-right: 8px;
   }
   .rightAlign {
     visibility: hidden;
