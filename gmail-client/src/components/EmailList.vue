@@ -10,11 +10,13 @@
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
+                
                 <label class="container">
                   <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
+      
                 </label>
               </div>
               
@@ -26,20 +28,11 @@
                   </div> -->
                   
                 
-
-              <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <div v-if=!starCheck v-on:click="checkStar()">
-                      <font-awesome-icon class="Icon" icon="star" />
-                    </div>
-                    <div v-if=starCheck v-on:click="checkStar()">
-                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
-                    </div>
+                    <input class="star" type="checkbox" title="bookmark page">
                   </div>
                 </div>
-              </div>
-
             </div>
 
 
