@@ -136,7 +136,7 @@
   background-color: rgba(255, 255, 255, 0.0); 
   border-color: black;
   border-style: solid;
-  border-width: 1.5px;
+  border-width: 1px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
@@ -159,7 +159,7 @@
 }
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 4px;
+  left: 5px;
   top: 1px;
   width: 5px;
   height: 10px;
