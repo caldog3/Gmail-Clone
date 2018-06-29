@@ -22,8 +22,7 @@
         </div>  
       </div>
       <div>
-        <b-navbar-nav class="ml-auto">
-          <div class="flex">
+          <div class="flex1">
             <div>
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
@@ -39,10 +38,15 @@
                 <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
+
           </div>
-        </b-navbar-nav>
+
         </div>
+
+        
+
       </div>
+        
     </b-navbar>
     
   </div>
@@ -159,6 +163,48 @@ input:focus {
 .flex div:last-child {
   margin-top: 20px;
 }
+.dropbtn {
+  color: black;
+  padding: 0px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.0);
+}
+
+
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 99999999;
+  cursor: default;
+  right: 10px;
+}
+#Dropdown {
+  color: black;
+  
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown a:hover {background-color: #ddd;}
+.show {
+  display: block;
+  position: relative;
+  right: 65px;  
+}
 
 @media screen and (max-width : 700px) {
   .search { 
@@ -188,6 +234,23 @@ export default {
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
+    },
+    DropdownFunction() { 
+      document.getElementById("Dropdown").classList.toggle("show");
+    },
+    // Close the dropdown if the user clicks outside of it
+    window:onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
     }
   }
 }
