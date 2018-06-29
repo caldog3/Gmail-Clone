@@ -329,7 +329,28 @@ svg:not(:root).svg-inline--fa {
 @-moz-document url-prefix() {
   .star[data-v-9b75054c] {
     visibility: visible;
+    left: 0px;
+    top: 0px;
   }
+  /* input.star:checked + label::after, input.star + label::after {
+    display: inline-block;
+    position: relative;
+    visibility: visible;
+    font-family: FontAwesome;
+    font-size: 60px;
+    background-color: transparent;
+  }
+  input.star:checked +label::after {
+    content: '\f058';
+    color: #16A085;
+  }
+
+  input.star + label::after {
+    content: '\f057';
+    color: #C0392B;
+    position: relative;
+    bottom: 5px;
+  } */
 }
 
 
