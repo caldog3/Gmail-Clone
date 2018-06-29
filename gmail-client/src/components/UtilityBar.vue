@@ -80,7 +80,8 @@
                 </div>
               </div>
               <div class="item">
-                <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                <div  class="dropbtn">
+                  <font-awesome-icon v-on:click="ellipsesDropdownFunction()" style="color:white;" class="Icon" icon="ellipsis-v"/>
                   <div id="ellipsesDropdown" class="dropdown-content">
                     <p>Mark as read</p>
                     <hr>
@@ -96,9 +97,9 @@
                     <hr>
                     <p>Mute</p>
                   </div>  
-                <div class="highlightArea">
+                  <div class="highlightArea">
+                  </div>
                 </div>
-                  
                 
               </div>
             </div>
@@ -275,7 +276,7 @@ button {
 .dropbtn {
   opacity: .99;
   position: relative;
-  z-index: 1;
+  z-index: -345;
   color: black;
   padding: 0px;
   font-size: 16px;
