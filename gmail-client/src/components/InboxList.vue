@@ -3,14 +3,14 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <!-- <b-tab icon='inbox' title="Primary">
-        <email-list labelId="CATEGORY_PRIMARY"/>
+      <b-tab icon='inbox' title="Primary (personal)">
+        <email-list labelId="CATEGORY_PERSONAL"/>
       </b-tab>
       <b-tab title="Social">
         <email-list labelId="CATEGORY_SOCIAL"/>
-      </b-tab> -->
+      </b-tab>
 
-      <b-tab title="Promotions">
+      <b-tab title="Promotions" >
         <email-list labelId="CATEGORY_PROMOTIONS"/>      
       </b-tab>
     </b-tabs>
@@ -37,10 +37,23 @@ export default {
     EmailList,
     FontAwesomeIcon
   },
+  data() {
+    return {
+      labelId: '',
+    }
+  },
   beforeCreate(){
-    let messages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
-    if(messages.length === 0){
+    let promoMessages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
+    if(promoMessages.length === 0){
       this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
+    }
+    let socialMessages = this.$store.getters.getLabelMessages["CATEGORY_SOCIAL"];
+    if(socialMessages.length === 0){
+      this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
+    }
+    let personalMessages = this.$store.getters.getLabelMessages["CATEGORY_PERSONAL"];
+    if(personalMessages.length === 0){
+      this.$store.dispatch("getListOfMessages", "CATEGORY_PERSONAL");
     }
   },
 }

@@ -14,7 +14,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     labelMessages: {
-      'CATEGORY_PROMOTIONS': []
+      'CATEGORY_PROMOTIONS': [],
+      'CATEGORY_SOCIAL': [],
+      'CATEGORY_PERSONAL': [],
     },
     messages: [],
     token: "",
