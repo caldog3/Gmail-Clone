@@ -140,15 +140,15 @@
   left: 6px;
   height: 17px;
   width: 17px;
-  background-color: #eee;
+  background-color: rgba(255, 255, 255, 0.0); 
   border-color: black;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: rgba(255, 255, 255, 0.0); 
 }
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
@@ -166,7 +166,7 @@
 }
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 4px;
+  left: 5px;
   top: 1px;
   width: 5px;
   height: 10px;
@@ -176,11 +176,28 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.item {
+.largeOnly {
   width: 30px;
   height: 30px;
 }
 .star {
+  visibility: hidden;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  left: -3px;
+  top: -5px;
+}
+.star:before {
+  content: "\2606";
+  position: absolute;
+  visibility:visible;
+}
+.star:checked:before {
+  content: "\2605";
+  position: absolute;
+}
+.item {
   width: 30px;
   height: 30px;
 }
@@ -263,8 +280,7 @@ a {
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
-
-@media screen and (max-width : 950px) {
+@media screen and (max-width : 690px) {
   .emailLink {
     display: flex;
     flex-direction: column;
@@ -293,6 +309,7 @@ svg:not(:root).svg-inline--fa {
   }
   .checkboxes {
     width: 30px;
+    margin-right: 8px;
   }
   .rightAlign {
     visibility: hidden;
@@ -312,6 +329,7 @@ svg:not(:root).svg-inline--fa {
   }
 }
 </style>
+
 
 <script>
 import eventBus from '../event_bus';
