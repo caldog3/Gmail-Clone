@@ -5,22 +5,17 @@
     <span>
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
-      <div v-for="message in messages" :key="message.id" v-bind:class="classChanger(message)">
-        <template v-if="message.labelIds.includes(labelId)">
+      <div v-for="message in messages" :key="message.id" v-bind:class="readClassChanger(message)">
+        <!-- <template v-if="message.labelIds.includes(labelId)"> -->
           <div class="FlexTable">
-
             <div class="checkboxes">
-
               <div class="first">
-                
                 <label class="container">
                   <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
-      
                 </label>
-
               </div>
               
                   <!-- <div v-if=!checked v-on:click="check()">
@@ -32,11 +27,18 @@
                   
                 
 
+              <div class="star">
                 <div class="largeOnly">
                   <div class="highlightArea">
-                    <input class="star" type="checkbox" title="bookmark page">
+                    <div v-if=!starCheck v-on:click="checkStar()">
+                      <font-awesome-icon class="Icon" icon="star" />
+                    </div>
+                    <div v-if=starCheck v-on:click="checkStar()">
+                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                    </div>
                   </div>
                 </div>
+              </div>
 
             </div>
 
@@ -64,13 +66,18 @@
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
-              <div class="highlightArea">
-                <input class="star" type="checkbox" title="bookmark page">
+              <div class="highlightArea">              
+                <div v-if=!starCheck v-on:click="checkStar()">
+                    <font-awesome-icon class="Icon" icon="star" />
+                </div>
+                <div v-if=starCheck v-on:click="checkStar()">
+                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                </div>
               </div>
             </div>
 
           </div>     
-        </template>
+        <!-- </template> -->
       </div>
   </div>
 </template>
@@ -324,6 +331,7 @@ svg:not(:root).svg-inline--fa {
 }
 </style>
 
+
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
@@ -344,7 +352,7 @@ export default {
     }
   },
   methods: {
-    classChanger(message){
+    readClassChanger(message){
       var theClass = 'readClass';
       //console.log(message.unread);
       if(message.unread == true){
@@ -354,7 +362,11 @@ export default {
     },
     enterMessage(message) {
       eventBus.$emit('ENTER_MESSAGE');
-      this.$router.push({ name: 'EmailBody', params: { id: message.id, message: message }, hash: '#body'});
+      this.$router.push({ name: 'EmailBody', params: { 
+        id: message.id,
+        message: message,
+        labelId: this.labelId
+      }, hash: '#body'});
       markAsRead(message.id);
     },
     check() {
@@ -366,7 +378,9 @@ export default {
   },
   computed: {
     messages() {
-      let messagesFinal = _.sortBy(this.$store.getters.messages, [function(messages){
+      let labelId = this.labelId;
+      const labelMessages = this.$store.getters.getLabelMessages[labelId];
+      let messagesFinal = _.sortBy(labelMessages, [function(messages){
         return messages.unixTime;
       }]).reverse();
       

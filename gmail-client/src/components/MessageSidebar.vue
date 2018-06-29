@@ -120,7 +120,7 @@ button {
 </style>
 
 <script>
-import { getLabelsForUnread } from "./../store-utility-files/gmail-api-calls";
+import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
 import eventBus from "../event_bus";
 
@@ -153,6 +153,7 @@ export default {
       this.unreadCount = unreads;
     }),
     getLabelsForUnread();
+    getLabels();
   }
 };
 </script>

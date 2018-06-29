@@ -110,7 +110,8 @@
         <div class="right-side-utility">
           <div class="flexIcons">
             
-            <div class="rightTopPad">1-50 of {{totalMessages}}</div>
+            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) > 49">1-50 of {{totalMessages}}</div>
+            <div class="rightTopPad" v-else>1-{{totalMessages}} of {{totalMessages}}</div>
 
             <div class="paddingNeeded">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
@@ -164,7 +165,6 @@
 </template>
 
 <style scoped>
-
 .body {
   height: 40px;
   border-bottom: 0px;
@@ -235,7 +235,6 @@
   padding-right: 30px;
   padding-top: 5px;
 }
-
 input {
   float: left;
 }
@@ -285,16 +284,6 @@ button {
 .cog {
   right: 105px;
 }
-/* .cog-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  cursor: default;
-  right: 105px;
-} */
 #ellipsesDropdown {
   color: black;
   
@@ -403,14 +392,12 @@ export default {
           }
         }
       }
-    }
-
+    } 
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false);
     eventBus.$on('TOTAL_EMAIL_COUNT', messageTotal => {
-      console.log("Reached the email count receiver");
       messageTotal = messageTotal.toLocaleString('en', {useGrouping:true})
       this.totalMessages = messageTotal;
     });

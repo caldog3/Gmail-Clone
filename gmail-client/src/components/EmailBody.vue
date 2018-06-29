@@ -61,15 +61,15 @@ export default {
   },
   computed: {
     message(){
-      let messageId =this.$route.params.id;
-      let messages = this.$store.getters.messages;
-      
+      let messageId = this.$route.params.id;
+      let labelId = this.$route.params.labelId;
+      let labelMessages = this.$store.getters.getLabelMessages;
       let counter = 0;
-      while(messages[counter].id !== messageId){
+      while(labelMessages[labelId][counter].id !== messageId){
         counter++;
       }
 
-      return messages[counter];
+      return labelMessages[labelId][counter];
     },
     subject(){
       return this.message.subject;
