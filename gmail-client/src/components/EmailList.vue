@@ -179,8 +179,10 @@
   font-size: 20px;
   cursor: pointer;
   position: relative;
-  left: -3px;
-  top: -5px;
+  left: 5px;
+  top: 1px;
+  width: 30px;
+  height: 30px;
 }
 .star:before {
   content: "\2606";
