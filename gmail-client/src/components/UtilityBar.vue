@@ -2,9 +2,7 @@
   <div class="body">
       <div class="iconDiv">
         <div class="spacing">
-
           <div>
-
             <span v-if=!messageBody>
               <div class="flexIcons">
                 <div v-on:click="checkAll()" class="item">
@@ -103,7 +101,6 @@
               </div>
             </div>
           </span>
-
           
         </div>
 
@@ -154,13 +151,9 @@
           </div>
         </div>
 
-
         </div>
       </div>
 
-    <!-- <button v-on:click="utilityToggle">Toggle</button> -->
-    <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
-  
   </div>
 </template>
 
