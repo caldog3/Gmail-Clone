@@ -2,9 +2,7 @@
   <div class="body">
       <div class="iconDiv">
         <div class="spacing">
-
           <div>
-
             <span v-if=!messageBody>
               <div class="flexIcons">
                 <div v-on:click="checkAll()" class="item">
@@ -103,7 +101,6 @@
               </div>
             </div>
           </span>
-
           
         </div>
 
@@ -153,13 +150,9 @@
           </div>
         </div>
 
-
         </div>
       </div>
 
-    <!-- <button v-on:click="utilityToggle">Toggle</button> -->
-    <!-- <font-awesome-icon icon="angle-down" size="lg"/> -->
-  
   </div>
 </template>
 
@@ -285,16 +278,6 @@ button {
 .cog {
   right: 105px;
 }
-/* .cog-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  cursor: default;
-  right: 105px;
-} */
 #ellipsesDropdown {
   color: black;
   
