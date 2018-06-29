@@ -123,7 +123,9 @@ textarea {
   border: none;
   outline: none;
   height: 100%;
-  min-height: 290px;
+  min-height: 285px;
+  resize: none;
+  /* for now */
 }
 .footerSection {
   overflow: hidden;
@@ -188,11 +190,12 @@ export default {
         'Subject': this.composeSubject
       }
       sendMessage(headerSection, this.composeMessage);
-      this.composeTidy;
+      this.composeTidy();
     },
     composeTidy() {
-        this.composeTo = '';
-        this.composeSubject = '';
+      this.composeTo = '';
+      this.composeSubject = '';
+      // this.composeMessage = '';
     },
     focusOnSection(section) {
       this.activeSection = section;
