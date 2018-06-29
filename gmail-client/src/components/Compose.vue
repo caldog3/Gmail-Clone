@@ -38,7 +38,7 @@
   right: 10px;
   width: 510px;
   display: flex;
-  height: 500px;
+  /* height: 500px; */
   flex-direction: column;
   align-content: stretch;
   align-items: center;
@@ -56,12 +56,13 @@
 }
 .headerSection {
   background: #404040;
-  width: 100%;
+  height: 35px;
   display: flex;
   flex-direction: row;
   align-content: stretch;
   align-items: center;
   padding: 4px;
+  width: 100%;
 }
 h2 {
   color: white;
@@ -86,6 +87,7 @@ a:not([href]):not([tabindex]) {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
   padding: 4px;
+  height: 35px;
 }
 .sectionText {
   width: 100%;
@@ -93,6 +95,7 @@ a:not([href]):not([tabindex]) {
   padding: 4px;
   flex-grow: 1;
   flex-basis: 0;
+  min-height: 290px;
 }
 .TO {
   width: 15px;
@@ -120,11 +123,13 @@ textarea {
   border: none;
   outline: none;
   height: 100%;
+  min-height: 290px;
 }
 .footerSection {
   overflow: hidden;
   width: 510px;
   padding: 4px;
+  height: 55px;
 }
 .sendButton {
   float: left;
