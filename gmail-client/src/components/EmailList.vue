@@ -325,6 +325,14 @@ svg:not(:root).svg-inline--fa {
     margin-top: 0px;
   }
 }
+
+@-moz-document url-prefix() {
+  .star[data-v-9b75054c] {
+    visibility: visible;
+  }
+}
+
+
 </style>
 
 

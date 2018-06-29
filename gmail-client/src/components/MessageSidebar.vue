@@ -74,6 +74,7 @@ button {
   margin: 20px 90px 20px 5px;
   cursor: pointer;
   outline: none;
+  background-color: white;
 }
 .button {
   padding: 13px 15px;

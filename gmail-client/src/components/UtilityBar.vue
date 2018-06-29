@@ -180,7 +180,7 @@
 .flexIcons {
   display: flex;
   flex-direction: row;
-  margin-left: 7px;
+  margin-left: 8px;
 }
 .flexIcons svg:not(:root).svg-inline--fa {
   margin-top: 7px;
