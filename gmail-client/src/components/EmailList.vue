@@ -27,18 +27,12 @@
                   
                 
 
-              <div class="star">
-                <div class="largeOnly">
-                  <div class="highlightArea">
-                    <div v-if=!starCheck v-on:click="checkStar()">
-                      <font-awesome-icon class="Icon" icon="star" />
-                    </div>
-                    <div v-if=starCheck v-on:click="checkStar()">
-                      <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
-                    </div>
-                  </div>
-                </div>
+              <div class="largeOnly">
+                <div class="highlightArea">
+                  <input class="star" type="checkbox" title="bookmark page">
               </div>
+              
+            </div>
 
             </div>
 
