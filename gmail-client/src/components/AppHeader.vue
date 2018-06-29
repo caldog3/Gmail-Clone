@@ -22,9 +22,11 @@
         </div>  
       </div>
       <div>
-          <div>
-            
-            <div v-on:click="DropdownFunction()" class="dropbtn"> 
+          <div class="flex1">
+            <div>
+              <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
+            </div>
+            <div> 
               <svg width="70" height="70" viewBox="0 0 100 100" 
                   preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -44,9 +46,7 @@
         
 
       </div>
-        <div id="Dropdown" class="dropdown-content">
-          <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
-        </div>
+        
     </b-navbar>
     
   </div>
