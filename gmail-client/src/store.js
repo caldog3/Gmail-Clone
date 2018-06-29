@@ -13,6 +13,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    labelMessages: {
+      'CATEGORY_PROMOTIONS': [],
+      'CATEGORY_SOCIAL': [],
+      'CATEGORY_PERSONAL': [],
+    },
     messages: [],
     token: "",
     currentUser: null,
@@ -21,6 +26,7 @@ export default new Vuex.Store({
     sessionExpiration: null
   },
   getters: {
+    getLabelMessages: state => state.labelMessages,
     messages: state => state.messages,
     googleAuth: state => state.googleAuth,
     getCurrentUserProfile: state => state.currentUserProfile,
@@ -44,7 +50,11 @@ export default new Vuex.Store({
       }
     },
     addMessage(state, message) {
-      state.messages.push(message);
+      let labelId = message.labelId;
+      state.labelMessages[labelId].push(message);
+    },
+    addLabelId(state, labelId) {
+      state.labelMessages[labelId] = labelId;
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -87,36 +97,40 @@ export default new Vuex.Store({
         context.commit("setToken", token);
       }
     },  
-    getListOfMessages(context) {
+    getListOfMessages(context, labelId) {
+      // context.commit('addLabelId', labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.messages.list({
           'userId': 'me',
-          'labelIds': 'INBOX',
-          'maxResults': 100
+          'labelIds': labelId,
+          'maxResults': 50
         }).then((response) => {
           console.log(response);
           response.result.messages.forEach(message => {
-            context.dispatch("getMessageContent", message.id);
+            let messageId = message.id;
+            context.dispatch("getMessageContent", { messageId, labelId });
           });
         });
       }).catch((err) => {
         console.log(err);
       });
     },
-    getMessageContent(context, messageId) {
+    getMessageContent(context, payload) {
+      const messageId = payload.messageId;
         gapi.client.gmail.users.messages.get({
           'userId': 'me',
           'id': messageId,
         }).then((response) => {
-          console.log(response.result.payload.headers);
+          //console.log(response.result.payload.headers);
           const { from, to, cc, subject, detailedFrom } = getEmailInfo(
             response.result.payload.headers
           );
-          const { labelIds, unread } = resolveLabels(response.result.labelIds);
+          const { unread } = resolveLabels(response.result.labelIds);
           const { time, unixTime } = getTimeFormat(response.result.internalDate);
           const snippet = response.result.snippet;
           const id = response.result.id;
           const { body, attachmentIds } = getBody(response.result.payload);
+          const labelId = payload.labelId;
           const message = {
             messageId,
             from,
@@ -128,7 +142,7 @@ export default new Vuex.Store({
             body,
             time,
             id,
-            labelIds,
+            labelId,
             unread,
             unixTime,
             attachmentIds
