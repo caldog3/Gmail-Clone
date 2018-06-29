@@ -38,10 +38,10 @@ export default {
     FontAwesomeIcon
   },
   beforeCreate(){
-    // let messages = this.$store.getters.messages;
-    // if(messages.length === 0){
+    let messages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
+    if(messages.length === 0){
       this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
-    // }
+    }
   },
 }
 </script>
