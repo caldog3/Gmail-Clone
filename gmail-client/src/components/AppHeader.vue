@@ -23,10 +23,10 @@
       </div>
       <div>
           <div class="flex1">
-            <div>
+            <div class="logoutButton">
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
-            <div> 
+            <div class="userPhoto"> 
               <svg width="70" height="70" viewBox="0 0 100 100" 
                   preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -110,8 +110,14 @@ img {
   align-items: center;
   height: 100%
 }
-.flex1 > div {
+.searchIcon {
   margin: 10px;
+}
+.logoutButton {
+  margin: 10px;
+}
+.userPhoto {
+  margin-top: 15px;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
