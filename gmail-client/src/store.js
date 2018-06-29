@@ -119,7 +119,7 @@ export default new Vuex.Store({
           'userId': 'me',
           'id': messageId,
         }).then((response) => {
-          console.log(response.result.payload.headers);
+          //console.log(response.result.payload.headers);
           const { from, to, cc, subject, detailedFrom } = getEmailInfo(
             response.result.payload.headers
           );

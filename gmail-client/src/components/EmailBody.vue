@@ -63,8 +63,7 @@ export default {
     message(){
       let messageId = this.$route.params.id;
       let labelId = this.$route.params.labelId;
-      let labelMessages = this.$store.getters.getLabelMessages[labelId];
-      console.log(labelMessages[labelId]);
+      let labelMessages = this.$store.getters.getLabelMessages;
       let counter = 0;
       while(labelMessages[labelId][counter].id !== messageId){
         counter++;
