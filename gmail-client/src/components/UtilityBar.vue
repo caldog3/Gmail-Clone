@@ -135,7 +135,7 @@
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <p>Background Toggle</p>
+                    <p>Themes</p>
                     <hr>
                     <p>Some kind of setting</p>
                     <hr>
@@ -169,6 +169,7 @@
   height: 40px;
   border-bottom: 0px;
   color: white;
+  background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
 } 
 .iconDiv {
@@ -334,7 +335,11 @@ hr {
   margin: 0px;
 }
 /* lets see end */
-
+@media screen and (max-width : 950px) { 
+  .rightTopPad {
+    display: none;
+  }
+}
 </style>
 
 <script>
