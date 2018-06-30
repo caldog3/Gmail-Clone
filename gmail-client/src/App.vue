@@ -1,11 +1,9 @@
 <template>
   <div id="app">
+    <!-- LOG-IN SCREEN -->
     <div class="notLoggedIn" v-if="!loggedIn">
       <login-page/>
     </div>
-
-
-
 
     <div class="loggedIn" v-else-if="loggedIn && this.loading">
 
@@ -13,6 +11,7 @@
 
       <div class="sideBar"><message-sidebar/></div>
       
+      <!-- OUR ACTUAL EMAIL -->
       <div class="mainView">
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
@@ -21,7 +20,7 @@
       </div>
       <Compose/>
     </div>
-
+    <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
     <div class="loadingScreen" v-else-if="loggedIn && trigger">
       <loading-screen/>
     </div>
