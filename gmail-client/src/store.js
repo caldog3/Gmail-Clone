@@ -17,6 +17,7 @@ export default new Vuex.Store({
       'CATEGORY_PROMOTIONS': [],
       'CATEGORY_SOCIAL': [],
       'CATEGORY_PERSONAL': [],
+      'INBOX': [],
     },
     messages: [],
     token: "",
@@ -52,6 +53,9 @@ export default new Vuex.Store({
     addMessage(state, message) {
       let labelId = message.labelId;
       state.labelMessages[labelId].push(message);
+      if (labelId === "INBOX") {
+        console.log("It should have pushed an inbox");
+      }
     },
     addLabelId(state, labelId) {
       state.labelMessages[labelId] = labelId;
@@ -100,23 +104,42 @@ export default new Vuex.Store({
     getListOfMessages(context, labelId) {
       // context.commit('addLabelId', labelId);
       gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.messages.list({
-          'userId': 'me',
-          'labelIds': labelId,
-          'maxResults': 50
-        }).then((response) => {
-          console.log(response);
-          response.result.messages.forEach(message => {
-            let messageId = message.id;
-            context.dispatch("getMessageContent", { messageId, labelId });
+        if(labelId === 'INBOX') {
+          console.log("It says inbox");
+          gapi.client.gmail.users.messages.list({
+            'userId': 'me',
+            'labelIds': labelId,
+            'maxResults': 50,
+            'q': 'category:primary',
+          }).then((response) => {
+            console.log(response);
+            response.result.messages.forEach(message => {
+              let messageId = message.id;
+              console.log("EACH MESSAGE");
+              context.dispatch("getMessageContent", { messageId, labelId });
+            });
           });
-        });
+        }
+        else {
+          gapi.client.gmail.users.messages.list({
+            'userId': 'me',
+            'labelIds': labelId,
+            'maxResults': 50,
+          }).then((response) => {
+            // console.log(response);
+            response.result.messages.forEach(message => {
+              let messageId = message.id;
+              context.dispatch("getMessageContent", { messageId, labelId });
+            });
+          });
+        }
       }).catch((err) => {
         console.log(err);
       });
     },
     getMessageContent(context, payload) {
       const messageId = payload.messageId;
+      console.log(payload.labelId); 
         gapi.client.gmail.users.messages.get({
           'userId': 'me',
           'id': messageId,

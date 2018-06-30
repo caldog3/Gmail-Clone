@@ -3,8 +3,8 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <b-tab icon='inbox' title="Primary (personal)">
-        <email-list labelId="CATEGORY_PERSONAL"/>
+      <b-tab icon='inbox' title="Primary">
+        <email-list labelId="INBOX"/>
       </b-tab>
       <b-tab title="Social">
         <email-list labelId="CATEGORY_SOCIAL"/>
@@ -51,9 +51,9 @@ export default {
     if(socialMessages.length === 0){
       this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
     }
-    let personalMessages = this.$store.getters.getLabelMessages["CATEGORY_PERSONAL"];
+    let personalMessages = this.$store.getters.getLabelMessages["INBOX"];
     if(personalMessages.length === 0){
-      this.$store.dispatch("getListOfMessages", "CATEGORY_PERSONAL");
+      this.$store.dispatch("getListOfMessages", "INBOX");
     }
   },
 }

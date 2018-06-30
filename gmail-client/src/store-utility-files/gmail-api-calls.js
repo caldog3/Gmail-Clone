@@ -38,8 +38,8 @@ const getLabels = () => {
   gapi.client.gmail.users.labels.list({
     'userId': 'me'
   }).then(response => {
-      console.log("Labels");
-      console.log(response);
+      // console.log("Labels");
+      // console.log(response);
       // let unreadCount = response.data.messagesUnread;
       // eventBus.$emit('UNREAD_COUNT', unreadCount);
     })
