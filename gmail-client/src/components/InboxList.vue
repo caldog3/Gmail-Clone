@@ -4,14 +4,14 @@
   <div id="setWidth">
     <b-tabs>
       <b-tab icon='inbox' title="Primary">
-        <email-list labelId="INBOX"/>
+        <email-list labelId="PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
-        <email-list labelId="CATEGORY_SOCIAL"/>
+        <email-list labelId="SOCIAL"/>
       </b-tab>
 
       <b-tab title="Promotions" >
-        <email-list labelId="CATEGORY_PROMOTIONS"/>      
+        <email-list labelId="PROMOTIONS"/>      
       </b-tab>
     </b-tabs>
   </div>
@@ -43,17 +43,17 @@ export default {
     }
   },
   beforeCreate(){
-    let promoMessages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
+    let promoMessages = this.$store.getters.getLabelMessages["PROMOTIONS"];
     if(promoMessages.length === 0){
-      this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
+      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
     }
-    let socialMessages = this.$store.getters.getLabelMessages["CATEGORY_SOCIAL"];
+    let socialMessages = this.$store.getters.getLabelMessages["SOCIAL"];
     if(socialMessages.length === 0){
-      this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
+      this.$store.dispatch("getListOfMessages", "SOCIAL");
     }
-    let personalMessages = this.$store.getters.getLabelMessages["INBOX"];
+    let personalMessages = this.$store.getters.getLabelMessages["PRIMARY"];
     if(personalMessages.length === 0){
-      this.$store.dispatch("getListOfMessages", "INBOX");
+      this.$store.dispatch("getListOfMessages", "PRIMARY");
     }
   },
 }

@@ -14,9 +14,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     labelMessages: {
-      'CATEGORY_PROMOTIONS': [],
-      'CATEGORY_SOCIAL': [],
-      'CATEGORY_PERSONAL': [],
+      'PROMOTIONS': [],
+      'SOCIAL': [],
+      'PRIMARY': [],
       'INBOX': [],
     },
     messages: [],
@@ -53,9 +53,7 @@ export default new Vuex.Store({
     addMessage(state, message) {
       let labelId = message.labelId;
       state.labelMessages[labelId].push(message);
-      if (labelId === "INBOX") {
-        console.log("It should have pushed an inbox");
-      }
+      console.log("Reaching add message");
     },
     addLabelId(state, labelId) {
       state.labelMessages[labelId] = labelId;
@@ -123,8 +121,9 @@ export default new Vuex.Store({
         else {
           gapi.client.gmail.users.messages.list({
             'userId': 'me',
-            'labelIds': labelId,
+            'labelIds': 'INBOX',
             'maxResults': 50,
+            'q': `category:`+labelId,
           }).then((response) => {
             // console.log(response);
             response.result.messages.forEach(message => {
