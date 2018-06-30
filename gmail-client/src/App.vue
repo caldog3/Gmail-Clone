@@ -5,23 +5,26 @@
       <login-page/>
     </div>
 
+      <!-- OUR ACTUAL EMAIL -->
     <div class="loggedIn" v-else-if="loggedIn && this.loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
       <div class="sideBar"><message-sidebar/></div>
-      
-      <!-- OUR ACTUAL EMAIL -->
+
       <div class="mainView">
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
           <router-view/>
         </div>
+        <h1>hello?</h1>
       </div>
       <Compose/>
+      
     </div>
+
     <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
-    <div class="loadingScreen" v-else-if="loggedIn && trigger">
+    <div class="loadingScreen" v-else-if="loggedIn && triggerLoading">
       <loading-screen/>
     </div>
 
@@ -61,7 +64,7 @@ export default {
     loggedIn: function() {
       return this.$store.getters.loggedIn;
     },
-    trigger: function() {
+    triggerLoading: function() {
       this.loaded(false);
       return true;
     }
@@ -92,11 +95,13 @@ export default {
     },
     updateLoading() {
       console.log("Reached update loading");
-      setTimeout(() => {
-        console.log("passed the timeout");
-        this.loading = true;
-        this.loaded(true);
-      }, 2500);
+      if (this.loading === false) {
+        setTimeout(() => {
+          console.log("passed the timeout");
+          this.loading = true;
+          this.loaded(true);
+        }, 2500);
+      }
       // HERES THE TIME IN MILISECONDS
     },
 

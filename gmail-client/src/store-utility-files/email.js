@@ -112,10 +112,10 @@ const getBody = (payload) => {
 
 const resolveLabels = (tempLabelIds) => {
   let labelIds = tempLabelIds;
-
-  if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")) {
-    labelIds.push("CATEGORY_PRIMARY");
-  }
+  // console.log('the resolvelabel ids:' + labelIds);
+  // if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")) {
+  //   labelIds.push("CATEGORY_PRIMARY");
+  // }
 
   let unread = true;
   if (labelIds.includes("UNREAD")) {

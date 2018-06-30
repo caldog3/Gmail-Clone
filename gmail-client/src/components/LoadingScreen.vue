@@ -25,6 +25,20 @@
    name: 'LoginPage',
    methods: {
    },
+   created() {
+    let promoMessages = this.$store.getters.getLabelMessages["PROMOTIONS"];
+    if(promoMessages.length === 0){
+      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
+    }
+    let socialMessages = this.$store.getters.getLabelMessages["SOCIAL"];
+    if(socialMessages.length === 0){
+      this.$store.dispatch("getListOfMessages", "SOCIAL");
+    }
+    let personalMessages = this.$store.getters.getLabelMessages["PRIMARY"];
+    if(personalMessages.length === 0){
+      this.$store.dispatch("getListOfMessages", "PRIMARY");
+    }
+   },
  }
 </script>
 
