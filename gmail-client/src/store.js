@@ -102,36 +102,32 @@ export default new Vuex.Store({
     getListOfMessages(context, labelId) {
       // context.commit('addLabelId', labelId);
       gapi.client.load('gmail', 'v1').then(() => {
-        if(labelId === 'INBOX') {
-          console.log("It says inbox");
-          gapi.client.gmail.users.messages.list({
-            'userId': 'me',
-            'labelIds': labelId,
-            'maxResults': 50,
-            'q': 'category:primary',
-          }).then((response) => {
-            console.log(response);
-            response.result.messages.forEach(message => {
-              let messageId = message.id;
-              console.log("EACH MESSAGE");
-              context.dispatch("getMessageContent", { messageId, labelId });
-            });
+        console.log("It says inbox");
+        gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+          'labelIds': labelId,
+          'maxResults': 50,
+          'q': 'category:primary',
+        }).then((response) => {
+          console.log(response);
+          response.result.messages.forEach(message => {
+            let messageId = message.id;
+            console.log("EACH MESSAGE");
+            context.dispatch("getMessageContent", { messageId, labelId });
           });
-        }
-        else {
-          gapi.client.gmail.users.messages.list({
-            'userId': 'me',
-            'labelIds': 'INBOX',
-            'maxResults': 50,
-            'q': `category:`+labelId,
-          }).then((response) => {
-            // console.log(response);
-            response.result.messages.forEach(message => {
-              let messageId = message.id;
-              context.dispatch("getMessageContent", { messageId, labelId });
-            });
+        });
+        gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+          'labelIds': 'INBOX',
+          'maxResults': 50,
+          'q': `category:`+labelId,
+        }).then((response) => {
+          // console.log(response);
+          response.result.messages.forEach(message => {
+            let messageId = message.id;
+            context.dispatch("getMessageContent", { messageId, labelId });
           });
-        }
+        });
       }).catch((err) => {
         console.log(err);
       });
