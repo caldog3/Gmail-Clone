@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <div class="loggedIn" v-if="loggedIn">
+    <div class="notLoggedIn" v-if="!loggedIn">
+      <login-page/>
+    </div>
+
+
+
+
+    <div class="loggedIn" v-else-if="loggedIn && this.loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
@@ -15,9 +22,11 @@
       <Compose/>
     </div>
 
-    <div class="notLoggedIn" v-else>
-      <login-page/>
+    <div class="loadingScreen" v-else-if="loggedIn && trigger">
+      <loading-screen/>
     </div>
+
+
   </div>
 </template>
 
@@ -29,6 +38,8 @@ import AppHeader from "./components/AppHeader";
 import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
+import LoadingScreen from "./components/LoadingScreen";
+import { setTimeout } from 'timers';
 
 export default {
   name: "App",
@@ -36,6 +47,7 @@ export default {
     return {
       emailListHeight: {},
       initialHeightCalculated: false,
+      loading: false,
     };
   },
   components: {
@@ -43,12 +55,19 @@ export default {
     MessageSidebar,
     UtilityBar,
     LoginPage,
-    Compose
+    Compose,
+    LoadingScreen,
   },
   computed: {
     loggedIn: function() {
       return this.$store.getters.loggedIn;
+    },
+    trigger: function() {
+      this.loaded(false);
+      return true;
     }
+
+
   },
   methods: {
     setEmailListHeight() {
@@ -65,7 +84,22 @@ export default {
           this.initialHeightCalculated = true;
         }
       }
-    }
+    },
+    loaded(ourBool) {
+      console.log("reached loaded");
+      let returnVal = ourBool;
+      this.updateLoading();
+      return returnVal;
+    },
+    updateLoading() {
+      console.log("Reached update loading");
+      setTimeout(() => {
+        console.log("passed the timeout");
+        this.loading = true;
+        this.loaded(true);
+      }, 5000);
+    },
+
   },
   beforeUpdate() {
     if (!this.initialHeightCalculated){
@@ -101,7 +135,7 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  background-image: url(assets/Background10.jpg);
+  background-image: url(assets/Background16.jpg);
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;

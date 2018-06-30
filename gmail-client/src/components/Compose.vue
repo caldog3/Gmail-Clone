@@ -195,7 +195,7 @@ export default {
     composeTidy() {
       this.composeTo = '';
       this.composeSubject = '';
-      // this.composeMessage = '';
+      this.composeMessage = '';
     },
     focusOnSection(section) {
       this.activeSection = section;

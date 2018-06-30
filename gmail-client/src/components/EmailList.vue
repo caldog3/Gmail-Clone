@@ -27,17 +27,15 @@
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div> -->
                   
-                
-                <div class="largeOnly">
-                  <div class="highlightArea">
-                    <input class="star" type="checkbox" title="bookmark page">
-                  </div>
+              <div class="largeOnly">
+                <div class="highlightArea">
+                  <input class="star" type="checkbox" title="bookmark page">
                 </div>
+              </div>
+              
             </div>
 
-
             <div class="emailLink" v-on:click="enterMessage(message)">
-
               <div class="from"> 
                   <b><span class="leftAlign">{{ message.from }}</span></b>
               </div>
@@ -55,7 +53,6 @@
               </div>
 
             </div>
-
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
