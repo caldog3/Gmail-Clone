@@ -15,12 +15,12 @@
 }
 .whiteSpace {
   height: 9999px;
-  /* not sure if this is the best strategy for solving this but I mean it works.... */
+  
 }
 </style>
 
 <script>
-
+// WE NEED TO MAKE ALMOST ALL OF THE CALLS START BEING EXECUTED HERE
  export default {
    name: 'LoginPage',
    methods: {
