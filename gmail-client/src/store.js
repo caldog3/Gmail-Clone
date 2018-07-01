@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
+import eventBus from './event_bus.js';
 import { initializeGoogleClient } from './main';
 import {
   getTimeFormat,
@@ -13,11 +13,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    labelMessages: {
-      'CATEGORY_PROMOTIONS': [],
-      'CATEGORY_SOCIAL': [],
-      'CATEGORY_PERSONAL': [],
-    },
+    labelMessages: {},
+    threadMessages: {},
     messages: [],
     token: "",
     currentUser: null,
@@ -50,11 +47,31 @@ export default new Vuex.Store({
       }
     },
     addMessage(state, message) {
-      let labelId = message.labelId;
-      state.labelMessages[labelId].push(message);
+      let threadId = message.threadId;
+      console.log("threadId", threadId);
+      const threadMessages = state.threadMessages;
+      if (threadMessages[threadId] !== undefined) {
+        threadMessages[threadId].push(message);
+      }
     },
     addLabelId(state, labelId) {
-      state.labelMessages[labelId] = labelId;
+      console.log("LabelMessages: ", labelId);
+      if (state.labelMessages[labelId] === undefined){
+        Vue.set(state.labelMessages, labelId, []);
+      }
+    },
+    addThreadId(state, payload) {
+      const labelId = payload.labelId;
+      const threadId = payload.threadId;
+
+      Vue.set(state.threadMessages, threadId, []);
+      const labelIdArray = state.labelMessages[labelId];
+
+      if (labelIdArray !== undefined){
+        if (labelIdArray.threadId === undefined){
+          labelIdArray.push(threadId);
+        }
+      }
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -98,59 +115,79 @@ export default new Vuex.Store({
       }
     },  
     getListOfMessages(context, labelId) {
-      // context.commit('addLabelId', labelId);
+      context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.messages.list({
+        gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 50
+          'maxResults': 5
         }).then((response) => {
-          console.log(response);
-          response.result.messages.forEach(message => {
-            let messageId = message.id;
-            context.dispatch("getMessageContent", { messageId, labelId });
+          response.result.threads.forEach(thread => {
+            let threadId = thread.id;
+            
+            context.commit("addThreadId", { threadId, labelId });
+            context.dispatch("getThreadData", { threadId, labelId });
           });
         });
       }).catch((err) => {
         console.log(err);
       });
     },
-    getMessageContent(context, payload) {
-      const messageId = payload.messageId;
-        gapi.client.gmail.users.messages.get({
-          'userId': 'me',
-          'id': messageId,
-        }).then((response) => {
-          //console.log(response.result.payload.headers);
-          const { from, to, cc, subject, detailedFrom } = getEmailInfo(
-            response.result.payload.headers
-          );
-          const { unread } = resolveLabels(response.result.labelIds);
-          const { time, unixTime } = getTimeFormat(response.result.internalDate);
-          const snippet = response.result.snippet;
-          const id = response.result.id;
-          const { body, attachmentIds } = getBody(response.result.payload);
-          const labelId = payload.labelId;
-          const message = {
-            messageId,
-            from,
-            detailedFrom,
-            to,
-            cc,
-            subject,
-            snippet,
-            body,
-            time,
-            id,
-            labelId,
-            unread,
-            unixTime,
-            attachmentIds
-          };
-          context.commit("addMessage", message);
-        }).catch((err) => {
-          console.log(err);
+    getThreadData(context, payload) {
+      const threadId = payload.threadId;
+      const labelId = payload.labelId;
+      
+      gapi.client.gmail.users.threads.get({
+        'userId': 'me',
+        'id': threadId,
+      }).then((response) => {
+        response.result.messages.forEach(message => {
+          let messageId = message.id;
+          context.dispatch("getMessageContent", { labelId, messageId, threadId });
         });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    getMessageContent(context, payload) {
+      const threadId = payload.threadId;
+      const messageId = payload.messageId;
+      const labelId = payload.labelId;
+
+      gapi.client.gmail.users.messages.get({
+        'userId': 'me',
+        'id': messageId,
+      }).then((response) => {
+        const { from, to, cc, subject, detailedFrom } = getEmailInfo(
+          response.result.payload.headers
+        );
+        const { unread } = resolveLabels(response.result.labelIds);
+        const { time, unixTime } = getTimeFormat(response.result.internalDate);
+        const snippet = response.result.snippet;
+        const id = response.result.id;
+        const { body, attachmentIds } = getBody(response.result.payload);
+        
+        const message = {
+          threadId,
+          messageId,
+          from,
+          detailedFrom,
+          to,
+          cc,
+          subject,
+          snippet,
+          body,
+          time,
+          id,
+          labelId,
+          unread,
+          unixTime,
+          attachmentIds
+        };
+        context.commit("addMessage", message);
+      }).catch((err) => {
+        console.log(err);
+      });
     },
   }
 });

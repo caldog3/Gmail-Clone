@@ -5,14 +5,14 @@
     <span>
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
-      <div v-for="message in messages" :key="message.id" v-bind:class="readClassChanger(message)">
-        <!-- <template v-if="message.labelIds.includes(labelId)"> -->
+      <div v-for="thread in threads" :key="thread.id" v-bind:class="readClassChanger(thread)">
+        <!-- <template v-if="thread.labelIds.includes(labelId)"> -->
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
                 <label class="container">
                   <div class="highlightAreaCheck">
-                    <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
+                    <input type="checkbox" checked="checked" :value="thread.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
                 </label>
@@ -37,29 +37,29 @@
             </div>
 
 
-            <div class="emailLink" v-on:click="enterMessage(message)">
+            <div class="emailLink" v-on:click="enterMessage(thread)">
 
               <div class="from"> 
-                  <b><span class="leftAlign">{{ message.from }}</span></b>
+                  <b><span class="leftAlign">{{ thread.from }}</span></b>
               </div>
 
               <div class="snippit">
                 <div class="leftAlign1">
-                    <b>{{ message.subject }} </b>- 
+                    <b>{{ thread.subject }} </b>- 
                     <br class="rwd-break">
-                    <i><span v-html="message.snippet">...</span></i>
+                    <i><span v-html="thread.snippet">...</span></i>
                 </div>
               </div>
 
               <div class="dateTime"> 
-                <div class="rightAlign">{{ message.time }}</div>
+                <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
             </div>
 
 
             <div class="smallOnly">
-              <span>{{ message.time }}</span>
+              <span>{{ thread.time }}</span>
               <div class="highlightArea">              
                 <div v-if=!starCheck v-on:click="checkStar()">
                     <font-awesome-icon class="Icon" icon="star" />
@@ -369,21 +369,38 @@ export default {
     checkStar() {
       this.starCheck = !this.starCheck;
     },
+    
   },
   computed: {
-    messages() {
-      let labelId = this.labelId;
-      const labelMessages = this.$store.getters.getLabelMessages[labelId];
-      let messagesFinal = _.sortBy(labelMessages, [function(messages){
-        return messages.unixTime;
-      }]).reverse();
+    threads() {
+      const labelId = this.labelId;
+      const labelThreads = this.$store.state.labelMessages;
       
-      return messagesFinal;
+      const labelIdThreads = labelThreads[labelId];
+      if (labelIdThreads !== undefined) {
+        const message = this.$store.state.threadMessages;
+        
+        const fullThreadData = labelIdThreads.map((threadId) => {
+          const threadMessages = message[threadId];
+          if (threadMessages !== undefined) {
+            if (threadMessages.length >= 1) {
+              const { from, subject, snippet, time } = threadMessages[threadMessages.length - 1];
+              return {threadId, from, subject, snippet, time };
+            }
+          }
+        });
+        return fullThreadData;
+        // let threadsFinal = _.sortBy(labelThreads[labelId], [function(threads){
+        //   return threads.unixTime;
+        // }]).reverse();
+
+        // return threadsFinal;
+      }
     },
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
-  }
+  },
 }
 </script>
