@@ -5,14 +5,15 @@
     <span>
       <p> works.... {{ checkedEmails }} </p>
     </span> -->
-      <div v-for="thread in threads" :key="thread.id" v-bind:class="readClassChanger(thread)">
-        <!-- <template v-if="thread.labelIds.includes(labelId)"> -->
+    <template v-if="threads">
+
+      <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
                 <label class="container">
                   <div class="highlightAreaCheck">
-                    <input type="checkbox" checked="checked" :value="thread.id" v-model="checkedEmails">
+                    <input type="checkbox" checked="checked" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
                 </label>
@@ -70,9 +71,12 @@
               </div>
             </div>
 
-          </div>     
-        <!-- </template> -->
+          </div>
       </div>
+    </template>
+    <template v-else>
+      <h1>Not yet initialized</h1>
+    </template>
   </div>
 </template>
 
@@ -374,22 +378,29 @@ export default {
   computed: {
     threads() {
       const labelId = this.labelId;
-      const labelThreads = this.$store.state.labelMessages;
+      let labelThreads = this.$store.state.labelMessages;
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
-        const message = this.$store.state.threadMessages;
+        let message = this.$store.state.threadMessages;
         
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
           if (threadMessages !== undefined) {
             if (threadMessages.length >= 1) {
-              const { from, subject, snippet, time } = threadMessages[threadMessages.length - 1];
-              return {threadId, from, subject, snippet, time };
+              console.log("Getting threadMessages")
+              let { from, subject, snippet, time, unixTime } = threadMessages[threadMessages.length - 1];
+              console.log({threadId, from, subject, snippet, time, unixTime });
+              return {threadId, from, subject, snippet, time, unixTime };
             }
           }
         });
-        return fullThreadData;
+        if (fullThreadData !== undefined) {
+          return fullThreadData;
+        } else {
+          return [];
+        }
+        
         // let threadsFinal = _.sortBy(labelThreads[labelId], [function(threads){
         //   return threads.unixTime;
         // }]).reverse();

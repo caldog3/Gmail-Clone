@@ -43,25 +43,18 @@ export default {
     }
   },
   beforeCreate(){
-    if (this.$store.getters.getLabelMessages.length > 0){
       let promoMessages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
-      if(promoMessages.length === 0){
+      if(promoMessages === undefined){
         this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
       }
       let socialMessages = this.$store.getters.getLabelMessages["CATEGORY_SOCIAL"];
-      if(socialMessages.length === 0){
+      if(socialMessages === undefined){
         this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
       }
       let personalMessages = this.$store.getters.getLabelMessages["CATEGORY_PERSONAL"];
-      if(personalMessages.length === 0){
+      if(personalMessages === undefined){
         this.$store.dispatch("getListOfMessages", "CATEGORY_PERSONAL");
       }
-    }
-    else {
-      this.$store.dispatch("getListOfMessages", "CATEGORY_PERSONAL");
-      this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
-      this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
-    }
   },
 }
 </script>

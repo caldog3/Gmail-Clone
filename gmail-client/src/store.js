@@ -120,7 +120,7 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 5
+          'maxResults': 2
         }).then((response) => {
           response.result.threads.forEach(thread => {
             let threadId = thread.id;
@@ -153,7 +153,7 @@ export default new Vuex.Store({
       const threadId = payload.threadId;
       const messageId = payload.messageId;
       const labelId = payload.labelId;
-
+      console.log("ThreadIDDD DD: DJD:", threadId);
       gapi.client.gmail.users.messages.get({
         'userId': 'me',
         'id': messageId,
