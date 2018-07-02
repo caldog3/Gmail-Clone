@@ -1,7 +1,9 @@
 <template>
   <div class="column">
       <br><br><br><br>
-    <img src="./../assets/gmailLogo.png" alt="">
+    <div class="logo">
+      <img src="./../assets/gmailLogo.png" alt="" class="responsive">
+    </div>
     <br>
     <br>
     <br>
@@ -35,8 +37,13 @@
   height: 10px;
   background-color: #fdba2c;
 }
-img {
-  max-width: 500px;
+.logo {
+  width: 40%;
+  margin: auto;
+}
+.responsive {
+  width: 100%;
+  height: auto;
 }
 .bar {
   content: "";
