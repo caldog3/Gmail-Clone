@@ -11,11 +11,13 @@
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
+                
                 <label class="container">
                   <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
+      
                 </label>
               </div>
               
@@ -26,14 +28,11 @@
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div> -->
                   
-                
-
               <div class="largeOnly">
                 <div class="highlightArea">
                   <input class="star" type="checkbox" title="bookmark page">
+                </div>
               </div>
-              
-            </div>
 
             </div>
 
@@ -57,7 +56,6 @@
               </div>
 
             </div>
-
 
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
@@ -183,8 +181,10 @@
   font-size: 20px;
   cursor: pointer;
   position: relative;
-  left: -3px;
-  top: -5px;
+  left: 5px;
+  top: 1px;
+  width: 30px;
+  height: 30px;
 }
 .star:before {
   content: "\2606";
@@ -327,6 +327,35 @@ svg:not(:root).svg-inline--fa {
     margin-top: 0px;
   }
 }
+
+@-moz-document url-prefix() {
+  .star[data-v-9b75054c] {
+    visibility: visible;
+    left: 0px;
+    top: 0px;
+  }
+  /* input.star:checked + label::after, input.star + label::after {
+    display: inline-block;
+    position: relative;
+    visibility: visible;
+    font-family: FontAwesome;
+    font-size: 60px;
+    background-color: transparent;
+  }
+  input.star:checked +label::after {
+    content: '\f058';
+    color: #16A085;
+  }
+
+  input.star + label::after {
+    content: '\f057';
+    color: #C0392B;
+    position: relative;
+    bottom: 5px;
+  } */
+}
+
+
 </style>
 
 

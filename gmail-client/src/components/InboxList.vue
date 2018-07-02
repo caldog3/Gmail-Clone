@@ -3,15 +3,15 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <b-tab icon='inbox' title="Primary (personal)">
-        <email-list labelId="CATEGORY_PERSONAL"/>
+      <b-tab icon='inbox' title="Primary">
+        <email-list labelId="PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
-        <email-list labelId="CATEGORY_SOCIAL"/>
+        <email-list labelId="SOCIAL"/>
       </b-tab>
 
       <b-tab title="Promotions" >
-        <email-list labelId="CATEGORY_PROMOTIONS"/>      
+        <email-list labelId="PROMOTIONS"/>      
       </b-tab>
     </b-tabs>
   </div>
@@ -43,18 +43,7 @@ export default {
     }
   },
   beforeCreate(){
-      let promoMessages = this.$store.getters.getLabelMessages["CATEGORY_PROMOTIONS"];
-      if(promoMessages === undefined){
-        this.$store.dispatch("getListOfMessages", "CATEGORY_PROMOTIONS");
-      }
-      let socialMessages = this.$store.getters.getLabelMessages["CATEGORY_SOCIAL"];
-      if(socialMessages === undefined){
-        this.$store.dispatch("getListOfMessages", "CATEGORY_SOCIAL");
-      }
-      let personalMessages = this.$store.getters.getLabelMessages["CATEGORY_PERSONAL"];
-      if(personalMessages === undefined){
-        this.$store.dispatch("getListOfMessages", "CATEGORY_PERSONAL");
-      }
+    //MOVED TO LoadingScreen.vue Created
   },
 }
 </script>

@@ -41,7 +41,7 @@
           <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
         </div>
       </div>
-      <div>
+      <div v-on:click="loadDrafts()">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
         </div>
@@ -71,12 +71,13 @@ img {
   width: 30px;
 }
 button {
-  margin: 30px;
+  margin: 20px 90px 20px 5px;
   cursor: pointer;
   outline: none;
+  background-color: white;
 }
 .button {
-  padding: 15px 15px;
+  padding: 13px 15px;
   border-radius: 40px;
   outline: none;
 }
@@ -88,7 +89,7 @@ button {
 .options > div {
   width: 100%;
   height: 35px;
-  padding-left: 15px;
+  padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
 }
@@ -123,6 +124,7 @@ button {
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
 import eventBus from "../event_bus";
+import index from "../router/index.js"
 
 export default {
   name: "MessageSidebar",
@@ -144,8 +146,9 @@ export default {
       this.$router.push({ path: "/" });
     },
     loadDrafts() {
+      console.log("Reached loadDrafts");
       //not sure how to route this properly yet
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: "/Folder/DRAFTS/" });
     }
   },
   created() {

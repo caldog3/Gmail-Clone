@@ -114,6 +114,26 @@ export default new Vuex.Store({
         context.commit("setToken", token);
       }
     },  
+    
+    getFolderListOfMessages(context, labelId) {
+      // context.commit('addLabelId', labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        console.log("Its at the DRAFTS");
+        gapi.client.gmail.users.messages.list({
+          'userId': 'me',
+          'labelIds': labelId,
+          'maxResults': 50,
+        }).then((response) => {
+          // console.log(response);
+          response.result.messages.forEach(message => {
+            let messageId = message.id;
+            context.dispatch("getMessageContent", { messageId, labelId });
+          });
+        });  
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
     getListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {

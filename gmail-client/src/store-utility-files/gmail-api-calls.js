@@ -38,8 +38,8 @@ const getLabels = () => {
   gapi.client.gmail.users.labels.list({
     'userId': 'me'
   }).then(response => {
-      console.log("Labels");
-      console.log(response);
+      // console.log("Labels");
+      // console.log(response);
       // let unreadCount = response.data.messagesUnread;
       // eventBus.$emit('UNREAD_COUNT', unreadCount);
     })
@@ -55,6 +55,8 @@ const getNumberOfMessages = () => {
       'userId': 'me',
       'id': 'INBOX',
     }).then((response) => {
+      console.log("NUM MESSAGES STUFF");
+      console.log(response);
       let totalInboxEmailCount = response.result.threadsTotal;
         gapi.client.gmail.users.labels.get({
           'userId': 'me',
@@ -77,8 +79,10 @@ const getLabelsForUnread = () => {
   gapi.client.load('gmail', 'v1').then(() => {
     gapi.client.gmail.users.labels.get({
     'userId': 'me',
-    'id': 'CATEGORY_PERSONAL',
+    'id': 'INBOX',
+    // 'q': 'category:primary',
     }).then((response) => {
+      console.log(response);
       let unreadCount = response.result.threadsUnread;
       eventBus.$emit('UNREAD_COUNT', unreadCount);
 
@@ -110,7 +114,7 @@ const getLabelsForUnread = () => {
 }
 
 // const getListOfDrafts =() => {
-//   let url = "https://www.googleapis.com/gmail/v1/users/me/drafts";
+//   let url = "https://www.googleapis.com/gmail/v1/users/me/draft";
 //   axios.get(url, getAuthHeader())
 //     .then(response => {
 //       console.log("DRAFTS OBJ");

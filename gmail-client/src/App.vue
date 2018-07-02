@@ -1,23 +1,38 @@
 <template>
   <div id="app">
-    <div class="loggedIn" v-if="loggedIn">
+    <!-- LOG-IN SCREEN -->
+    <div class="notLoggedIn" v-if="!loggedIn">
+      <login-page/>
+    </div>
+
+      <!-- OUR ACTUAL EMAIL -->
+    <div class="loggedIn" v-else-if="loggedIn && this.loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
       <div class="sideBar"><message-sidebar/></div>
-      
+
       <div class="mainView">
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
           <router-view/>
+          <div class="termsUnderneath">
+            <br><br>
+            <p>Terms - Privacy - Program Policies</p>
+          </div>
         </div>
       </div>
+
       <Compose/>
+      
     </div>
 
-    <div class="notLoggedIn" v-else>
-      <login-page/>
+    <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
+    <div class="loadingScreen" v-else-if="loggedIn && triggerLoading">
+      <loading-screen/>
     </div>
+
+
   </div>
 </template>
 
@@ -29,6 +44,8 @@ import AppHeader from "./components/AppHeader";
 import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
+import LoadingScreen from "./components/LoadingScreen";
+import { setTimeout } from 'timers';
 
 export default {
   name: "App",
@@ -36,6 +53,7 @@ export default {
     return {
       emailListHeight: {},
       initialHeightCalculated: false,
+      loading: false,
     };
   },
   components: {
@@ -43,11 +61,16 @@ export default {
     MessageSidebar,
     UtilityBar,
     LoginPage,
-    Compose
+    Compose,
+    LoadingScreen,
   },
   computed: {
     loggedIn: function() {
       return this.$store.getters.loggedIn;
+    },
+    triggerLoading: function() {
+      this.loaded(false);
+      return true;
     }
   },
   methods: {
@@ -64,7 +87,25 @@ export default {
           this.initialHeightCalculated = true;
         }
       }
-    }
+    },
+    loaded(ourBool) {
+      console.log("reached loaded");
+      let returnVal = ourBool;
+      this.updateLoading();
+      return returnVal;
+    },
+    updateLoading() {
+      console.log("Reached update loading");
+      if (this.loading === false) {
+        setTimeout(() => {
+          console.log("passed the timeout");
+          this.loading = true;
+          this.loaded(true);
+        }, 3000);
+      }
+      //   ^^ HERES THE TIME IN MILISECONDS
+    },
+
   },
   beforeUpdate() {
     if (!this.initialHeightCalculated){
@@ -100,7 +141,7 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  background-image: url(assets/Background10.jpg);
+  background-image: url(assets/Background16.jpg);
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;
@@ -113,7 +154,10 @@ body {
 .emailList {
   overflow-y: auto;
   padding-right: 5px;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
+}
+.termsUnderneath {
+  color: white;
 }
 .notLoggedIn {
   height: 100%;
@@ -121,6 +165,7 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
+  
 }
 /* width */
 .emailList::-webkit-scrollbar {
