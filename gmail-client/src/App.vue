@@ -16,10 +16,13 @@
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
           <router-view/>
+          <div class="termsUnderneath">
+            <br><br>
+            <p>Terms - Privacy - Program Policies</p>
+          </div>
         </div>
-        <!-- this appears transparently -->
-        <h1>hello?</h1>
       </div>
+
       <Compose/>
       
     </div>
@@ -69,8 +72,6 @@ export default {
       this.loaded(false);
       return true;
     }
-
-
   },
   methods: {
     setEmailListHeight() {
@@ -103,7 +104,7 @@ export default {
           this.loaded(true);
         }, 3000);
       }
-      // HERES THE TIME IN MILISECONDS
+      //   ^^ HERES THE TIME IN MILISECONDS
     },
 
   },
@@ -154,7 +155,10 @@ body {
 .emailList {
   overflow-y: auto;
   padding-right: 5px;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
+}
+.termsUnderneath {
+  color: white;
 }
 .notLoggedIn {
   height: 100%;
@@ -162,6 +166,7 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
+  
 }
 /* width */
 .emailList::-webkit-scrollbar {

@@ -21,7 +21,7 @@ export default new Router({
     },
     {
       path: "/Folder/:labelId",
-      name: "Drafts",
+      name: "FolderEmailList",
       component: FolderEmailList
     }
 

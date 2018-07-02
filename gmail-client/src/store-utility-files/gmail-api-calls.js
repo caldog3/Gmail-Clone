@@ -114,7 +114,7 @@ const getLabelsForUnread = () => {
 }
 
 // const getListOfDrafts =() => {
-//   let url = "https://www.googleapis.com/gmail/v1/users/me/drafts";
+//   let url = "https://www.googleapis.com/gmail/v1/users/me/draft";
 //   axios.get(url, getAuthHeader())
 //     .then(response => {
 //       console.log("DRAFTS OBJ");
