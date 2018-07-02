@@ -1,5 +1,6 @@
 <template>
   <div class="column">
+      <br><br><br><br>
     <img src="./../assets/logo1.png" alt="">
     <br>
     <h1> Hello we are loading.... </h1>

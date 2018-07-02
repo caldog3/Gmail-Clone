@@ -41,7 +41,7 @@
           <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
         </div>
       </div>
-      <div>
+      <div v-on:click="loadDrafts()">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
         </div>
@@ -123,6 +123,7 @@ button {
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
 import eventBus from "../event_bus";
+import index from "../router/index.js"
 
 export default {
   name: "MessageSidebar",
@@ -144,8 +145,9 @@ export default {
       this.$router.push({ path: "/" });
     },
     loadDrafts() {
+      console.log("Reached loadDrafts");
       //not sure how to route this properly yet
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: "/Folder/DRAFTS/" });
     }
   },
   created() {

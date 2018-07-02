@@ -17,6 +17,7 @@
         <div class="emailList" :style="emailListHeight">
           <router-view/>
         </div>
+        <!-- this appears transparently -->
         <h1>hello?</h1>
       </div>
       <Compose/>
@@ -100,7 +101,7 @@ export default {
           console.log("passed the timeout");
           this.loading = true;
           this.loaded(true);
-        }, 2500);
+        }, 3000);
       }
       // HERES THE TIME IN MILISECONDS
     },

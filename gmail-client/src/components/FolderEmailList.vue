@@ -4,19 +4,9 @@
 /* eslint-disable */
 <template>
   <div id="setWidth">
-      <email-list :labelId="labelId">
-    <b-tabs>
-      <b-tab icon='inbox' title="Primary">
-        <email-list labelId="PRIMARY"/>
-      </b-tab>
-      <b-tab title="Social">
-        <email-list labelId="SOCIAL"/>
-      </b-tab>
+    <!-- <email-list :labelId="labelId"> -->
+    <email-list labelId="DRAFT"/>
 
-      <b-tab title="Promotions" >
-        <email-list labelId="PROMOTIONS"/>      
-      </b-tab>
-    </b-tabs>
   </div>
 </template>
 
@@ -47,7 +37,10 @@ export default {
     }
   },
   beforeCreate(){
-    //MOVED TO LoadingScreen.vue Created
+    let personalMessages = this.$store.getters.getLabelMessages["DRAFT"];
+    if(personalMessages.length === 0){
+      this.$store.dispatch("getFolderListOfMessages", "DRAFT");
+    }
   },
 }
 </script>

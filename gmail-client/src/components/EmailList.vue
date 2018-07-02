@@ -32,7 +32,7 @@
                   <input class="star" type="checkbox" title="bookmark page">
                 </div>
               </div>
-              
+
             </div>
 
             <div class="emailLink" v-on:click="enterMessage(message)">
