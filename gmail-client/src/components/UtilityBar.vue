@@ -22,9 +22,9 @@
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div class="highlightArea item">
-                    <div v-on:click="ellipsesDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                <div class="item">
+                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
+                    <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
                       <div id="ellipsesDropdown" class="dropdown-content">
                         <p>  Mark all as read </p>
                         <hr>
@@ -98,6 +98,7 @@
                     <p>Mute</p>
                   </div>  
                 </div>
+                
               </div>
             </div>
           </span>
@@ -132,20 +133,20 @@
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
-                  <div id="cogDropdown" class="cog dropdown-content">
-                    <p>Themes</p>
-                    <hr>
-                    <p>Some kind of setting</p>
-                    <hr>
-                    <p>Some kind of setting</p>
-                    <hr>
-                    <p>Some kind of setting</p>
-                    <hr>
-                    <p>Some kind of setting</p>
-                    <hr>
-                    <p>Some kind of setting</p>
-                  </div> 
                 </div>
+                <div id="cogDropdown" class="cog dropdown-content">
+                  <p>Themes</p>
+                  <hr>
+                  <p>Some kind of setting</p>
+                  <hr>
+                  <p>Some kind of setting</p>
+                  <hr>
+                  <p>Some kind of setting</p>
+                  <hr>
+                  <p>Some kind of setting</p>
+                  <hr>
+                  <p>Some kind of setting</p>
+                </div> 
               </div>
             </div>
           </div>
@@ -159,18 +160,24 @@
 
 <style scoped>
 .body {
+  position: relative;
   height: 40px;
+  z-index: 1;
   border-bottom: 0px;
   color: white;
   background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
 } 
 .iconDiv {
+  position: relative;
+  z-index: 2;
   width: auto;
   height: 40px;
   margin-left: 270px;
 }
 .spacing {
+  position: relative;
+  z-index: 3;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -178,14 +185,18 @@
   margin-bottom: 5px;
 }
 .flexIcons {
+  position: relative;
+  z-index: 4;
   display: flex;
   flex-direction: row;
-  margin-left: 7px;
+  margin-left: 8px;
 }
 .flexIcons svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
 .item {
+  position: relative;
+  z-index: 5;
   width: 30px;
   height: 30px;
   cursor: pointer;
@@ -193,6 +204,8 @@
 .Icon {
   display:inline-block;
   cursor: pointer;
+  z-index: -1;
+  position: relative;
 }
 .break {
   width: 30px;
@@ -200,12 +213,16 @@
   cursor: default;
 }
 .highlightArea {
+  position: fixed;
+  opacity: 0.999;
+  z-index: 999999999999999;
   width: 30px;
   height: 30px;
   border-radius: 35px;
 }
 .highlightArea:hover {
   background-color: rgba(255, 255, 255, 0.5);
+  z-index: 999999999999999;
 }
 .CenterIt {
   display: flex;
@@ -216,6 +233,10 @@
 }
 .right-side-utility {
   margin-right: 40px;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .paddingNeeded {
@@ -254,6 +275,8 @@ button {
 }
 /* lets see */
 .dropbtn {
+  position: relative;
+  z-index: -345;
   color: black;
   padding: 0px;
   font-size: 16px;
@@ -397,4 +420,6 @@ export default {
     getNumberOfMessages();
   },
 }
+
+
 </script>
