@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import InboxList from '@/components/InboxList'
 import EmailBody from '@/components/EmailBody'
+import FolderEmailList from '@/components/FolderEmailList'
 
 Vue.use(Router)
 
@@ -17,7 +18,13 @@ export default new Router({
       path: "/EmailBody/:id",
       name: "EmailBody",
       component: EmailBody
+    },
+    {
+      path: "/Folder/:labelId",
+      name: "FolderEmailList",
+      component: FolderEmailList
     }
+
   ],
   // scrollBehavior(to, from, savedPosition) {
   //   if (savedPosition) {
