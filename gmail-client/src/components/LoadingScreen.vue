@@ -1,7 +1,7 @@
 <template>
   <div class="column">
       <br><br><br><br>
-    <img src="./../assets/logo1.png" alt="">
+    <img src="./../assets/gmailLogo.png" alt="">
     <br>
     <br>
     <br>
@@ -35,6 +35,9 @@
   float: center;
   height: 10px;
   background-color: #fdba2c;
+}
+img {
+  width: 500px;
 }
 .bar {
   content: "";

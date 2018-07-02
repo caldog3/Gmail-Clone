@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <h1>Gmail Clone</h1>
-    <img src="./../assets/logo1.png" alt="">
+    <img src="./../assets/gmailLogo.png" alt="">
     <br>
     <button @click="authenticate()">Sign In</button>
     <div class="whiteSpace">
@@ -17,6 +17,9 @@
 .whiteSpace {
   height: 9999px;
   /* not sure if this is the best strategy for solving this but I mean it works.... */
+}
+img {
+  width: 400px;
 }
 </style>
 
