@@ -3,15 +3,15 @@
       <br><br><br><br>
     <img src="./../assets/logo1.png" alt="">
     <br>
+    <br>
+    <br>
+    <br>
     
     <div class="load-bar">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-
-
-
 
     <div class="whiteSpace">
     </div>
@@ -31,12 +31,12 @@
   position: relative;
   margin-top: 20px;
   width: 80%;
+  margin: auto;
   float: center;
   height: 10px;
   background-color: #fdba2c;
 }
 .bar {
-  float: center;
   content: "";
   display: inline;
   position: absolute;
