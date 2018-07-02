@@ -171,8 +171,9 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
-  
 }
+
+/* Scroll Bar */
 /* width */
 .emailList::-webkit-scrollbar {
   width: 12px;
@@ -189,6 +190,8 @@ body {
 .emailList::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
 }
+
+
 a:link {
   text-decoration: none;
   color: white;
