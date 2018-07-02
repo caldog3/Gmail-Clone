@@ -139,8 +139,9 @@ export default new Vuex.Store({
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'labelIds': labelId,
-          'maxResults': 2
+          'labelIds': "INBOX",
+          'maxResults': 50,
+          'q': `category:`+labelId,
         }).then((response) => {
           response.result.threads.forEach(thread => {
             let threadId = thread.id;

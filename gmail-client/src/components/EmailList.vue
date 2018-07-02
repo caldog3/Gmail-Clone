@@ -417,9 +417,9 @@ export default {
           const threadMessages = message[threadId];
           if (threadMessages !== undefined) {
             if (threadMessages.length >= 1) {
-              console.log("Getting threadMessages")
+              // console.log("Getting threadMessages")
               let { from, subject, snippet, time, unixTime } = threadMessages[threadMessages.length - 1];
-              console.log({threadId, from, subject, snippet, time, unixTime });
+              // console.log({threadId, from, subject, snippet, time, unixTime });
               return {threadId, from, subject, snippet, time, unixTime };
             }
           }
