@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import eventBus from './event_bus.js';
 import { initializeGoogleClient } from './main';
 import {
   getTimeFormat,
@@ -15,7 +14,6 @@ export default new Vuex.Store({
   state: {
     labelMessages: {},
     threadMessages: {},
-    messages: [],
     token: "",
     currentUser: null,
     currentUserProfile: null,
@@ -48,8 +46,8 @@ export default new Vuex.Store({
     },
     addMessage(state, message) {
       let threadId = message.threadId;
-      console.log("threadId", threadId);
       const threadMessages = state.threadMessages;
+
       if (threadMessages[threadId] !== undefined) {
         threadMessages[threadId].push(message);
       }
@@ -135,17 +133,25 @@ export default new Vuex.Store({
       });
     },
     getListOfMessages(context, labelId) {
+      let counter = 0;
+      let label = labelId;
+      if (labelId == 'PRIMARY') {
+        label = "PERSONAL";
+      }
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'labelIds': "INBOX",
-          'maxResults': 50,
-          'q': `category:`+labelId,
+          'labelIds': "CATEGORY_" + label,
+          'maxResults': 25,
+          // 'q': `category:`+labelId,
         }).then((response) => {
           response.result.threads.forEach(thread => {
             let threadId = thread.id;
-            
+            counter++;
+            if(counter === 3) {
+              console.log(counter, threadId);
+            }
             context.commit("addThreadId", { threadId, labelId });
             context.dispatch("getThreadData", { threadId, labelId });
           });
@@ -174,7 +180,7 @@ export default new Vuex.Store({
       const threadId = payload.threadId;
       const messageId = payload.messageId;
       const labelId = payload.labelId;
-      console.log("ThreadIDDD DD: DJD:", threadId);
+
       gapi.client.gmail.users.messages.get({
         'userId': 'me',
         'id': messageId,

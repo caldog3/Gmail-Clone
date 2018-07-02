@@ -412,12 +412,14 @@ export default {
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
         let message = this.$store.state.threadMessages;
-        
+        console.log("threadMessages length", message);
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
           if (threadMessages !== undefined) {
             if (threadMessages.length >= 1) {
               // console.log("Getting threadMessages")
+              // console.log("Array: ", threadMessages);
+              // console.log("Length: ", threadMessages.length);
               let { from, subject, snippet, time, unixTime } = threadMessages[threadMessages.length - 1];
               // console.log({threadId, from, subject, snippet, time, unixTime });
               return {threadId, from, subject, snippet, time, unixTime };
