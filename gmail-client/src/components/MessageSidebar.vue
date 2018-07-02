@@ -71,12 +71,13 @@ img {
   width: 30px;
 }
 button {
-  margin: 30px;
+  margin: 20px 90px 20px 5px;
   cursor: pointer;
   outline: none;
+  background-color: white;
 }
 .button {
-  padding: 15px 15px;
+  padding: 13px 15px;
   border-radius: 40px;
   outline: none;
 }
@@ -88,7 +89,7 @@ button {
 .options > div {
   width: 100%;
   height: 35px;
-  padding-left: 15px;
+  padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
 }
