@@ -204,6 +204,8 @@
 .Icon {
   display:inline-block;
   cursor: pointer;
+  z-index: -1;
+  position: relative;
 }
 .break {
   width: 30px;
@@ -213,6 +215,7 @@
 .highlightArea {
   position: fixed;
   opacity: 0.999;
+  background-color: red;
   z-index: 999999999999999;
   width: 30px;
   height: 30px;
