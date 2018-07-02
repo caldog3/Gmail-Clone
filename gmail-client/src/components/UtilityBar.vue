@@ -97,8 +97,6 @@
                     <hr>
                     <p>Mute</p>
                   </div>  
-                  <div class="highlightArea">
-                  </div>
                 </div>
                 
               </div>
@@ -214,6 +212,7 @@
 }
 .highlightArea {
   position: fixed;
+  opacity: 0.999;
   z-index: 999999999999999;
   width: 30px;
   height: 30px;
@@ -274,7 +273,6 @@ button {
 }
 /* lets see */
 .dropbtn {
-  opacity: .99;
   position: relative;
   z-index: -345;
   color: black;
@@ -420,4 +418,6 @@ export default {
     getNumberOfMessages();
   },
 }
+
+
 </script>
