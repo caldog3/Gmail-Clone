@@ -10,11 +10,13 @@
           <div class="FlexTable">
             <div class="checkboxes">
               <div class="first">
+                
                 <label class="container">
                   <div class="highlightAreaCheck">
                     <input type="checkbox" checked="checked" :value="message.id" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
+      
                 </label>
               </div>
               
@@ -25,20 +27,15 @@
                     <font-awesome-icon class="Icon" icon="check-square"/>
                   </div> -->
                   
-                
-
               <div class="largeOnly">
                 <div class="highlightArea">
                   <input class="star" type="checkbox" title="bookmark page">
+                </div>
               </div>
-              
-            </div>
 
             </div>
-
 
             <div class="emailLink" v-on:click="enterMessage(message)">
-
               <div class="from"> 
                   <b><span class="leftAlign">{{ message.from }}</span></b>
               </div>
@@ -56,7 +53,6 @@
               </div>
 
             </div>
-
 
             <div class="smallOnly">
               <span>{{ message.time }}</span>
