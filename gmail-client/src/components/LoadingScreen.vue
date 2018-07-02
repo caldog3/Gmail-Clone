@@ -25,7 +25,6 @@
 }
 .whiteSpace {
   height: 9999px;
-  
 }
 .load-bar {
   position: relative;
@@ -37,7 +36,7 @@
   background-color: #fdba2c;
 }
 img {
-  width: 500px;
+  max-width: 500px;
 }
 .bar {
   content: "";

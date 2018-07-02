@@ -19,7 +19,8 @@
   /* not sure if this is the best strategy for solving this but I mean it works.... */
 }
 img {
-  width: 400px;
+  margin: 30px;
+  max-width: 400px;
 }
 </style>
 
