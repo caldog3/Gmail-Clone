@@ -81,7 +81,6 @@ export default {
           window.innerHeight -
           this.$refs.appHeader.clientHeight -
           verticalPadding;
-          console.log(height)
         Vue.set(this.emailListHeight, "height", `${height}px`);
 
         if (!this.initialHeightCalculated){
