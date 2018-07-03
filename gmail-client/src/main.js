@@ -40,14 +40,6 @@ import faKeyboard from "@fortawesome/fontawesome-free-solid/faKeyboard";
 import faCaretDown from "@fortawesome/fontawesome-free-solid/faCaretDown";
 import faChevronRight from "@fortawesome/fontawesome-free-solid/faChevronRight";
 import faChevronLeft from "@fortawesome/fontawesome-free-solid/faChevronLeft";
-// import vueScrollBehavior from 'vue-scroll-behavior';
-
-// Vue.use(vueScrollBehavior, { 
-//   router: router,    // The router instance
-//   maxLength: 100,    // Saved history List max length
-//   ignore: [/\/EmailBody/],    // ignore some routes, they will directly scroll to the top
-//   delay: 0  
-//  });
 
 fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,

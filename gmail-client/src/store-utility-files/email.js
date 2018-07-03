@@ -1,14 +1,6 @@
 import moment from 'moment';
 import base64js from 'base64-js';
 
-const getAuthHeader = () => {
-  return { 
-    headers: { 
-      Authorization: `Bearer ${localStorage.getItem("token")}` 
-    }
-  };
-}
-
 const Base64Decode = (str, encoding = "utf-8") => {
     let bytes = base64js.toByteArray(str);
     return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
@@ -48,6 +40,7 @@ const getBody = (payload) => {
   } else {
     let htmlPart = payload.parts[1];
     if (htmlPart !== undefined) {
+      
       let htmlBodyData = htmlPart.body.data;
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
@@ -55,37 +48,49 @@ const getBody = (payload) => {
         if (payload.parts[0].body.data !== undefined){
           body = Base64Decode(payload.parts[0].body.data);
         }
-        else if (payload.parts[0].parts[1].body.data !== undefined){
-          let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
-          body = Base64Decode(multipartMixedAlternativeBody);
-
-          let bodyAndAttachmentArray = payload.parts;
-          for (let part of bodyAndAttachmentArray) {
-            if (part.mimeType.includes('image')) {
+        else if (payload.parts[0].parts[0].parts !== undefined){
+          if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
+            let multipartSignedMixedAlternativeRelatedBody = payload.parts[0].parts[0].parts[1].parts[0].body.data;
+            body = Base64Decode(multipartSignedMixedAlternativeRelatedBody);
+            
+            let part = payload.parts[1];
+            if (part.mimeType.includes('application')) {
               attachmentIds.push(part.body.attachmentId);
             }
-          }
-        }
-        else{
-          let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
-          if (multipartMixedAlternativeBodyEdge !== undefined) {
-            body = Base64Decode(multipartMixedAlternativeBodyEdge);
-            let bodyAndAttachmentObject = payload.parts;
-            for (let part of bodyAndAttachmentObject) {
-            //  console.log(part);
-              if (part.mimeType.includes('application')) {
-                attachmentIds.push(part.body.attachmentId);
-                console.log(part.body);
-              }
-              else if (part.mimeType.includes('image')) {
-                attachmentIds.push(part.body.attachmentId);
-                console.log(part.body);
+            else{
+              let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
+              if (multipartMixedAlternativeBodyEdge !== undefined) {
+                body = Base64Decode(multipartMixedAlternativeBodyEdge);
+
+                let bodyAndAttachmentObject = payload.parts;
+                for (let part of bodyAndAttachmentObject) {
+                  if (part.mimeType.includes('application')) {
+                    attachmentIds.push(part.body.attachmentId);
+                  }
+                  else if (part.mimeType.includes('image')) {
+                    attachmentIds.push(part.body.attachmentId);
+                  }
+                }
               }
             }
           }
-          //console.log(payload.parts[0].parts[0].parts[1].body.data);
-          //console.log(payload.parts[0].parts[1].body.attachmentId) // chipmunk
         }
+        else {
+          if (payload.parts[0].parts[1].body.data !== undefined){
+            let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
+            body = Base64Decode(multipartMixedAlternativeBody);
+
+            let bodyAndAttachmentArray = payload.parts;
+            for (let part of bodyAndAttachmentArray) {
+              if (part.mimeType.includes('image')) {
+                attachmentIds.push(part.body.attachmentId);
+              }
+              else if (part.mimeType.includes('application')) {
+                attachmentIds.push(part.body.attachmentId);
+              }
+            }
+          }
+        } 
       }
     } else {
       let multipartAlternativeBody = payload.parts[0].body.data;
@@ -112,11 +117,7 @@ const getBody = (payload) => {
 
 const resolveLabels = (tempLabelIds) => {
   let labelIds = tempLabelIds;
-  // console.log('the resolvelabel ids:' + labelIds);
-  // if (labelIds.includes("INBOX") && !labelIds.includes("CATEGORY_SOCIAL") && !labelIds.includes("CATEGORY_PROMOTIONS")) {
-  //   labelIds.push("CATEGORY_PRIMARY");
-  // }
-
+  
   let unread = true;
   if (labelIds.includes("UNREAD")) {
     unread = false;

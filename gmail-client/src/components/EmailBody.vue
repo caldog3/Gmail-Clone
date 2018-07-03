@@ -1,19 +1,21 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <div class="leftAlign">
-      <h4 >{{subject}}</h4>
-      <hr>
-      <p><b>{{from}}</b></p>
-      <p>to {{to}}</p>
+    <h4 >{{messages[0].subject}}</h4>
+    <div v-for="message in messages" :key="message.messageId">
+      <div class="leftAlign">
+        <hr>
+        <p><b>{{message.from}}</b></p>
+        <p>to {{message.to}}</p>
+      </div>
+      <div v-html="message.body" class="leftAlign"></div>
     </div>
-    <div v-html="body" class="leftAlign"></div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
         <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
-        &emsp;
+      &emsp;
       </span>
       <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
@@ -53,6 +55,7 @@ h4 {
 
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { sortBy } from 'lodash'
 
 export default {
   name: 'EmailBody',
@@ -60,41 +63,16 @@ export default {
     FontAwesomeIcon
   },
   computed: {
-    message(){
-      let messageId = this.$route.params.id;
-      let labelId = this.$route.params.labelId;
-      let labelMessages = this.$store.getters.getLabelMessages;
-      let counter = 0;
-      while(labelMessages[labelId][counter].id !== messageId){
-        counter++;
-      }
-
-      return labelMessages[labelId][counter];
-    },
-    subject(){
-      return this.message.subject;
-    },
-    body(){
-      return this.message.body;
-    },
-    from(){
-      return this.message.detailedFrom;
-    },
-    to(){
-      let cc = this.message.cc;
-      let to = this.message.to;
-      console.log(cc);
-      if (cc !== null) {
-        to += ", ";
-        to += cc;
-      }
-      return to;
-    },
-
+    messages(){
+      let messages = this.$store.state.threadMessages;
+      const threadMessages = messages[this.$route.params.id];
+      return sortBy(threadMessages, m => m.unixTime);
+      // return threadMessages;
+    }
   },
   methods: {
     ifGroupMessage() {
-      let to = this.message.to;
+      let to = this.messages[0].to;
       //console.log(to);
       var theClass = 'not-group-message';
       //console.log(message.unread);
@@ -104,12 +82,5 @@ export default {
       return theClass;
     },
   },
-  created(){
-    // console.log("Window: ", window);
-    // window.scrollTo(0, 0);
-    // window.scrollTo(0, 0);
-    // console.log("EmailBody Scrolling to top");
-    // document.body.scrollTop = document.documentElement.scrollTop = 0;
-  }
 }
 </script>

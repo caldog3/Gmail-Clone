@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     labelMessages: {},
     threadMessages: {},
+    latestThreadMessageTime: {},
     token: "",
     currentUser: null,
     currentUserProfile: null,
@@ -70,6 +71,21 @@ export default new Vuex.Store({
           labelIdArray.push(threadId);
         }
       }
+    },
+    initializeThreadTime(state, payload) {
+      const threadId = payload.threadId;
+      Vue.set(state.latestThreadMessageTime, threadId, 0);
+    },
+    setThreadTime(state, payload) {
+      const threadId = payload.threadId;
+      const newUnixTime = payload.unixTime;
+      console.log(threadId, newUnixTime)
+      if (newUnixTime > state.latestThreadMessageTime[threadId]){
+        Vue.set(state.latestThreadMessageTime, threadId, newUnixTime);
+      }
+    },
+    setThreadMessages(state, messages) {
+      Vue.set(state.threadMessages, threadId, messages);
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -133,7 +149,6 @@ export default new Vuex.Store({
       });
     },
     getListOfMessages(context, labelId) {
-      let counter = 0;
       let label = labelId;
       if (labelId == 'PRIMARY') {
         label = "PERSONAL";
@@ -143,17 +158,17 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': "CATEGORY_" + label,
-          'maxResults': 25,
+          // 'labelIds': 'INBOX',
+          'maxResults': 20,
           // 'q': `category:`+labelId,
         }).then((response) => {
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
-              counter++;
-              if(counter === 3) {
-                console.log(counter, threadId);
-              }
+
               context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
               context.dispatch("getThreadData", { threadId, labelId });
             });
           }          
@@ -190,12 +205,15 @@ export default new Vuex.Store({
         const { from, to, cc, subject, detailedFrom } = getEmailInfo(
           response.result.payload.headers
         );
-        const { unread } = resolveLabels(response.result.labelIds);
+        
         const { time, unixTime } = getTimeFormat(response.result.internalDate);
+        context.commit("setThreadTime", { threadId, unixTime });
+
+        const { body, attachmentIds } = getBody(response.result.payload);
+        const { unread } = resolveLabels(response.result.labelIds);
         const snippet = response.result.snippet;
         const id = response.result.id;
-        const { body, attachmentIds } = getBody(response.result.payload);
-        
+
         const message = {
           threadId,
           messageId,

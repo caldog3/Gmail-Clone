@@ -363,7 +363,8 @@ svg:not(:root).svg-inline--fa {
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { markAsRead } from './../store-utility-files/gmail-api-calls';
-import _ from 'lodash';
+import { getTimeFormat } from './../store-utility-files/email';
+import { sortBy } from 'lodash'
 
 export default {
   name: 'EmailList',
@@ -387,14 +388,10 @@ export default {
       }
       return theClass;
     },
-    enterMessage(message) {
+    enterMessage(thread) {
       eventBus.$emit('ENTER_MESSAGE');
-      this.$router.push({ name: 'EmailBody', params: { 
-        id: message.id,
-        message: message,
-        labelId: this.labelId
-      }, hash: '#body'});
-      markAsRead(message.id);
+      this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
+      markAsRead(thread.threadId);
     },
     check() {
       this.checked = !this.checked;
@@ -407,36 +404,23 @@ export default {
   computed: {
     threads() {
       const labelId = this.labelId;
-      let labelThreads = this.$store.state.labelMessages;
+      const labelThreads = this.$store.state.labelMessages;
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
-        let message = this.$store.state.threadMessages;
-        console.log("threadMessages length", message);
+        const message = this.$store.state.threadMessages;
+
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
-          if (threadMessages !== undefined) {
-            if (threadMessages.length >= 1) {
-              // console.log("Getting threadMessages")
-              // console.log("Array: ", threadMessages);
-              // console.log("Length: ", threadMessages.length);
-              let { from, subject, snippet, time, unixTime } = threadMessages[threadMessages.length - 1];
-              // console.log({threadId, from, subject, snippet, time, unixTime });
-              return {threadId, from, subject, snippet, time, unixTime };
-            }
-          }
-        });
-        if (fullThreadData !== undefined) {
-          return fullThreadData;
-        } else {
-          return [];
-        }
-        
-        // let threadsFinal = _.sortBy(labelThreads[labelId], [function(threads){
-        //   return threads.unixTime;
-        // }]).reverse();
+          const { from, subject, snippet, unread } = threadMessages[0];
 
-        // return threadsFinal;
+          const unixTime = this.$store.state.latestThreadMessageTime[threadId];
+          const time = getTimeFormat(unixTime * 1000).time;
+          
+          return {threadId, from, subject, snippet, time, unread };
+        });
+        
+        return fullThreadData;
       }
     },
   },
