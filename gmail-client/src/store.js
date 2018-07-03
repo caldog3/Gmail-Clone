@@ -146,15 +146,17 @@ export default new Vuex.Store({
           'maxResults': 25,
           // 'q': `category:`+labelId,
         }).then((response) => {
-          response.result.threads.forEach(thread => {
-            let threadId = thread.id;
-            counter++;
-            if(counter === 3) {
-              console.log(counter, threadId);
-            }
-            context.commit("addThreadId", { threadId, labelId });
-            context.dispatch("getThreadData", { threadId, labelId });
-          });
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              counter++;
+              if(counter === 3) {
+                console.log(counter, threadId);
+              }
+              context.commit("addThreadId", { threadId, labelId });
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }          
         });
       }).catch((err) => {
         console.log(err);

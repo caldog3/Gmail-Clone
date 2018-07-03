@@ -1,7 +1,9 @@
 <template>
   <div class="column">
     <h1>Gmail Clone</h1>
-    <img src="./../assets/gmailLogo.png" alt="">
+    <div class="logo">
+      <img src="./../assets/gmailLogo.png" alt="" class="responsive">
+    </div>
     <br>
     <button @click="authenticate()">Sign In</button>
     <div class="whiteSpace">
@@ -18,8 +20,13 @@
   height: 9999px;
   /* not sure if this is the best strategy for solving this but I mean it works.... */
 }
-img {
-  width: 400px;
+.logo {
+  width: 40%;
+  margin: auto;
+}
+.responsive {
+  width: 100%;
+  height: auto;
 }
 </style>
 

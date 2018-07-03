@@ -60,11 +60,8 @@
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
               <div class="highlightArea">              
-                <div v-if=!starCheck v-on:click="checkStar()">
-                    <font-awesome-icon class="Icon" icon="star" />
-                </div>
-                <div v-if=starCheck v-on:click="checkStar()">
-                  <font-awesome-icon style="color:gold;" class="Icon" icon="star" />
+                <div class="highlightArea">
+                  <input class="star" type="checkbox" title="bookmark page">
                 </div>
               </div>
             </div>
@@ -110,6 +107,9 @@
   width: 60px;
   margin-right: 4px;
 }
+
+
+/* The Checkbox  */
 /* The container */
 .container {
   display: block;
@@ -176,6 +176,8 @@
   width: 30px;
   height: 30px;
 }
+
+/*  The Star Checkbox   */
 .star {
   visibility: hidden;
   font-size: 20px;
@@ -195,6 +197,11 @@
   content: "\2605";
   position: absolute;
 }
+
+
+
+
+
 .item {
   width: 30px;
   height: 30px;
@@ -279,7 +286,7 @@ svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
 
-@media screen and (max-width : 690px) {
+@media screen and (max-width : 830px) {
   .emailLink {
     display: flex;
     flex-direction: column;
@@ -334,24 +341,16 @@ svg:not(:root).svg-inline--fa {
     left: 0px;
     top: 0px;
   }
-  /* input.star:checked + label::after, input.star + label::after {
-    display: inline-block;
-    position: relative;
-    visibility: visible;
-    font-family: FontAwesome;
-    font-size: 60px;
-    background-color: transparent;
+  /* .star + label::before {
+    content: "star";
+    color: black;
+    position: absolute;
+    visibility:visible;
   }
-  input.star:checked +label::after {
-    content: '\f058';
-    color: #16A085;
-  }
-
-  input.star + label::after {
-    content: '\f057';
-    color: #C0392B;
-    position: relative;
-    bottom: 5px;
+  .star:checked + label::before {
+    content: "star";
+    color: gold;
+    position: absolute;
   } */
 }
 

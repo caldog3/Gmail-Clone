@@ -18,7 +18,13 @@
           <router-view/>
           <div class="termsUnderneath">
             <br><br>
-            <p>Terms - Privacy - Program Policies</p>
+            <p>
+              <a href="https://policies.google.com/terms" rel="noopener noreferrer" target="_blank">Terms</a> 
+              - 
+              <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">Privacy</a> 
+              - 
+              <a href="https://www.google.com/gmail/about/policy/" rel="noopener noreferrer" target="_blank">Program Policies</a>
+            </p>
           </div>
         </div>
       </div>
@@ -165,8 +171,9 @@ body {
 .mainView {
   margin-right: 50px;
   min-width: 770px;
-  
 }
+
+/* Scroll Bar */
 /* width */
 .emailList::-webkit-scrollbar {
   width: 12px;
@@ -182,5 +189,23 @@ body {
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
+}
+
+
+a:link {
+  text-decoration: none;
+  color: white;
+}
+a:visited {
+  text-decoration: none;
+  color: white;
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+a:active {
+  text-decoration: none;
+  color: white;
 }
 </style>
