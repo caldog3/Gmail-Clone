@@ -133,20 +133,20 @@
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
-                </div>
-                <div id="cogDropdown" class="cog dropdown-content">
-                  <p>Themes</p>
-                  <hr>
-                  <p>Some kind of setting</p>
-                  <hr>
-                  <p>Some kind of setting</p>
-                  <hr>
-                  <p>Some kind of setting</p>
-                  <hr>
-                  <p>Some kind of setting</p>
-                  <hr>
-                  <p>Some kind of setting</p>
+                  <div id="cogDropdown" class="cog dropdown-content">
+                    <p>Themes</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
+                    <hr>
+                    <p>Some kind of setting</p>
                 </div> 
+                </div>
               </div>
             </div>
           </div>
@@ -241,9 +241,11 @@
 
 .paddingNeeded {
   padding-right: 30px;
+  cursor: pointer;
 }
 .lessPadding {
   padding-right: 20px;
+  cursor: pointer;
 }
 .rightTopPad {
   padding-right: 30px;
@@ -260,6 +262,7 @@ button {
   width: 25px;
   height: 30px;
   border-radius: 5px;
+  cursor: pointer;
 }
 .highlightArea1:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -269,6 +272,7 @@ button {
   height: 30px;
   border-radius: 5px;
   margin-right: 15px;
+  cursor: pointer;
 }
 .highlightArea2:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -292,13 +296,14 @@ button {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  width: 260px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   cursor: default;
 }
 .cog {
-  right: 105px;
+  right: 1px;
+  top: 30px;
 }
 #ellipsesDropdown {
   color: black;
