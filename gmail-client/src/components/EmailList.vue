@@ -40,8 +40,12 @@
             <div class="emailLink" v-on:click="enterMessage(thread)">
 
               <div class="from"> 
-                  <b><span class="leftAlign">{{ thread.from }}</span></b>
+                  <b><span class="leftAlign">
+                    {{ thread.from }}
+                    <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
+                  </span></b>
               </div>
+              
 
               <div class="snippit">
                 <div class="leftAlign1">
@@ -77,6 +81,11 @@
 
 
 <style scoped>
+.threadLength {
+  color: gray;
+  font-size: .9em;
+}
+
 .everything {
   width: 100%;
   border-top: none;
@@ -361,7 +370,7 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { markAsRead } from './../store-utility-files/gmail-api-calls';
+import { markAsRead, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 
@@ -411,12 +420,14 @@ export default {
 
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
+          console.log("Ive got stuff: " + threadMessages.length)
+          const numberOfMessages = threadMessages.length;
           const { from, subject, snippet, unread } = threadMessages[0];
 
           const unixTime = this.$store.state.latestThreadMessageTime[threadId];
           const time = getTimeFormat(unixTime * 1000).time;
           
-          return {threadId, from, subject, snippet, time, unread };
+          return {threadId, from, subject, snippet, time, unread, numberOfMessages};
         });
         
         return fullThreadData;

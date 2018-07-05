@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <h4 >{{messages[0].subject}}</h4>
+    <h4>{{messages[0].subject}}</h4>
     <div v-for="message in messages" :key="message.messageId">
       <div class="leftAlign">
         <hr>
