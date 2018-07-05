@@ -79,13 +79,16 @@ export default new Vuex.Store({
     setThreadTime(state, payload) {
       const threadId = payload.threadId;
       const newUnixTime = payload.unixTime;
-      console.log(threadId, newUnixTime)
+      // console.log(threadId, newUnixTime)
       if (newUnixTime > state.latestThreadMessageTime[threadId]){
         Vue.set(state.latestThreadMessageTime, threadId, newUnixTime);
       }
     },
     setThreadMessages(state, messages) {
+      // console.log("WHATS GOING ON:")
+      // console.log(messages);
       Vue.set(state.threadMessages, threadId, messages);
+
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -150,7 +153,7 @@ export default new Vuex.Store({
     },
     getListOfMessages(context, labelId) {
       let label = labelId;
-      if (labelId == 'PRIMARY') {
+      if (labelId === 'PRIMARY') {
         label = "PERSONAL";
       }
       context.commit("addLabelId", labelId);
@@ -159,15 +162,17 @@ export default new Vuex.Store({
           'userId': 'me',
           'labelIds': "CATEGORY_" + label,
           // 'labelIds': 'INBOX',
-          'maxResults': 20,
+          'maxResults': 30,
           // 'q': `category:`+labelId,
         }).then((response) => {
+          // console.log(response);
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
 
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
+              
               
               context.dispatch("getThreadData", { threadId, labelId });
             });
@@ -185,6 +190,11 @@ export default new Vuex.Store({
         'userId': 'me',
         'id': threadId,
       }).then((response) => {
+        // console.log("Each thread object");
+        // console.log(response.result);
+        let numMessages = response.result.messages.length;
+        // console.log("Num:" + numMessages);
+        // still working on this....
         response.result.messages.forEach(message => {
           let messageId = message.id;
           context.dispatch("getMessageContent", { labelId, messageId, threadId });
@@ -233,6 +243,7 @@ export default new Vuex.Store({
         };
         context.commit("addMessage", message);
       }).catch((err) => {
+        // console.log("but first: " + from);
         console.log(err);
       });
     },

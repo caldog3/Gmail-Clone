@@ -45,8 +45,12 @@ const getBody = (payload) => {
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
       } else {
+
         if (payload.parts[0].body.data !== undefined){
           body = Base64Decode(payload.parts[0].body.data);
+        }
+        else if (payload.parts[0].parts[0] === undefined) {
+          console.log("Edge case = " + payload.parts[0]);
         }
         else if (payload.parts[0].parts[0].parts !== undefined){
           if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
