@@ -149,6 +149,9 @@ const getEmailInfo = (headers) => {
 
         from = from.substring(1, from.length - 1);
       }
+      if(from.includes("@")) {
+        from = from.substring(0, from.search("@"));
+      }
     } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
       // console.log(headers[i].value);
       // console.log("SPACE");
