@@ -42,7 +42,8 @@
               <div class="from"> 
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
-                    <span class='red' v-else-if="labelId === 'DRAFT'"> Draft </span>
+                    <!-- The on-click needs to match the conditional for just displaying draft -->
+                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> Draft </span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
@@ -415,7 +416,9 @@ export default {
     checkStar() {
       this.starCheck = !this.starCheck;
     },
-    
+    openCompose() {
+      eventBus.$emit('COMPOSE_OPEN');
+    },
   },
   computed: {
     threads() {
