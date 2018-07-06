@@ -41,7 +41,9 @@
 
               <div class="from"> 
                   <b><span class="leftAlign">
-                    {{ thread.from }}
+                    <span v-if="thread.from === userEmail">
+                    me </span>
+                    <span v-else> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
               </div>
@@ -385,6 +387,7 @@ export default {
       checked: false,
       starCheck: false,
       checkedEmails: [],
+      userEmail: '',
     }
   },
   methods: {
@@ -420,7 +423,6 @@ export default {
 
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
-          console.log("Ive got stuff: " + threadMessages.length)
           const numberOfMessages = threadMessages.length;
           const { from, subject, snippet, unread } = threadMessages[0];
 
@@ -437,6 +439,7 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
+    this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
 </script>

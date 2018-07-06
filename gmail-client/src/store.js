@@ -153,19 +153,21 @@ export default new Vuex.Store({
     },
     getListOfMessages(context, labelId) {
       let label = labelId;
-      if (labelId === 'PRIMARY') {
-        label = "PERSONAL";
-      }
+      // if (labelId === 'PRIMARY') {
+      //   label = "PERSONAL";
+      // }
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'labelIds': "CATEGORY_" + label,
+          // 'labelIds': "CATEGORY_" + label,
           // 'labelIds': 'INBOX',
           'maxResults': 30,
-          // 'q': `category:`+labelId,
+          'q': `category:`+label,
+          // 'q': 'Wunderlist',
         }).then((response) => {
           // console.log(response);
+          console.log(this.state.currentUserProfile.U3); 
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
@@ -192,9 +194,6 @@ export default new Vuex.Store({
       }).then((response) => {
         // console.log("Each thread object");
         // console.log(response.result);
-        let numMessages = response.result.messages.length;
-        // console.log("Num:" + numMessages);
-        // still working on this....
         response.result.messages.forEach(message => {
           let messageId = message.id;
           context.dispatch("getMessageContent", { labelId, messageId, threadId });
