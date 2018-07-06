@@ -133,19 +133,24 @@ export default new Vuex.Store({
     },  
     
     getFolderListOfMessages(context, labelId) {
-      // context.commit('addLabelId', labelId);
+      context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         console.log("Its at the DRAFTS");
-        gapi.client.gmail.users.messages.list({
+        gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 50,
+          'maxResults': 10,
         }).then((response) => {
-          // console.log(response);
-          response.result.messages.forEach(message => {
-            let messageId = message.id;
-            context.dispatch("getMessageContent", { messageId, labelId });
-          });
+          console.log("Draft test" + response);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
         });  
       }).catch((err) => {
         console.log(err);
@@ -153,17 +158,16 @@ export default new Vuex.Store({
     },
     getListOfMessages(context, labelId) {
       let label = labelId;
-      if (labelId === 'PRIMARY') {
-        label = "PERSONAL";
-      }
+      // if (labelId === 'PRIMARY') {
+      //   label = "PERSONAL";
+      // }
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'labelIds': "CATEGORY_" + label,
-          // 'labelIds': 'INBOX',
+          // 'labelIds': "CATEGORY_" + label,
           'maxResults': 30,
-          // 'q': `category:`+labelId,
+          'q': `category:`+label,
         }).then((response) => {
           // console.log(response);
           if (response.result.threads !== undefined) {
@@ -192,9 +196,6 @@ export default new Vuex.Store({
       }).then((response) => {
         // console.log("Each thread object");
         // console.log(response.result);
-        let numMessages = response.result.messages.length;
-        // console.log("Num:" + numMessages);
-        // still working on this....
         response.result.messages.forEach(message => {
           let messageId = message.id;
           context.dispatch("getMessageContent", { labelId, messageId, threadId });

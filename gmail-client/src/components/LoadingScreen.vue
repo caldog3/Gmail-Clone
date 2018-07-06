@@ -92,6 +92,10 @@
     if(personalMessages === undefined){
       this.$store.dispatch("getListOfMessages", "PRIMARY");
     }
+    let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
+    if(draftMessages === undefined){
+      this.$store.dispatch("getFolderListOfMessages", "DRAFT");
+    }
    },
  }
 </script>

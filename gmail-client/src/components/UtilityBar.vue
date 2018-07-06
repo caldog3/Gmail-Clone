@@ -15,6 +15,9 @@
                     </div>
                   </div>
                 </div>
+                <div class="highlightArea2">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                </div>
                 <div class="item">
                   <div class="highlightArea">
                     <div>

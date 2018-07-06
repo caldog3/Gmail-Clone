@@ -21,7 +21,7 @@ const getTimeFormat = (internalDate) => {
   } else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
     time = unix.format("MMM D");
   } else {
-    time = unix.format("DD/MM/YY");
+    time = unix.format("MM/DD/YY");
   }
   let unixTime = internalDate / 1000;
 
@@ -148,6 +148,9 @@ const getEmailInfo = (headers) => {
       if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
 
         from = from.substring(1, from.length - 1);
+      }
+      if(from.includes("@")) {
+        from = from.substring(0, from.search("@"));
       }
     } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
       // console.log(headers[i].value);

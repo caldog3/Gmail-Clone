@@ -36,11 +36,11 @@ export default {
 
     }
   },
-  beforeCreate(){
-    let personalMessages = this.$store.getters.getLabelMessages["DRAFT"];
-    if(personalMessages.length === 0){
-      this.$store.dispatch("getFolderListOfMessages", "DRAFT");
-    }
+  created(){
+    // let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
+    // if(draftMessages === undefined){
+    //   this.$store.dispatch("getFolderListOfMessages", "DRAFT");
+    // }
   },
 }
 </script>

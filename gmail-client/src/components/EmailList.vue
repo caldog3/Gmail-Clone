@@ -41,7 +41,10 @@
 
               <div class="from"> 
                   <b><span class="leftAlign">
-                    {{ thread.from }}
+                    <span v-if="thread.from === userEmail"> me </span>
+                    <!-- The on-click needs to match the conditional for just displaying draft -->
+                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> Draft </span>
+                    <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
               </div>
@@ -81,6 +84,11 @@
 
 
 <style scoped>
+
+.red {
+  color: red;
+  font-weight: 90;
+}
 .threadLength {
   color: gray;
   font-size: .9em;
@@ -385,6 +393,7 @@ export default {
       checked: false,
       starCheck: false,
       checkedEmails: [],
+      userEmail: '',
     }
   },
   methods: {
@@ -407,7 +416,9 @@ export default {
     checkStar() {
       this.starCheck = !this.starCheck;
     },
-    
+    openCompose() {
+      eventBus.$emit('COMPOSE_OPEN');
+    },
   },
   computed: {
     threads() {
@@ -417,13 +428,11 @@ export default {
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
         const message = this.$store.state.threadMessages;
-
+        console.log("Message: " + message);
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
-          console.log("Ive got stuff: " + threadMessages.length)
           const numberOfMessages = threadMessages.length;
           const { from, subject, snippet, unread } = threadMessages[0];
-
           const unixTime = this.$store.state.latestThreadMessageTime[threadId];
           const time = getTimeFormat(unixTime * 1000).time;
           
@@ -437,6 +446,7 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
+    this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
 </script>
