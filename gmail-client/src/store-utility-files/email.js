@@ -21,7 +21,7 @@ const getTimeFormat = (internalDate) => {
   } else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
     time = unix.format("MMM D");
   } else {
-    time = unix.format("DD/MM/YY");
+    time = unix.format("MM/DD/YY");
   }
   let unixTime = internalDate / 1000;
 

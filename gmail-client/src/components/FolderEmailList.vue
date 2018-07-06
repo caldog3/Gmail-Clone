@@ -37,10 +37,10 @@ export default {
     }
   },
   created(){
-    let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
-    if(draftMessages === undefined){
-      this.$store.dispatch("getFolderListOfMessages", "DRAFT");
-    }
+    // let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
+    // if(draftMessages === undefined){
+    //   this.$store.dispatch("getFolderListOfMessages", "DRAFT");
+    // }
   },
 }
 </script>

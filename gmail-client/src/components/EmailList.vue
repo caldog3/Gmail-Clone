@@ -42,8 +42,8 @@
               <div class="from"> 
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
+                    <span class='red' v-else-if="labelId === 'DRAFT'"> Draft </span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
-                    <span v-else> draft </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
               </div>
@@ -83,6 +83,11 @@
 
 
 <style scoped>
+
+.red {
+  color: red;
+  font-weight: 90;
+}
 .threadLength {
   color: gray;
   font-size: .9em;
