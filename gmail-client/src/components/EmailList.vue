@@ -41,9 +41,9 @@
 
               <div class="from"> 
                   <b><span class="leftAlign">
-                    <span v-if="thread.from === userEmail">
-                    me </span>
-                    <span v-else> {{ thread.from }} </span>
+                    <span v-if="thread.from === userEmail"> me </span>
+                    <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
+                    <span v-else> draft </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
               </div>
@@ -420,12 +420,11 @@ export default {
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
         const message = this.$store.state.threadMessages;
-
+        console.log("Message: " + message);
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
           const numberOfMessages = threadMessages.length;
           const { from, subject, snippet, unread } = threadMessages[0];
-
           const unixTime = this.$store.state.latestThreadMessageTime[threadId];
           const time = getTimeFormat(unixTime * 1000).time;
           

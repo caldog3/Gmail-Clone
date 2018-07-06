@@ -133,19 +133,24 @@ export default new Vuex.Store({
     },  
     
     getFolderListOfMessages(context, labelId) {
-      // context.commit('addLabelId', labelId);
+      context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         console.log("Its at the DRAFTS");
-        gapi.client.gmail.users.messages.list({
+        gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 50,
+          'maxResults': 10,
         }).then((response) => {
-          // console.log(response);
-          response.result.messages.forEach(message => {
-            let messageId = message.id;
-            context.dispatch("getMessageContent", { messageId, labelId });
-          });
+          console.log("Draft test" + response);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
         });  
       }).catch((err) => {
         console.log(err);
@@ -161,13 +166,10 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           // 'labelIds': "CATEGORY_" + label,
-          // 'labelIds': 'INBOX',
           'maxResults': 30,
           'q': `category:`+label,
-          // 'q': 'Wunderlist',
         }).then((response) => {
           // console.log(response);
-          console.log(this.state.currentUserProfile.U3); 
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;

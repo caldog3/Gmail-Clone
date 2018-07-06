@@ -20,6 +20,7 @@
       <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
+
 </template>
 
 <style scoped>
