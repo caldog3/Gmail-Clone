@@ -123,12 +123,17 @@ const resolveLabels = (tempLabelIds) => {
   let labelIds = tempLabelIds;
   
   let unread = true;
+  let starred = false;
   if (labelIds.includes("UNREAD")) {
     unread = false;
   }
+  if (labelIds.includes("STARRED")) {
+    starred = true;
+  }
   return {
     labelIds,
-    unread
+    unread,
+    starred,
   };
 }
 

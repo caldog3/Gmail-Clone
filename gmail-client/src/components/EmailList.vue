@@ -30,7 +30,7 @@
                   
               <div class="largeOnly">
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <input class="star" type="checkbox" :checked="isStarred(thread)" title="bookmark page">
                 </div>
               </div>
 
@@ -68,7 +68,7 @@
               <span>{{ thread.time }}</span>
               <div class="highlightArea">              
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <input class="star" type="checkbox" :checked="isStarred(thread)" title="bookmark page">
                 </div>
               </div>
             </div>
@@ -397,6 +397,12 @@ export default {
     }
   },
   methods: {
+    isStarred(thread) {
+      if(thread.starred == true) {
+        return true;
+      }
+      return false;
+    },
     readClassChanger(message){
       var theClass = 'readClass';
       //console.log(message.unread);
@@ -421,6 +427,8 @@ export default {
     },
   },
   computed: {
+    
+
     threads() {
       const labelId = this.labelId;
       const labelThreads = this.$store.state.labelMessages;
@@ -432,11 +440,11 @@ export default {
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = message[threadId];
           const numberOfMessages = threadMessages.length;
-          const { from, subject, snippet, unread } = threadMessages[0];
+          const { from, subject, snippet, unread, starred } = threadMessages[0];
           const unixTime = this.$store.state.latestThreadMessageTime[threadId];
           const time = getTimeFormat(unixTime * 1000).time;
           
-          return {threadId, from, subject, snippet, time, unread, numberOfMessages};
+          return {threadId, from, subject, snippet, time, unread, starred, numberOfMessages};
         });
         
         return fullThreadData;
