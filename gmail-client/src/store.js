@@ -166,7 +166,7 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           // 'labelIds': "CATEGORY_" + label,
-          'maxResults': 30,
+          'maxResults': 16,
           'q': `category:`+label,
         }).then((response) => {
           // console.log(response);
@@ -221,10 +221,9 @@ export default new Vuex.Store({
         context.commit("setThreadTime", { threadId, unixTime });
 
         const { body, attachmentIds } = getBody(response.result.payload);
-        const { unread } = resolveLabels(response.result.labelIds);
+        const { unread, starred } = resolveLabels(response.result.labelIds);
         const snippet = response.result.snippet;
         const id = response.result.id;
-
         const message = {
           threadId,
           messageId,
@@ -239,6 +238,7 @@ export default new Vuex.Store({
           id,
           labelId,
           unread,
+          starred,
           unixTime,
           attachmentIds
         };
