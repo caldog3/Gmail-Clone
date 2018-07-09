@@ -33,6 +33,29 @@ const markAsRead = (messageId) => {
   });
 }
 
+const markAsStarred = (messageId) => {
+  gapi.client.gmail.users.threads.modify({
+    'userId': 'me',
+    'id': messageId,
+    'addLabelIds': ['STARRED']
+  }).then((response) => {
+    console.log(`markAsStarred`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+const unMarkAsStarred = (messageId) => {
+  gapi.client.gmail.users.threads.modify({
+    'userId': 'me',
+    'id': messageId,
+    'removeLabelIds': ['STARRED']
+  }).then((response) => {
+    console.log(`unMarkAsStarred`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
 const getLabels = () => {
   gapi.client.load('gmail', 'v1').then(() => {
   gapi.client.gmail.users.labels.list({
@@ -92,6 +115,8 @@ const getLabelsForUnread = () => {
 export {
   sendMessage,
   markAsRead,
+  markAsStarred,
+  unMarkAsStarred,
   getProfileEmail,
   getLabels,
   getLabelsForUnread,
