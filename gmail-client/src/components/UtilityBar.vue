@@ -114,11 +114,11 @@
             <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) > 49">1-50 of {{totalMessages}}</div>
             <div class="rightTopPad" v-else>1-{{totalMessages}} of {{totalMessages}}</div>
 
-            <div class="paddingNeeded">
+            <div class="paddingNeeded" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
-
-            <div class="lessPadding">
+            
+            <div class="lessPadding" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
             </div>
 
@@ -374,6 +374,14 @@ export default {
     }
   },
   methods: {
+    nextPageLoad() {
+      eventBus.$emit("NEXT_PAGE_LOAD");
+      // not sure what the best strategy is here*
+    },
+    lastPageLoad() {
+      eventBus.$emit("LAST_PAGE_LOAD");
+      // *...or here
+    },
     true() {
       this.messageBody = true;
     },
