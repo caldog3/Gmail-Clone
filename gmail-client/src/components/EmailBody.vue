@@ -83,5 +83,9 @@ export default {
       return theClass;
     },
   },
+  created() {
+    console.log("THE THING IM LOOKING FOR");
+    console.log(this.$store.state.labelNextPageTokens);
+  }
 }
 </script>
