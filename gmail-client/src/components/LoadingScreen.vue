@@ -96,6 +96,10 @@
     if(draftMessages === undefined){
       this.$store.dispatch("getFolderListOfMessages", "DRAFT");
     }
+    let sentMessages = this.$store.getters.getLabelMessages["SENT"];
+    if(sentMessages === undefined){
+      this.$store.dispatch("getFolderListOfMessages", "SENT");
+    }
    },
  }
 </script>

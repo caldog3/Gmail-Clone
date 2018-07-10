@@ -36,7 +36,7 @@
           <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
         </div>
       </div>
-      <div>
+      <div v-on:click="loadSent()">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
         </div>
@@ -142,14 +142,17 @@ export default {
       eventBus.$emit("COMPOSE_OPEN");
     },
     loadInbox() {
-      //console.log("HERE???????");
       this.$router.push({ path: "/" });
     },
     loadDrafts() {
-      console.log("Reached loadDrafts");
       //not sure how to route this properly yet
+      eventBus.$emit("FOLDER_EMAIL_LIST", "DRAFT")
       this.$router.push({ path: "/Folder/DRAFTS/" });
-    }
+    },
+    loadSent() {
+      eventBus.$emit("FOLDER_EMAIL_LIST", "SENT")
+      this.$router.push({ path: "/Folder/SENT/" });
+    },
   },
   created() {
     eventBus.$on("UNREAD_COUNT", unreads => {
