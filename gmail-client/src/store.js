@@ -15,6 +15,7 @@ export default new Vuex.Store({
     labelMessages: {},
     threadMessages: {},
     latestThreadMessageTime: {},
+    labelNextPageTokens: {},
     token: "",
     currentUser: null,
     currentUserProfile: null,
@@ -23,7 +24,10 @@ export default new Vuex.Store({
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
-    messages: state => state.messages,
+    getThreadMessages: state => state.threadMessages,
+    getLabelNextPageTokens: state => state.labelNextPageTokens,
+    getLatestThreadMessageTime: state => state.latestThreadMessageTime,
+
     googleAuth: state => state.googleAuth,
     getCurrentUserProfile: state => state.currentUserProfile,
     getCurrentUser: state => state.currentUser,
@@ -59,6 +63,9 @@ export default new Vuex.Store({
         Vue.set(state.labelMessages, labelId, []);
       }
     },
+    addLabelNextPageToken(state, payload) {
+      Vue.set(state.labelNextPageTokens, payload.labelId, payload.nextPageToken);
+    },
     addThreadId(state, payload) {
       const labelId = payload.labelId;
       const threadId = payload.threadId;
@@ -79,7 +86,7 @@ export default new Vuex.Store({
     setThreadTime(state, payload) {
       const threadId = payload.threadId;
       const newUnixTime = payload.unixTime;
-      // console.log(threadId, newUnixTime)
+
       if (newUnixTime > state.latestThreadMessageTime[threadId]){
         Vue.set(state.latestThreadMessageTime, threadId, newUnixTime);
       }
@@ -166,17 +173,18 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           // 'labelIds': "CATEGORY_" + label,
-          'maxResults': 30,
-          'q': `category:`+label,
+          'maxResults': 50,
+          'q': `category: ${label}`,
         }).then((response) => {
-          // console.log(response);
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
 
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
-              
               
               context.dispatch("getThreadData", { threadId, labelId });
             });
@@ -194,8 +202,6 @@ export default new Vuex.Store({
         'userId': 'me',
         'id': threadId,
       }).then((response) => {
-        // console.log("Each thread object");
-        // console.log(response.result);
         response.result.messages.forEach(message => {
           let messageId = message.id;
           context.dispatch("getMessageContent", { labelId, messageId, threadId });
