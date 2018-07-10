@@ -193,6 +193,36 @@ export default new Vuex.Store({
         console.log(err);
       });
     },
+    //working on this
+    getPageListOfMessages(context, labelId) {
+      let label = labelId;
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': `category: ${label}`,
+          'pageToken': this.state.labelNextPageTokens.PRIMARY,
+        }).then((response) => {
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          console.log("NEXT PAGE TOKEN AFTER");
+          console.log(this.state.labelNextPageTokens);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }          
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
     getThreadData(context, payload) {
       const threadId = payload.threadId;
       const labelId = payload.labelId;
