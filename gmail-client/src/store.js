@@ -20,7 +20,8 @@ export default new Vuex.Store({
     currentUser: null,
     currentUserProfile: null,
     googleAuth: {},
-    sessionExpiration: null
+    sessionExpiration: null,
+    currentPage: "",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,

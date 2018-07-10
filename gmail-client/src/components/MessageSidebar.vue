@@ -146,11 +146,11 @@ export default {
     },
     loadDrafts() {
       //not sure how to route this properly yet
-      eventBus.$emit("FOLDER_EMAIL_LIST", "DRAFT")
+      this.$store.state.currentPage = "DRAFT";
       this.$router.push({ path: "/Folder/DRAFTS/" });
     },
     loadSent() {
-      eventBus.$emit("FOLDER_EMAIL_LIST", "SENT")
+      this.$store.state.currentPage = "SENT";
       this.$router.push({ path: "/Folder/SENT/" });
     },
   },

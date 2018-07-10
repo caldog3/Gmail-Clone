@@ -5,7 +5,7 @@
 <template>
   <div id="setWidth">
     <!-- <email-list :labelId="labelId"> -->
-    <email-list :labelId="this.other"/>
+    <email-list :labelId="getPage()"/>
 
   </div>
 </template>
@@ -34,14 +34,15 @@ export default {
   data() {
     return {
       labelId: '',
-      other: '',
     }
   },
+  methods: {
+    getPage() {
+      let page = this.$store.state.currentPage;
+      return page;
+    },
+  },
   created(){
-    eventBus.$on("FOLDER_EMAIL_LIST", folder => {
-      this.other = folder;
-      console.log("arriving?" + this.other);
-    });
     // let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
     // if(draftMessages === undefined){
     //   this.$store.dispatch("getFolderListOfMessages", "DRAFT");
