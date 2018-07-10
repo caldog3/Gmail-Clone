@@ -107,7 +107,7 @@ export default {
           console.log("passed the timeout");
           this.loading = true;
           this.loaded(true);
-        }, 4000);
+        }, 4500);
       }
       //   ^^ HERES THE TIME IN MILISECONDS
     },

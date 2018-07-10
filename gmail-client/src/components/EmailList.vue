@@ -439,20 +439,26 @@ export default {
 
     threads() {
       const labelId = this.labelId;
-      const labelThreads = this.$store.state.labelMessages;
+      const labelThreads = this.$store.getters.getLabelMessages;
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
-        const message = this.$store.state.threadMessages;
-        console.log("Message: " + message);
+        const messages = this.$store.getters.getThreadMessages;
+
         const fullThreadData = labelIdThreads.map((threadId) => {
-          const threadMessages = message[threadId];
+          const threadMessages = messages[threadId];
           const numberOfMessages = threadMessages.length;
-          const { from, subject, snippet, unread, starred } = threadMessages[0];
-          const unixTime = this.$store.state.latestThreadMessageTime[threadId];
-          const time = getTimeFormat(unixTime * 1000).time;
+
+          if (numberOfMessages > 0) {
+            const { from, subject, snippet, unread } = threadMessages[0];
+            const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
+            const time = getTimeFormat(unixTime * 1000).time;
           
-          return {threadId, from, subject, snippet, time, unread, starred, numberOfMessages};
+            return {threadId, from, subject, snippet, time, unread, numberOfMessages};
+          } else {
+            console.log("Not yet Ready. NumberOfMessages is", numberOfMessages)
+            return {};
+          }
         });
         
         return fullThreadData;

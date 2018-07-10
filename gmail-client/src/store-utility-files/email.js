@@ -59,7 +59,10 @@ const getBody = (payload) => {
             
             let part = payload.parts[1];
             if (part.mimeType.includes('application')) {
-              attachmentIds.push(part.body.attachmentId);
+              attachmentIds.push({
+                mimeType: part.mimeType,
+                attachmentId: part.body.attachmentId,
+              });
             }
             else{
               let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
@@ -69,10 +72,16 @@ const getBody = (payload) => {
                 let bodyAndAttachmentObject = payload.parts;
                 for (let part of bodyAndAttachmentObject) {
                   if (part.mimeType.includes('application')) {
-                    attachmentIds.push(part.body.attachmentId);
+                    attachmentIds.push({
+                      mimeType: part.mimeType,
+                      attachmentId: part.body.attachmentId,
+                    });
                   }
                   else if (part.mimeType.includes('image')) {
-                    attachmentIds.push(part.body.attachmentId);
+                    attachmentIds.push({
+                      mimeType: part.mimeType,
+                      attachmentId: part.body.attachmentId,
+                    });
                   }
                 }
               }
@@ -87,10 +96,16 @@ const getBody = (payload) => {
             let bodyAndAttachmentArray = payload.parts;
             for (let part of bodyAndAttachmentArray) {
               if (part.mimeType.includes('image')) {
-                attachmentIds.push(part.body.attachmentId);
+                attachmentIds.push({
+                  mimeType: part.mimeType,
+                  attachmentId: part.body.attachmentId,
+                });
               }
               else if (part.mimeType.includes('application')) {
-                attachmentIds.push(part.body.attachmentId);
+                attachmentIds.push({
+                  mimeType: part.mimeType,
+                  attachmentId: part.body.attachmentId,
+                });
               }
             }
           }

@@ -7,11 +7,15 @@
         <email-list labelId="PRIMARY"/>
       </b-tab>
       <b-tab title="Social">
-        <email-list labelId="SOCIAL"/>
+        <delay :wait="5000">
+          <email-list labelId="SOCIAL"/>
+        </delay>
       </b-tab>
 
       <b-tab title="Promotions" >
-        <email-list labelId="PROMOTIONS"/>      
+        <delay :wait="5000">
+          <email-list labelId="PROMOTIONS"/> 
+        </delay>
       </b-tab>
     </b-tabs>
   </div>
