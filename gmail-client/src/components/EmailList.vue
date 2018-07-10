@@ -30,15 +30,14 @@
                   
               <div class="largeOnly">
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <!-- star -->
+                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
               </div>
-
             </div>
 
 
             <div class="emailLink" v-on:click="enterMessage(thread)">
-
               <div class="from"> 
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
@@ -68,7 +67,8 @@
               <span>{{ thread.time }}</span>
               <div class="highlightArea">              
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <!-- star -->
+                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
               </div>
             </div>
@@ -378,7 +378,7 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { markAsRead, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
+import { markAsRead, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 
@@ -397,6 +397,20 @@ export default {
     }
   },
   methods: {
+    starredLabelToggle(thread) {
+      console.log("1st time");
+      console.log(thread.starred);
+      thread.starred = !thread.starred;
+      console.log("2nd time");
+      console.log(thread.starred);
+      if(thread.starred === true) {
+        markAsStarred(thread.threadId);
+      }
+      else {
+        unMarkAsStarred(thread.threadId);
+      }
+
+    },
     readClassChanger(message){
       var theClass = 'readClass';
       //console.log(message.unread);
@@ -421,6 +435,8 @@ export default {
     },
   },
   computed: {
+    
+
     threads() {
       const labelId = this.labelId;
       const labelThreads = this.$store.getters.getLabelMessages;
