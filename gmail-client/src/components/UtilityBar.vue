@@ -111,8 +111,10 @@
         <div class="right-side-utility">
           <div class="flexIcons">
             
-            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) > 49">1-50 of {{totalMessages}}</div>
-            <div class="rightTopPad" v-else>1-{{totalMessages}} of {{totalMessages}}</div>
+            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
+              {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
+            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
             <div class="paddingNeeded" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
@@ -253,6 +255,7 @@
 .rightTopPad {
   padding-right: 30px;
   padding-top: 5px;
+  font-size: .9em;
 }
 input {
   float: left;
@@ -374,6 +377,9 @@ export default {
     }
   },
   methods: {
+    pageNum() {
+      return this.$store.state.currentPage;
+    },
     nextPageLoad() {
       eventBus.$emit("NEXT_PAGE_LOAD");
       console.log(this.$store.state.labelMessages);
