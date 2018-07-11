@@ -376,11 +376,18 @@ export default {
   methods: {
     nextPageLoad() {
       eventBus.$emit("NEXT_PAGE_LOAD");
+      console.log(this.$store.state.labelMessages);
+      //We'll have to switch it to be more universal 
+      // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.dispatch("getPageListOfMessages", "PRIMARY");
       // not sure what the best strategy is here*
     },
     lastPageLoad() {
       eventBus.$emit("LAST_PAGE_LOAD");
       // *...or here
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
     },
     true() {
       this.messageBody = true;
