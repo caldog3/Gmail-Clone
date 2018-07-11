@@ -189,7 +189,7 @@ const getEmailInfo = (headers) => {
       conciseTo = to;
       // Need to break up the to for each comma and shorten each of the senders before piecing back together
       if(conciseTo.length > 20) {
-        console.log(conciseTo);
+        // console.log(conciseTo);
       }
       if(conciseTo.includes("@")) {
         conciseTo = conciseTo.substring(0, conciseTo.search("@"));

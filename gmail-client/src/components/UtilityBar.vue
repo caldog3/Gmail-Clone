@@ -139,7 +139,14 @@
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <p>Themes</p>
+                    
+                      <b-btn v-b-modal.modal1>Change Theme</b-btn>
+                      <!-- Modal Component -->
+                      <b-modal id="modal1" title="Change Theme">
+                        <!-- <div v-for="background in backgrounds"> -->
+                        </div>
+                      </b-modal>
+                    
                     <hr>
                     <p>Some kind of setting</p>
                     <hr>
