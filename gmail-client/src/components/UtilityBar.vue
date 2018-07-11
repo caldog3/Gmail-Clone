@@ -144,7 +144,7 @@
                       <!-- Modal Component -->
                       <b-modal id="modal1" title="Change Theme">
                         <!-- <div v-for="background in backgrounds"> -->
-                        </div>
+                        <!-- </div> -->
                       </b-modal>
                     
                     <hr>
