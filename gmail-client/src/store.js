@@ -16,11 +16,13 @@ export default new Vuex.Store({
     threadMessages: {},
     latestThreadMessageTime: {},
     labelNextPageTokens: {},
+    labelLastPageTokens: [],
     token: "",
     currentUser: null,
     currentUserProfile: null,
     googleAuth: {},
-    sessionExpiration: null
+    sessionExpiration: null,
+    currentPage: 1,
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
@@ -177,6 +179,75 @@ export default new Vuex.Store({
           let nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
 
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }          
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    //working on this
+    getPageListOfMessages(context, labelId) {
+      //this doesn't really work....
+      this.state.currentPage += 1;
+      this.state.labelLastPageTokens.push(this.state.labelNextPageTokens.PRIMARY);
+      let label = labelId;
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': `category: ${label}`,
+          'pageToken': this.state.labelNextPageTokens.PRIMARY,
+        }).then((response) => {
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          console.log("LastPage Tokens");
+          console.log(this.state.labelLastPageTokens);
+          console.log("NEXT PAGE TOKEN AFTER");
+          console.log(this.state.labelNextPageTokens);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }          
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    // also a work in progress
+    getLastPageListOfMessages(context, labelId) {
+      this.state.currentPage -= 1;
+      let page = this.state.currentPage;
+      let label = labelId;
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': `category: ${label}`,
+          'pageToken': this.state.labelLastPageTokens[page],
+        }).then((response) => {
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          // console.log("LastPage Tokens");
+          // console.log(this.state.labelLastPageTokens);
+          // console.log("NEXT PAGE TOKEN AFTER");
+          // console.log(this.state.labelNextPageTokens);
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;

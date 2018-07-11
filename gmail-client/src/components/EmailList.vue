@@ -105,6 +105,7 @@
 }
 .unreadClass {
   width: 100%;
+  font-weight: 90;
 }
 .FlexTable {
   display: flex;
