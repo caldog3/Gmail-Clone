@@ -43,6 +43,7 @@
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
                     <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> Draft </span>
+                    <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
@@ -451,11 +452,11 @@ export default {
           const numberOfMessages = threadMessages.length;
 
           if (numberOfMessages > 0) {
-            const { from, subject, snippet, unread } = threadMessages[0];
+            const { from, conciseTo, subject, snippet, unread } = threadMessages[0];
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, subject, snippet, time, unread, numberOfMessages};
+            return {threadId, from, conciseTo, subject, snippet, time, unread, numberOfMessages};
           } else {
             console.log("Not yet Ready. NumberOfMessages is", numberOfMessages)
             return {};
