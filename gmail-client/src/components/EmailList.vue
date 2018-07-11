@@ -456,7 +456,7 @@ export default {
           
             return {threadId, from, subject, snippet, time, unread, numberOfMessages};
           } else {
-            console.log("Not yet Ready. NumberOfMessages is", numberOfMessages)
+            console.log("Not yet Ready. The Label is", labelId)
             return {};
           }
         });
