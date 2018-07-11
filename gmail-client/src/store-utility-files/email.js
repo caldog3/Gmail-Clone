@@ -153,8 +153,9 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getEmailInfo = (headers) => {
-  let from, to, cc = null, subject, detailedFrom;
+  let from, to, conciseTo, cc = null, subject, detailedFrom;
   for (let i = 0; i < headers.length; i++) {
+
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
       // console.log(detailedFrom);
@@ -172,6 +173,7 @@ const getEmailInfo = (headers) => {
       if(from.includes("@")) {
         from = from.substring(0, from.search("@"));
       }
+      
       if(from.length >= 20) {
         from = from.substring(0, 19) + ".";
       }
@@ -179,8 +181,15 @@ const getEmailInfo = (headers) => {
       // console.log(headers[i].value);
       // console.log("SPACE");
       // console.log(headers);
-
       to = headers[i].value;
+      conciseTo = to;
+      if(conciseTo.includes("@")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search("@"));
+      }
+      if(conciseTo.length >= 16) {
+        conciseTo = conciseTo.substring(0, 15) + ".";
+      }
+      // console.log("conciseTo is this:"+ conciseTo)
     } else if (headers[i].name === "Subject") {
       subject = headers[i].value;
       // console.log(subject);
@@ -192,6 +201,7 @@ const getEmailInfo = (headers) => {
   return {
     from,
     to,
+    conciseTo,
     cc,
     subject,
     detailedFrom

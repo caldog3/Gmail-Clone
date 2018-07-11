@@ -289,7 +289,7 @@ export default new Vuex.Store({
         'userId': 'me',
         'id': messageId,
       }).then((response) => {
-        const { from, to, cc, subject, detailedFrom } = getEmailInfo(
+        const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
           response.result.payload.headers
         );
         
@@ -306,6 +306,7 @@ export default new Vuex.Store({
           from,
           detailedFrom,
           to,
+          conciseTo,
           cc,
           subject,
           snippet,
