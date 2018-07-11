@@ -386,6 +386,8 @@ export default {
     lastPageLoad() {
       eventBus.$emit("LAST_PAGE_LOAD");
       // *...or here
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
     },
     true() {
       this.messageBody = true;
