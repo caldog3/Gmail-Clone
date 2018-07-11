@@ -142,13 +142,11 @@ export default new Vuex.Store({
     getFolderListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
-        console.log("Its at the DRAFTS");
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
           'maxResults': 10,
         }).then((response) => {
-          console.log("Draft test" + response);
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
