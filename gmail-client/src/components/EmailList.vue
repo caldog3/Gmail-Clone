@@ -456,11 +456,14 @@ export default {
             return {threadId, unread};
           }
         });
-        for (thread in fullThreadData) {
-          if (fullThreadData.unread == true) {
-            markAsRead(thread.threadId);
+
+        if (labelId === "PRIMARY") {  // We'll have to adjust these calculations somehow
+          for (var i = 0; i < fullThreadData.length; i++) {
+            if (fullThreadData[i].unread.unread == false) {
+              markAsRead(fullThreadData[i].threadId);
+            }
           }
-        }
+      }
       }
 
     },
