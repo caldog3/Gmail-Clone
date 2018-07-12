@@ -422,6 +422,10 @@ export default {
       return theClass;
     },
     enterMessage(thread) {
+      // Trying to have an email show as read after you've clicked on it
+      //  without having to reload all of the emails
+      // thread.unread = false;
+      // this.readClassChanger(thread);
       eventBus.$emit('ENTER_MESSAGE');
       this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
       markAsRead(thread.threadId);
@@ -434,6 +438,31 @@ export default {
     },
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
+    },
+    readAll() {
+      let labelId = this.labelId;
+      let labelThreads = this.$store.getters.getLabelMessages;
+      let labelIdThreads = labelThreads[labelId];
+      var unread;
+      if (labelIdThreads !== undefined) {
+        let messages = this.$store.getters.getThreadMessages;
+
+        let fullThreadData = labelIdThreads.map((threadId) => {
+          let threadMessages = messages[threadId];
+          let numberOfMessages = threadMessages.length;
+
+          if (numberOfMessages > 0) {
+            unread = threadMessages[0];
+            return {threadId, unread};
+          }
+        });
+        for (thread in fullThreadData) {
+          if (fullThreadData.unread == true) {
+            markAsRead(thread.threadId);
+          }
+        }
+      }
+
     },
   },
   computed: {
@@ -470,6 +499,7 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
+    eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
