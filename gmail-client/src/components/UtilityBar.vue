@@ -29,7 +29,7 @@
                   <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
                     <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
                       <div id="ellipsesDropdown" class="dropdown-content">
-                        <p>  Mark all as read </p>
+                        <p v-on:click="markAllAsRead()">  Mark all as read </p>
                         <hr>
                         <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
                       </div>
@@ -139,7 +139,14 @@
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <p>Themes</p>
+                    
+                      <b-btn v-b-modal.modal1>Change Theme</b-btn>
+                      <!-- Modal Component -->
+                      <b-modal id="modal1" title="Change Theme">
+                        <!-- <div v-for="background in backgrounds"> -->
+                        <!-- </div> -->
+                      </b-modal>
+                    
                     <hr>
                     <p>Some kind of setting</p>
                     <hr>
@@ -414,7 +421,9 @@ export default {
       console.log("routing?");
     },
     markAllAsRead() {
-      console.log("marking once we figure out axios.post stuff");
+      //route to EmailList probably and loop through all and if they are marked as unread, send to 
+        // the markeAsRead method.  //That's my best guess anywayg
+      eventBus.$emit("MARK_ALL_AS_READ");
     },
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */

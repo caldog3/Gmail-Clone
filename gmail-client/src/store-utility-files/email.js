@@ -166,6 +166,10 @@ const getEmailInfo = (headers) => {
       if (from === "") {
         from = detailedFrom;
       }
+      // SO I"M NOT ALLOWED TO ACCESS THE STORE FROM THIS FILE? LAME!
+      // if (from === this.$store.state.currentUserProfile.U3) {
+      //   from = "me";
+      // }
       if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
 
         from = from.substring(1, from.length - 1);
@@ -183,8 +187,15 @@ const getEmailInfo = (headers) => {
       // console.log(headers);
       to = headers[i].value;
       conciseTo = to;
+      // Need to break up the to for each comma and shorten each of the senders before piecing back together
+      if(conciseTo.length > 20) {
+        // console.log(conciseTo);
+      }
       if(conciseTo.includes("@")) {
         conciseTo = conciseTo.substring(0, conciseTo.search("@"));
+      }
+      if(conciseTo.includes(" ")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search(" "));
       }
       if(conciseTo.length >= 16) {
         conciseTo = conciseTo.substring(0, 15) + ".";
