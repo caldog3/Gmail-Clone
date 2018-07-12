@@ -146,11 +146,11 @@ export default {
     },
     loadDrafts() {
       //not sure how to route this properly yet
-      this.$store.state.currentPage = "DRAFT";
+      this.$store.state.currentFolder = "DRAFT";
       this.$router.push({ path: "/Folder/DRAFTS/" });
     },
     loadSent() {
-      this.$store.state.currentPage = "SENT";
+      this.$store.state.currentFolder = "SENT";
       this.$router.push({ path: "/Folder/SENT/" });
     },
   },

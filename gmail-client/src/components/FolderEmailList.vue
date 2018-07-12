@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     getPage() {
-      let page = this.$store.state.currentPage;
+      let page = this.$store.state.currentFolder;
       return page;
     },
   },
