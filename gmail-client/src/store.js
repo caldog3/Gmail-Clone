@@ -23,6 +23,7 @@ export default new Vuex.Store({
     googleAuth: {},
     sessionExpiration: null,
     currentPage: 1,
+    currentFolder: "INBOX",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,

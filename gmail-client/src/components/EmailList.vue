@@ -457,7 +457,7 @@ export default {
           }
         });
 
-        if (labelId === "PRIMARY") {  // We'll have to adjust these calculations somehow
+        if (labelId === "PRIMARY") {  // We'll have to adjust these label check calculations somehow
           for (var i = 0; i < fullThreadData.length; i++) {
             if (fullThreadData[i].unread.unread == false) {
               markAsRead(fullThreadData[i].threadId);
