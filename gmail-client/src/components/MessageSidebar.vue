@@ -36,7 +36,7 @@
       </div>
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="draftsHandle()">
         <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts /  {{viewFolder}}
+          <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Important')">
