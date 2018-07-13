@@ -10,7 +10,6 @@
 
     <div class="options">
       <div class="inbox">
-        
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
             <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  Inbox
@@ -19,7 +18,6 @@
             <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
           </div>
         </div>
-
       </div>
       <div>
         <div class="notInbox">
@@ -29,11 +27,6 @@
       <div>
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
-        </div>
-      </div>
-      <div>
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
         </div>
       </div>
       <div v-on:click="loadSent()">
@@ -48,12 +41,32 @@
       </div>
       <div>
         <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
         </div>
       </div>
       <div>
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
+        </div>
+      </div>
+      <div>
+        <div class="notInbox">
+          <font-awesome-icon style="color:white;" icon="plus" />&emsp;  Create new label
         </div>
       </div>
 
