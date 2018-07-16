@@ -139,24 +139,25 @@
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    
+                    <div class="dropdownEntry">
                       <b-btn v-b-modal.modal1>Change Theme</b-btn>
                       <!-- Modal Component -->
                       <b-modal id="modal1" title="Change Theme">
                         <!-- <div v-for="background in backgrounds"> -->
                         <!-- </div> -->
                       </b-modal>
-                    
+                    </div>
+                    <br>
                     <hr>
-                    <p>Some kind of setting</p>
+                    <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
-                    <p>Some kind of setting</p>
+                    <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
-                    <p>Some kind of setting</p>
+                    <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
-                    <p>Some kind of setting</p>
+                    <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
-                    <p>Some kind of setting</p>
+                    <div class="dropdownEntry">Some kind of setting</div>
                 </div> 
                 </div>
               </div>
@@ -342,7 +343,21 @@ p {
   text-align: left;
 }
 p:hover {background-color: #ddd;}
-
+.dropdownEntry {
+  padding: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-right: 40px;
+  padding-left: 40px;
+  text-align: left;
+}
+.btn:not(:disabled):not(.disabled) {
+  background-color: rgba(0,0,0,0.0);
+  color: black;
+  border: none;
+  padding: 0px;
+  margin: auto;
+}
 .noHighlightDiv {
   padding: 4px;
   margin-top: 4px;
