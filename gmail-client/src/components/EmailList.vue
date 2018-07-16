@@ -30,18 +30,25 @@
                   
               <div class="largeOnly">
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <!-- star -->
+                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
               </div>
-
             </div>
 
 
             <div class="emailLink" v-on:click="enterMessage(thread)">
-
               <div class="from"> 
-                  <b><span class="leftAlign">{{ thread.from }}</span></b>
+                  <b><span class="leftAlign">
+                    <span v-if="thread.from === userEmail"> me </span>
+                    <!-- The on-click needs to match the conditional for just displaying draft -->
+                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
+                    <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
+                    <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
+                    <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
+                  </span></b>
               </div>
+              
 
               <div class="snippit">
                 <div class="leftAlign1">
@@ -61,7 +68,8 @@
               <span>{{ thread.time }}</span>
               <div class="highlightArea">              
                 <div class="highlightArea">
-                  <input class="star" type="checkbox" title="bookmark page">
+                  <!-- star -->
+                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
               </div>
             </div>
@@ -77,6 +85,16 @@
 
 
 <style scoped>
+
+.red {
+  color: red;
+  font-weight: 90;
+}
+.threadLength {
+  color: gray;
+  font-size: .9em;
+}
+
 .everything {
   width: 100%;
   border-top: none;
@@ -88,6 +106,7 @@
 }
 .unreadClass {
   width: 100%;
+  font-weight: 90;
 }
 .FlexTable {
   display: flex;
@@ -360,7 +379,7 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { markAsRead } from './../store-utility-files/gmail-api-calls';
+import { markAsRead, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 
@@ -375,9 +394,24 @@ export default {
       checked: false,
       starCheck: false,
       checkedEmails: [],
+      userEmail: '',
     }
   },
   methods: {
+    starredLabelToggle(thread) {
+      console.log("1st time");
+      console.log(thread.starred);
+      thread.starred = !thread.starred;
+      console.log("2nd time");
+      console.log(thread.starred);
+      if(thread.starred === true) {
+        markAsStarred(thread.threadId);
+      }
+      else {
+        unMarkAsStarred(thread.threadId);
+      }
+
+    },
     readClassChanger(message){
       var theClass = 'readClass';
       //console.log(message.unread);
@@ -387,6 +421,10 @@ export default {
       return theClass;
     },
     enterMessage(thread) {
+      // Trying to have an email show as read after you've clicked on it
+      //  without having to reload all of the emails
+      // thread.unread = false;
+      // this.readClassChanger(thread);
       eventBus.$emit('ENTER_MESSAGE');
       this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
       markAsRead(thread.threadId);
@@ -397,25 +435,63 @@ export default {
     checkStar() {
       this.starCheck = !this.starCheck;
     },
-    
+    openCompose() {
+      eventBus.$emit('COMPOSE_OPEN');
+    },
+    readAll() {
+      let labelId = this.labelId;
+      let labelThreads = this.$store.getters.getLabelMessages;
+      let labelIdThreads = labelThreads[labelId];
+      var unread;
+      if (labelIdThreads !== undefined) {
+        let messages = this.$store.getters.getThreadMessages;
+
+        let fullThreadData = labelIdThreads.map((threadId) => {
+          let threadMessages = messages[threadId];
+          let numberOfMessages = threadMessages.length;
+
+          if (numberOfMessages > 0) {
+            unread = threadMessages[0];
+            return {threadId, unread};
+          }
+        });
+
+        if (labelId === "PRIMARY") {  // We'll have to adjust these label check calculations somehow
+          for (var i = 0; i < fullThreadData.length; i++) {
+            if (fullThreadData[i].unread.unread == false) {
+              markAsRead(fullThreadData[i].threadId);
+            }
+          }
+      }
+      }
+
+    },
   },
   computed: {
+    
+
     threads() {
       const labelId = this.labelId;
-      const labelThreads = this.$store.state.labelMessages;
+      const labelThreads = this.$store.getters.getLabelMessages;
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
-        const message = this.$store.state.threadMessages;
+        const messages = this.$store.getters.getThreadMessages;
 
         const fullThreadData = labelIdThreads.map((threadId) => {
-          const threadMessages = message[threadId];
-          const { from, subject, snippet, unread } = threadMessages[0];
+          const threadMessages = messages[threadId];
+          const numberOfMessages = threadMessages.length;
 
-          const unixTime = this.$store.state.latestThreadMessageTime[threadId];
-          const time = getTimeFormat(unixTime * 1000).time;
+          if (numberOfMessages > 0) {
+            const { from, conciseTo, subject, snippet, unread } = threadMessages[0];
+            const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
+            const time = getTimeFormat(unixTime * 1000).time;
           
-          return {threadId, from, subject, snippet, time, unread };
+            return {threadId, from, conciseTo, subject, snippet, time, unread, numberOfMessages};
+          } else {
+            console.log("Not yet Ready. NumberOfMessages is", numberOfMessages)
+            return {};
+          }
         });
         
         return fullThreadData;
@@ -425,6 +501,8 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
+    eventBus.$on('MARK_ALL_AS_READ', this.readAll);
+    this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
 </script>

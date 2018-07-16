@@ -15,15 +15,22 @@ export default new Vuex.Store({
     labelMessages: {},
     threadMessages: {},
     latestThreadMessageTime: {},
+    labelNextPageTokens: {},
+    labelLastPageTokens: [],
     token: "",
     currentUser: null,
     currentUserProfile: null,
     googleAuth: {},
-    sessionExpiration: null
+    sessionExpiration: null,
+    currentPage: 1,
+    currentFolder: "INBOX",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
-    messages: state => state.messages,
+    getThreadMessages: state => state.threadMessages,
+    getLabelNextPageTokens: state => state.labelNextPageTokens,
+    getLatestThreadMessageTime: state => state.latestThreadMessageTime,
+
     googleAuth: state => state.googleAuth,
     getCurrentUserProfile: state => state.currentUserProfile,
     getCurrentUser: state => state.currentUser,
@@ -59,6 +66,9 @@ export default new Vuex.Store({
         Vue.set(state.labelMessages, labelId, []);
       }
     },
+    addLabelNextPageToken(state, payload) {
+      Vue.set(state.labelNextPageTokens, payload.labelId, payload.nextPageToken);
+    },
     addThreadId(state, payload) {
       const labelId = payload.labelId;
       const threadId = payload.threadId;
@@ -79,13 +89,16 @@ export default new Vuex.Store({
     setThreadTime(state, payload) {
       const threadId = payload.threadId;
       const newUnixTime = payload.unixTime;
-      console.log(threadId, newUnixTime)
+
       if (newUnixTime > state.latestThreadMessageTime[threadId]){
         Vue.set(state.latestThreadMessageTime, threadId, newUnixTime);
       }
     },
     setThreadMessages(state, messages) {
+      // console.log("WHATS GOING ON:")
+      // console.log(messages);
       Vue.set(state.threadMessages, threadId, messages);
+
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -130,19 +143,22 @@ export default new Vuex.Store({
     },  
     
     getFolderListOfMessages(context, labelId) {
-      // context.commit('addLabelId', labelId);
+      context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
-        console.log("Its at the DRAFTS");
-        gapi.client.gmail.users.messages.list({
+        gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 50,
+          'maxResults': 10,
         }).then((response) => {
-          // console.log(response);
-          response.result.messages.forEach(message => {
-            let messageId = message.id;
-            context.dispatch("getMessageContent", { messageId, labelId });
-          });
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
         });  
       }).catch((err) => {
         console.log(err);
@@ -150,18 +166,20 @@ export default new Vuex.Store({
     },
     getListOfMessages(context, labelId) {
       let label = labelId;
-      if (labelId == 'PRIMARY') {
-        label = "PERSONAL";
-      }
+      // if (labelId === 'PRIMARY') {
+      //   label = "PERSONAL";
+      // }
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'labelIds': "CATEGORY_" + label,
-          // 'labelIds': 'INBOX',
-          'maxResults': 20,
-          // 'q': `category:`+labelId,
+          // 'labelIds': "CATEGORY_" + label,
+          'maxResults': 50,
+          'q': `category: ${label}`,
         }).then((response) => {
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
@@ -172,6 +190,76 @@ export default new Vuex.Store({
               context.dispatch("getThreadData", { threadId, labelId });
             });
           }          
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    //working on this
+    getPageListOfMessages(context, labelId) {
+      //this doesn't really work....
+      this.state.labelLastPageTokens.push(this.state.labelNextPageTokens.PRIMARY);
+      let label = labelId;
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': `category: ${label}`,
+          'pageToken': this.state.labelNextPageTokens.PRIMARY,
+        }).then((response) => {
+          
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          console.log("LastPage Tokens");
+          console.log(this.state.labelLastPageTokens);
+          console.log("NEXT PAGE TOKEN AFTER");
+          console.log(this.state.labelNextPageTokens);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
+          this.state.currentPage += 1;          
+        });
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+    // also a work in progress
+    getLastPageListOfMessages(context, labelId) {
+      let page = this.state.currentPage;
+      let label = labelId;
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': `category: ${label}`,
+          'pageToken': this.state.labelLastPageTokens[page - 1],
+        }).then((response) => {
+          let nextPageToken = response.result.nextPageToken;
+          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          // console.log("LastPage Tokens");
+          // console.log(this.state.labelLastPageTokens);
+          // console.log("NEXT PAGE TOKEN AFTER");
+          // console.log(this.state.labelNextPageTokens);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }    
+          this.state.currentPage -= 1;      
         });
       }).catch((err) => {
         console.log(err);
@@ -202,7 +290,7 @@ export default new Vuex.Store({
         'userId': 'me',
         'id': messageId,
       }).then((response) => {
-        const { from, to, cc, subject, detailedFrom } = getEmailInfo(
+        const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
           response.result.payload.headers
         );
         
@@ -210,16 +298,16 @@ export default new Vuex.Store({
         context.commit("setThreadTime", { threadId, unixTime });
 
         const { body, attachmentIds } = getBody(response.result.payload);
-        const { unread } = resolveLabels(response.result.labelIds);
+        const { unread, starred } = resolveLabels(response.result.labelIds);
         const snippet = response.result.snippet;
         const id = response.result.id;
-
         const message = {
           threadId,
           messageId,
           from,
           detailedFrom,
           to,
+          conciseTo,
           cc,
           subject,
           snippet,
@@ -228,11 +316,13 @@ export default new Vuex.Store({
           id,
           labelId,
           unread,
+          starred,
           unixTime,
           attachmentIds
         };
         context.commit("addMessage", message);
       }).catch((err) => {
+        // console.log("but first: " + from);
         console.log(err);
       });
     },

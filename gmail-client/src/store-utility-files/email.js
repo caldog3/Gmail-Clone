@@ -21,7 +21,7 @@ const getTimeFormat = (internalDate) => {
   } else if (currentUnix.format("YYYY") === unix.format("YYYY")) {
     time = unix.format("MMM D");
   } else {
-    time = unix.format("DD/MM/YY");
+    time = unix.format("MM/DD/YY");
   }
   let unixTime = internalDate / 1000;
 
@@ -45,8 +45,12 @@ const getBody = (payload) => {
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
       } else {
+
         if (payload.parts[0].body.data !== undefined){
           body = Base64Decode(payload.parts[0].body.data);
+        }
+        else if (payload.parts[0].parts[0] === undefined) {
+          console.log("Edge case = " + payload.parts[0]);
         }
         else if (payload.parts[0].parts[0].parts !== undefined){
           if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
@@ -55,7 +59,10 @@ const getBody = (payload) => {
             
             let part = payload.parts[1];
             if (part.mimeType.includes('application')) {
-              attachmentIds.push(part.body.attachmentId);
+              attachmentIds.push({
+                mimeType: part.mimeType,
+                attachmentId: part.body.attachmentId,
+              });
             }
             else{
               let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
@@ -65,10 +72,16 @@ const getBody = (payload) => {
                 let bodyAndAttachmentObject = payload.parts;
                 for (let part of bodyAndAttachmentObject) {
                   if (part.mimeType.includes('application')) {
-                    attachmentIds.push(part.body.attachmentId);
+                    attachmentIds.push({
+                      mimeType: part.mimeType,
+                      attachmentId: part.body.attachmentId,
+                    });
                   }
                   else if (part.mimeType.includes('image')) {
-                    attachmentIds.push(part.body.attachmentId);
+                    attachmentIds.push({
+                      mimeType: part.mimeType,
+                      attachmentId: part.body.attachmentId,
+                    });
                   }
                 }
               }
@@ -83,10 +96,16 @@ const getBody = (payload) => {
             let bodyAndAttachmentArray = payload.parts;
             for (let part of bodyAndAttachmentArray) {
               if (part.mimeType.includes('image')) {
-                attachmentIds.push(part.body.attachmentId);
+                attachmentIds.push({
+                  mimeType: part.mimeType,
+                  attachmentId: part.body.attachmentId,
+                });
               }
               else if (part.mimeType.includes('application')) {
-                attachmentIds.push(part.body.attachmentId);
+                attachmentIds.push({
+                  mimeType: part.mimeType,
+                  attachmentId: part.body.attachmentId,
+                });
               }
             }
           }
@@ -119,18 +138,24 @@ const resolveLabels = (tempLabelIds) => {
   let labelIds = tempLabelIds;
   
   let unread = true;
+  let starred = false;
   if (labelIds.includes("UNREAD")) {
     unread = false;
   }
+  if (labelIds.includes("STARRED")) {
+    starred = true;
+  }
   return {
     labelIds,
-    unread
+    unread,
+    starred,
   };
 }
 
 const getEmailInfo = (headers) => {
-  let from, to, cc = null, subject, detailedFrom;
+  let from, to, conciseTo, cc = null, subject, detailedFrom;
   for (let i = 0; i < headers.length; i++) {
+
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
       // console.log(detailedFrom);
@@ -141,16 +166,41 @@ const getEmailInfo = (headers) => {
       if (from === "") {
         from = detailedFrom;
       }
+      // SO I"M NOT ALLOWED TO ACCESS THE STORE FROM THIS FILE? LAME!
+      // if (from === this.$store.state.currentUserProfile.U3) {
+      //   from = "me";
+      // }
       if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
 
         from = from.substring(1, from.length - 1);
+      }
+      if(from.includes("@")) {
+        from = from.substring(0, from.search("@"));
+      }
+      
+      if(from.length >= 20) {
+        from = from.substring(0, 19) + ".";
       }
     } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
       // console.log(headers[i].value);
       // console.log("SPACE");
       // console.log(headers);
-
       to = headers[i].value;
+      conciseTo = to;
+      // Need to break up the to for each comma and shorten each of the senders before piecing back together
+      if(conciseTo.length > 20) {
+        // console.log(conciseTo);
+      }
+      if(conciseTo.includes("@")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search("@"));
+      }
+      if(conciseTo.includes(" ")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search(" "));
+      }
+      if(conciseTo.length >= 16) {
+        conciseTo = conciseTo.substring(0, 15) + ".";
+      }
+      // console.log("conciseTo is this:"+ conciseTo)
     } else if (headers[i].name === "Subject") {
       subject = headers[i].value;
       // console.log(subject);
@@ -162,6 +212,7 @@ const getEmailInfo = (headers) => {
   return {
     from,
     to,
+    conciseTo,
     cc,
     subject,
     detailedFrom

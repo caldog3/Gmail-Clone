@@ -107,7 +107,7 @@ export default {
           console.log("passed the timeout");
           this.loading = true;
           this.loaded(true);
-        }, 4000);
+        }, 4500);
       }
       //   ^^ HERES THE TIME IN MILISECONDS
     },
@@ -147,7 +147,7 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  background-image: url(assets/Background16.jpg);
+  background-image: url(assets/Background10.jpg);
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;

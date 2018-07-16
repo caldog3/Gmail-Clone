@@ -33,6 +33,29 @@ const markAsRead = (messageId) => {
   });
 }
 
+const markAsStarred = (messageId) => {
+  gapi.client.gmail.users.threads.modify({
+    'userId': 'me',
+    'id': messageId,
+    'addLabelIds': ['STARRED']
+  }).then((response) => {
+    console.log(`markAsStarred`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+const unMarkAsStarred = (messageId) => {
+  gapi.client.gmail.users.threads.modify({
+    'userId': 'me',
+    'id': messageId,
+    'removeLabelIds': ['STARRED']
+  }).then((response) => {
+    console.log(`unMarkAsStarred`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
 const getLabels = () => {
   gapi.client.load('gmail', 'v1').then(() => {
   gapi.client.gmail.users.labels.list({
@@ -85,67 +108,15 @@ const getLabelsForUnread = () => {
       console.log(response);
       let unreadCount = response.result.threadsUnread;
       eventBus.$emit('UNREAD_COUNT', unreadCount);
-
-      //Attemps to get the correct number of unread....didn't work...gave me numbers just barely in the negatives
-      // console.log("INBOX UNREAD TOTAL");
-      // console.log(unreadCount);
-      // //I want to filter out archived messages' unreads but haven't found an api call for that yet
-      // let socialURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_SOCIAL';
-      // axios.get(socialURL, getAuthHeader())
-      // .then(response => {
-      //   let socialUnread = response.data.threadsUnread;
-      //   console.log("SOCIAL UNREAD");
-      //   console.log(socialUnread);
-      //   unreadCount -= socialUnread;
-      //   let promoURL = 'https://www.googleapis.com/gmail/v1/users/me/labels/CATEGORY_PROMOTIONS';
-      //   axios.get(promoURL, getAuthHeader())
-      //   .then(response => {
-      //     let promoUnread = response.data.threadsUnread;
-      //     console.log("PROMO UNREAD");
-      //     console.log(promoUnread);
-      //     unreadCount -= promoUnread;
-      //     console.log("UNREAD COUNT");
-      //     console.log(unreadCount);
-      //     eventBus.$emit('UNREAD_COUNT', unreadCount);
-      //   })
-      // })
     });
   });
 }
 
-// const getListOfDrafts =() => {
-//   let url = "https://www.googleapis.com/gmail/v1/users/me/draft";
-//   axios.get(url, getAuthHeader())
-//     .then(response => {
-//       console.log("DRAFTS OBJ");
-//       console.log(response);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// }
-
-// const getAttachments = (message) => {
-//   if (message.attachmentIds.length !== 0) {
-//     const messageId = message.messageId;
-//     message.attachmentIds.map(attachmentId => {
-//       let url = `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}/attachments/${attachmentId}`;
-
-//       axios.get(url, getAuthHeader())
-//         .then(response => {
-//           let attachmentData = response.data;
-//           return attachmentData;
-//         })
-//         .catch(error => {
-//           console.log(error);
-//         });
-//     })
-//   }
-// }
-
 export {
   sendMessage,
   markAsRead,
+  markAsStarred,
+  unMarkAsStarred,
   getProfileEmail,
   getLabels,
   getLabelsForUnread,

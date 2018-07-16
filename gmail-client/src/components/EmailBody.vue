@@ -1,7 +1,7 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <h4 >{{messages[0].subject}}</h4>
+    <h4>{{messages[0].subject}}</h4>
     <div v-for="message in messages" :key="message.messageId">
       <div class="leftAlign">
         <hr>
@@ -20,6 +20,7 @@
       <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -82,5 +83,9 @@ export default {
       return theClass;
     },
   },
+  created() {
+    console.log("THE THING IM LOOKING FOR");
+    console.log(this.$store.state.labelNextPageTokens);
+  }
 }
 </script>

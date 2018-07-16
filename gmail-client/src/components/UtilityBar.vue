@@ -15,6 +15,9 @@
                     </div>
                   </div>
                 </div>
+                <div class="highlightArea2">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                </div>
                 <div class="item">
                   <div class="highlightArea">
                     <div>
@@ -26,7 +29,7 @@
                   <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
                     <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
                       <div id="ellipsesDropdown" class="dropdown-content">
-                        <p>  Mark all as read </p>
+                        <p v-on:click="markAllAsRead()">  Mark all as read </p>
                         <hr>
                         <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
                       </div>
@@ -108,14 +111,16 @@
         <div class="right-side-utility">
           <div class="flexIcons">
             
-            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) > 49">1-50 of {{totalMessages}}</div>
-            <div class="rightTopPad" v-else>1-{{totalMessages}} of {{totalMessages}}</div>
+            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
+              {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
+            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
-            <div class="paddingNeeded">
+            <div class="paddingNeeded" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
             </div>
-
-            <div class="lessPadding">
+            
+            <div class="lessPadding" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
             </div>
 
@@ -134,7 +139,14 @@
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <p>Themes</p>
+                    
+                      <b-btn v-b-modal.modal1>Change Theme</b-btn>
+                      <!-- Modal Component -->
+                      <b-modal id="modal1" title="Change Theme">
+                        <!-- <div v-for="background in backgrounds"> -->
+                        <!-- </div> -->
+                      </b-modal>
+                    
                     <hr>
                     <p>Some kind of setting</p>
                     <hr>
@@ -250,6 +262,7 @@
 .rightTopPad {
   padding-right: 30px;
   padding-top: 5px;
+  font-size: .9em;
 }
 input {
   float: left;
@@ -371,6 +384,24 @@ export default {
     }
   },
   methods: {
+    pageNum() {
+      return this.$store.state.currentPage;
+    },
+    nextPageLoad() {
+      eventBus.$emit("NEXT_PAGE_LOAD");
+      console.log(this.$store.state.labelMessages);
+      //We'll have to switch it to be more universal 
+      // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.dispatch("getPageListOfMessages", "PRIMARY");
+      // not sure what the best strategy is here*
+    },
+    lastPageLoad() {
+      eventBus.$emit("LAST_PAGE_LOAD");
+      // *...or here
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
+    },
     true() {
       this.messageBody = true;
     },
@@ -390,7 +421,9 @@ export default {
       console.log("routing?");
     },
     markAllAsRead() {
-      console.log("marking once we figure out axios.post stuff");
+      //route to EmailList probably and loop through all and if they are marked as unread, send to 
+        // the markeAsRead method.  //That's my best guess anywayg
+      eventBus.$emit("MARK_ALL_AS_READ");
     },
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
