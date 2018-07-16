@@ -42,7 +42,8 @@
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
-                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> Draft </span>
+                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
+                    <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
                   </span></b>
@@ -303,7 +304,6 @@ a {
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
-
 @media screen and (max-width : 830px) {
   .emailLink {
     display: flex;
@@ -421,6 +421,10 @@ export default {
       return theClass;
     },
     enterMessage(thread) {
+      // Trying to have an email show as read after you've clicked on it
+      //  without having to reload all of the emails
+      // thread.unread = false;
+      // this.readClassChanger(thread);
       eventBus.$emit('ENTER_MESSAGE');
       this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
       markAsRead(thread.threadId);
@@ -433,6 +437,34 @@ export default {
     },
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
+    },
+    readAll() {
+      let labelId = this.labelId;
+      let labelThreads = this.$store.getters.getLabelMessages;
+      let labelIdThreads = labelThreads[labelId];
+      var unread;
+      if (labelIdThreads !== undefined) {
+        let messages = this.$store.getters.getThreadMessages;
+
+        let fullThreadData = labelIdThreads.map((threadId) => {
+          let threadMessages = messages[threadId];
+          let numberOfMessages = threadMessages.length;
+
+          if (numberOfMessages > 0) {
+            unread = threadMessages[0];
+            return {threadId, unread};
+          }
+        });
+
+        if (labelId === "PRIMARY") {  // We'll have to adjust these label check calculations somehow
+          for (var i = 0; i < fullThreadData.length; i++) {
+            if (fullThreadData[i].unread.unread == false) {
+              markAsRead(fullThreadData[i].threadId);
+            }
+          }
+      }
+      }
+
     },
   },
   computed: {
@@ -451,11 +483,11 @@ export default {
           const numberOfMessages = threadMessages.length;
 
           if (numberOfMessages > 0) {
-            const { from, subject, snippet, unread } = threadMessages[0];
+            const { from, conciseTo, subject, snippet, unread } = threadMessages[0];
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, subject, snippet, time, unread, numberOfMessages};
+            return {threadId, from, conciseTo, subject, snippet, time, unread, numberOfMessages};
           } else {
             console.log("Not yet Ready. The Label is", labelId)
             return {};
@@ -469,6 +501,7 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', this.check);
+    eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }

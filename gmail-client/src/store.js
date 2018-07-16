@@ -23,6 +23,7 @@ export default new Vuex.Store({
     googleAuth: {},
     sessionExpiration: null,
     currentPage: 1,
+    currentFolder: "INBOX",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
@@ -197,7 +198,6 @@ export default new Vuex.Store({
     //working on this
     getPageListOfMessages(context, labelId) {
       //this doesn't really work....
-      this.state.currentPage += 1;
       this.state.labelLastPageTokens.push(this.state.labelNextPageTokens.PRIMARY);
       let label = labelId;
       context.commit("addLabelId", labelId);
@@ -208,6 +208,7 @@ export default new Vuex.Store({
           'q': `category: ${label}`,
           'pageToken': this.state.labelNextPageTokens.PRIMARY,
         }).then((response) => {
+          
           let nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
           console.log("LastPage Tokens");
@@ -223,7 +224,8 @@ export default new Vuex.Store({
               
               context.dispatch("getThreadData", { threadId, labelId });
             });
-          }          
+          }
+          this.state.currentPage += 1;          
         });
       }).catch((err) => {
         console.log(err);
@@ -231,7 +233,6 @@ export default new Vuex.Store({
     },
     // also a work in progress
     getLastPageListOfMessages(context, labelId) {
-      this.state.currentPage -= 1;
       let page = this.state.currentPage;
       let label = labelId;
       context.commit("addLabelId", labelId);
@@ -240,7 +241,7 @@ export default new Vuex.Store({
           'userId': 'me',
           'maxResults': 50,
           'q': `category: ${label}`,
-          'pageToken': this.state.labelLastPageTokens[page],
+          'pageToken': this.state.labelLastPageTokens[page - 1],
         }).then((response) => {
           let nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
@@ -257,7 +258,8 @@ export default new Vuex.Store({
               
               context.dispatch("getThreadData", { threadId, labelId });
             });
-          }          
+          }    
+          this.state.currentPage -= 1;      
         });
       }).catch((err) => {
         console.log(err);
@@ -288,7 +290,7 @@ export default new Vuex.Store({
         'userId': 'me',
         'id': messageId,
       }).then((response) => {
-        const { from, to, cc, subject, detailedFrom } = getEmailInfo(
+        const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
           response.result.payload.headers
         );
         
@@ -305,6 +307,7 @@ export default new Vuex.Store({
           from,
           detailedFrom,
           to,
+          conciseTo,
           cc,
           subject,
           snippet,

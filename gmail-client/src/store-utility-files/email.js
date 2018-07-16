@@ -153,8 +153,9 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getEmailInfo = (headers) => {
-  let from, to, cc = null, subject, detailedFrom;
+  let from, to, conciseTo, cc = null, subject, detailedFrom;
   for (let i = 0; i < headers.length; i++) {
+
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
       // console.log(detailedFrom);
@@ -165,6 +166,10 @@ const getEmailInfo = (headers) => {
       if (from === "") {
         from = detailedFrom;
       }
+      // SO I"M NOT ALLOWED TO ACCESS THE STORE FROM THIS FILE? LAME!
+      // if (from === this.$store.state.currentUserProfile.U3) {
+      //   from = "me";
+      // }
       if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
 
         from = from.substring(1, from.length - 1);
@@ -172,6 +177,7 @@ const getEmailInfo = (headers) => {
       if(from.includes("@")) {
         from = from.substring(0, from.search("@"));
       }
+      
       if(from.length >= 20) {
         from = from.substring(0, 19) + ".";
       }
@@ -179,8 +185,22 @@ const getEmailInfo = (headers) => {
       // console.log(headers[i].value);
       // console.log("SPACE");
       // console.log(headers);
-
       to = headers[i].value;
+      conciseTo = to;
+      // Need to break up the to for each comma and shorten each of the senders before piecing back together
+      if(conciseTo.length > 20) {
+        // console.log(conciseTo);
+      }
+      if(conciseTo.includes("@")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search("@"));
+      }
+      if(conciseTo.includes(" ")) {
+        conciseTo = conciseTo.substring(0, conciseTo.search(" "));
+      }
+      if(conciseTo.length >= 16) {
+        conciseTo = conciseTo.substring(0, 15) + ".";
+      }
+      // console.log("conciseTo is this:"+ conciseTo)
     } else if (headers[i].name === "Subject") {
       subject = headers[i].value;
       // console.log(subject);
@@ -192,6 +212,7 @@ const getEmailInfo = (headers) => {
   return {
     from,
     to,
+    conciseTo,
     cc,
     subject,
     detailedFrom

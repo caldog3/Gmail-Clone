@@ -5,7 +5,7 @@
 <template>
   <div id="setWidth">
     <!-- <email-list :labelId="labelId"> -->
-    <email-list :labelId="getPage()"/>
+    <email-list :labelId="getFolder()"/>
 
   </div>
 </template>
@@ -37,9 +37,9 @@ export default {
     }
   },
   methods: {
-    getPage() {
-      let page = this.$store.state.currentPage;
-      return page;
+    getFolder() {
+      let folder = this.$store.state.currentFolder;
+      return folder;
     },
   },
   created(){
