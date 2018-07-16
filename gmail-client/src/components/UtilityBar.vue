@@ -147,7 +147,6 @@
                         <!-- </div> -->
                       </b-modal>
                     </div>
-                    <br>
                     <hr>
                     <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
@@ -350,6 +349,7 @@ p:hover {background-color: #ddd;}
   padding-right: 40px;
   padding-left: 40px;
   text-align: left;
+  height: 32px;
 }
 .btn:not(:disabled):not(.disabled) {
   background-color: rgba(0,0,0,0.0);
