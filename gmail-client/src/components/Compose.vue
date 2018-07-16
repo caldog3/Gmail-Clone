@@ -10,10 +10,13 @@
         <a class="close" @click="close">×</a>
       </div>
     </div>
-    <div class="section">
-      <div>
-        <input class="full" type="email" v-model="composeTo"  placeholder="Recipients" @focus="focusOnSection('to')">
+    <div class="sectionTop">
+      <div class="unselected">
+        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
       </div>
+      <!-- <div class="selected">
+        <input class="full" type="email" v-model="composeTo" placeholder="To" @focus="focusOnSection('to')">
+      </div> -->
     </div>
     <div class="section">
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
@@ -83,6 +86,23 @@ a:not([href]):not([tabindex]) {
   margin-left: 5px;
   margin-right: 4px;
 }
+.sectionTop {
+  width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  height: 35px;
+}
+/* .sectionTop:focus-within {
+  width: 100%;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  height: 72px;
+} */
+
+
+
+
+
 .section {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
@@ -100,12 +120,7 @@ a:not([href]):not([tabindex]) {
 .TO {
   width: 15px;
 }
-.full1 {
-  width: 460px;
-  border: none;
-  outline: none;
-  overflow: hidden;
-}
+
 .full2 {
   width: 100%;
   border: none;
