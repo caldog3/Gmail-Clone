@@ -351,6 +351,7 @@ p:hover {background-color: #ddd;}
   text-align: left;
   height: 32px;
 }
+.dropdownEntry:hover {background-color: #ddd;}
 .btn:not(:disabled):not(.disabled) {
   background-color: rgba(0,0,0,0.0);
   color: black;
