@@ -483,11 +483,11 @@ export default {
           const numberOfMessages = threadMessages.length;
 
           if (numberOfMessages > 0) {
-            const { from, conciseTo, subject, snippet, unread } = threadMessages[0];
+            const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, conciseTo, subject, snippet, time, unread, numberOfMessages};
+            return {threadId, from, starred, conciseTo, subject, snippet, time, unread, numberOfMessages};
           } else {
             console.log("Not yet Ready. NumberOfMessages is", numberOfMessages)
             return {};
