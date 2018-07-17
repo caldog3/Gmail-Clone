@@ -169,13 +169,11 @@ textarea {
 <script>
 import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import eventBus from '../event_bus.js';
-import DropDown from './drop-down';
 import Icon from './icon';
 
 export default {
   name: 'Compose',
   components: {
-    DropDown,
     Icon
   },
   data() {
