@@ -1,11 +1,22 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <h4>{{messages[0].subject}}</h4>
+    <h4>{{messages[0].subject}}
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    <font-awesome-icon class="Icon" icon="print" /></h4> 
+
     <div v-for="message in messages" :key="message.messageId">
       <div class="leftAlign">
         <hr>
-        <p><b>{{message.from}}</b></p>
+        <b>{{message.from}}</b> 
+        <!-- we need to style this over to the right -->
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        {{message.time}} (some hours ago idk)
+        <span class="highlightArea">
+          <input class="star" type="checkbox" :checked="message.starred" title="bookmark page">
+        </span> 
+        <font-awesome-icon class="Icon" icon="reply" />
+        <font-awesome-icon class="Icon" icon="ellipsis-v" />
         <p>to {{message.to}}</p>
       </div>
       <div v-html="message.body" class="leftAlign"></div>
@@ -52,6 +63,26 @@ h4 {
   padding-left: 5%;
   padding-right: 1%;
 }
+.star {
+  visibility: hidden;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  left: 5px;
+  top: 1px;
+  width: 30px;
+  height: 30px;
+}
+.star:before {
+  content: "\2606";
+  position: absolute;
+  visibility:visible;
+}
+.star:checked:before {
+  content: "\2605";
+  position: absolute;
+}
+
 </style>
 
 <script>
