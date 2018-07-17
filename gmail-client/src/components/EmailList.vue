@@ -304,7 +304,6 @@ a {
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
-
 @media screen and (max-width : 830px) {
   .emailLink {
     display: flex;
