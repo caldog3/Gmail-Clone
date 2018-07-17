@@ -100,6 +100,10 @@
     if(sentMessages === undefined){
       this.$store.dispatch("getFolderListOfMessages", "SENT");
     }
+    let starredMessages = this.$store.getters.getLabelMessages["STARRED"];
+    if(starredMessages === undefined){
+      this.$store.dispatch("getFolderListOfMessages", "STARRED");
+    }
    },
  }
 </script>
