@@ -14,7 +14,7 @@
                 
                 <label class="container">
                   <div class="highlightAreaCheck">
-                    <input type="checkbox" checked="checked" :value="thread.threadId" v-model="checkedEmails">
+                    <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
       
@@ -500,7 +500,15 @@ export default {
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
-    eventBus.$on('CHECK_ALL', this.check);
+    eventBus.$on('CHECK_ALL', source => {
+      var checkboxes = document.getElementsByName('checks');
+      console.log(checkboxes);
+      console.log(source);
+      for(var i = 0, n=checkboxes.lenth;i<n;i++) {
+        checkboxes[i].checked = source.checked;
+      }
+      console.log('hello?');
+    });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
