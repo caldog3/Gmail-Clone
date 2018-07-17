@@ -5,14 +5,10 @@
           <div>
             <span v-if=!messageBody>
               <div class="flexIcons">
-                <div v-on:click="checkAll()" class="item">
+                <!-- <div v-on:click="checkAll(this)" class="item"> -->
+                <div class="item">
                   <div class="highlightArea">
-                    <div v-if=!checked>
-                      <font-awesome-icon style="color:white;" class="Icon" icon="square" />
-                    </div>
-                    <div v-if=checked>
-                      <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
-                    </div>
+                    <input type="checkbox" @click="checkAll(this)">
                   </div>
                 </div>
                 <div class="highlightArea2">
@@ -424,9 +420,11 @@ export default {
     false() {
       this.messageBody = false;
     },
-    checkAll() {
+    checkAll(source) {
+      console.log("source");
+      console.log(source);
       this.checked = !this.checked;
-      eventBus.$emit('CHECK_ALL');
+      eventBus.$emit('CHECK_ALL', source);
     },
     back() {
       //Need to route it back to EmailList

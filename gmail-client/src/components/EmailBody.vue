@@ -24,8 +24,8 @@
 </template>
 
 <style scoped>
-#body {
-  background-color: white;
+a:link {
+  color: purple;
 }
 .leftAlign {
   text-align: left;
