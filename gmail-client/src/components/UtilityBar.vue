@@ -11,8 +11,13 @@
                     <input type="checkbox" @click="checkAllToggle()">
                   </div>
                 </div>
-                <div class="highlightArea2">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <div id="caretDropdown" class="dropdown-content">
+                    <p>  Mark all as read </p>
+                    <hr>
+                    <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                  </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
@@ -316,9 +321,11 @@ button {
 }
 #ellipsesDropdown {
   color: black;
-  
 }
 #cogDropdown {
+  color: black;
+}
+#caretDropdown {
   color: black;
 }
 .dropdown-content a {
@@ -426,8 +433,6 @@ export default {
       this.messageBody = false;
     },
     checkAll(source) {
-      console.log("source");
-      console.log(source);
       this.checked = !this.checked;
       eventBus.$emit('CHECK_ALL', source);
     },
@@ -448,6 +453,9 @@ export default {
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
       document.getElementById("ellipsesDropdown").classList.toggle("show");
+    },
+    caretDropdownFunction() {
+      document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
       document.getElementById("cogDropdown").classList.toggle("show");
