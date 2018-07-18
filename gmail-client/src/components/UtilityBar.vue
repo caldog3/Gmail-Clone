@@ -8,7 +8,7 @@
                 <!-- <div v-on:click="checkAll(this)" class="item"> -->
                 <div class="item">
                   <div class="highlightArea">
-                    <input type="checkbox" @click="checkAll(this)">
+                    <input type="checkbox" @click="checkAllToggle()">
                   </div>
                 </div>
                 <div class="highlightArea2">
@@ -393,11 +393,16 @@ export default {
       messageBody: false,
       checked: false,
       totalMessages: '50',
+      check: false,
     }
   },
   methods: {
     pageNum() {
       return this.$store.state.currentPage;
+    },
+    checkAllToggle() {
+      this.check = !this.check;
+      this.checkAll(this.check);
     },
     nextPageLoad() {
       eventBus.$emit("NEXT_PAGE_LOAD");

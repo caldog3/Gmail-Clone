@@ -127,7 +127,6 @@
   margin-right: 4px;
 }
 
-
 /* The Checkbox  */
 /* The container */
 .container {
@@ -216,10 +215,6 @@
   content: "\2605";
   position: absolute;
 }
-
-
-
-
 
 .item {
   width: 30px;
@@ -501,13 +496,24 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', source => {
-      var checkboxes = document.getElementsByName('checks');
-      console.log(checkboxes);
-      console.log(source);
-      for(var i = 0, n=checkboxes.lenth;i<n;i++) {
-        checkboxes[i].checked = source.checked;
+      const checkboxes = document.getElementsByName('checks');
+      // console.log(checkboxes);
+      // console.log(source);
+      // console.log(checkboxes.length);
+      // console.log("end lenght");
+      console.log()
+      for(var i = 0; i < document.getElementsByName('checks').length; i++) {
+        if (source === true) {
+          // console.log(checkboxes[i].checked);
+          console.log("in the if");
+          document.getElementsByName('checks')[i].checked = true;
+        }
+        else {
+          console.log("making it in the else?");
+          document.getElementsByName('checks')[i].checked = false;
+        }
       }
-      console.log('hello?');
+      
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
