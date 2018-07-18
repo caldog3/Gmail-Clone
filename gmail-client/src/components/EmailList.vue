@@ -394,11 +394,7 @@ export default {
   },
   methods: {
     starredLabelToggle(thread) {
-      console.log("1st time");
-      console.log(thread.starred);
       thread.starred = !thread.starred;
-      console.log("2nd time");
-      console.log(thread.starred);
       if(thread.starred === true) {
         markAsStarred(thread.threadId);
       }
@@ -496,24 +492,14 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', source => {
-      const checkboxes = document.getElementsByName('checks');
-      // console.log(checkboxes);
-      // console.log(source);
-      // console.log(checkboxes.length);
-      // console.log("end lenght");
-      console.log()
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
-          // console.log(checkboxes[i].checked);
-          console.log("in the if");
           document.getElementsByName('checks')[i].checked = true;
         }
         else {
-          console.log("making it in the else?");
           document.getElementsByName('checks')[i].checked = false;
         }
       }
-      
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
