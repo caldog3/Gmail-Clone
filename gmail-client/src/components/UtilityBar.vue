@@ -14,9 +14,17 @@
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
                   <div id="caretDropdown" class="dropdown-content">
-                    <p>  Mark all as read </p>
+                    <p>  All </p>
                     <hr>
-                    <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                    <p> None </p>
+                    <hr>
+                    <p> Read </p>
+                    <hr>
+                    <p> Unread </p>
+                    <hr>
+                    <p> Starred </p>
+                    <hr>
+                    <p> Unstarred </p>
                   </div>
                 </div>
                 <div class="item">
