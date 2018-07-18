@@ -327,10 +327,10 @@
   padding-top: 5px;
   font-size: .9em;
 }
-
-/* input {
+input {
   float: left;
-} */
+  /* opacity: 0; */
+}
 button {
   float: right;
   margin-right: 20%;
