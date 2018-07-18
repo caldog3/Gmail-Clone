@@ -187,15 +187,15 @@
 
 .container {
   display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 /* Hide the browser's default checkbox */
 .container input {
@@ -203,6 +203,7 @@
   /* top: 7px;
   left: 6px; */
   opacity: 0;
+  visibility: hidden;
   cursor: pointer;
 }
 /* Create a custom checkbox */
@@ -327,10 +328,9 @@
   padding-top: 5px;
   font-size: .9em;
 }
-input {
+/* input {
   float: left;
-  /* opacity: 0; */
-}
+} */
 button {
   float: right;
   margin-right: 20%;
