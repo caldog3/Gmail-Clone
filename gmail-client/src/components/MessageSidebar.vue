@@ -15,7 +15,7 @@
             <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  Inbox
           </div>
           <div>
-            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+            <p class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</p>
           </div>
         </div>
       </div>
@@ -98,6 +98,8 @@ button {
   color: white;
   text-shadow: .5px -1px 2px #333;
   margin-right: 10px;
+  font-size: .9em;
+
 }
 .options > div {
   width: 100%;
@@ -131,7 +133,7 @@ button {
 #bootstrap-overrides {
   text-align: left;
 }
-.notificationPill b-badge {
+.notificationPill {
   text-align: right;
 }
 </style>

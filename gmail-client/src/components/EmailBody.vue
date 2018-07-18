@@ -8,7 +8,7 @@
     <div v-for="message in messages" :key="message.messageId">
       <div class="leftAlign">
         <hr>
-        <b>{{message.from}}</b> 
+        <b>{{message.detailedFrom}}</b> 
         <!-- we need to style this over to the right -->
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         {{message.time}} (some hours ago idk)
