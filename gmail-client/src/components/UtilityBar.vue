@@ -203,7 +203,6 @@
   /* top: 7px;
   left: 6px; */
   opacity: 0;
-  visibility: hidden;
   cursor: pointer;
 }
 /* Create a custom checkbox */
