@@ -53,6 +53,7 @@ a:link {
 }
 .flexboxSubject {
   display:flex;
+  justify-content: space-between;
 }
 .response-buttons {
   padding: 40px;
