@@ -7,20 +7,25 @@
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
+      <div class="flexboxSubject">
+        <div class="leftAlign">
+          <hr>
+          <b>{{message.detailedFrom}}</b>
+        </div>
+        <div class="rightAlign">
+          {{message.time}} (some hours ago idk)
+          <span class="highlightArea">
+            <input class="star" type="checkbox" :checked="message.starred" title="bookmark page">
+          </span> 
+          <font-awesome-icon class="Icon" icon="reply" />
+          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+        </div>
+      </div>
       <div class="leftAlign">
-        <hr>
-        <b>{{message.detailedFrom}}</b> 
-        <!-- we need to style this over to the right -->
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-        {{message.time}} (some hours ago idk)
-        <span class="highlightArea">
-          <input class="star" type="checkbox" :checked="message.starred" title="bookmark page">
-        </span> 
-        <font-awesome-icon class="Icon" icon="reply" />
-        <font-awesome-icon class="Icon" icon="ellipsis-v" />
         <p>to {{message.to}}</p>
       </div>
       <div v-html="message.body" class="leftAlign"></div>
+
     </div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
@@ -48,6 +53,7 @@ a:link {
 }
 .flexboxSubject {
   display:flex;
+  justify-content: space-between;
 }
 .response-buttons {
   padding: 40px;
