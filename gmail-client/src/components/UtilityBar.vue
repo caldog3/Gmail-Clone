@@ -12,8 +12,21 @@
                     <span class="checkmark"></span>
                   </div>
                 </div>
-                <div class="highlightArea2">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <div id="caretDropdown" class="dropdown-content">
+                    <p>  All </p>
+                    <hr>
+                    <p> None </p>
+                    <hr>
+                    <p> Read </p>
+                    <hr>
+                    <p> Unread </p>
+                    <hr>
+                    <p> Starred </p>
+                    <hr>
+                    <p> Unstarred </p>
+                  </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
@@ -383,9 +396,11 @@ button {
 }
 #ellipsesDropdown {
   color: black;
-  
 }
 #cogDropdown {
+  color: black;
+}
+#caretDropdown {
   color: black;
 }
 .dropdown-content a {
@@ -493,8 +508,6 @@ export default {
       this.messageBody = false;
     },
     checkAll(source) {
-      console.log("source");
-      console.log(source);
       this.checked = !this.checked;
       eventBus.$emit('CHECK_ALL', source);
     },
@@ -515,6 +528,9 @@ export default {
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
       document.getElementById("ellipsesDropdown").classList.toggle("show");
+    },
+    caretDropdownFunction() {
+      document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
       document.getElementById("cogDropdown").classList.toggle("show");

@@ -1,9 +1,10 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <h4>{{messages[0].subject}}
-    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-    <font-awesome-icon class="Icon" icon="print" /></h4> 
+    <div class="flexboxSubject">
+      <h4 class="leftAlign">{{messages[0].subject}}</h4>
+      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+    </div>
 
     <div v-for="message in messages" :key="message.messageId">
       <div class="leftAlign">
@@ -41,6 +42,12 @@ a:link {
 .leftAlign {
   text-align: left;
   margin-left: 2%;
+}
+.rightAlign {
+  text-align: right;
+}
+.flexboxSubject {
+  display:flex;
 }
 .response-buttons {
   padding: 40px;
