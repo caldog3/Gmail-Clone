@@ -214,6 +214,7 @@
 .star:checked:before {
   content: "\2605";
   position: absolute;
+  color:gold;
 }
 
 .item {
