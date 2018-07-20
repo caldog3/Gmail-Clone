@@ -32,16 +32,13 @@
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
         </div>
-        <div>
-          <!-- <p class="notificationPill" v-if="unreadCount('Snoozed') > 0">{{unreadCount('Snoozed')}}</p> -->
-        </div>
       </div>
       <div v-bind:class="activeFolderClass('Sent')" v-on:click="sentHandle()">
         <div class="notInbox"  id="sidebarFlex">
           <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
         </div>
         <div>
-          <p class="notificationPill" v-if="unreadCounts[2].count">{{unreadCounts[2].count}}</p>
+          <p class="notificationPill" v-if="unreadCounts[2].count > 0">{{unreadCounts[2].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="draftsHandle()">
@@ -57,7 +54,7 @@
           <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
         </div>
         <div>
-          <p class="notificationPill" v-if="unreadCounts[4].count">{{unreadCounts[4].count}}</p>
+          <p class="notificationPill" v-if="unreadCounts[4].count > 0">{{unreadCounts[4].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('All mail')">
