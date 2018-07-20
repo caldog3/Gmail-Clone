@@ -141,7 +141,19 @@ export default new Vuex.Store({
         context.commit("setToken", token);
       }
     },  
-    
+    unreadEmails(folder) {
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.labels.get({
+        'userId': 'me',
+        'id': folder,
+        // 'q': 'category:primary',
+        }).then((response) => {
+          console.log(response);
+          let unreadCount = response.result.threadsUnread;
+          return unreadCount;
+        });
+      });
+    },
     getFolderListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
