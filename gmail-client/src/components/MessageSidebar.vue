@@ -16,7 +16,7 @@
           </div>
           <div>
             <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
-            <p class="notificationPill" v-if="unreadCount('INBOX') > 0">{{unreadCounts[1].count}}</p>
+            <p class="notificationPill" v-if="unreadCounts[0].count > 0">{{unreadCounts[0].count}}</p>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
           <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
         </div>
         <div>
-            <p class="notificationPill" v-if="unreadCount('STARRED') > 0">{{unreadCount('STARRED')}}</p>
+            <p class="notificationPill" v-if="unreadCounts[1].count > 0">{{unreadCounts[1].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Snoozed')">
@@ -41,7 +41,7 @@
           <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
         </div>
         <div>
-          <p class="notificationPill" v-if="unreadCount('SENT') > 0">{{unreadCount('SENT')}}</p>
+          <p class="notificationPill" v-if="unreadCounts[2].count">{{unreadCounts[2].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="draftsHandle()">
@@ -49,7 +49,7 @@
           <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
         </div>
         <div>
-          <p class="notificationPill" v-if="unreadCount('DRAFT') > 0">{{unreadCount('DRAFT')}}</p>
+          <p class="notificationPill" v-if="unreadCounts[3].count > 0">{{unreadCounts[3].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Important')">
@@ -57,7 +57,7 @@
           <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
         </div>
         <div>
-          <p class="notificationPill" v-if="unreadCount('IMPORTANT') > 0">{{unreadCount('IMPORTANT')}}</p>
+          <p class="notificationPill" v-if="unreadCounts[4].count">{{unreadCounts[4].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('All mail')">
@@ -68,6 +68,9 @@
       <div v-bind:class="activeFolderClass('Spam')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
+        </div>
+        <div>
+          <p class="notificationPill" v-if="unreadCounts[5].count > 0">{{unreadCounts[5].count}}</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Trash')">
@@ -170,7 +173,6 @@ export default {
     return {
       unreadCounts: [],
       viewFolder: "Inbox",
-      theCount: 10,
       i: 0,
     };
   },
@@ -186,10 +188,11 @@ export default {
           let unreadCount = response.result.threadsUnread;
           // console.log(unreadCount + "unreadCount");
           this.unreadCounts.push({folder: label, count: unreadCount});
-
-          console.log(this.unreadCounts[this.i].count);
+          console.log(label);
+          let index = this.i;
+          console.log(this.unreadCounts[index].count);
+          console.log(this.unreadCounts);
           this.i += 1;
-          return unreadCount;
         });
       });
     },
@@ -240,9 +243,18 @@ export default {
   created() {
     eventBus.$on("UNREAD_COUNT", unreads => {
       // this.unreadCounts = unreads;
-    }),
+    })
     getLabelsForUnread();
     getLabels();
-  }
+    //Probably a much better way to do this
+
+    this.unreadCount("CATEGORY_PERSONAL");
+    this.unreadCount("STARRED");
+    this.unreadCount("SENT");
+    this.unreadCount("DRAFT");
+    this.unreadCount("IMPORTANT");
+    this.unreadCount("SPAM");
+  },
+
 };
 </script>
