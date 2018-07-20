@@ -1,14 +1,31 @@
 /* eslint-disable */
 <template>
   <div id="body">
-    <h4>{{messages[0].subject}}</h4>
+    <div class="flexboxSubject">
+      <h4 class="leftAlign">{{messages[0].subject}}</h4>
+      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+    </div>
+
     <div v-for="message in messages" :key="message.messageId">
+      <div class="flexboxSubject">
+        <div class="leftAlign">
+          <hr>
+          <b>{{message.detailedFrom}}</b>
+        </div>
+        <div class="rightAlign">
+          {{message.time}} (some hours ago idk)
+          <span class="highlightArea">
+            <input class="star" type="checkbox" :checked="message.starred" title="bookmark page">
+          </span> 
+          <font-awesome-icon class="Icon" icon="reply" />
+          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+        </div>
+      </div>
       <div class="leftAlign">
-        <hr>
-        <p><b>{{message.from}}</b></p>
         <p>to {{message.to}}</p>
       </div>
       <div v-html="message.body" class="leftAlign"></div>
+
     </div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
@@ -24,12 +41,19 @@
 </template>
 
 <style scoped>
-#body {
-  background-color: white;
+a:link {
+  color: purple;
 }
 .leftAlign {
   text-align: left;
   margin-left: 2%;
+}
+.rightAlign {
+  text-align: right;
+}
+.flexboxSubject {
+  display:flex;
+  justify-content: space-between;
 }
 .response-buttons {
   padding: 40px;
@@ -52,6 +76,26 @@ h4 {
   padding-left: 5%;
   padding-right: 1%;
 }
+.star {
+  visibility: hidden;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  left: 5px;
+  top: 1px;
+  width: 30px;
+  height: 30px;
+}
+.star:before {
+  content: "\2606";
+  position: absolute;
+  visibility:visible;
+}
+.star:checked:before {
+  content: "\2605";
+  position: absolute;
+}
+
 </style>
 
 <script>

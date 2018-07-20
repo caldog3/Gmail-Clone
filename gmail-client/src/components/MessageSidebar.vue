@@ -15,11 +15,11 @@
             <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  Inbox
           </div>
           <div>
-            <b-badge variant="primary" pill class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</b-badge>
+            <p class="notificationPill" v-if="unreadCount > 0">{{unreadCount}}</p>
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Starred')">
+      <div v-bind:class="activeFolderClass('Starred')" v-on:click="starredHandle()">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
         </div>
@@ -98,6 +98,8 @@ button {
   color: white;
   text-shadow: .5px -1px 2px #333;
   margin-right: 10px;
+  font-size: .9em;
+
 }
 .options > div {
   width: 100%;
@@ -131,7 +133,7 @@ button {
 #bootstrap-overrides {
   text-align: left;
 }
-.notificationPill b-badge {
+.notificationPill {
   text-align: right;
 }
 </style>
@@ -179,6 +181,10 @@ export default {
       this.$store.state.currentFolder = "SENT";
       this.$router.push({ path: "/Folder/SENT/" });
     },
+    loadStarred() {
+      this.$store.state.currentFolder = "STARRED";
+      this.$router.push({ path: "/Folder/STARRED/" });
+    },
     sentHandle() {
       this.loadSent();
       this.activateFolder("Sent");
@@ -186,7 +192,11 @@ export default {
     draftsHandle() {
       this.loadDrafts();
       this.activateFolder("Drafts");
-    }
+    },
+    starredHandle() {
+      this.loadStarred();
+      this.activateFolder("Starred");
+    },
   },
   created() {
     eventBus.$on("UNREAD_COUNT", unreads => {

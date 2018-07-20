@@ -14,7 +14,7 @@
                 
                 <label class="container">
                   <div class="highlightAreaCheck">
-                    <input type="checkbox" checked="checked" :value="thread.threadId" v-model="checkedEmails">
+                    <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
       
@@ -127,7 +127,6 @@
   margin-right: 4px;
 }
 
-
 /* The Checkbox  */
 /* The container */
 .container {
@@ -216,10 +215,6 @@
   content: "\2605";
   position: absolute;
 }
-
-
-
-
 
 .item {
   width: 30px;
@@ -399,11 +394,7 @@ export default {
   },
   methods: {
     starredLabelToggle(thread) {
-      console.log("1st time");
-      console.log(thread.starred);
       thread.starred = !thread.starred;
-      console.log("2nd time");
-      console.log(thread.starred);
       if(thread.starred === true) {
         markAsStarred(thread.threadId);
       }
@@ -483,11 +474,11 @@ export default {
           const numberOfMessages = threadMessages.length;
 
           if (numberOfMessages > 0) {
-            const { from, conciseTo, subject, snippet, unread } = threadMessages[0];
+            const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, conciseTo, subject, snippet, time, unread, numberOfMessages};
+            return {threadId, from, starred, conciseTo, subject, snippet, time, unread, numberOfMessages};
           } else {
             console.log("Not yet Ready. The Label is", labelId)
             return {};
@@ -500,7 +491,16 @@ export default {
   },
   created() {
     eventBus.$emit('MESSAGE_LIST');
-    eventBus.$on('CHECK_ALL', this.check);
+    eventBus.$on('CHECK_ALL', source => {
+      for(var i = 0; i < document.getElementsByName('checks').length; i++) {
+        if (source === true) {
+          document.getElementsByName('checks')[i].checked = true;
+        }
+        else {
+          document.getElementsByName('checks')[i].checked = false;
+        }
+      }
+    });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },

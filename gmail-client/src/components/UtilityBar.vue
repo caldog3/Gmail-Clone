@@ -5,18 +5,27 @@
           <div>
             <span v-if=!messageBody>
               <div class="flexIcons">
-                <div v-on:click="checkAll()" class="item">
+                <!-- <div v-on:click="checkAll(this)" class="item"> -->
+                <div class="item">
                   <div class="highlightArea">
-                    <div v-if=!checked>
-                      <font-awesome-icon style="color:white;" class="Icon" icon="square" />
-                    </div>
-                    <div v-if=checked>
-                      <font-awesome-icon style="color:white;" class="Icon" icon="check-square"/>
-                    </div>
+                    <input type="checkbox" @click="checkAllToggle()">
                   </div>
                 </div>
-                <div class="highlightArea2">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
+                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <div id="caretDropdown" class="dropdown-content">
+                    <p>  All </p>
+                    <hr>
+                    <p> None </p>
+                    <hr>
+                    <p> Read </p>
+                    <hr>
+                    <p> Unread </p>
+                    <hr>
+                    <p> Starred </p>
+                    <hr>
+                    <p> Unstarred </p>
+                  </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
@@ -320,9 +329,11 @@ button {
 }
 #ellipsesDropdown {
   color: black;
-  
 }
 #cogDropdown {
+  color: black;
+}
+#caretDropdown {
   color: black;
 }
 .dropdown-content a {
@@ -397,11 +408,16 @@ export default {
       messageBody: false,
       checked: false,
       totalMessages: '50',
+      check: false,
     }
   },
   methods: {
     pageNum() {
       return this.$store.state.currentPage;
+    },
+    checkAllToggle() {
+      this.check = !this.check;
+      this.checkAll(this.check);
     },
     nextPageLoad() {
       eventBus.$emit("NEXT_PAGE_LOAD");
@@ -424,9 +440,9 @@ export default {
     false() {
       this.messageBody = false;
     },
-    checkAll() {
+    checkAll(source) {
       this.checked = !this.checked;
-      eventBus.$emit('CHECK_ALL');
+      eventBus.$emit('CHECK_ALL', source);
     },
     back() {
       //Need to route it back to EmailList
@@ -445,6 +461,9 @@ export default {
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
       document.getElementById("ellipsesDropdown").classList.toggle("show");
+    },
+    caretDropdownFunction() {
+      document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
       document.getElementById("cogDropdown").classList.toggle("show");
