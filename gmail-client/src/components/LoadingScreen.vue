@@ -80,17 +80,17 @@
    methods: {
    },
    created() {
-    let promoMessages = this.$store.getters.getLabelMessages["PROMOTIONS"];
-    if(promoMessages === undefined){
-      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
+    let primaryMessages = this.$store.getters.getLabelMessages["PRIMARY"];
+    if(primaryMessages === undefined){
+      this.$store.dispatch("getListOfMessages", "PRIMARY");
     }
     let socialMessages = this.$store.getters.getLabelMessages["SOCIAL"];
     if(socialMessages === undefined){
       this.$store.dispatch("getListOfMessages", "SOCIAL");
     }
-    let personalMessages = this.$store.getters.getLabelMessages["PRIMARY"];
-    if(personalMessages === undefined){
-      this.$store.dispatch("getListOfMessages", "PRIMARY");
+    let promoMessages = this.$store.getters.getLabelMessages["PROMOTIONS"];
+    if(promoMessages === undefined){
+      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
     }
     let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
     if(draftMessages === undefined){
