@@ -24,7 +24,7 @@
           <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
         </div>
         <div>
-            <p class="notificationPill" v-if="unreadCount('STARRED') > 0">{{unreadCount('STARRED')}}</p>
+            <p class="notificationPill" v-if="unreadCount('STARRED') > 0">{{unreadCount('STARRED')}} hissss</p>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Snoozed')">
