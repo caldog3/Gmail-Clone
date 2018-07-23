@@ -9,11 +9,13 @@
                 <div class="item">
                   <div class="highlightArea">
                     <input type="checkbox" @click="checkAllToggle()">
+                    <span class="tooltiptext">Select</span>
                     <!-- <span class="checkmark"></span> -->
                   </div>
                 </div>
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <span class="tooltiptext">Select</span>
                   <div id="caretDropdown" class="dropdown-content">
                     <p>  All </p>
                     <hr>
@@ -32,6 +34,7 @@
                   <div class="highlightArea">
                     <div>
                       <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                      <span class="tooltiptext">Refresh</span>
                     </div>
                   </div>
                 </div>
@@ -53,21 +56,25 @@
                   <div v-on:click.stop="back()" class="item">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                      <span class="tooltiptext">Back to Inbox</span>
                     </div>
                   </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                    <span class="tooltiptext">Archive</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                    <span class="tooltiptext">Report Spam</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
+                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
+                    <span class="tooltiptext">Delete</span> 
                   </div>
                 </div>
                 <div class="break">
@@ -76,12 +83,14 @@
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                    <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>
             
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                  <span class="tooltiptext">Snooze</span>
                 </div>
               </div>
               <div class="break">
@@ -90,6 +99,7 @@
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                  <span class="tooltiptext">Move to</span>
                 </div>
               </div>
               <div class="item">
@@ -128,15 +138,18 @@
 
             <div class="paddingNeeded" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+              <span class="tooltiptext">Newer</span>
             </div>
             
             <div class="lessPadding" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+              <span class="tooltiptext">Older</span>
             </div>
             <div>
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                  <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
                     <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
@@ -241,8 +254,6 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
-
 .spacing {
   position: relative;
   z-index: 3;
@@ -431,6 +442,120 @@ p:hover {background-color: #ddd;}
 hr {
   margin: 0px;
 }
+
+/* Tooltip text */
+.highlightArea .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.highlightArea2 .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea2:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.lessPadding .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 150px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.lessPadding:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.paddingNeeded .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 110px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.paddingNeeded:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* lets see end */
 @media screen and (max-width : 950px) { 
   .rightTopPad {
