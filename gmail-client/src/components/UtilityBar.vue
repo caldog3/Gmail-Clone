@@ -460,6 +460,7 @@ hr {
   left: 25px;
   margin-left: -30px;
   font-size:x-small;
+  white-space: nowrap;
 
   /* Fade in tooltip */
   opacity: 0;
