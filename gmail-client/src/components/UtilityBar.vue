@@ -329,7 +329,6 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-
 .paddingNeeded {
   padding-right: 30px;
   cursor: pointer;
