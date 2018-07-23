@@ -133,8 +133,6 @@
             <div class="lessPadding" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
             </div>
-
-
             <div>
               <div class="item">
                 <div class="highlightArea">
