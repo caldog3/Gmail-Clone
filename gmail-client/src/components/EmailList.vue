@@ -205,11 +205,13 @@
   top: 1px;
   width: 30px;
   height: 30px;
+  
 }
 .star:before {
   content: "\2606";
   position: absolute;
   visibility:visible;
+
 }
 .star:checked:before {
   content: "\2605";
