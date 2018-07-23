@@ -90,11 +90,7 @@
           <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
         </div>
       </div>
-      <div>
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="plus" />&emsp;  Create new label
-        </div>
-      </div>
+
 
     </div>
 
