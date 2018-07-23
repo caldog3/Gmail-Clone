@@ -9,7 +9,7 @@
                 <div class="item">
                   <div class="highlightArea">
                     <input type="checkbox" @click="checkAllToggle()">
-                    <span class="checkmark"></span>
+                    <!-- <span class="checkmark"></span> -->
                   </div>
                 </div>
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
@@ -340,9 +340,9 @@
   padding-top: 5px;
   font-size: .9em;
 }
-/* input {
-  float: left;
-} */
+input {
+  margin-top: 7px;
+}
 button {
   float: right;
   margin-right: 20%;
