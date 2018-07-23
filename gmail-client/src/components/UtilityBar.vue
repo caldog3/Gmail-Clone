@@ -9,6 +9,7 @@
                 <div class="item">
                   <div class="highlightArea">
                     <input type="checkbox" @click="checkAllToggle()">
+                    <!-- <span class="checkmark"></span> -->
                   </div>
                 </div>
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
@@ -196,6 +197,72 @@
   height: 40px;
   margin-left: 270px;
 }
+
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  /* top: 7px;
+  left: 6px; */
+  opacity: 0;
+  cursor: pointer;
+}
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 7px;
+  left: 6px;
+  height: 17px;
+  width: 17px;
+  background-color: rgba(255, 255, 255, 0.0); 
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: rgba(255, 255, 255, 0.0); 
+}
+/* When the checkbox is checked, add a black background */
+.container input:checked ~ .checkmark {
+  background-color: black;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
 .spacing {
   position: relative;
   z-index: 3;
@@ -274,7 +341,7 @@
   font-size: .9em;
 }
 input {
-  float: left;
+  margin-top: 7px;
 }
 button {
   float: right;

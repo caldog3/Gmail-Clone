@@ -131,20 +131,26 @@ button {
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
-.inactiveFolder {
-  /* not sure */
-}
+/* .inactiveFolder {
+  not sure
+} */
 #sidebarFlex {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 5px;
+  padding-left: 5px;
   padding-right: 10px;
   text-shadow: none;
+  height: 100%;
+  padding-top: 8px;
 }
 .notInbox {
   float: left;
-  padding: 5px;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 8px;
 }
 #bootstrap-overrides {
   text-align: left;
