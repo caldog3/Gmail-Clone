@@ -231,7 +231,7 @@
   height: 17px;
   width: 17px;
   background-color: rgba(255, 255, 255, 0.0); 
-  border-color: black;
+  border-color: white;
   border-style: solid;
   border-width: 1px;
   border-radius: 4px;
@@ -242,7 +242,7 @@
 }
 /* When the checkbox is checked, add a black background */
 .container input:checked ~ .checkmark {
-  background-color: black;
+  background-color: white;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -260,7 +260,7 @@
   top: 1px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid black;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
