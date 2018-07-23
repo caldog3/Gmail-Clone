@@ -7,11 +7,13 @@
               <div class="flexIcons">
                 <!-- <div v-on:click="checkAll(this)" class="item"> -->
                 <div class="item">
-                  <div class="highlightArea">
-                    <input type="checkbox" @click="checkAllToggle()">
-                    <span class="tooltiptext">Select</span>
-                    <!-- <span class="checkmark"></span> -->
-                  </div>
+                  <label class="container">
+                    <div class="highlightAreaCheck">
+                      <input type="checkbox" @click="checkAllToggle()">
+                      <span class="tooltiptext">Select</span>
+                      <span class="checkmark"></span>
+                    </div>
+                  </label>
                 </div>
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
@@ -190,7 +192,17 @@
   height: 40px;
   margin-left: 270px;
 }
-
+.highlightAreaCheck {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+  cursor: pointer; 
+  position: absolute;
+  left: 1px;
+}
+.highlightAreaCheck:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
 .container {
   display: block;
   position: relative;
@@ -553,6 +565,34 @@ hr {
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .paddingNeeded:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.highlightAreaCheck .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 27px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightAreaCheck:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
