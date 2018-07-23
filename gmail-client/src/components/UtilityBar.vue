@@ -134,30 +134,12 @@
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
             </div>
 
-            <div>
-              <div class="highlightArea1">
-                <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
-              </div>  
-            </div>
-            <div>
-              <div class="highlightArea2">
-                <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
-              </div>
-            </div>
+
             <div>
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry">
-                      <b-btn v-b-modal.modal1>Change Theme</b-btn>
-                      <!-- Modal Component -->
-                      <b-modal id="modal1" title="Change Theme">
-                        <!-- <div v-for="background in backgrounds"> -->
-                        <!-- </div> -->
-                      </b-modal>
-                    </div>
-                    <hr>
                     <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
                     <div class="dropdownEntry">Some kind of setting</div>
