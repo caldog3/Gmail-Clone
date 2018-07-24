@@ -121,11 +121,19 @@
   background: rgba(255, 255, 255, 0.6); 
   width: 100%;
   position: relative;
+  z-index: 1;
+}
+.readClass:hover {
+  box-shadow: 2px 0px 5px grey;
 }
 .unreadClass {
   width: 100%;
   font-weight: 90;
   position: relative;
+  z-index: 1;
+}
+.unreadClass:hover {
+  box-shadow: 2px 0px 5px grey;
 }
 .FlexTable {
   position: relative;
@@ -135,6 +143,7 @@
   padding-right: 3px;
   padding-left: 3px;
   height: 40px;
+  z-index: 3;
 }
 .first {
   width: 30px;
@@ -252,6 +261,7 @@
   flex-basis: 0;
   overflow: hidden;
   position: relative;
+  z-index: 4;
 }
 .from {
   width: 200px;
