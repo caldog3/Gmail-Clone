@@ -94,7 +94,7 @@
               </div>
               <div class="item">
                 <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
                   <div id="ellipsesDropdown" class="dropdown-content">
                     <p>Mark as read</p>
                     <hr>
