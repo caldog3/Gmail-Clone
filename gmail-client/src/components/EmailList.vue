@@ -62,27 +62,29 @@
                 <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
-              <div class="hoverView">
-                <div class="item">
+              
+
+            </div>
+
+            <div class="hoverView">
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                  <!-- <span class="tooltiptext">Archive</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                  <!-- <span class="tooltiptext">Report Spam</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" /> 
+                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                </div>
                   <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
-                    <!-- <span class="tooltiptext">Archive</span> -->
-                  </div>
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                    <!-- <span class="tooltiptext">Report Spam</span> -->
-                  </div>
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-                    <!-- <span class="tooltiptext">Mark as Unread</span> -->
-                  </div>
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                    <!-- <span class="tooltiptext">Snooze</span> -->
-                  </div>
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                  <!-- <span class="tooltiptext">Snooze</span> -->
                 </div>
               </div>
-
             </div>
 
             <div class="smallOnly">
@@ -349,7 +351,33 @@ svg:not(:root).svg-inline--fa {
   display: block;
 }
 
+.highlightArea .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+  /* Position the tooltip text */
+  /* position: absolute; */
+  z-index: 1;
+  bottom: 25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+  white-space: nowrap;
 
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 
 
 @media screen and (max-width : 830px) {
