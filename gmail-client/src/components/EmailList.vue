@@ -133,10 +133,9 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  padding-top: 7px;
-  padding-bottom: 7px;
   padding-right: 3px;
   padding-left: 3px;
+  height: 40px;
 }
 .first {
   width: 30px;
@@ -145,7 +144,7 @@
   display: flex;
   flex-direction: row;
   width: 60px;
-  margin-right: 4px;
+  margin: 5px 4px 5px 0px
 }
 
 /* The Checkbox  */
@@ -250,16 +249,15 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  height: 30px;
   flex-grow: 1;
   flex-basis: 0;
   overflow: hidden;
-  padding-top: 4px;
 }
 .from {
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
+  margin: 10px 0px 5px 0px;
 }
 .dateTime {
   width: 100px;
@@ -267,6 +265,7 @@
   white-space:nowrap; 
   justify-content: flex-end;
   margin-left: auto;
+  margin-top: 10px;
   
 }
 .snippit {
@@ -274,6 +273,7 @@
   white-space:nowrap; 
   flex-grow: 1;
   flex-basis: 0;
+  margin-top: 10px;
 }
 .rwd-break {
   display: none;
@@ -341,6 +341,7 @@ svg:not(:root).svg-inline--fa {
   margin-left: auto;
   flex-direction: row;
   padding-left: 14px;
+  margin-top: 5px;
 }
 
 .FlexTable:hover .hoverView {
