@@ -62,6 +62,25 @@
                 <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
+              <div class="hoverView">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                  <!-- <span class="tooltiptext">Archive</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                  <!-- <span class="tooltiptext">Report Spam</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                  <!-- <span class="tooltiptext">Snooze</span> -->
+                </div>
+              </div>
+
             </div>
 
             <div class="smallOnly">
@@ -245,6 +264,7 @@
   white-space:nowrap; 
   justify-content: flex-end;
   margin-left: auto;
+  display: none; 
 }
 .snippit {
   overflow: hidden;
@@ -299,9 +319,41 @@ a {
 .highlightAreaCheck:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
 }
+.hoverView .highlightArea {
+  position: relative;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
+
+.FlexTable:hover .dateTime {
+  visibility: hidden;
+  display: none;
+}
+
+.hoverView {
+  /* visibility: hidden;
+  display: none; */
+  width: 200px;
+  overflow: hidden;
+  white-space:nowrap; 
+  justify-content: flex-end;
+  margin-left: auto;
+  flex-direction: row;
+}
+
+.FlexTable:hover .hoverView {
+  visibility: visible;
+  display: block;
+}
+
+
+
+
 @media screen and (max-width : 830px) {
   .emailLink {
     display: flex;
