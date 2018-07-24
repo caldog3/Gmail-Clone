@@ -63,21 +63,23 @@
               </div>
 
               <div class="hoverView">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
-                  <!-- <span class="tooltiptext">Archive</span> -->
-                </div>
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                  <!-- <span class="tooltiptext">Report Spam</span> -->
-                </div>
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
-                </div>
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <!-- <span class="tooltiptext">Snooze</span> -->
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                    <!-- <span class="tooltiptext">Archive</span> -->
+                  </div>
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                    <!-- <span class="tooltiptext">Report Spam</span> -->
+                  </div>
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                    <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                  </div>
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                    <!-- <span class="tooltiptext">Snooze</span> -->
+                  </div>
                 </div>
               </div>
 
@@ -239,8 +241,9 @@
 }
 
 .item {
-  width: 30px;
-  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .emailLink {
   cursor: pointer;
@@ -264,7 +267,7 @@
   white-space:nowrap; 
   justify-content: flex-end;
   margin-left: auto;
-  display: none; 
+  
 }
 .snippit {
   overflow: hidden;
@@ -319,13 +322,6 @@ a {
 .highlightAreaCheck:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
 }
-.hoverView .highlightArea {
-  position: relative;
-  z-index: 5;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
@@ -336,14 +332,15 @@ svg:not(:root).svg-inline--fa {
 }
 
 .hoverView {
-  /* visibility: hidden;
-  display: none; */
+  visibility: hidden;
+  display: none;
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
   justify-content: flex-end;
   margin-left: auto;
   flex-direction: row;
+  padding-left: 14px;
 }
 
 .FlexTable:hover .hoverView {
