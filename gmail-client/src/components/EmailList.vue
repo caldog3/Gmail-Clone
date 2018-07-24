@@ -120,7 +120,7 @@
   background: rgba(255, 255, 255, 0.6); 
   width: 100%;
   position: relative;
-  z-index: 1;
+  /* z-index: 1; */
 }
 .readClass:hover {
   box-shadow: 2px 0px 5px grey;
@@ -129,7 +129,7 @@
   width: 100%;
   font-weight: 90;
   position: relative;
-  z-index: 1;
+  /* z-index: 1; */
 }
 .unreadClass:hover {
   box-shadow: 2px 0px 5px grey;
@@ -142,7 +142,7 @@
   padding-right: 3px;
   padding-left: 3px;
   height: 40px;
-  z-index: 3;
+  /* z-index: 3; */
 }
 .first {
   width: 30px;
@@ -260,7 +260,7 @@
   flex-basis: 0;
   overflow: hidden;
   position: relative;
-  z-index: 4;
+  /* z-index: 4; */
 }
 .from {
   width: 200px;
@@ -369,7 +369,7 @@ svg:not(:root).svg-inline--fa {
   
   /* Position the tooltip text */
   position: absolute;
-  z-index: 999999999999999999999999999999999;
+  /* z-index: 999999999999999999999999999999999; */
   bottom: -16px;
   /* left: 3px; */
   margin-left: -30px;
@@ -384,7 +384,7 @@ svg:not(:root).svg-inline--fa {
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
-  z-index: 999999999999999999999999999999999;
+  /* z-index: 999999999999999999999999999999999; */
   opacity: 1;
 }
 
