@@ -20,13 +20,7 @@
       
                 </label>
               </div>
-              
-                  <!-- <div v-if=!checked v-on:click="check()">
-                    <font-awesome-icon class="Icon" icon="square" />
-                  </div>
-                  <div v-if=checked v-on:click="check()">
-                    <font-awesome-icon class="Icon" icon="check-square"/>
-                  </div> -->
+            
                   
               <div class="largeOnly">
                 <div class="highlightArea">
@@ -70,19 +64,19 @@
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  <!-- <span class="tooltiptext">Archive</span> -->
+                  <span class="tooltiptext">Archive</span>
                 </div>
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <!-- <span class="tooltiptext">Report Spam</span> -->
+                  <span class="tooltiptext">Report Spam</span>
                 </div>
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" /> 
-                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                  <span class="tooltiptext">Mark as Unread</span>
                 </div>
                   <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                  <!-- <span class="tooltiptext">Snooze</span> -->
+                  <span class="tooltiptext">Snooze</span>
                 </div>
               </div>
             </div>
@@ -126,18 +120,30 @@
   color: none;
   background: rgba(255, 255, 255, 0.6); 
   width: 100%;
+  position: relative;
+  z-index: 1;
+}
+.readClass:hover {
+  box-shadow: 2px 0px 5px grey;
 }
 .unreadClass {
   width: 100%;
   font-weight: 90;
+  position: relative;
+  z-index: 1;
+}
+.unreadClass:hover {
+  box-shadow: 2px 0px 5px grey;
 }
 .FlexTable {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-content: stretch;
   padding-right: 3px;
   padding-left: 3px;
   height: 40px;
+  z-index: 3;
 }
 .first {
   width: 30px;
@@ -254,6 +260,8 @@
   flex-grow: 1;
   flex-basis: 0;
   overflow: hidden;
+  position: relative;
+  z-index: 4;
 }
 .from {
   width: 200px;
@@ -335,6 +343,7 @@ svg:not(:root).svg-inline--fa {
 
 .hoverView {
   visibility: hidden;
+  position: relative;
   display: none;
   width: 200px;
   overflow: hidden;
@@ -360,10 +369,10 @@ svg:not(:root).svg-inline--fa {
   border-radius: 6px;
   
   /* Position the tooltip text */
-  /* position: absolute; */
-  z-index: 1;
-  bottom: 25px;
-  left: 25px;
+  position: absolute;
+  z-index: 999999999999999999999999999999999;
+  bottom: -16px;
+  /* left: 3px; */
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
@@ -376,9 +385,13 @@ svg:not(:root).svg-inline--fa {
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
+  z-index: 999999999999999999999999999999999;
   opacity: 1;
 }
 
+/* .Icon {
+  margin-left: 7px;
+} */
 
 @media screen and (max-width : 830px) {
   .FlexTable {
@@ -441,17 +454,6 @@ svg:not(:root).svg-inline--fa {
     left: 0px;
     top: 0px;
   }
-  /* .star + label::before {
-    content: "star";
-    color: black;
-    position: absolute;
-    visibility:visible;
-  }
-  .star:checked + label::before {
-    content: "star";
-    color: gold;
-    position: absolute;
-  } */
 }
 
 
