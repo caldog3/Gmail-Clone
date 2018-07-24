@@ -7,13 +7,17 @@
               <div class="flexIcons">
                 <!-- <div v-on:click="checkAll(this)" class="item"> -->
                 <div class="item">
-                  <div class="highlightArea">
-                    <input type="checkbox" @click="checkAllToggle()">
-                    <!-- <span class="checkmark"></span> -->
-                  </div>
+                  <label class="container">
+                    <div class="highlightAreaCheck">
+                      <input type="checkbox" @click="checkAllToggle()">
+                      <span class="tooltiptext">Select</span>
+                      <span class="checkmark"></span>
+                    </div>
+                  </label>
                 </div>
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <span class="tooltiptext">Select</span>
                   <div id="caretDropdown" class="dropdown-content">
                     <p>  All </p>
                     <hr>
@@ -32,6 +36,7 @@
                   <div class="highlightArea">
                     <div>
                       <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                      <span class="tooltiptext">Refresh</span>
                     </div>
                   </div>
                 </div>
@@ -53,21 +58,25 @@
                   <div v-on:click.stop="back()" class="item">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                      <span class="tooltiptext">Back to Inbox</span>
                     </div>
                   </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                    <span class="tooltiptext">Archive</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                    <span class="tooltiptext">Report Spam</span>
                   </div>
                 </div>
                 <div class="item">
                   <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" /> 
+                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
+                    <span class="tooltiptext">Delete</span> 
                   </div>
                 </div>
                 <div class="break">
@@ -76,12 +85,14 @@
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                    <span class="tooltiptext">Mark as Unread</span>
+                  </div>
                 </div>
-              </div>
             
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                  <span class="tooltiptext">Snooze</span>
                 </div>
               </div>
               <div class="break">
@@ -90,6 +101,7 @@
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                  <span class="tooltiptext">Move to</span>
                 </div>
               </div>
               <div class="item">
@@ -128,36 +140,19 @@
 
             <div class="paddingNeeded" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+              <span class="tooltiptext">Newer</span>
             </div>
             
             <div class="lessPadding" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
-            </div>
-
-            <div>
-              <div class="highlightArea1">
-                <font-awesome-icon style="color:white;" class="Icon" icon="keyboard"/>
-              </div>  
-            </div>
-            <div>
-              <div class="highlightArea2">
-                <font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/>
-              </div>
+              <span class="tooltiptext">Older</span>
             </div>
             <div>
               <div class="item">
                 <div class="highlightArea">
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                  <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry">
-                      <b-btn v-b-modal.modal1>Change Theme</b-btn>
-                      <!-- Modal Component -->
-                      <b-modal id="modal1" title="Change Theme">
-                        <!-- <div v-for="background in backgrounds"> -->
-                        <!-- </div> -->
-                      </b-modal>
-                    </div>
-                    <hr>
                     <div class="dropdownEntry">Some kind of setting</div>
                     <hr>
                     <div class="dropdownEntry">Some kind of setting</div>
@@ -197,7 +192,17 @@
   height: 40px;
   margin-left: 270px;
 }
-
+.highlightAreaCheck {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+  cursor: pointer; 
+  position: absolute;
+  left: 1px;
+}
+.highlightAreaCheck:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
 .container {
   display: block;
   position: relative;
@@ -226,7 +231,7 @@
   height: 17px;
   width: 17px;
   background-color: rgba(255, 255, 255, 0.0); 
-  border-color: black;
+  border-color: white;
   border-style: solid;
   border-width: 1px;
   border-radius: 4px;
@@ -237,7 +242,7 @@
 }
 /* When the checkbox is checked, add a black background */
 .container input:checked ~ .checkmark {
-  background-color: black;
+  background-color: white;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -255,14 +260,12 @@
   top: 1px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid black;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
-
 .spacing {
   position: relative;
   z-index: 3;
@@ -326,7 +329,6 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-
 .paddingNeeded {
   padding-right: 30px;
   cursor: pointer;
@@ -451,6 +453,149 @@ p:hover {background-color: #ddd;}
 hr {
   margin: 0px;
 }
+
+/* Tooltip text */
+.highlightArea .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+  white-space: nowrap;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.highlightArea2 .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea2:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.lessPadding .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 150px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.lessPadding:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.paddingNeeded .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 110px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.paddingNeeded:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.highlightAreaCheck .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 27px;
+  margin-left: -30px;
+  font-size:x-small;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightAreaCheck:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* lets see end */
 @media screen and (max-width : 950px) { 
   .rightTopPad {

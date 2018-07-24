@@ -21,11 +21,13 @@
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Starred')" v-on:click="starredHandle()">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
-        </div>
-        <div>
+        <div id="sidebarFlex">
+          <div> 
+            <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
+          </div>
+          <div>
             <p class="notificationPill" v-if="unreadCounts[1].count > 0">{{unreadCounts[1].count}}</p>
+          </div>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Snoozed')">
@@ -34,27 +36,33 @@
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Sent')" v-on:click="sentHandle()">
-        <div class="notInbox"  id="sidebarFlex">
-          <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
-        </div>
-        <div>
-          <p class="notificationPill" v-if="unreadCounts[2].count > 0">{{unreadCounts[2].count}}</p>
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
+          </div>
+          <div>
+            <p class="notificationPill" v-if="unreadCounts[2].count > 0">{{unreadCounts[2].count}}</p>
+          </div>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="draftsHandle()">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
-        </div>
-        <div>
-          <p class="notificationPill" v-if="unreadCounts[3].count > 0">{{unreadCounts[3].count}}</p>
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
+          </div>
+          <div>
+            <p class="notificationPill" v-if="unreadCounts[3].count > 0">{{unreadCounts[3].count}}</p>
+          </div>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Important')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
-        </div>
-        <div>
-          <p class="notificationPill" v-if="unreadCounts[4].count > 0">{{unreadCounts[4].count}}</p>
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
+          </div>
+          <div>
+            <p class="notificationPill" v-if="unreadCounts[4].count > 0">{{unreadCounts[4].count}}</p>
+          </div>  
         </div>
       </div>
       <div v-bind:class="activeFolderClass('All mail')">
@@ -63,11 +71,13 @@
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Spam')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
-        </div>
-        <div>
-          <p class="notificationPill" v-if="unreadCounts[5].count > 0">{{unreadCounts[5].count}}</p>
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
+          </div>
+          <div>
+            <p class="notificationPill" v-if="unreadCounts[5].count > 0">{{unreadCounts[5].count}}</p>
+          </div>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Trash')">
@@ -80,11 +90,7 @@
           <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
         </div>
       </div>
-      <div>
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="plus" />&emsp;  Create new label
-        </div>
-      </div>
+
 
     </div>
 
@@ -131,6 +137,7 @@ button {
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
+
 /* .inactiveFolder {
   not sure
 } */

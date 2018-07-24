@@ -62,6 +62,29 @@
                 <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
+              
+
+            </div>
+
+            <div class="hoverView">
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                  <!-- <span class="tooltiptext">Archive</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                  <!-- <span class="tooltiptext">Report Spam</span> -->
+                </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" /> 
+                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                </div>
+                  <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                  <!-- <span class="tooltiptext">Snooze</span> -->
+                </div>
+              </div>
             </div>
 
             <div class="smallOnly">
@@ -112,10 +135,9 @@
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  padding-top: 7px;
-  padding-bottom: 7px;
   padding-right: 3px;
   padding-left: 3px;
+  height: 40px;
 }
 .first {
   width: 30px;
@@ -124,7 +146,7 @@
   display: flex;
   flex-direction: row;
   width: 60px;
-  margin-right: 4px;
+  margin: 5px 4px 5px 0px
 }
 
 /* The Checkbox  */
@@ -220,24 +242,24 @@
 }
 
 .item {
-  width: 30px;
-  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .emailLink {
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-content: stretch;
-  height: 30px;
   flex-grow: 1;
   flex-basis: 0;
   overflow: hidden;
-  padding-top: 4px;
 }
 .from {
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
+  margin: 10px 0px 5px 0px;
 }
 .dateTime {
   width: 100px;
@@ -245,12 +267,15 @@
   white-space:nowrap; 
   justify-content: flex-end;
   margin-left: auto;
+  margin-top: 10px;
+  
 }
 .snippit {
   overflow: hidden;
   white-space:nowrap; 
   flex-grow: 1;
   flex-basis: 0;
+  margin-top: 10px;
 }
 .rwd-break {
   display: none;
@@ -302,11 +327,66 @@ a {
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
 }
+
+.FlexTable:hover .dateTime {
+  visibility: hidden;
+  display: none;
+}
+
+.hoverView {
+  visibility: hidden;
+  display: none;
+  width: 200px;
+  overflow: hidden;
+  white-space:nowrap; 
+  justify-content: flex-end;
+  margin-left: auto;
+  flex-direction: row;
+  padding-left: 14px;
+  margin-top: 5px;
+}
+
+.FlexTable:hover .hoverView {
+  visibility: visible;
+  display: block;
+}
+
+.highlightArea .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  
+  /* Position the tooltip text */
+  /* position: absolute; */
+  z-index: 1;
+  bottom: 25px;
+  left: 25px;
+  margin-left: -30px;
+  font-size:x-small;
+  white-space: nowrap;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightArea:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 @media screen and (max-width : 830px) {
+  .FlexTable {
+    height: 110px;
+  }
   .emailLink {
     display: flex;
     flex-direction: column;
-    height: 75px;
     padding-bottom: 4px;
   }
   .from {
@@ -349,6 +429,10 @@ svg:not(:root).svg-inline--fa {
     display: block;
     margin-top: 0px;
   }
+  .FlexTable:hover .hoverView {
+  visibility: hidden;
+  display: none;
+}
 }
 
 @-moz-document url-prefix() {
