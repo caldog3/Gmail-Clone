@@ -41,9 +41,7 @@
 </template>
 
 <style scoped>
-a:link {
-  color: purple;
-}
+
 .leftAlign {
   text-align: left;
   margin-left: 2%;
