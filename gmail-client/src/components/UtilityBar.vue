@@ -86,8 +86,8 @@
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                     <span class="tooltiptext">Mark as Unread</span>
+                  </div>
                 </div>
-              </div>
             
               <div class="item">
                 <div class="highlightArea">
@@ -329,7 +329,6 @@
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
 }
-
 .paddingNeeded {
   padding-right: 30px;
   cursor: pointer;
