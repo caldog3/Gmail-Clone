@@ -20,13 +20,7 @@
       
                 </label>
               </div>
-              
-                  <!-- <div v-if=!checked v-on:click="check()">
-                    <font-awesome-icon class="Icon" icon="square" />
-                  </div>
-                  <div v-if=checked v-on:click="check()">
-                    <font-awesome-icon class="Icon" icon="check-square"/>
-                  </div> -->
+            
                   
               <div class="largeOnly">
                 <div class="highlightArea">
