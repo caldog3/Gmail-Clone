@@ -381,10 +381,12 @@ svg:not(:root).svg-inline--fa {
 
 
 @media screen and (max-width : 830px) {
+  .FlexTable {
+    height: 110px;
+  }
   .emailLink {
     display: flex;
     flex-direction: column;
-    height: 75px;
     padding-bottom: 4px;
   }
   .from {
@@ -427,6 +429,10 @@ svg:not(:root).svg-inline--fa {
     display: block;
     margin-top: 0px;
   }
+  .FlexTable:hover .hoverView {
+  visibility: hidden;
+  display: none;
+}
 }
 
 @-moz-document url-prefix() {
