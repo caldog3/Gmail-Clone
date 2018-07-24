@@ -64,19 +64,19 @@
               <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  <!-- <span class="tooltiptext">Archive</span> -->
+                  <span class="tooltiptext">Archive</span>
                 </div>
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <!-- <span class="tooltiptext">Report Spam</span> -->
+                  <span class="tooltiptext">Report Spam</span>
                 </div>
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" /> 
-                  <!-- <span class="tooltiptext">Mark as Unread</span> -->
+                  <span class="tooltiptext">Mark as Unread</span>
                 </div>
                   <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                  <!-- <span class="tooltiptext">Snooze</span> -->
+                  <span class="tooltiptext">Snooze</span>
                 </div>
               </div>
             </div>
@@ -354,10 +354,10 @@ svg:not(:root).svg-inline--fa {
   border-radius: 6px;
   
   /* Position the tooltip text */
-  /* position: absolute; */
+  position: relative;
   z-index: 1;
-  bottom: 25px;
-  left: 25px;
+  bottom: -25px;
+  left: 3px;
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
@@ -373,6 +373,9 @@ svg:not(:root).svg-inline--fa {
   opacity: 1;
 }
 
+.Icon {
+  margin-left: 7px;
+}
 
 @media screen and (max-width : 830px) {
   .FlexTable {
@@ -435,17 +438,6 @@ svg:not(:root).svg-inline--fa {
     left: 0px;
     top: 0px;
   }
-  /* .star + label::before {
-    content: "star";
-    color: black;
-    position: absolute;
-    visibility:visible;
-  }
-  .star:checked + label::before {
-    content: "star";
-    color: gold;
-    position: absolute;
-  } */
 }
 
 
