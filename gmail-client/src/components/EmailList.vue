@@ -111,7 +111,6 @@
   color: gray;
   font-size: .9em;
 }
-
 .everything {
   width: 100%;
   border-top: none;
