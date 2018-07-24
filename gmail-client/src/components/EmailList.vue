@@ -120,12 +120,15 @@
   color: none;
   background: rgba(255, 255, 255, 0.6); 
   width: 100%;
+  position: relative;
 }
 .unreadClass {
   width: 100%;
   font-weight: 90;
+  position: relative;
 }
 .FlexTable {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-content: stretch;
@@ -248,6 +251,7 @@
   flex-grow: 1;
   flex-basis: 0;
   overflow: hidden;
+  position: relative;
 }
 .from {
   width: 200px;
@@ -329,6 +333,7 @@ svg:not(:root).svg-inline--fa {
 
 .hoverView {
   visibility: hidden;
+  position: relative;
   display: none;
   width: 200px;
   overflow: hidden;
@@ -354,10 +359,10 @@ svg:not(:root).svg-inline--fa {
   border-radius: 6px;
   
   /* Position the tooltip text */
-  position: relative;
-  z-index: 1;
-  bottom: -25px;
-  left: 3px;
+  position: absolute;
+  z-index: 999999999999999999999999999999999;
+  bottom: -16px;
+  /* left: 3px; */
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
@@ -370,12 +375,13 @@ svg:not(:root).svg-inline--fa {
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
+  z-index: 999999999999999999999999999999999;
   opacity: 1;
 }
 
-.Icon {
+/* .Icon {
   margin-left: 7px;
-}
+} */
 
 @media screen and (max-width : 830px) {
   .FlexTable {
