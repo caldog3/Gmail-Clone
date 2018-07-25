@@ -94,13 +94,6 @@ a:not([href]):not([tabindex]) {
   padding: 4px;
   height: 35px;
 }
-/* .sectionTop:focus-within {
-  width: 100%;
-  border-bottom: 1px solid #CFCFCF;
-  padding: 4px;
-  height: 72px;
-} */
-
 .section {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
