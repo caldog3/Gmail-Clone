@@ -368,10 +368,10 @@ svg:not(:root).svg-inline--fa {
   border-radius: 6px;
   
   /* Position the tooltip text */
-  position: absolute;
-  /* z-index: 999999999999999999999999999999999; */
+  position: relative;
+  z-index: 1;
   bottom: -16px;
-  /* left: 3px; */
+  left: 3px;
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
@@ -388,9 +388,9 @@ svg:not(:root).svg-inline--fa {
   opacity: 1;
 }
 
-/* .Icon {
+.Icon {
   margin-left: 7px;
-} */
+}
 
 @media screen and (max-width : 830px) {
   .FlexTable {
