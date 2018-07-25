@@ -99,31 +99,10 @@
                 |
               </div>
               <div class="item">
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-                    <span class="tooltiptext">Move to</span>
-                  </div>
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                  <span class="tooltiptext">Move to</span>
                 </div>
-                <div class="item">
-                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                    <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                    <div id="ellipsesDropdown" class="dropdown-content">
-                      <p>Mark as read</p>
-                      <hr>
-                      <p>Mark as important</p>
-                      <hr>
-                      <p>Add to tasks</p>
-                      <hr>
-                      <p>Add star</p>
-                      <hr>
-                      <p>Create Event</p>
-                      <hr>
-                      <p>Filter messages like these</p>
-                      <hr>
-                      <p>Mute</p>
-                    </div>  
-                  </div>
               </div>
               <div class="item">
                 <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
@@ -143,6 +122,8 @@
                     <hr>
                     <p>Mute</p>
                   </div>  
+                </div>
+                
               </div>
             </div>
           </span>

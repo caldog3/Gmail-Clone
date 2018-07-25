@@ -210,20 +210,29 @@ export default {
           // }
           if(j <= 8) {
             theFolder = theFolder.toUpperCase();
+          
+            if (this.labels[j].unreadCount === 0) {
+              gapi.client.gmail.users.labels.get({
+              'userId': 'me',
+              'id': theFolder,
+              // 'q': 'category:primary',
+              }).then((response) => {
+                // console.log(response);
+                let unreadCount = response.result.threadsUnread;
+                this.labels[j].unreadCount = unreadCount;
+              });
+            } 
           }
-          if (this.labels[j].unreadCount === 0) {
+          else {
             gapi.client.gmail.users.labels.get({
-            'userId': 'me',
-            'id': theFolder,
-            // 'q': 'category:primary',
-            }).then((response) => {
-              // console.log(response);
-              let unreadCount = response.result.threadsUnread;
-              this.labels[j].unreadCount = unreadCount;
-            });
-          } 
-          else if (this.labels[j].folder == "Drafts") {
-            
+              'userId': 'me',
+              'id': this.labels[j].id,
+              // 'q': 'category:primary',
+              }).then((response) => {
+                // console.log(response);
+                let unreadCount = response.result.threadsUnread;
+                this.labels[j].unreadCount = unreadCount;
+              });
           }
         }
       });
@@ -291,7 +300,7 @@ export default {
     //Probably a much better way to do this
     eventBus.$on("CUSTOM_FOLDERS", customs => {
       for (let i = 0; i < customs.length; i+=1) {
-        this.labels.push({folder: customs[i], unreadCount: 0});
+        this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
         console.log("Pushed" + customs[i]);
       }
       // time to call something to check all the unreadCounts
