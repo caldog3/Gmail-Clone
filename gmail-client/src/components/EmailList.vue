@@ -364,14 +364,14 @@ svg:not(:root).svg-inline--fa {
   background-color: #555;
   color: #fff;
   text-align: center;
-  padding: 5px;
+  padding: 1px;
   border-radius: 6px;
   
   /* Position the tooltip text */
   position: relative;
   z-index: 1;
-  bottom: -16px;
-  left: 3px;
+  bottom: 7px;
+  left: 26px;
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
