@@ -409,11 +409,7 @@ button {
 }
 
 
-
-
-
-
-/* DROP DOWN STYLE */
+/*                  DROP DOWN STYLE                  */
 .dropbtn {
   position: relative;
   z-index: -345;
