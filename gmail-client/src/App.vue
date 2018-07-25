@@ -192,19 +192,19 @@ body {
 }
 
 
-a:link {
+.termsUnderneath a:link {
   text-decoration: none;
   color: white;
 }
-a:visited {
+.termsUnderneath a:visited {
   text-decoration: none;
   color: white;
 }
-a:hover {
+.termsUnderneath a:hover {
   text-decoration: none;
   color: white;
 }
-a:active {
+.termsUnderneath a:active {
   text-decoration: none;
   color: white;
 }
