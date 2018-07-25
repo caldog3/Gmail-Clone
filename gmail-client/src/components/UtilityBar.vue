@@ -672,24 +672,29 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
+      console.log("ellipses");
       document.getElementById("ellipsesDropdown").classList.toggle("show");
     },
     caretDropdownFunction() {
+      console.log("caret");
       document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
+      console.log("cog");
       document.getElementById("cogDropdown").classList.toggle("show");
     },
     // Close the dropdown if the user clicks outside of it
     window:onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
-
+        console.log("what's this?");
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
+          console.log(i);
           var openDropdown = dropdowns[i];
           if (openDropdown.classList.contains('show')) {
             openDropdown.classList.remove('show');
+            console.log("I don't know what this does?");
           }
         }
       }
