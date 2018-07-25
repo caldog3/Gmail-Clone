@@ -12,21 +12,21 @@
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
-            <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  Inbox
+            <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
           </div>
           <div>
             <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
-            <p class="notificationPill" v-if="unreadCounts[0].count > 0">{{unreadCounts[0].count}}</p>
+            <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
           </div>
         </div>
       </div>
       <div v-bind:class="activeFolderClass('Starred')" v-on:click="starredHandle()">
         <div id="sidebarFlex">
           <div> 
-            <font-awesome-icon style="color:white;" icon="star" />&emsp; Starred
+            <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
           </div>
           <div>
-            <p class="notificationPill" v-if="unreadCounts[1].count > 0">{{unreadCounts[1].count}}</p>
+            <p class="notificationPill" v-if="labels[1].unreadCount > 0">{{labels[1].unreadCount}}</p>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
             <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
           </div>
           <div>
-            <p class="notificationPill" v-if="unreadCounts[2].count > 0">{{unreadCounts[2].count}}</p>
+            <p class="notificationPill" v-if="labels[3].unreadCount > 0">{{labels[3].unreadCount}}</p>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
             <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
           </div>
           <div>
-            <p class="notificationPill" v-if="unreadCounts[3].count > 0">{{unreadCounts[3].count}}</p>
+            <p class="notificationPill" v-if="labels[4].unreadCount > 0">{{labels[4].unreadCount}}</p>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
           </div>
           <div>
-            <p class="notificationPill" v-if="unreadCounts[4].count > 0">{{unreadCounts[4].count}}</p>
+            <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
           </div>  
         </div>
       </div>
@@ -76,7 +76,7 @@
             <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
           </div>
           <div>
-            <p class="notificationPill" v-if="unreadCounts[5].count > 0">{{unreadCounts[5].count}}</p>
+            <p class="notificationPill" v-if="labels[7].unreadCount > 0">{{labels[7].unreadCount}}</p>
           </div>
         </div>
       </div>
@@ -184,28 +184,69 @@ export default {
       unreadCounts: [],
       viewFolder: "Inbox",
       i: 0,
+      labels: [
+        {folder: "Inbox", unreadCount: 0},
+        {folder: "Starred", unreadCount: -1},
+        {folder: "Snoozed", unreadCount: -1},
+        {folder: "Sent", unreadCount: 0},
+        {folder: "Drafts", unreadCount: -1},
+        {folder: "Important", unreadCount: -1     },
+        {folder: "All Mail", unreadCount: -1},
+        {folder: "Spam", unreadCount: 0},
+        {folder: "Trash", unreadCount: 0},
+        //all custom folders will push to the end of here
+      ],
     };
   },
   methods: {
-    unreadCount(label) {
+    unreadCount() {
+      console.log("IM MAKING IT HERE RIGHT");
+      
       gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.labels.get({
-        'userId': 'me',
-        'id': label,
-        // 'q': 'category:primary',
-        }).then((response) => {
-          // console.log(response);
-          let unreadCount = response.result.threadsUnread;
-          // console.log(unreadCount + "unreadCount");
-          this.unreadCounts.push({folder: label, count: unreadCount});
-          console.log(label);
-          let index = this.i;
-          console.log(this.unreadCounts[index].count);
-          console.log(this.unreadCounts);
-          this.i += 1;
-        });
+        for (let j = 0; j < this.labels.length; j++) {
+          var theFolder = this.labels[j].folder;
+          // if (theFolder == "Inbox") {
+          //   theFolder = "CATEGORY_PERSONAL";
+          // }
+          if(j <= 8) {
+            theFolder = theFolder.toUpperCase();
+          
+            if (this.labels[j].unreadCount === 0) {
+              gapi.client.gmail.users.labels.get({
+              'userId': 'me',
+              'id': theFolder,
+              // 'q': 'category:primary',
+              }).then((response) => {
+                // console.log(response);
+                let unreadCount = response.result.threadsUnread;
+                this.labels[j].unreadCount = unreadCount;
+              });
+            } 
+          }
+          else {
+            gapi.client.gmail.users.labels.get({
+              'userId': 'me',
+              'id': this.labels[j].id,
+              // 'q': 'category:primary',
+              }).then((response) => {
+                // console.log(response);
+                let unreadCount = response.result.threadsUnread;
+                this.labels[j].unreadCount = unreadCount;
+              });
+          }
+        }
       });
     },
+    // getLabels() {
+    //   gapi.client.load('gmail', 'v1').then(() => {
+    //     gapi.client.gmail.users.labels.list({
+    //       'userId': 'me',
+    //     }).then((response) => {
+    //       console.log("Listing the labels");
+    //       console.log(response);
+    //     });
+    //   });
+    // },
     activateFolder(folder) {
       this.viewFolder = folder;
     },
@@ -254,16 +295,23 @@ export default {
     eventBus.$on("UNREAD_COUNT", unreads => {
       // this.unreadCounts = unreads;
     })
-    getLabelsForUnread();
+    // getLabelsForUnread();
     getLabels();
     //Probably a much better way to do this
-
-    this.unreadCount("CATEGORY_PERSONAL");
-    this.unreadCount("STARRED");
-    this.unreadCount("SENT");
-    this.unreadCount("DRAFT");
-    this.unreadCount("IMPORTANT");
-    this.unreadCount("SPAM");
+    eventBus.$on("CUSTOM_FOLDERS", customs => {
+      for (let i = 0; i < customs.length; i+=1) {
+        this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
+        console.log("Pushed" + customs[i]);
+      }
+      // time to call something to check all the unreadCounts
+      this.unreadCount();
+    })
+    // this.unreadCount("CATEGORY_PERSONAL");
+    // this.unreadCount("STARRED");
+    // this.unreadCount("SENT");
+    // this.unreadCount("DRAFT");
+    // this.unreadCount("IMPORTANT");
+    // this.unreadCount("SPAM");
   },
 
 };
