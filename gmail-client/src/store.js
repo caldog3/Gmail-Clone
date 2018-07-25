@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { initializeGoogleClient } from './main';
+import { getAttachment } from './store-utility-files/gmail-api-calls';
 import {
   getTimeFormat,
   getBody, 
@@ -24,13 +25,14 @@ export default new Vuex.Store({
     sessionExpiration: null,
     currentPage: 1,
     currentFolder: "INBOX",
+    attachments: {},
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
     getThreadMessages: state => state.threadMessages,
     getLabelNextPageTokens: state => state.labelNextPageTokens,
     getLatestThreadMessageTime: state => state.latestThreadMessageTime,
-
+    getAttachments: state => state.attachments,
     googleAuth: state => state.googleAuth,
     getCurrentUserProfile: state => state.currentUserProfile,
     getCurrentUser: state => state.currentUser,
@@ -99,6 +101,14 @@ export default new Vuex.Store({
       // console.log(messages);
       Vue.set(state.threadMessages, threadId, messages);
 
+    },
+    addAttachmentId(state, payload) {
+      console.log(payload);
+      Vue.set(state.attachments, payload.attachmentId, {
+        messageId: payload.messageId,
+        mimeType: payload.mimeType,
+        data: null
+      });
     },
     currentUser(state, payload) {
       state.currentUser = payload;
@@ -321,10 +331,35 @@ export default new Vuex.Store({
           attachmentIds
         };
         context.commit("addMessage", message);
+
+        return { messageId, attachmentIds };
+      }).then((payload) => {
+        if (payload.attachmentIds.length >= 1) {
+          payload.attachmentIds.forEach((attachmentId) => {
+            context.commit("addAttachmentId", {
+              attachmentId: attachmentId.attachmentId,
+              mimeType: attachmentId.mimeType,
+              messageId: payload.messageId              
+            });
+          });
+        }
       }).catch((err) => {
         // console.log("but first: " + from);
         console.log(err);
       });
+    },
+    getAttachments(context) {
+      const attachments = context.getters.getAttachments;
+      console.log("Attachments from getter", attachments)
+      const attachmentIds = Object.keys(attachments);
+      for (const attachmentId of attachmentIds) {
+        const messageId = attachments[attachmentId].messageId;
+
+        const attachmentData = getAttachment({ attachmentId, messageId });
+      
+        console.log("Store: log After getAttachment")
+        console.log("Attachments:--", attachmentData);
+      }
     },
   }
 });
