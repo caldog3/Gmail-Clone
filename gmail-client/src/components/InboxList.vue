@@ -9,7 +9,6 @@
       <b-tab title="Social">
         <email-list labelId="SOCIAL"/>
       </b-tab>
-
       <b-tab title="Promotions" >
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
@@ -20,10 +19,6 @@
 <style scoped>
 #setWidth {
   background: rgba(255, 255, 255, 0.6);
-}
-ul > .nav {
-  display: flex;
-  flex-wrap: nowrap !important;
 }
 </style>
 

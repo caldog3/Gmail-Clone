@@ -8,7 +8,6 @@
     <br>
     <br>
     <br>
-    
     <div class="load-bar">
       <div class="bar"></div>
       <div class="bar"></div>

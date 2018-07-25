@@ -3,6 +3,7 @@
       <div class="iconDiv">
         <div class="spacing">
           <div>
+
             <span v-if=!messageBody>
               <div class="flexIcons">
                 <!-- <div v-on:click="checkAll(this)" class="item"> -->
@@ -32,7 +33,7 @@
                     <p> Unstarred </p>
                   </div>
                 </div>
-                <div class="item">
+                <div class="item1">
                   <div class="highlightArea">
                     <div>
                       <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
@@ -43,24 +44,24 @@
                 <div class="item">
                   <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
                     <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                      <div id="ellipsesDropdown" class="dropdown-content">
-                        <p v-on:click="markAllAsRead()">  Mark all as read </p>
-                        <hr>
-                        <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
-                      </div>
+                    <div id="ellipsesDropdown" class="dropdown-content">
+                      <p v-on:click="markAllAsRead()">  Mark all as read </p>
+                      <hr>
+                      <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
                     </div>
                   </div>
                 </div>
-              </span>
+              </div>
+            </span>
       
-              <span v-if=messageBody>
-                <div class="CenterIt">
-                  <div v-on:click.stop="back()" class="item">
-                    <div class="highlightArea">
-                      <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
-                      <span class="tooltiptext">Back to Inbox</span>
-                    </div>
+            <span v-if=messageBody>
+              <div class="CenterIt">
+                <div v-on:click.stop="back()" class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                    <span class="tooltiptext">Back to Inbox</span>
                   </div>
+                </div>
                 <div class="item">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
@@ -89,85 +90,83 @@
                   </div>
                 </div>
             
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                    <span class="tooltiptext">Snooze</span>
+                  </div>
+                </div>
+                <div class="break">
+                  |
+                </div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                    <span class="tooltiptext">Move to</span>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
+                    <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                    <div id="ellipsesDropdown" class="dropdown-content">
+                      <p>Mark as read</p>
+                      <hr>
+                      <p>Mark as important</p>
+                      <hr>
+                      <p>Add to tasks</p>
+                      <hr>
+                      <p>Add star</p>
+                      <hr>
+                      <p>Create Event</p>
+                      <hr>
+                      <p>Filter messages like these</p>
+                      <hr>
+                      <p>Mute</p>
+                    </div>  
+                  </div>
                 </div>
               </div>
-              <div class="break">
-                |
-              </div>
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-                  <span class="tooltiptext">Move to</span>
-                </div>
-              </div>
-              <div class="item">
-                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="ellipsesDropdown" class="dropdown-content">
-                    <p>Mark as read</p>
-                    <hr>
-                    <p>Mark as important</p>
-                    <hr>
-                    <p>Add to tasks</p>
-                    <hr>
-                    <p>Add star</p>
-                    <hr>
-                    <p>Create Event</p>
-                    <hr>
-                    <p>Filter messages like these</p>
-                    <hr>
-                    <p>Mute</p>
-                  </div>  
-                </div>
-                
-              </div>
-            </div>
-          </span>
-          
-        </div>
+            </span>          
+          </div>
 
-        <div class="right-side-utility">
-          <div class="flexIcons">
+          <div class="right-side-utility">
+            <div class="flexIcons">
             
-            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
-              {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
-            </div>
-            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
+              <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
+                {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+              </div>
+              <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
-            <div class="paddingNeeded" v-on:click="lastPageLoad">
-              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
-              <span class="tooltiptext">Newer</span>
-            </div>
+              <div class="paddingNeeded" v-on:click="lastPageLoad">
+                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+                <span class="tooltiptext">Newer</span>
+              </div>
             
-            <div class="lessPadding" v-on:click="nextPageLoad">
-              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
-              <span class="tooltiptext">Older</span>
-            </div>
-            <div>
-              <div class="item">
-                <div class="highlightArea">
-                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
-                  <span class="tooltiptext">Settings</span>
-                  <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry">Some kind of setting</div>
-                    <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
-                    <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
-                    <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
-                    <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
-                </div> 
+              <div class="lessPadding" v-on:click="nextPageLoad">
+                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+                <span class="tooltiptext">Older</span>
+              </div>
+              <div>
+                <div class="item">
+                  <div class="highlightArea">
+                    <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                    <span class="tooltiptext">Settings</span>
+                    <div id="cogDropdown" class="cog dropdown-content">
+                      <div class="dropdownEntry">Some kind of setting</div>
+                      <hr>
+                      <div class="dropdownEntry">Some kind of setting</div>
+                      <hr>
+                      <div class="dropdownEntry">Some kind of setting</div>
+                      <hr>
+                      <div class="dropdownEntry">Some kind of setting</div>
+                      <hr>
+                      <div class="dropdownEntry">Some kind of setting</div>
+                    </div> 
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
         </div>
       </div>
@@ -176,6 +175,7 @@
 </template>
 
 <style scoped>
+/*                  BASIC STYLES                  */
 .body {
   position: relative;
   height: 40px;
@@ -192,17 +192,124 @@
   height: 40px;
   margin-left: 270px;
 }
-.highlightAreaCheck {
+.flexIcons {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: row;
+  margin-left: 8px;
+}
+.flexIcons svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+.item {
+  position: relative;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.item1 {
+  position: relative;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+.spacing {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.Icon {
+  display:inline-block;
+  cursor: pointer;
+  z-index: -1;
+  position: relative;
+}
+.break {
+  width: 30px;
+  padding-top: 4px;
+  cursor: default;
+}
+.highlightArea {
+  position: fixed;
+  opacity: 0.999;
+  z-index: 999999999999999;
   width: 30px;
   height: 30px;
   border-radius: 35px;
-  cursor: pointer; 
-  position: absolute;
-  left: 1px;
 }
-.highlightAreaCheck:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+.highlightArea:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 999999999999999;
 }
+.highlightArea1 {
+  width: 25px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.highlightArea1:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.highlightArea2 {
+  position: fixed;
+  opacity: 0.999;
+  z-index: 999999999999999;
+  width: 15px;
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 15px;
+  cursor: pointer;
+  left: 303px;
+}
+.highlightArea2:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.CenterIt {
+  display: flex;
+  flex-direction: row;
+}
+.CenterIt svg:not(:root).svg-inline--fa {
+  margin-top: 7px;
+}
+.right-side-utility {
+  margin-right: 40px;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+.paddingNeeded {
+  margin-right: 30px;
+  cursor: pointer;
+}
+.lessPadding {
+  padding-right: 20px;
+  cursor: pointer;
+}
+.rightTopPad {
+  padding-right: 30px;
+  padding-top: 5px;
+  font-size: .9em;
+}
+input {
+  margin-top: 7px;
+}
+button {
+  float: right;
+  margin-right: 20%;
+}
+
+
+
+/*                  STYLIZED CHECKBOX                  */
 .container {
   display: block;
   position: relative;
@@ -222,6 +329,40 @@
   left: 6px; */
   opacity: 0;
   cursor: pointer;
+}
+.highlightAreaCheck {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+  cursor: pointer; 
+  position: absolute;
+  left: 1px;
+}
+.highlightAreaCheck:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+.highlightAreaCheck .tooltiptext {
+  visibility: hidden;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: -25px;
+  left: 27px;
+  margin-left: -30px;
+  font-size:x-small;
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.highlightAreaCheck:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 /* Create a custom checkbox */
 .checkmark {
@@ -266,109 +407,13 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-.spacing {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-.flexIcons {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  flex-direction: row;
-  margin-left: 8px;
-}
-.flexIcons svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.item {
-  position: relative;
-  z-index: 5;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
-.Icon {
-  display:inline-block;
-  cursor: pointer;
-  z-index: -1;
-  position: relative;
-}
-.break {
-  width: 30px;
-  padding-top: 4px;
-  cursor: default;
-}
-.highlightArea {
-  position: fixed;
-  opacity: 0.999;
-  z-index: 999999999999999;
-  width: 30px;
-  height: 30px;
-  border-radius: 35px;
-}
-.highlightArea:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 999999999999999;
-}
-.CenterIt {
-  display: flex;
-  flex-direction: row;
-}
-.CenterIt svg:not(:root).svg-inline--fa {
-  margin-top: 7px;
-}
-.right-side-utility {
-  margin-right: 40px;
-  -webkit-user-select: none; /* Safari */        
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
-}
-.paddingNeeded {
-  margin-right: 30px;
-  cursor: pointer;
-}
-.lessPadding {
-  padding-right: 20px;
-  cursor: pointer;
-}
-.rightTopPad {
-  padding-right: 30px;
-  padding-top: 5px;
-  font-size: .9em;
-}
-input {
-  margin-top: 7px;
-}
-button {
-  float: right;
-  margin-right: 20%;
-}
-.highlightArea1 {
-  width: 25px;
-  height: 30px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.highlightArea1:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-.highlightArea2 {
-  width: 15px;
-  height: 30px;
-  border-radius: 5px;
-  margin-right: 15px;
-  cursor: pointer;
-}
-.highlightArea2:hover {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-/* lets see */
+
+
+
+
+
+
+/* DROP DOWN STYLE */
 .dropbtn {
   position: relative;
   z-index: -345;
@@ -454,7 +499,8 @@ hr {
   margin: 0px;
 }
 
-/* Tooltip text */
+
+/*                  Tooltip text                  */
 .highlightArea .tooltiptext {
   visibility: hidden;
   background-color: #555;
@@ -462,8 +508,6 @@ hr {
   text-align: center;
   padding: 5px;
   border-radius: 6px;
-  
-
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
@@ -472,12 +516,10 @@ hr {
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
-
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
@@ -491,8 +533,6 @@ hr {
   text-align: center;
   padding: 5px;
   border-radius: 6px;
-  
-
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
@@ -500,12 +540,10 @@ hr {
   left: 25px;
   margin-left: -30px;
   font-size:x-small;
-
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea2:hover .tooltiptext {
   visibility: visible;
@@ -519,8 +557,6 @@ hr {
   text-align: center;
   padding: 5px;
   border-radius: 6px;
-  
-
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
@@ -528,12 +564,10 @@ hr {
   left: 150px;
   margin-left: -30px;
   font-size:x-small;
-
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .lessPadding:hover .tooltiptext {
   visibility: visible;
@@ -547,8 +581,6 @@ hr {
   text-align: center;
   padding: 5px;
   border-radius: 6px;
-  
-
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
@@ -556,45 +588,17 @@ hr {
   left: 110px;
   margin-left: -30px;
   font-size:x-small;
-
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .paddingNeeded:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
 }
 
-.highlightAreaCheck .tooltiptext {
-  visibility: hidden;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  border-radius: 6px;
-  
 
-  /* Position the tooltip text */
-  position: absolute;
-  z-index: 1;
-  bottom: -25px;
-  left: 27px;
-  margin-left: -30px;
-  font-size:x-small;
-
-  /* Fade in tooltip */
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.highlightAreaCheck:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
 
 /* lets see end */
 @media screen and (max-width : 950px) { 
@@ -672,24 +676,29 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
+      console.log("ellipses");
       document.getElementById("ellipsesDropdown").classList.toggle("show");
     },
     caretDropdownFunction() {
+      console.log("caret");
       document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
+      console.log("cog");
       document.getElementById("cogDropdown").classList.toggle("show");
     },
     // Close the dropdown if the user clicks outside of it
     window:onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
-
+        console.log("close dropdown?");
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
+          console.log(i);
           var openDropdown = dropdowns[i];
           if (openDropdown.classList.contains('show')) {
             openDropdown.classList.remove('show');
+            console.log("It closed this dropdown?");
           }
         }
       }
