@@ -330,7 +330,7 @@
   user-select: none; /* Standard */
 }
 .paddingNeeded {
-  padding-right: 30px;
+  margin-right: 30px;
   cursor: pointer;
 }
 .lessPadding {
