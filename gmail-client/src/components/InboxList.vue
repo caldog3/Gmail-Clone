@@ -20,7 +20,6 @@
 #setWidth {
   background: rgba(255, 255, 255, 0.6);
 }
-
 </style>
 
 <script>
