@@ -33,7 +33,7 @@
                     <p> Unstarred </p>
                   </div>
                 </div>
-                <div class="item">
+                <div class="item1">
                   <div class="highlightArea">
                     <div>
                       <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
@@ -209,6 +209,14 @@
   height: 30px;
   cursor: pointer;
 }
+.item1 {
+  position: relative;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 20px;
+}
 .spacing {
   position: relative;
   z-index: 3;
@@ -251,11 +259,15 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 .highlightArea2 {
+  position: fixed;
+  opacity: 0.999;
+  z-index: 999999999999999;
   width: 15px;
   height: 30px;
   border-radius: 5px;
   margin-right: 15px;
   cursor: pointer;
+  left: 303px;
 }
 .highlightArea2:hover {
   background-color: rgba(255, 255, 255, 0.5);
@@ -678,7 +690,7 @@ export default {
     // Close the dropdown if the user clicks outside of it
     window:onclick = function(event) {
       if (!event.target.matches('.dropbtn')) {
-        console.log("what's this?");
+        console.log("close dropdown?");
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
@@ -686,7 +698,7 @@ export default {
           var openDropdown = dropdowns[i];
           if (openDropdown.classList.contains('show')) {
             openDropdown.classList.remove('show');
-            console.log("I don't know what this does?");
+            console.log("It closed this dropdown?");
           }
         }
       }
