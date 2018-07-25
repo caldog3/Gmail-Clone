@@ -350,7 +350,7 @@ svg:not(:root).svg-inline--fa {
   justify-content: flex-end;
   margin-left: auto;
   flex-direction: row;
-  padding-left: 14px;
+  padding-left: 18px;
   margin-top: 5px;
 }
 
@@ -371,7 +371,7 @@ svg:not(:root).svg-inline--fa {
   position: relative;
   z-index: 1;
   bottom: 7px;
-  left: 26px;
+  left: -23px;
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
