@@ -175,7 +175,7 @@
 </template>
 
 <style scoped>
-/*                  BASIC STYLES                  */
+/* ----------------------BASIC STYLES---------------------- */
 .body {
   position: relative;
   height: 40px;
@@ -309,7 +309,7 @@ button {
 
 
 
-/*                  STYLIZED CHECKBOX                  */
+/* ----------------------STYLIZED CHECKBOX---------------------- */
 .container {
   display: block;
   position: relative;
@@ -408,12 +408,7 @@ button {
   transform: rotate(45deg);
 }
 
-
-
-
-
-
-/* DROP DOWN STYLE */
+/* ----------------------DROP DOWN STYLE---------------------- */
 .dropbtn {
   position: relative;
   z-index: -345;
@@ -499,8 +494,7 @@ hr {
   margin: 0px;
 }
 
-
-/*                  Tooltip text                  */
+/* ----------------------Tooltip text---------------------- */
 .highlightArea .tooltiptext {
   visibility: hidden;
   background-color: #555;
@@ -597,8 +591,6 @@ hr {
   visibility: visible;
   opacity: 1;
 }
-
-
 
 /* lets see end */
 @media screen and (max-width : 950px) { 
