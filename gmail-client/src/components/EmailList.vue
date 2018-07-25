@@ -1,10 +1,6 @@
 /* eslint-disable */
 <template>
   <div class="everything">
-    <!-- This is for testing the checkboxes array
-    <span>
-      <p> works.... {{ checkedEmails }} </p>
-    </span> -->
     <template v-if="threads">
 
       <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
