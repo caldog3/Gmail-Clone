@@ -1,10 +1,6 @@
 /* eslint-disable */
 <template>
   <div class="everything">
-    <!-- This is for testing the checkboxes array
-    <span>
-      <p> works.... {{ checkedEmails }} </p>
-    </span> -->
     <template v-if="threads">
 
       <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
@@ -111,7 +107,6 @@
   color: gray;
   font-size: .9em;
 }
-
 .everything {
   width: 100%;
   border-top: none;
@@ -121,7 +116,7 @@
   background: rgba(255, 255, 255, 0.6); 
   width: 100%;
   position: relative;
-  z-index: 1;
+  /* z-index: 1; */
 }
 .readClass:hover {
   box-shadow: 2px 0px 5px grey;
@@ -130,7 +125,7 @@
   width: 100%;
   font-weight: 90;
   position: relative;
-  z-index: 1;
+  /* z-index: 1; */
 }
 .unreadClass:hover {
   box-shadow: 2px 0px 5px grey;
@@ -143,7 +138,7 @@
   padding-right: 3px;
   padding-left: 3px;
   height: 40px;
-  z-index: 3;
+  /* z-index: 3; */
 }
 .first {
   width: 30px;
@@ -261,7 +256,7 @@
   flex-basis: 0;
   overflow: hidden;
   position: relative;
-  z-index: 4;
+  /* z-index: 4; */
 }
 .from {
   width: 200px;
@@ -351,7 +346,7 @@ svg:not(:root).svg-inline--fa {
   justify-content: flex-end;
   margin-left: auto;
   flex-direction: row;
-  padding-left: 14px;
+  padding-left: 18px;
   margin-top: 5px;
 }
 
@@ -365,14 +360,14 @@ svg:not(:root).svg-inline--fa {
   background-color: #555;
   color: #fff;
   text-align: center;
-  padding: 5px;
+  padding: 1px;
   border-radius: 6px;
   
   /* Position the tooltip text */
-  position: absolute;
-  z-index: 999999999999999999999999999999999;
-  bottom: -16px;
-  /* left: 3px; */
+  position: relative;
+  z-index: 1;
+  bottom: 7px;
+  left: -23px;
   margin-left: -30px;
   font-size:x-small;
   white-space: nowrap;
@@ -385,13 +380,13 @@ svg:not(:root).svg-inline--fa {
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
-  z-index: 999999999999999999999999999999999;
+  /* z-index: 999999999999999999999999999999999; */
   opacity: 1;
 }
 
-/* .Icon {
+.Icon {
   margin-left: 7px;
-} */
+}
 
 @media screen and (max-width : 830px) {
   .FlexTable {

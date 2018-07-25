@@ -23,6 +23,8 @@
     </div>
     <div class="sectionText">
       <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+      <!-- <div class="textSpace" contenteditable="true" v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"> </div> -->
+
     </div>
     <div class="footerSection">
       <div class="sendButton">
@@ -99,10 +101,6 @@ a:not([href]):not([tabindex]) {
   height: 72px;
 } */
 
-
-
-
-
 .section {
   width: 100%;
   border-bottom: 1px solid #CFCFCF;
@@ -141,6 +139,14 @@ textarea {
   min-height: 285px;
   resize: none;
   /* for now */
+}
+.textSpace {
+  width: 100%;
+  border: none;
+  outline: none;
+  height: 100%;
+  min-height: 285px;
+  resize: none;
 }
 .footerSection {
   overflow: hidden;
