@@ -15,7 +15,7 @@
         <div class="rightAlign">
           {{message.time}} (some hours ago idk)
           <span class="highlightArea">
-            <input class="star" type="checkbox" :checked="message.starred" title="bookmark page">
+            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
           </span> 
           <font-awesome-icon class="Icon" icon="reply" />
           <font-awesome-icon class="Icon" icon="ellipsis-v" />
@@ -41,9 +41,7 @@
 </template>
 
 <style scoped>
-a:link {
-  color: purple;
-}
+
 .leftAlign {
   text-align: left;
   margin-left: 2%;
@@ -101,6 +99,8 @@ h4 {
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { sortBy } from 'lodash'
+import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
+
 
 export default {
   name: 'EmailBody',
@@ -116,6 +116,16 @@ export default {
     }
   },
   methods: {
+    starredLabelToggle(thread) {
+      thread.starred = !thread.starred;
+      if(thread.starred === true) {
+        markAsStarred(thread.threadId);
+      }
+      else {
+        unMarkAsStarred(thread.threadId);
+      }
+
+    },
     ifGroupMessage() {
       let to = this.messages[0].to;
       //console.log(to);

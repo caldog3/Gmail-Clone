@@ -78,22 +78,22 @@ const getNumberOfMessages = () => {
       'userId': 'me',
       'id': 'INBOX',
     }).then((response) => {
-      console.log("NUM MESSAGES STUFF");
-      console.log(response);
+      // console.log("NUM MESSAGES STUFF");
+      // console.log(response);
       let totalInboxEmailCount = response.result.threadsTotal;
-        gapi.client.gmail.users.labels.get({
-          'userId': 'me',
-          'id': 'CATEGORY_PROMOTIONS',
-        }).then((response) => {
-          let totalEmailCount = totalInboxEmailCount - response.result.threadsTotal;
-            gapi.client.gmail.users.labels.get({
-              'userId': 'me',
-              'id': 'CATEGORY_SOCIAL',
-            }).then((response) => {
-              totalEmailCount = totalEmailCount - response.result.threadsTotal;
-              eventBus.$emit('TOTAL_EMAIL_COUNT', totalEmailCount);
-            });
-        });
+      gapi.client.gmail.users.labels.get({
+        'userId': 'me',
+        'id': 'CATEGORY_PROMOTIONS',
+      }).then((response) => {
+        let totalEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+          gapi.client.gmail.users.labels.get({
+            'userId': 'me',
+            'id': 'CATEGORY_SOCIAL',
+          }).then((response) => {
+            totalEmailCount = totalEmailCount - response.result.threadsTotal;
+            eventBus.$emit('TOTAL_EMAIL_COUNT', totalEmailCount);
+          });
+      });
     });
   });
 }
@@ -105,7 +105,7 @@ const getLabelsForUnread = () => {
     'id': 'INBOX',
     // 'q': 'category:primary',
     }).then((response) => {
-      console.log(response);
+      // console.log(response);
       let unreadCount = response.result.threadsUnread;
       eventBus.$emit('UNREAD_COUNT', unreadCount);
     });
