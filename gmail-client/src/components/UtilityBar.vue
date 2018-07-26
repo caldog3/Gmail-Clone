@@ -592,6 +592,11 @@ hr {
   opacity: 1;
 }
 
+
+@-moz-document url-prefix() {
+  /* Something */
+}
+
 /* lets see end */
 @media screen and (max-width : 950px) { 
   .rightTopPad {
