@@ -137,9 +137,13 @@
               </div>
               <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
-              <div class="paddingNeeded" v-on:click="lastPageLoad">
+              <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
                 <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
                 <span class="tooltiptext">Newer</span>
+              </div>
+              <div class="paddingNeeded" v-else>
+                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+                <span class="tooltiptext">No Newer</span>
               </div>
             
               <div class="lessPadding" v-on:click="nextPageLoad">

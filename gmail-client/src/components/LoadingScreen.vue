@@ -103,6 +103,7 @@
     if(starredMessages === undefined){
       this.$store.dispatch("getFolderListOfMessages", "STARRED");
     }
+
     
    },
  }
