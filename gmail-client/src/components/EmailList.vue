@@ -6,9 +6,6 @@
           <div class="FlexTable">
 
             <div class="checkboxes">
-              <div class="lockIcon">
-
-              </div>
 
               <div class="first">
                 <label class="container">
@@ -23,6 +20,10 @@
                 <div class="highlightArea">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
+              </div>
+
+              <div class="lockIcon">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKPSURBVGhD7dpNiE5RHMfxh/FSIiQbCwsjZcOGvMZGUWM32xGJBQuiWLCyEDtJlCIUWTE1WVhQJuWlJGQlrykpZlJeSl6/v8VTt+N/nznnPHPOGdP86rM793/Of57n3nvuc6eRKQtxANfxBl/xB4N4jIvYjOkYkVmJm9CifXzBMczCiMgkHMdvWAseynusR9FMQcinUOcntqJYrsJaWAw1swHZswnWgqqeoR/XcAcfYY1reousF4HZqFvUL5zAPLjpwFqoKetYOYlsOQhrEd+xEUNlHM6irob+UMkzHi9hLWIXfKNP5y6sOvuQPCtgTf4UWlxIlsGq9RDJsxfW5LsRk0dwa+kKNhVJcxnuxDIfMTkCq54uCknzAO6kuoLFphtuPdmOpHkOd1J9PWJTd57sR9J8gDvpLcRmAdx6oq9c0nyCO6nu3LGZC7eenELSjJpGZmCmo51LpW6wbj3RzjpZJsCaNIVh3zzqwWkP9Jga+/AUS4/JfViOtqK/ym1Yk+SkO33IPu6fXIFVuAR9G6IevJbCKliSdhXBOQSrWGlzEJRzsAqVFnziX4JVqLTVCMpYI4kVaeQVDkNPj+fxA9a4ENkb6cU0VLMEA7DG+8rayDtov2RFv8Rbx/jK2shp1GUy9NuVdZyPrI3odUGrfIN1nI+sjdxHXRbDOsZX9pO9B24m4gas8b6yN6KtdxeqGY7ddPZGZAeqeQJrXIixRtoxahrZiWr+20bOoBnd6T/DGheiSCPN13DboHuLNSZUkUZSCG7kAqxCpa1CUI7CKlSa9ba4ZdbBKlSSXsIGR6+Q78EqWMoWREU/+b+GVTS3Vs84XtHLe90Pmv93ldsLRH8SVvS+YhF07uSwBp1w0mj8BYxi/ufuYUtEAAAAAElFTkSuQmCC">
               </div>
 
             </div>
@@ -125,7 +126,8 @@
 }
 .unreadClass {
   width: 100%;
-  font-weight: 90;
+  background: rgba(255, 255, 255, 0.6); 
+  /* font-weight: 90; */
   position: relative;
   /* z-index: 1; */
 }
@@ -151,17 +153,28 @@
   flex-direction: row;
   margin: 5px 4px 5px 0px
 }
-
 .readClass .checkboxes {
   width: 80px;
 }
-
+.readClass .from {
+  width: 180px;
+}
 .unreadClass .checkboxes {
   width: 60px;
 }
-
+.unreadClass .from {
+  width: 200px;
+}
+.unreadClass .lockIcon {
+  display: none;
+  visibility: hidden;
+}
 .lockIcon {
   width: 20px;
+}
+img {
+  width: 20px;
+  height: 20px;
 }
 
 /* The Checkbox  */
@@ -273,7 +286,7 @@
   /* z-index: 4; */
 }
 .from {
-  width: 200px;
+  /* width: 200px; */
   overflow: hidden;
   white-space:nowrap; 
   margin: 10px 0px 5px 0px;
