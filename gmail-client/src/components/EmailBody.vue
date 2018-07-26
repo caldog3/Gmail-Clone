@@ -16,7 +16,7 @@
           <b>{{message.detailedFrom}}</b>
         </div>
         <div class="rightAlign">
-          {{message.time}} (some hours ago idk)
+          {{message.time}}
           <span class="highlightArea">
             <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
           </span> 
