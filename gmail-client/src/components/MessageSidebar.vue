@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Starred')" v-on:click="starredHandle()">
+      <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
             <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
@@ -35,7 +35,7 @@
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Sent')" v-on:click="sentHandle()">
+      <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
@@ -45,13 +45,13 @@
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Drafts')" v-on:click="draftsHandle()">
+      <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
           </div>
           <div>
-            <p class="notificationPill" v-if="labels[4].unreadCount > 0">{{labels[4].unreadCount}}</p>
+            <p class="notificationPill" v-if="draftNum > 0">{{draftNum}}</p>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Spam')">
+      <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
@@ -181,8 +181,8 @@ export default {
   },
   data() {
     return {
+      draftNum: 0,
       unreadCounts: [],
-      viewFolder: "Inbox",
       i: 0,
       labels: [
         {folder: "Inbox", unreadCount: 0},
@@ -200,14 +200,12 @@ export default {
   },
   methods: {
     unreadCount() {
-      console.log("IM MAKING IT HERE RIGHT");
-      
       gapi.client.load('gmail', 'v1').then(() => {
         for (let j = 0; j < this.labels.length; j++) {
           var theFolder = this.labels[j].folder;
-          // if (theFolder == "Inbox") {
-          //   theFolder = "CATEGORY_PERSONAL";
-          // }
+          if (theFolder == "Inbox") {
+            theFolder = "CATEGORY_PERSONAL";
+          }
           if(j <= 8) {
             theFolder = theFolder.toUpperCase();
           
@@ -248,10 +246,11 @@ export default {
     //   });
     // },
     activateFolder(folder) {
-      this.viewFolder = folder;
+      this.$store.state.viewFolder = folder;
+      this.$store.state.currentPage = 1;
     },
     activeFolderClass(folder) {
-      if (folder == this.viewFolder) {
+      if (folder == this.$store.state.viewFolder) {
         return "activeFolder";
       }
       else {return "inactiveFolder"}
@@ -261,37 +260,43 @@ export default {
     },
     loadInbox() {
       this.$router.push({ path: "/" });
+      this.$store.state.labelMessages.PRIMARY = [];
+      this.$store.state.labelMessages.SOCIAL = [];
+      this.$store.state.labelMessages.PROMOTIONS = [];
+      this.$store.dispatch("getListOfMessages", "PRIMARY");
+      this.$store.dispatch("getListOfMessages", "SOCIAL");
+      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
+
+
+
+
     },
-    loadDrafts() {
-      //not sure how to route this properly yet
-      this.$store.state.currentFolder = "DRAFT";
-      this.$router.push({ path: "/Folder/DRAFTS/" });
+
+    generalHandle(folder) {
+      if (folder == "Spam") {
+        let spamMessages = this.$store.getters.getLabelMessages["SPAM"];
+        if(spamMessages === undefined) {
+          this.$store.dispatch("getFolderListOfMessages", "SPAM");
+        }
+      }
+
+      this.loadFolder(folder);
+      this.activateFolder(folder);
     },
-    loadSent() {
-      this.$store.state.currentFolder = "SENT";
-      this.$router.push({ path: "/Folder/SENT/" });
-    },
-    loadStarred() {
-      this.$store.state.currentFolder = "STARRED";
-      this.$router.push({ path: "/Folder/STARRED/" });
-    },
-    sentHandle() {
-      this.loadSent();
-      this.activateFolder("Sent");
-    },
-    draftsHandle() {
-      this.loadDrafts();
-      this.activateFolder("Drafts");
-    },
-    starredHandle() {
-      this.loadStarred();
-      this.activateFolder("Starred");
+    loadFolder(folder) {
+      this.$router.push({ path: "/Folder/" + folder.toUpperCase() + "/" });
+      if (folder == "Drafts") {
+        folder = "Draft";
+      }
+      this.$store.state.currentFolder = folder.toUpperCase();
+
     },
   },
   computed: {
 
   },
   created() {
+    this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
     eventBus.$on("UNREAD_COUNT", unreads => {
       // this.unreadCounts = unreads;
     })
@@ -301,7 +306,7 @@ export default {
     eventBus.$on("CUSTOM_FOLDERS", customs => {
       for (let i = 0; i < customs.length; i+=1) {
         this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
-        console.log("Pushed" + customs[i]);
+        // console.log("Pushed" + customs[i]);
       }
       // time to call something to check all the unreadCounts
       this.unreadCount();
