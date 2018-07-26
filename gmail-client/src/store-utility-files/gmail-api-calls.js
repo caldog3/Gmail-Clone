@@ -82,28 +82,18 @@ const getLabels = () => {
 //..we need more conditionals
 
 //Getting the number of messages for the utility bar
-const getNumberOfMessages = () => {
+const getNumberOfMessages = (folder) => {
   gapi.client.load('gmail', 'v1').then(() => {
+    folder = folder.toUpperCase();
+    console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
+    console.log(folder);
     gapi.client.gmail.users.labels.get({
       'userId': 'me',
-      'id': 'INBOX',
+      'id': folder,
     }).then((response) => {
-      // console.log("NUM MESSAGES STUFF");
-      // console.log(response);
       let totalInboxEmailCount = response.result.threadsTotal;
-      gapi.client.gmail.users.labels.get({
-        'userId': 'me',
-        'id': 'CATEGORY_PROMOTIONS',
-      }).then((response) => {
-        let totalEmailCount = totalInboxEmailCount - response.result.threadsTotal;
-          gapi.client.gmail.users.labels.get({
-            'userId': 'me',
-            'id': 'CATEGORY_SOCIAL',
-          }).then((response) => {
-            totalEmailCount = totalEmailCount - response.result.threadsTotal;
-            eventBus.$emit('TOTAL_EMAIL_COUNT', totalEmailCount);
-          });
-      });
+      console.log("still alive");
+      return totalInboxEmailCount;
     });
   });
 }
