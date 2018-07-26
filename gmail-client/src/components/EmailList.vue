@@ -484,7 +484,8 @@ export default {
       else {
         unMarkAsStarred(thread.threadId);
       }
-
+    this.$store.state.labelMessages.STARRED = [];
+    this.$store.dispatch("getFolderListOfMessages", "STARRED");
     },
     readClassChanger(message){
       var theClass = 'readClass';
