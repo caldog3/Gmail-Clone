@@ -149,7 +149,7 @@ button {
   padding-right: 10px;
   text-shadow: none;
   height: 100%;
-  padding-top: 8px;
+  padding-top: 7px;
 }
 .notInbox {
   float: left;
