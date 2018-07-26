@@ -6,6 +6,9 @@
           <div class="FlexTable">
 
             <div class="checkboxes">
+              <div class="lockIcon">
+
+              </div>
 
               <div class="first">
                 <label class="container">
@@ -142,11 +145,23 @@
 .first {
   width: 30px;
 }
+
 .checkboxes {
   display: flex;
   flex-direction: row;
-  width: 60px;
   margin: 5px 4px 5px 0px
+}
+
+.readClass .checkboxes {
+  width: 80px;
+}
+
+.unreadClass .checkboxes {
+  width: 60px;
+}
+
+.lockIcon {
+  width: 20px;
 }
 
 /* The Checkbox  */
