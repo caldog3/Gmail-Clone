@@ -8,7 +8,6 @@
     <br>
     <br>
     <br>
-    
     <div class="load-bar">
       <div class="bar"></div>
       <div class="bar"></div>
@@ -104,6 +103,7 @@
     if(starredMessages === undefined){
       this.$store.dispatch("getFolderListOfMessages", "STARRED");
     }
+
     
    },
  }
