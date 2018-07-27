@@ -12,8 +12,8 @@
           <hr>
           <b>{{message.detailedFrom}}</b>
         </div>
-        <div class="rightAlign">
-          {{message.time}} (some hours ago idk)
+        <div class="rightAlign shift-down">
+          {{message.time}} ({{ timeAgo }})
           <span class="highlightArea">
             <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
           </span> 
@@ -50,6 +50,9 @@
 
 <style scoped>
 
+.shift-down {
+  margin-top: 20px;
+}
 .recipients {
   font-size: .8em;
 }
@@ -103,6 +106,7 @@ h4 {
 .star:checked:before {
   content: "\2605";
   position: absolute;
+  color:gold;
 }
 
 </style>
@@ -118,16 +122,43 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  data() {
+    return {
+      timeAgo: "1 hour ago",
+      messageUnix: 0,
+    }
+  },
   computed: {
     messages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
-      return sortBy(threadMessages, m => m.unixTime);
-      // return threadMessages;
+        let object = sortBy(threadMessages, m => m.unixTime);
+        let time = object[0].unixTime;
+        this.messageUnix = time;
+          var ts = Math.round((new Date()).getTime() / 1000);
+          console.log("currentTime: " + ts);
+          console.log("messageTime: " + time);
+          var diff = Math.floor((ts - time)), units = [
+            { d: 60, l: "seconds" },
+            { d: 60, l: "minutes" },
+            { d: 24, l: "hours" },
+            { d: 7, l: "days" }
+          ];
+          var s = '';
+          for (var i = 0; i < units.length; ++i) {
+            s = (diff % units[i].d) + " " + units[i].l + " " + s;
+            diff = Math.floor(diff / units[i].d);
+          }
+          this.timeAgo = s;
+          console.log("this is the s: "+ s);
+// This is all in this property because it overflows the stack if I call another function...
+
+      return object;
     },
     attachments(){
      return this.$store.getters.getAttachments;
-    }
+    },
+
   },
   methods: {
     starredLabelToggle(thread) {
@@ -140,6 +171,13 @@ export default {
       }
 
     },
+    timeDifference(object) {
+      let thisMessage = this.messages(object);
+      console.log(thisMessage);
+      var ts = Math.round((new Date()).getTime() / 1000);
+      console.log("currentTime: " + ts);
+      console.log("messageTime: " + messageTime);
+    },
     ifGroupMessage() {
       let to = this.messages[0].to;
       //console.log(to);
@@ -150,9 +188,9 @@ export default {
       }
       return theClass;
     },
+
   },
   created() {
-    console.log("THE THING IM LOOKING FOR");
     console.log(this.$store.state.labelNextPageTokens);
   }
 }
