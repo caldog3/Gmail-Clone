@@ -123,14 +123,16 @@ const getLabelsForUnread = () => {
 }
 
 const getAttachment = (payload) => {
-  gapi.client.gmail.users.messages.attachments.get({
-    'userId': 'me',
-    'messageId': payload.messageId,
-    'id': payload.attachmentId
-  }).then((response) => {
-    return response.result.data;
-  }).catch((err) => {
-    console.log(err);
+  return new Promise((resolve) => {
+      gapi.client.gmail.users.messages.attachments.get({
+        'userId': 'me',
+        'messageId': payload.messageId,
+        'id': payload.attachmentId
+      }).then((response) => {
+        resolve(response.result.data);
+      }).catch((err) => {
+        console.log(err);
+      });
   });
 }
 

@@ -111,6 +111,10 @@ export default new Vuex.Store({
         data: null
       });
     },
+    setAttachmentData(state, payload) {
+      console.log(payload);
+      state.attachments[payload.attachmentId].data = payload.data;
+    },
     currentUser(state, payload) {
       state.currentUser = payload;
     },
@@ -363,15 +367,20 @@ export default new Vuex.Store({
     },
     getAttachments(context) {
       const attachments = context.getters.getAttachments;
-      console.log("Attachments from getter", attachments)
       const attachmentIds = Object.keys(attachments);
+      console.log("Attachments from getter", attachments);
+      
       for (const attachmentId of attachmentIds) {
         const messageId = attachments[attachmentId].messageId;
 
-        const attachmentData = getAttachment({ attachmentId, messageId });
-      
-        console.log("Store: log After getAttachment")
-        console.log("Attachments:--", attachmentData);
+        getAttachment({ attachmentId, messageId })
+          .then((attachmentData) => {
+            context.commit("setAttachmentData", {
+              attachmentId: attachmentId,
+              data: attachmentData
+            });
+          }
+        );
       }
     },
   }

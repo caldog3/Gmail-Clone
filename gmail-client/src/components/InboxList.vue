@@ -46,7 +46,7 @@ export default {
     setTimeout(() => {
       console.log("GetAttachments DISPATCHED")
       this.$store.dispatch("getAttachments");
-    }, 7000);
+    }, 1000);
     
   },
 }
