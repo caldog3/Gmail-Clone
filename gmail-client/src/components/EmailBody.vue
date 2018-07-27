@@ -171,13 +171,6 @@ export default {
       }
 
     },
-    timeDifference(object) {
-      let thisMessage = this.messages(object);
-      console.log(thisMessage);
-      var ts = Math.round((new Date()).getTime() / 1000);
-      console.log("currentTime: " + ts);
-      console.log("messageTime: " + messageTime);
-    },
     ifGroupMessage() {
       let to = this.messages[0].to;
       //console.log(to);
