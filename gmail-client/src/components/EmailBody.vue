@@ -25,7 +25,15 @@
         <p>to {{message.to}}</p>
       </div>
       <div v-html="message.body" class="leftAlign"></div>
-
+      
+      <div v-if="message.attachmentIds.length > 0">
+        <!-- <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId"> -->
+          <h4>You have {{message.attachmentIds.length}} attachment(s).</h4>
+          <h5>Support for them is imminent</h5>
+          <img img width="16" height="16" alt=" An Image should be here" src="'data:' + attachments[attachmentId.attachmentId].mimeType + ';base64,' +  attachments[attachmentId.attachmentId].data"/>
+          <!-- {{attachments[attachmentId.attachmentId].mimeType}} -->
+        <!-- </div> -->
+      </div>
     </div>
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
@@ -113,6 +121,9 @@ export default {
       const threadMessages = messages[this.$route.params.id];
       return sortBy(threadMessages, m => m.unixTime);
       // return threadMessages;
+    },
+    attachments(){
+     return this.$store.getters.getAttachments;
     }
   },
   methods: {

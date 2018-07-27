@@ -112,6 +112,20 @@ const getLabelsForUnread = () => {
   });
 }
 
+const getAttachment = (payload) => {
+  return new Promise((resolve) => {
+      gapi.client.gmail.users.messages.attachments.get({
+        'userId': 'me',
+        'messageId': payload.messageId,
+        'id': payload.attachmentId
+      }).then((response) => {
+        resolve(response.result.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+  });
+}
+
 export {
   sendMessage,
   markAsRead,
@@ -121,5 +135,5 @@ export {
   getLabels,
   getLabelsForUnread,
   getNumberOfMessages,
-  getAttachments
+  getAttachment
 };
