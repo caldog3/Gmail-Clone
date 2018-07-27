@@ -64,10 +64,15 @@
                   <span class="tooltiptext">Report Spam</span>
                 </div>
 
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" /> 
+                <div class="highlightArea" v-if="thread.unread">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
+                <div class="highlightArea" v-else>
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                  <span class="tooltiptext">Mark as Read</span>
+                </div>
+                
 
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 

@@ -160,7 +160,7 @@
                       <hr>
                       <div class="dropdownEntry">Some kind of setting</div>
                       <hr>
-                      <div class="dropdownEntry">Some kind of setting</div>
+                      <div class="dropdownEntry">Maybe a security mode</div>
                       <hr>
                       <div class="dropdownEntry">Some kind of setting</div>
                       <hr>
@@ -619,7 +619,7 @@ export default {
     return {
       messageBody: false,
       checked: false,
-      totalMessages: '50',
+      totalMessages: "50",
       check: false,
     }
   },
@@ -698,7 +698,24 @@ export default {
           }
         }
       }
-    } 
+    },
+    getNumberTotal(folder) {
+      gapi.client.load('gmail', 'v1').then(() => {
+        folder = folder.toUpperCase();
+        console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
+        console.log(folder);
+        gapi.client.gmail.users.labels.get({
+          'userId': 'me',
+          'id': folder,
+        }).then((response) => {
+          let totalInboxEmailCount = response.result.threadsTotal;
+          console.log("still alive: " + totalInboxEmailCount);
+          totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+          this.$store.state.totalMessages = totalInboxEmailCount;
+          this.totalMessages = totalInboxEmailCount;
+        });
+      });
+    }
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
@@ -707,7 +724,12 @@ export default {
       messageTotal = messageTotal.toLocaleString('en', {useGrouping:true})
       this.totalMessages = messageTotal;
     });
-    getNumberOfMessages();
+    // let messageNumberTotal = getNumberOfMessages(this.$store.state.viewFolder);
+    this.getNumberTotal(this.$store.state.viewFolder);
+    // console.log("Still still alive" + messageNumberTotal);
+    // messageNumberTotal = messageNumberTotal.toLocaleString('en', {useGrouping:true});
+    // this.$store.state.totalMessages = messageNumberTotal;
+    // // this.totalMessages = messageNumberTotal;
   },
 }
 
