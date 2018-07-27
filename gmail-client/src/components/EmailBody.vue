@@ -21,7 +21,7 @@
           <font-awesome-icon class="Icon" icon="ellipsis-v" />
         </div>
       </div>
-      <div class="leftAlign">
+      <div class="leftAlign recipients">
         <p>to {{message.to}}</p>
       </div>
       <div v-html="message.body" class="leftAlign"></div>
@@ -50,6 +50,9 @@
 
 <style scoped>
 
+.recipients {
+  font-size: .8em;
+}
 .leftAlign {
   text-align: left;
   margin-left: 2%;
