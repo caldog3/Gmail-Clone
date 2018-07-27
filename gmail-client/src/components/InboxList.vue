@@ -25,6 +25,7 @@
 <script>
 import EmailList from './EmailList';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { setTimeout } from 'timers';
 
 export default {
   name: 'InboxList',
@@ -39,6 +40,14 @@ export default {
   },
   beforeCreate(){
     //MOVED TO LoadingScreen.vue Created
+  },
+  created(){
+    console.log("INBOX LIST MOUNTED")
+    setTimeout(() => {
+      console.log("GetAttachments DISPATCHED")
+      this.$store.dispatch("getAttachments");
+    }, 1000);
+    
   },
 }
 </script>
