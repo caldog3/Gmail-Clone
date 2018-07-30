@@ -8,7 +8,7 @@
       Test compose block
     </b-modal> -->
 
-    <div class="options">
+    <div class="optionsA">
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
@@ -123,7 +123,7 @@ button {
   border-radius: 40px;
   outline: none;
 }
-.options {
+.optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
   margin-right: 25px;
@@ -131,18 +131,18 @@ button {
   height: 300px;
   overflow: hidden;
 }
-.options:hover {
+.optionsA:hover {
   overflow: scroll;
   margin-right: 10px;
 }
-.options > div {
+.optionsA > div {
   width: 100%;
   height: 35px;
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
 }
-.options > div:hover {
+.optionsA > div:hover {
   /* background: rgba(153, 153, 153, 0.4); */
   background: rgba(255, 255, 255, 0.4);
 }

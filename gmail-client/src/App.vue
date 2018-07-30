@@ -191,6 +191,24 @@ body {
  background: rgba(255, 255, 255, 0.9);
 }
 
+/* Scroll Bar */
+/* width */
+.optionsA::-webkit-scrollbar {
+  width: 12px;
+}
+/* Track */
+.optionsA::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* Handle */
+.optionsA::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+}
+/* Handle on hover */
+.optionsA::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
+}
+
 
 .termsUnderneath a:link {
   text-decoration: none;
