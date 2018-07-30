@@ -90,6 +90,9 @@
           <div class="notInbox">
             <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
           </div>
+          <div>
+            <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+          </div>
         </div>
       </div>
       <div>
