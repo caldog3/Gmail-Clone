@@ -53,7 +53,11 @@ const getBody = (payload) => {
           console.log("Edge case = " + payload.parts[0]);
         }
         else if (payload.parts[0].parts[0].parts !== undefined){
-          if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
+          if (payload.parts[0].parts[0].parts[1].body.data !== undefined) {
+            let multipartSignedMixedAlternativeBody = payload.parts[0].parts[0].parts[1].body.data;
+            body = Base64Decode(multipartSignedMixedAlternativeBody);
+          }
+          else if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
             let multipartSignedMixedAlternativeRelatedBody = payload.parts[0].parts[0].parts[1].parts[0].body.data;
             body = Base64Decode(multipartSignedMixedAlternativeRelatedBody);
             

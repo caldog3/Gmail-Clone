@@ -105,7 +105,7 @@ export default new Vuex.Store({
 
     },
     addAttachmentId(state, payload) {
-      console.log(payload);
+      // console.log(payload);
       Vue.set(state.attachments, payload.attachmentId, {
         messageId: payload.messageId,
         mimeType: payload.mimeType,
@@ -113,7 +113,7 @@ export default new Vuex.Store({
       });
     },
     setAttachmentData(state, payload) {
-      console.log(payload);
+      // console.log(payload);
       state.attachments[payload.attachmentId].data = payload.data;
     },
     currentUser(state, payload) {
