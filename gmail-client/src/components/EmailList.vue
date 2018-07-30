@@ -64,11 +64,11 @@
                   <span class="tooltiptext">Report Spam</span>
                 </div>
 
-                <div class="highlightArea" v-if="thread.unread">
+                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
-                <div class="highlightArea" v-else>
+                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   <span class="tooltiptext">Mark as Read</span>
                 </div>
@@ -97,15 +97,15 @@
                   <span class="tooltiptext">Report Spam</span>
                 </div>
 
-                <div class="highlightArea" v-if="thread.unread">
+                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
-                <div class="highlightArea" v-else>
+                <!-- it isn't making it to my function -->
+                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   <span class="tooltiptext">Mark as Read</span>
                 </div>
-                
 
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
@@ -113,15 +113,15 @@
                 </div>
 
               </div>
-              </div>
-              <div class="highlightArea">              
-                <div class="highlightArea">
-                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
-                </div>
+            </div>
+            <div class="highlightArea">              
+              <div class="highlightArea">
+                <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
               </div>
             </div>
-
           </div>
+
+        </div>
       </div>
     </template>
     <template v-else>
@@ -529,14 +529,13 @@ svg:not(:root).svg-inline--fa {
   }
 }
 
-
 </style>
 
 
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { markAsRead, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
+import { markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 
@@ -565,6 +564,15 @@ export default {
       }
     this.$store.state.labelMessages.STARRED = [];
     this.$store.dispatch("getFolderListOfMessages", "STARRED");
+    },
+    toggleUnread(thread) {
+      if (thread.unread === true) {
+        markAsUnread(thread.threadId);
+      }
+      else if (thread.unread === false) {
+        markAsRead(thread.threadId);
+      }
+
     },
     readClassChanger(message){
       var theClass = 'readClass';
