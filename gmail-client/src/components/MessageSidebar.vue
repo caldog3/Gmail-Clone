@@ -132,7 +132,7 @@ button {
   overflow: hidden;
 }
 .optionsA:hover {
-  overflow: scroll;
+  overflow-y: scroll;
   margin-right: 10px;
 }
 .optionsA > div {
