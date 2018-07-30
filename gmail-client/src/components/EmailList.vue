@@ -448,6 +448,9 @@ svg:not(:root).svg-inline--fa {
     display: block;
     visibility: visible;
   }
+  .FlexTable:hover .smallOnly {
+    width: 110px;
+  }
   svg:not(:root).svg-inline--fa {
     margin-top: 7px;
     margin-right: 5px;
