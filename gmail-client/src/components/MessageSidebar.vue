@@ -114,6 +114,7 @@
 <style scoped>
 .sideBar {
   float: left;
+  /* padding-right: -100px; */
 }
 img {
   width: 30px;
