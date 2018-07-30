@@ -414,7 +414,6 @@ svg:not(:root).svg-inline--fa {
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
@@ -493,9 +492,36 @@ svg:not(:root).svg-inline--fa {
     margin-top: 0px;
   }
   .FlexTable:hover .hoverView {
-  visibility: hidden;
-  display: none;
-}
+    visibility: hidden;
+    display: none;
+  }
+  .highlightArea .tooltiptext {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 1px;
+    border-radius: 6px;
+    
+    /* Position the tooltip text */
+    position: relative;
+    z-index: 1;
+    bottom: 0px;
+    left: 0px;
+    margin-left: 0px;
+    font-size: x-small;
+    white-space: nowrap;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+/* Show the tooltip text when you mouse over the tooltip container */
+  .highlightArea:hover .tooltiptext {
+    visibility: visible;
+    /* z-index: 999999999999999999999999999999999; */
+    opacity: 1;
+  }
 }
 
 @-moz-document url-prefix() {
