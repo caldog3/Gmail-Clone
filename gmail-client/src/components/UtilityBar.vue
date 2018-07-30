@@ -16,21 +16,23 @@
                     </div>
                   </label>
                 </div>
-                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
-                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
-                  <span class="tooltiptext">Select</span>
-                  <div id="caretDropdown" class="dropdown-content">
-                    <p>  All </p>
-                    <hr>
-                    <p> None </p>
-                    <hr>
-                    <p> Read </p>
-                    <hr>
-                    <p> Unread </p>
-                    <hr>
-                    <p> Starred </p>
-                    <hr>
-                    <p> Unstarred </p>
+                <div>
+                  <div class="highlightArea2" v-on:click="caretDropdownFunction()">
+                    <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                    <span class="tooltiptext">Select</span>
+                    <div id="caretDropdown" class="dropdown-content">
+                      <p>  All </p>
+                      <hr>
+                      <p> None </p>
+                      <hr>
+                      <p> Read </p>
+                      <hr>
+                      <p> Unread </p>
+                      <hr>
+                      <p> Starred </p>
+                      <hr>
+                      <p> Unstarred </p>
+                    </div>
                   </div>
                 </div>
                 <div class="item1">
@@ -594,6 +596,11 @@ hr {
 .paddingNeeded:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+
+@-moz-document url-prefix() {
+  /* Something */
 }
 
 /* lets see end */

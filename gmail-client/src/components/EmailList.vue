@@ -24,9 +24,9 @@
 
             </div>
 
-            <div class="emailLink" v-on:click="enterMessage(thread)">
+            <div class="emailLink">
 
-              <div class="from"> 
+              <div class="from" v-on:click="enterMessage(thread)"> 
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
@@ -37,7 +37,7 @@
                   </span></b>
               </div>
               
-              <div class="snippit">
+              <div class="snippit" v-on:click="enterMessage(thread)">
                 <div class="leftAlign1">
                     <b>{{ thread.subject }} </b>- 
                     <br class="rwd-break">
@@ -84,6 +84,36 @@
 
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
+              <div class="smallHover">
+                <div class="item">
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                  <span class="tooltiptext">Archive</span>
+                </div>
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                  <span class="tooltiptext">Report Spam</span>
+                </div>
+
+                <div class="highlightArea" v-if="thread.unread">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                  <span class="tooltiptext">Mark as Unread</span>
+                </div>
+                <div class="highlightArea" v-else>
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                  <span class="tooltiptext">Mark as Read</span>
+                </div>
+                
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                  <span class="tooltiptext">Snooze</span>
+                </div>
+
+              </div>
+              </div>
               <div class="highlightArea">              
                 <div class="highlightArea">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
@@ -266,15 +296,15 @@
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
-  margin: 10px 0px 5px 0px;
+  padding: 10px 0px 5px 0px;
 }
 .dateTime {
   width: 100px;
   overflow: hidden;
   white-space:nowrap; 
   justify-content: flex-end;
-  margin-left: auto;
-  margin-top: 10px;
+  padding-left: auto;
+  padding-top: 10px;
   
 }
 .snippit {
@@ -282,7 +312,7 @@
   white-space:nowrap; 
   flex-grow: 1;
   flex-basis: 0;
-  margin-top: 10px;
+  padding-top: 10px;
 }
 .rwd-break {
   display: none;
@@ -310,6 +340,10 @@ a {
   visibility: hidden;
   float: right;
   margin-top: 4px;
+}
+.smallHover {
+  display: none;
+  visibility: hidden;
 }
 .highlightArea {
   width: 30px;
@@ -380,7 +414,6 @@ svg:not(:root).svg-inline--fa {
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .highlightArea:hover .tooltiptext {
   visibility: visible;
@@ -403,6 +436,20 @@ svg:not(:root).svg-inline--fa {
   }
   .from {
     width: 100%;
+  }
+  .FlexTable:hover .smallOnly span {
+    display: none;
+  }
+  .FlexTable:hover .smallHover {
+    display: block;
+    visibility: visible;
+  }
+  .FlexTable:hover .smallOnly {
+    width: 110px;
+  }
+  svg:not(:root).svg-inline--fa {
+    margin-top: 7px;
+    margin-right: 5px;
   }
   .rwd-break {
     display: block;
@@ -442,9 +489,36 @@ svg:not(:root).svg-inline--fa {
     margin-top: 0px;
   }
   .FlexTable:hover .hoverView {
-  visibility: hidden;
-  display: none;
-}
+    visibility: hidden;
+    display: none;
+  }
+  .highlightArea .tooltiptext {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 1px;
+    border-radius: 6px;
+    
+    /* Position the tooltip text */
+    position: relative;
+    z-index: 1;
+    bottom: 0px;
+    left: 0px;
+    margin-left: 0px;
+    font-size: x-small;
+    white-space: nowrap;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+/* Show the tooltip text when you mouse over the tooltip container */
+  .highlightArea:hover .tooltiptext {
+    visibility: visible;
+    /* z-index: 999999999999999999999999999999999; */
+    opacity: 1;
+  }
 }
 
 @-moz-document url-prefix() {
