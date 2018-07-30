@@ -444,7 +444,7 @@ svg:not(:root).svg-inline--fa {
   .FlexTable:hover .smallOnly span {
     display: none;
   }
-  .smallHover {
+  .FlexTable:hover .smallHover {
     display: block;
     visibility: visible;
   }
