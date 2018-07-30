@@ -24,9 +24,9 @@
 
             </div>
 
-            <div class="emailLink" v-on:click="enterMessage(thread)">
+            <div class="emailLink">
 
-              <div class="from"> 
+              <div class="from" v-on:click="enterMessage(thread)"> 
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
@@ -37,7 +37,7 @@
                   </span></b>
               </div>
               
-              <div class="snippit">
+              <div class="snippit" v-on:click="enterMessage(thread)">
                 <div class="leftAlign1">
                     <b>{{ thread.subject }} </b>- 
                     <br class="rwd-break">
@@ -84,6 +84,36 @@
 
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
+              <div class="smallHover">
+                <div class="item">
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                  <span class="tooltiptext">Archive</span>
+                </div>
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                  <span class="tooltiptext">Report Spam</span>
+                </div>
+
+                <div class="highlightArea" v-if="thread.unread">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                  <span class="tooltiptext">Mark as Unread</span>
+                </div>
+                <div class="highlightArea" v-else>
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                  <span class="tooltiptext">Mark as Read</span>
+                </div>
+                
+
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                  <span class="tooltiptext">Snooze</span>
+                </div>
+
+              </div>
+              </div>
               <div class="highlightArea">              
                 <div class="highlightArea">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
@@ -311,6 +341,10 @@ a {
   float: right;
   margin-top: 4px;
 }
+.smallHover {
+  display: none;
+  visibility: hidden;
+}
 .highlightArea {
   width: 30px;
   height: 30px;
@@ -409,6 +443,14 @@ svg:not(:root).svg-inline--fa {
   }
   .FlexTable:hover .smallOnly span {
     display: none;
+  }
+  .smallHover {
+    display: block;
+    visibility: visible;
+  }
+  svg:not(:root).svg-inline--fa {
+    margin-top: 7px;
+    margin-right: 5px;
   }
   .rwd-break {
     display: block;
