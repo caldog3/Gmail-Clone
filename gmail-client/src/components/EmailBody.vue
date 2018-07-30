@@ -156,7 +156,7 @@ export default {
             else {s = times[2] + " hours"}
           }
           else {s = times[3] + " days"}
-          this.timeAgo = s;
+          this.timeAgo = s.slice();
 // This is all in this property because it overflows the stack if I call another function...
 
       return object;
