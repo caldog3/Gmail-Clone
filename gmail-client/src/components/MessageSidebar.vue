@@ -126,9 +126,14 @@ button {
 .options {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 10px;
+  margin-right: 25px;
   font-size: .9em;
-
+  height: 300px;
+  overflow: hidden;
+}
+.options:hover {
+  overflow: scroll;
+  margin-right: 10px;
 }
 .options > div {
   width: 100%;

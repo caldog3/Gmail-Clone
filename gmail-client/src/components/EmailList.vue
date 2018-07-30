@@ -437,9 +437,6 @@ svg:not(:root).svg-inline--fa {
   .from {
     width: 100%;
   }
-  .FlexTable:hover .from {
-    width: 200px;
-  }
   .FlexTable:hover .smallOnly span {
     display: none;
   }
