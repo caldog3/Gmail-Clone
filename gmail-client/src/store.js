@@ -27,6 +27,7 @@ export default new Vuex.Store({
     currentFolder: "INBOX",
     attachments: {},
     viewFolder: "Inbox",
+    totalMessages: "0",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,

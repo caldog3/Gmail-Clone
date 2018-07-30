@@ -266,10 +266,6 @@ export default {
       this.$store.dispatch("getListOfMessages", "PRIMARY");
       this.$store.dispatch("getListOfMessages", "SOCIAL");
       this.$store.dispatch("getListOfMessages", "PROMOTIONS");
-
-
-
-
     },
 
     generalHandle(folder) {
