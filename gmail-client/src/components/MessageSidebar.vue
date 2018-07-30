@@ -129,10 +129,13 @@ button {
 .optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 25px;
+  margin-right: 22px;
   font-size: .9em;
   height: 300px;
   overflow: hidden;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 .optionsA:hover {
   overflow-y: scroll;
