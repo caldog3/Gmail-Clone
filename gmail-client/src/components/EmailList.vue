@@ -266,15 +266,15 @@
   width: 200px;
   overflow: hidden;
   white-space:nowrap; 
-  margin: 10px 0px 5px 0px;
+  padding: 10px 0px 5px 0px;
 }
 .dateTime {
   width: 100px;
   overflow: hidden;
   white-space:nowrap; 
   justify-content: flex-end;
-  margin-left: auto;
-  margin-top: 10px;
+  padding-left: auto;
+  padding-top: 10px;
   
 }
 .snippit {
@@ -282,7 +282,7 @@
   white-space:nowrap; 
   flex-grow: 1;
   flex-basis: 0;
-  margin-top: 10px;
+  padding-top: 10px;
 }
 .rwd-break {
   display: none;
@@ -403,6 +403,12 @@ svg:not(:root).svg-inline--fa {
   }
   .from {
     width: 100%;
+  }
+  .FlexTable:hover .from {
+    width: 200px;
+  }
+  .FlexTable:hover .smallOnly span {
+    display: none;
   }
   .rwd-break {
     display: block;
