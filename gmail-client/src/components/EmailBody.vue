@@ -13,7 +13,7 @@
           <b>{{message.detailedFrom}}</b>
         </div>
         <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }})
+          {{message.time}} ({{ timeAgo }} ago)
           <span class="highlightArea">
             <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
           </span> 
@@ -124,7 +124,7 @@ export default {
   },
   data() {
     return {
-      timeAgo: "1 hour ago",
+      timeAgo: "1 hour",
       messageUnix: 0,
     }
   },
@@ -134,10 +134,8 @@ export default {
       const threadMessages = messages[this.$route.params.id];
         let object = sortBy(threadMessages, m => m.unixTime);
         let time = object[0].unixTime;
-        this.messageUnix = time;
+        // this.messageUnix = time;
           var ts = Math.round((new Date()).getTime() / 1000);
-          console.log("currentTime: " + ts);
-          console.log("messageTime: " + time);
           var diff = Math.floor((ts - time)), units = [
             { d: 60, l: "seconds" },
             { d: 60, l: "minutes" },
@@ -145,12 +143,20 @@ export default {
             { d: 7, l: "days" }
           ];
           var s = '';
+          var times = [];
           for (var i = 0; i < units.length; ++i) {
-            s = (diff % units[i].d) + " " + units[i].l + " " + s;
+            times[i] = (diff % units[i].d);
             diff = Math.floor(diff / units[i].d);
           }
+          console.log(times);
+          if (times[3] === 0) {
+            if (times[2] === 0) {
+              s = times[1] + " minutes";
+            }
+            else {s = times[2] + " hours"}
+          }
+          else {s = times[3] + " days"}
           this.timeAgo = s;
-          console.log("this is the s: "+ s);
 // This is all in this property because it overflows the stack if I call another function...
 
       return object;

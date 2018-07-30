@@ -55,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Important')">
+      <!-- <div v-bind:class="activeFolderClass('Important')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
@@ -69,7 +69,7 @@
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
-      </div>
+      </div> -->
       <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
@@ -83,6 +83,13 @@
       <div v-bind:class="activeFolderClass('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
+        </div>
+      </div>
+      <div v-for="label in labels.slice(9)" :key="label.folder">
+        <div v-bind:class="activeFolderClass(label)">
+          <div class="notInbox">
+            <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+          </div>
         </div>
       </div>
       <div>
@@ -260,12 +267,14 @@ export default {
     },
     loadInbox() {
       this.$router.push({ path: "/" });
-      this.$store.state.labelMessages.PRIMARY = [];
-      this.$store.state.labelMessages.SOCIAL = [];
-      this.$store.state.labelMessages.PROMOTIONS = [];
-      this.$store.dispatch("getListOfMessages", "PRIMARY");
-      this.$store.dispatch("getListOfMessages", "SOCIAL");
-      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
+      
+      // if we want to be reloading it to update it.
+      // this.$store.state.labelMessages.PRIMARY = [];
+      // this.$store.state.labelMessages.SOCIAL = [];
+      // this.$store.state.labelMessages.PROMOTIONS = [];
+      // this.$store.dispatch("getListOfMessages", "PRIMARY");
+      // this.$store.dispatch("getListOfMessages", "SOCIAL");
+      // this.$store.dispatch("getListOfMessages", "PROMOTIONS");
     },
 
     generalHandle(folder) {
@@ -293,10 +302,7 @@ export default {
   },
   created() {
     this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
-    eventBus.$on("UNREAD_COUNT", unreads => {
-      // this.unreadCounts = unreads;
-    })
-    // getLabelsForUnread();
+
     getLabels();
     //Probably a much better way to do this
     eventBus.$on("CUSTOM_FOLDERS", customs => {
