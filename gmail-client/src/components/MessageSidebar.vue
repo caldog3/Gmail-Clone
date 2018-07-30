@@ -7,8 +7,9 @@
     <!-- <b-modal v-model="composeShow">
       Test compose block
     </b-modal> -->
-
+    
     <div class="optionsA">
+
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
@@ -55,7 +56,7 @@
           </div>
         </div>
       </div>
-      <!-- <div v-bind:class="activeFolderClass('Important')">
+      <div v-bind:class="activeFolderClass('Important')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
@@ -69,7 +70,7 @@
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
-      </div> -->
+      </div>
       <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
@@ -86,12 +87,14 @@
         </div>
       </div>
       <div v-for="label in labels.slice(9)" :key="label.folder">
-        <div v-bind:class="activeFolderClass(label)">
-          <div class="notInbox">
-            <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
-          </div>
-          <div>
-            <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+        <div v-bind:class="activeFolderClass(label.folder)" v-on:click="generalHandle(label.folder)">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+            </div>
+            <div>
+              <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -32,6 +32,17 @@ const markAsRead = (messageId) => {
     console.log(err);
   });
 }
+const markAsUnread = (messageId) => {
+  gapi.client.gmail.users.messages.modify({
+    'userId': 'me',
+    'id': messageId,
+    'addLabelIds': ['UNREAD']
+  }).then((response) => {
+    console.log(`MarkedAsUnread`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
 
 const markAsStarred = (messageId) => {
   gapi.client.gmail.users.threads.modify({
@@ -129,6 +140,7 @@ const getAttachment = (payload) => {
 export {
   sendMessage,
   markAsRead,
+  markAsUnread,
   markAsStarred,
   unMarkAsStarred,
   getProfileEmail,
