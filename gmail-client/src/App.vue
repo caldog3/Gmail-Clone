@@ -173,7 +173,7 @@ body {
   min-width: 770px;
 }
 
-/* Scroll Bar */
+/* Scroll Bar for EmailList */
 /* width */
 .emailList::-webkit-scrollbar {
   width: 12px;
@@ -191,7 +191,7 @@ body {
  background: rgba(255, 255, 255, 0.9);
 }
 
-/* Scroll Bar */
+/* Scroll Bar for SideBar */
 /* width */
 .optionsA::-webkit-scrollbar {
   width: 12px;

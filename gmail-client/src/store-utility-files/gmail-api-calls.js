@@ -33,6 +33,28 @@ const markAsRead = (messageId) => {
     console.log(err);
   });
 }
+const markAsUnread = (messageId) => {
+  gapi.client.gmail.users.messages.modify({
+    'userId': 'me',
+    'id': messageId,
+    'addLabelIds': ['UNREAD']
+  }).then((response) => {
+    console.log(`MarkedAsUnread`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+const archiveMessage = (messageId) => {
+  gapi.client.gmail.users.messages.modify({
+    'userId': 'me',
+    'id': messageId,
+    'removeLabelIds': ['INBOX']
+  }).then((response) => {
+    console.log('Trying to archive', response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
 
 const markAsStarred = (messageId) => {
   gapi.client.gmail.users.threads.modify({
@@ -131,7 +153,9 @@ const getAttachment = (payload) => {
 
 export {
   sendMessage,
+  archiveMessage,
   markAsRead,
+  markAsUnread,
   markAsStarred,
   unMarkAsStarred,
   getProfileEmail,

@@ -103,6 +103,10 @@
     if(starredMessages === undefined){
       this.$store.dispatch("getFolderListOfMessages", "STARRED");
     }
+    let trashMessages = this.$store.getters.getLabelMessages["TRASH"];
+    if(trashMessages === undefined) {
+      this.$store.dispatch("getFolderListOfMessages", "TRASH");
+    }
 
     
    },

@@ -7,8 +7,9 @@
     <!-- <b-modal v-model="composeShow">
       Test compose block
     </b-modal> -->
-
+    
     <div class="optionsA">
+
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
@@ -55,7 +56,7 @@
           </div>
         </div>
       </div>
-      <!-- <div v-bind:class="activeFolderClass('Important')">
+      <div v-bind:class="activeFolderClass('Important')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
@@ -69,7 +70,7 @@
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
-      </div> -->
+      </div>
       <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
@@ -80,18 +81,20 @@
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Trash')">
+      <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
         </div>
       </div>
       <div v-for="label in labels.slice(9)" :key="label.folder">
-        <div v-bind:class="activeFolderClass(label)">
-          <div class="notInbox">
-            <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
-          </div>
-          <div>
-            <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+        <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+            </div>
+            <div>
+              <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -111,6 +114,7 @@
 <style scoped>
 .sideBar {
   float: left;
+  /* padding-right: -100px; */
 }
 img {
   width: 30px;
@@ -129,10 +133,14 @@ button {
 .optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 25px;
+  margin-right: 22px;
   font-size: .9em;
+  width: 248px;
   height: 300px;
   overflow: hidden;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 .optionsA:hover {
   overflow-y: scroll;
@@ -144,6 +152,8 @@ button {
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .optionsA > div:hover {
   /* background: rgba(153, 153, 153, 0.4); */
@@ -301,7 +311,14 @@ export default {
       if (folder == "Drafts") {
         folder = "Draft";
       }
-      this.$store.state.currentFolder = folder.toUpperCase();
+      console.log(folder);
+      console.log("99999999");
+      if(folder.includes("Label_")) {
+        this.$store.state.currentFolder  = folder;
+      }
+      else {
+        this.$store.state.currentFolder = folder.toUpperCase();
+      }
 
     },
   },
@@ -316,17 +333,17 @@ export default {
     eventBus.$on("CUSTOM_FOLDERS", customs => {
       for (let i = 0; i < customs.length; i+=1) {
         this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
-        // console.log("Pushed" + customs[i]);
+        //maybe something can be added to include a parent folder
       }
-      // time to call something to check all the unreadCounts
       this.unreadCount();
+      for (let j = 9; j < this.labels.length; j++) {
+        let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
+        console.log(messages);
+        if(messages === undefined){
+          this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
+        }
+      }
     })
-    // this.unreadCount("CATEGORY_PERSONAL");
-    // this.unreadCount("STARRED");
-    // this.unreadCount("SENT");
-    // this.unreadCount("DRAFT");
-    // this.unreadCount("IMPORTANT");
-    // this.unreadCount("SPAM");
   },
 
 };
