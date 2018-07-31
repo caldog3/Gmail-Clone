@@ -133,10 +133,14 @@ button {
 .optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 25px;
+  margin-right: 22px;
   font-size: .9em;
+  width: 248px;
   height: 300px;
   overflow: hidden;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 .optionsA:hover {
   overflow-y: scroll;
@@ -148,6 +152,8 @@ button {
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .optionsA > div:hover {
   /* background: rgba(153, 153, 153, 0.4); */
