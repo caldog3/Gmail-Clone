@@ -87,7 +87,7 @@
         </div>
       </div>
       <div v-for="label in labels.slice(9)" :key="label.folder">
-        <div v-bind:class="activeFolderClass(label.folder)" v-on:click="generalHandle(label.folder)">
+        <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlex">
             <div>
               <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
@@ -305,7 +305,14 @@ export default {
       if (folder == "Drafts") {
         folder = "Draft";
       }
-      this.$store.state.currentFolder = folder.toUpperCase();
+      console.log(folder);
+      console.log("99999999");
+      if(folder.includes("Label_")) {
+        this.$store.state.currentFolder  = folder;
+      }
+      else {
+        this.$store.state.currentFolder = folder.toUpperCase();
+      }
 
     },
   },
@@ -320,17 +327,19 @@ export default {
     eventBus.$on("CUSTOM_FOLDERS", customs => {
       for (let i = 0; i < customs.length; i+=1) {
         this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
-        // console.log("Pushed" + customs[i]);
+        //maybe something can be added to include a parent folder
       }
-      // time to call something to check all the unreadCounts
       this.unreadCount();
+      for (let j = 9; j < this.labels.length; j++) {
+        let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
+        console.log("Inn the for");
+        console.log(messages);
+        if(messages === undefined){
+          console.log("Inn the if");
+          this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
+        }
+      }
     })
-    // this.unreadCount("CATEGORY_PERSONAL");
-    // this.unreadCount("STARRED");
-    // this.unreadCount("SENT");
-    // this.unreadCount("DRAFT");
-    // this.unreadCount("IMPORTANT");
-    // this.unreadCount("SPAM");
   },
 
 };
