@@ -81,7 +81,7 @@
           </div>
         </div>
       </div>
-      <div v-bind:class="activeFolderClass('Trash')">
+      <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
         </div>
@@ -332,10 +332,8 @@ export default {
       this.unreadCount();
       for (let j = 9; j < this.labels.length; j++) {
         let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
-        console.log("Inn the for");
         console.log(messages);
         if(messages === undefined){
-          console.log("Inn the if");
           this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
         }
       }
