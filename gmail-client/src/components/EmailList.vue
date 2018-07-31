@@ -54,7 +54,7 @@
             <div class="hoverView">
               <div class="item">
 
-                <div class="highlightArea">
+                <div class="highlightArea" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
                   <span class="tooltiptext">Archive</span>
                 </div>
@@ -87,7 +87,7 @@
               <div class="smallHover">
                 <div class="item">
 
-                <div class="highlightArea">
+                <div class="highlightArea" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
                   <span class="tooltiptext">Archive</span>
                 </div>
@@ -535,7 +535,7 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
+import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 
@@ -572,7 +572,10 @@ export default {
       else if (thread.unread === false) {
         markAsRead(thread.threadId);
       }
-
+    },
+    archiveThread(thread) {
+      console.log("archiving");
+      archiveMessage(thread.threadId);
     },
     readClassChanger(message){
       var theClass = 'readClass';
