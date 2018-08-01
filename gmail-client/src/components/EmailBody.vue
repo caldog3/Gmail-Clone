@@ -111,7 +111,8 @@ h4 {
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { sortBy } from 'lodash'
-import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
+import eventBus from '../event_bus';
+import { trashMessages, markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
 
 
 export default {
@@ -173,7 +174,11 @@ export default {
       else {
         unMarkAsStarred(thread.threadId);
       }
-
+    },
+    trash() {
+      // console.log("thread Id: ");
+      // console.log(this.messages[0].threadId);
+      // trashMessages(this.messages[0].threadId)
     },
     ifGroupMessage() {
       let to = this.messages[0].to;
@@ -189,6 +194,7 @@ export default {
   },
   created() {
     console.log(this.$store.state.labelNextPageTokens);
+    eventBus.$on("TRASHING_THREAD", this.trash);
   }
 }
 </script>

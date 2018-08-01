@@ -215,7 +215,7 @@ export default {
         {folder: "Snoozed", unreadCount: -1},
         {folder: "Sent", unreadCount: 0},
         {folder: "Drafts", unreadCount: -1},
-        {folder: "Important", unreadCount: -1     },
+        {folder: "Important", unreadCount: -1},
         {folder: "All Mail", unreadCount: -1},
         {folder: "Spam", unreadCount: 0},
         {folder: "Trash", unreadCount: 0},

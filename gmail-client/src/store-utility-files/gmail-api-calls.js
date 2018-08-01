@@ -45,12 +45,23 @@ const markAsUnread = (messageId) => {
   });
 }
 const archiveMessage = (messageId) => {
-  gapi.client.gmail.users.messages.modify({
+  gapi.client.gmail.users.threads.modify({
     'userId': 'me',
     'id': messageId,
     'removeLabelIds': ['INBOX']
   }).then((response) => {
     console.log('Trying to archive', response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+const trashMessage = (threadId) => {
+  gapi.client.gmail.users.threads.trash({
+    'userId': 'me',
+    'id': threadId,
+  }).then((response) => {
+    console.log("Trashing...:", response);
   }).catch((err) => {
     console.log(err);
   });
@@ -162,5 +173,6 @@ export {
   getLabels,
   getLabelsForUnread,
   getNumberOfMessages,
-  getAttachment
+  getAttachment,
+  trashMessage
 };
