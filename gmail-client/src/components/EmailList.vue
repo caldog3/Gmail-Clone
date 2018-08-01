@@ -146,8 +146,7 @@
   border-top: none;
 }
 .readClass {
-  color: none;
-  background: rgba(255, 255, 255, 0.6); 
+  background: rgba(255, 255, 255, 0.7); 
   width: 100%;
   position: relative;
   /* z-index: 1; */

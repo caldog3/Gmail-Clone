@@ -176,11 +176,31 @@
 
         </div>
       </div>
+      <div class="messageUtility">
 
+
+      </div>
   </div>
 </template>
 
 <style scoped>
+
+.messageUtility {
+  position: absolute;
+  right: 17px;
+  left: 270px;
+  height: 70px;
+  background-color: white;
+}
+
+
+
+
+
+
+
+
+
 /* ----------------------BASIC STYLES---------------------- */
 .body {
   position: relative;
@@ -189,6 +209,7 @@
   border-bottom: 0px;
   background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
+  height: 110px;
 } 
 .iconDiv {
   position: relative;
@@ -196,6 +217,7 @@
   width: auto;
   height: 40px;
   margin-left: 270px;
+  visibility: hidden;
 }
 .flexIcons {
   position: relative;

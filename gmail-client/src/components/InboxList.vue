@@ -1,23 +1,48 @@
 
 /* eslint-disable */
 <template>
-  <div id="setWidth">
-    <b-tabs>
-      <b-tab icon='inbox' title="Primary">
-        <email-list labelId="PRIMARY"/>
-      </b-tab>
-      <b-tab title="Social">
-        <email-list labelId="SOCIAL"/>
-      </b-tab>
-      <b-tab title="Promotions" >
-        <email-list labelId="PROMOTIONS"/>
-      </b-tab>
-    </b-tabs>
+  <div>
+    <div id="setWidth">
+      <b-tabs>
+        <b-tab icon='inbox' title="Primary">
+          <email-list labelId="PRIMARY"/>
+        </b-tab>
+        <b-tab title="Social">
+          <email-list labelId="SOCIAL"/>
+        </b-tab>
+        <b-tab title="Promotions" >
+          <email-list labelId="PROMOTIONS"/>
+        </b-tab>
+      </b-tabs>
+    </div>
+      <div class="flexMessages">
+
+      </div>
+
+    <div class="messages">
+
+
+    </div>
+
+
+
   </div>
 </template>
 
 <style scoped>
+.messages {
+  width: 100%;
+  height: 700px;
+  background-color: rgba(255, 255, 255, 0.7); 
+}
+
+
+
+
+
+
 #setWidth {
+  display: none;
   background: rgba(255, 255, 255, 0.6);
 }
 </style>
