@@ -162,7 +162,6 @@ button {
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
-
 /* .inactiveFolder {
   not sure
 } */
