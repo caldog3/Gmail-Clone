@@ -1,51 +1,142 @@
 /* eslint-disable */
 <template>
-  <div id="body">
-    <div class="flexboxSubject">
-      <h4 class="leftAlign">{{messages[0].subject}}</h4>
-      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+  <div>
+    <div id="body">
+      <div class="flexboxSubject">
+        <h4 class="leftAlign">{{messages[0].subject}}</h4>
+        <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+      </div>
+
+      <div v-for="message in messages" :key="message.messageId">
+        <div class="flexboxSubject">
+          <div class="leftAlign">
+            <hr>
+            <b>{{message.detailedFrom}}</b>
+          </div>
+          <div class="rightAlign shift-down">
+            {{message.time}} ({{ timeAgo }} ago)
+            <span class="highlightArea">
+              <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
+            </span> 
+            <font-awesome-icon class="Icon" icon="reply" />
+            <font-awesome-icon class="Icon" icon="ellipsis-v" />
+          </div>
+        </div>
+        <div class="leftAlign recipients">
+          <p>to {{message.to}}</p>
+        </div>
+        <div v-html="message.body" class="leftAlign"></div>
+        
+        <div v-if="message.attachmentIds.length > 0">
+          <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
+            <img width="213" height="120" alt="An Image should be here" :src="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
+          </div>
+        </div>
+      </div>
+      <div class="response-buttons"> 
+        <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+        &emsp;
+        <span v-bind:class="ifGroupMessage()">
+          <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        &emsp;
+        </span>
+        <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+      </div>
     </div>
 
-    <div v-for="message in messages" :key="message.messageId">
-      <div class="flexboxSubject">
-        <div class="leftAlign">
-          <hr>
-          <b>{{message.detailedFrom}}</b>
+
+
+
+
+
+
+    <div class="flexALL">
+
+      <div class="messageFlex">
+        <div class="line">
+          <div class="me">
+            <div class="meMess">
+              Leverage agile frameworks to provide a robust synopsis for high level overviews. 
+              Iterative approaches to corporate strategy foster collaborative thinking to further 
+              the overall value proposition. 
+            </div>
+          </div>
         </div>
-        <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }} ago)
-          <span class="highlightArea">
-            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
-          </span> 
-          <font-awesome-icon class="Icon" icon="reply" />
-          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+        <div class="line">
+          <div class="them">
+            <div class="themMess">
+              Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. 
+            </div>  
+          </div>
         </div>
-      </div>
-      <div class="leftAlign recipients">
-        <p>to {{message.to}}</p>
-      </div>
-      <div v-html="message.body" class="leftAlign"></div>
-      
-      <div v-if="message.attachmentIds.length > 0">
-        <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
-          <img width="213" height="120" alt="An Image should be here" :src="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
+        <div class="line">
+          <div class="them">
+            <div class="themMess">
+              Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+            </div>
+          </div>
         </div>
+        <div class="line">
+          <div class="me">
+            <div class="meMess">
+              User generated content in real-time will have multiple touchpoints for offshoring.
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
-      &emsp;
-      <span v-bind:class="ifGroupMessage()">
-        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
-      &emsp;
-      </span>
-      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+
+      <div class="send">
+
+      </div>
+
     </div>
   </div>
-
 </template>
 
 <style scoped>
+.flexALL {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 800px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.messageFlex {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.line {
+  width: 100%;
+}
+.me {
+  width: 45%;
+  float: right;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.them {
+  width: 45%;
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+.meMess {
+  background-color: grey;
+  color: white;
+}
+.themMess {
+  background-color: lightgray;
+  color: white;
+}
+
+
+
+
+
+
+
 
 .shift-down {
   margin-top: 20px;
@@ -84,6 +175,7 @@ h4 {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
+  display: none;
 }
 .star {
   visibility: hidden;

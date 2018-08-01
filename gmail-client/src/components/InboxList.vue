@@ -15,14 +15,6 @@
         </b-tab>
       </b-tabs>
     </div>
-      <div class="flexMessages">
-
-      </div>
-
-    <div class="messages">
-
-
-    </div>
 
 
 
@@ -30,19 +22,8 @@
 </template>
 
 <style scoped>
-.messages {
-  width: 100%;
-  height: 700px;
-  background-color: rgba(255, 255, 255, 0.7); 
-}
-
-
-
-
-
 
 #setWidth {
-  display: none;
   background: rgba(255, 255, 255, 0.6);
 }
 </style>

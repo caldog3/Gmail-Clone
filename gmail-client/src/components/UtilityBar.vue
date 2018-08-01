@@ -188,7 +188,7 @@
 .messageUtility {
   position: absolute;
   right: 17px;
-  left: 270px;
+  left: 5px;
   height: 70px;
   background-color: white;
 }
