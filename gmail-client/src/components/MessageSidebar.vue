@@ -126,22 +126,35 @@
 
     </div>
 
+    <div class="encryptSide">
+      <div class="itsMe">
 
+      </div>
 
+      <div class="line">
 
+      </div>
 
-
-
-
+    </div>
 
   </div>
 </template>
 
 <style scoped>
 
+.encryptSide {
+  width: 262px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 116px;
+}
 
-
-
+.encryptSide > div {
+  background-color: white;
+  width: 100%;
+  margin: 2px 4px 2px 4px;
+  height: 70px;
+}
 
 
 
