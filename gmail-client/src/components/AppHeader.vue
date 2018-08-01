@@ -61,7 +61,7 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .flexBox {
@@ -87,12 +87,12 @@ img {
   padding-right: 10px;
 }
 .navbar-light .navbar-brand {
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .search {
   border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(180, 180, 180, 0.6);
   width: 60%;
   margin-right: 10px;
   height: 45px;
