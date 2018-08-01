@@ -152,7 +152,7 @@
                 <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
                 <span class="tooltiptext">Older</span>
               </div>
-              <div>
+              <div class="firefoxonlyCog">
                 <div class="item">
                   <div class="highlightArea">
                     <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
@@ -601,6 +601,13 @@ hr {
 
 @-moz-document url-prefix() { 
   .firefoxOnlyCaret {
+    position: relative;
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  .firefoxonlyCog {
     position: relative;
     z-index: 5;
     width: 30px;
