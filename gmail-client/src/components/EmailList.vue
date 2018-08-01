@@ -393,6 +393,14 @@ svg:not(:root).svg-inline--fa {
   display: block;
 }
 
+.FlexTable:hover .emailLink {
+  font-weight: bold;
+}
+
+.FlexTable:hover .checkmark {
+  border-width: 2px;
+}
+
 .highlightArea .tooltiptext {
   visibility: hidden;
   background-color: #555;
