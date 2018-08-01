@@ -392,10 +392,10 @@ svg:not(:root).svg-inline--fa {
   visibility: visible;
   display: block;
 }
-
+/* 
 .FlexTable:hover .emailLink {
   font-weight: bold;
-}
+} */
 
 .FlexTable:hover .checkmark {
   border-width: 2px;
