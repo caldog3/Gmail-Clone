@@ -1,5 +1,6 @@
 import { Base64Encode } from './email';
 import eventBus from './../event_bus.js';
+import base64url from 'base64url';
 
 const sendMessage = (headers, message) => {
   let email = '';
@@ -141,7 +142,9 @@ const getAttachment = (payload) => {
         'messageId': payload.messageId,
         'id': payload.attachmentId
       }).then((response) => {
-        resolve(response.result.data);
+        return base64url.toBase64(response.result.data);
+      }).then((base64Data) => {
+        resolve(base64Data);
       }).catch((err) => {
         console.log(err);
       });
