@@ -16,7 +16,7 @@
                     </div>
                   </label>
                 </div>
-                <div>
+                <div class="firefoxOnlyCaret">
                   <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                     <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
                     <span class="tooltiptext">Select</span>
@@ -187,7 +187,6 @@
   height: 40px;
   z-index: 1;
   border-bottom: 0px;
-  color: white;
   background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
 } 
@@ -304,6 +303,7 @@
   padding-right: 30px;
   padding-top: 5px;
   font-size: .9em;
+  color: white;
 }
 input {
   margin-top: 7px;
@@ -599,9 +599,18 @@ hr {
 }
 
 
-@-moz-document url-prefix() {
-  /* Something */
+@-moz-document url-prefix() { 
+  .firefoxOnlyCaret {
+    position: relative;
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
 }
+
+
+
 
 /* lets see end */
 @media screen and (max-width : 950px) { 
