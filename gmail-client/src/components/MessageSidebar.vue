@@ -71,6 +71,18 @@
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
       </div>
+      <div v-for="label in labels.slice(9)" :key="label.folder">
+        <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+            </div>
+            <div>
+              <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
@@ -84,18 +96,6 @@
       <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
-        </div>
-      </div>
-      <div v-for="label in labels.slice(9)" :key="label.folder">
-        <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
-          <div id="sidebarFlex">
-            <div>
-              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
-            </div>
-            <div>
-              <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
-            </div>
-          </div>
         </div>
       </div>
       <div>
@@ -214,7 +214,7 @@ export default {
         {folder: "Snoozed", unreadCount: -1},
         {folder: "Sent", unreadCount: 0},
         {folder: "Drafts", unreadCount: -1},
-        {folder: "Important", unreadCount: -1     },
+        {folder: "Important", unreadCount: -1},
         {folder: "All Mail", unreadCount: -1},
         {folder: "Spam", unreadCount: 0},
         {folder: "Trash", unreadCount: 0},

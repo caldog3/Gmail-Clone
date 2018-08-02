@@ -2,6 +2,8 @@
 <template>
   <div class="everything">
     <template v-if="threads">
+      <!-- testing how I can change things based on if anything is checked -->
+      <!-- <p>{{checkedThings}}</p> -->
       <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
 
@@ -627,13 +629,18 @@ export default {
               markAsRead(fullThreadData[i].threadId);
             }
           }
-      }
+        }
       }
 
     },
   },
   computed: {
-    
+    checkedThings: function() {
+      if(this.checkedEmails === []) {
+        return "hey there are checked things";
+      }
+      else { return "nah" };
+    },
 
     threads() {
       const labelId = this.labelId;
@@ -658,7 +665,6 @@ export default {
             return {};
           }
         });
-        
         return fullThreadData;
       }
     },

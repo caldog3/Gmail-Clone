@@ -76,7 +76,7 @@
                     <span class="tooltiptext">Report Spam</span>
                   </div>
                 </div>
-                <div class="item">
+                <div class="item" v-on:click="trashing()">
                   <div class="highlightArea">
                     <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
                     <span class="tooltiptext">Delete</span> 
@@ -668,6 +668,10 @@ export default {
       // *...or here
       this.$store.state.labelMessages.PRIMARY = [];
       this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
+    },
+    trashing() {
+      eventBus.$emit("TRASHING_THREAD");
+      console.log("Clicked the button");
     },
     true() {
       this.messageBody = true;
