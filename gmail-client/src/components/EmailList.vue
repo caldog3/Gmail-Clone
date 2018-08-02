@@ -643,7 +643,7 @@ export default {
           }
         });
 
-        if (labelId === "PRIMARY") {  // We'll have to adjust these label check calculations somehow
+        if (labelId === this.$store.state.currentFolder) {  //It's working so far
           for (var i = 0; i < fullThreadData.length; i++) {
             if (fullThreadData[i].unread.unread == false) {
               markAsRead(fullThreadData[i].threadId);

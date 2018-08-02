@@ -3,13 +3,13 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <b-tab icon='inbox' title="Primary">
+      <b-tab title="Primary" v-on:click="updateCurrentFolder('PRIMARY')">
         <email-list labelId="PRIMARY"/>
       </b-tab>
-      <b-tab title="Social">
+      <b-tab title="Social" v-on:click="updateCurrentFolder('SOCIAL')">
         <email-list labelId="SOCIAL"/>
       </b-tab>
-      <b-tab title="Promotions" >
+      <b-tab title="Promotions" v-on:click="updateCurrentFolder('PROMOTIONS')">
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
     </b-tabs>
@@ -37,6 +37,12 @@ export default {
     return {
       labelId: '',
     }
+  },
+  methods: {
+    updateCurrentFolder(tabFolder) {
+      this.$store.state.currentFolder = tabFolder;
+      console.log("IT has been set to: " + this.$store.state.currentFolder);
+    },
   },
   beforeCreate(){
     //MOVED TO LoadingScreen.vue Created
