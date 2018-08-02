@@ -28,11 +28,12 @@
                 </label>
               </div>
                               
-              <div class="largeOnly">
+              <div class="largeOnly" v-if="labelId !== 'TRASH'">
                 <div class="highlightArea">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                 </div>
               </div>
+              <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
 
             </div>
 
@@ -43,6 +44,7 @@
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
                     <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
+                    <!-- <span v-else-if="labelId === 'TRASH'"> <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> {{thread.from}}</span> -->
                     <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
                     <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
