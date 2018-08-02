@@ -6,12 +6,18 @@
       <!-- <p>{{checkedThings}}</p> -->
 
 
-      <span v-if="threads[0].labelId === 'TRASH'">
+      <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
-          <span>Messages that have been in Trash more than 30 days will be automatically deleted. &emsp;</span>
-          <span class="blue">&emsp;Empty Trash now</span>
+          <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
+          <span class="blue">&emsp;Empty {{threads[0].labelId}} now</span>
         </div>
         <hr id="barrier">
+      </span>
+      <!-- if there are no messages -->
+      <span v-if="threads[0] === undefined">
+        <div id="center-align">
+          <span>There are no messages in this folder</span>
+        </div>
       </span>
 
       <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
