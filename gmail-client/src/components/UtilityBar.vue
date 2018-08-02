@@ -671,6 +671,7 @@ export default {
     },
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
+      console.log("Clicked the button");
     },
     true() {
       this.messageBody = true;
