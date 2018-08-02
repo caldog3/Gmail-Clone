@@ -134,10 +134,10 @@
         <div class="theRest">
           <div class="nameTime">
             <div>
-              Buisness
+              <b> Buisness </b>
             </div>
             <div>
-              1 hour
+              <b> 1 hour </b>
             </div>
           </div>
           <div class="snippet">
