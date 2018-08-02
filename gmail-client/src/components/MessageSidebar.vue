@@ -127,13 +127,26 @@
     </div>
 
     <div class="encryptSide">
-      <div class="itsMe">
-
-      </div>
-
       <div class="line">
+        <div class="photo">
+          <img src="./../assets/user4.jpg">
+        </div>
+        <div class="theRest">
+          <div class="nameTime">
+            <div>
+              Buisness
+            </div>
+            <div>
+              1 hour
+            </div>
+          </div>
+          <div class="snippet">
 
+          </div>
+        </div>
       </div>
+
+
 
     </div>
 
@@ -155,11 +168,31 @@
   margin: 2px 4px 2px 4px;
   height: 70px;
 }
-
-
-
-
-
+.line {
+  display: flex;
+  flex-direction: row;
+}
+.photo {
+  height: 60px;
+  width: 60px;
+  margin: 5px;
+}
+.encryptSide img {
+  height: 60px;
+  width: 60px;
+}
+.theRest {
+  display: flex;
+  flex-direction: column;
+  width: 190px;
+  margin: 5px 5px 5px 0px;
+}
+.nameTime {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 190px;
+}
 
 
 

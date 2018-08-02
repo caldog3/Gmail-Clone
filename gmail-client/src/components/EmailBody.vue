@@ -50,7 +50,7 @@
 
 
 
-    <div class="flexALL">
+    <div class="ALL">
 
       <div class="messageFlex">
         <div class="line">
@@ -60,6 +60,9 @@
               Iterative approaches to corporate strategy foster collaborative thinking to further 
               the overall value proposition. 
             </div>
+            <div class="photo">
+              <img src="./../assets/user1.jpg">
+            </div>
           </div>
         </div>
         <div class="line">
@@ -67,12 +70,18 @@
             <div class="themMess">
               Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. 
             </div>  
+            <div class="photo">
+              <img src="./../assets/user4.jpg">
+            </div>
           </div>
         </div>
         <div class="line">
           <div class="them">
             <div class="themMess">
               Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+            </div>
+            <div class="photo">
+              <img src="./../assets/user4.jpg">
             </div>
           </div>
         </div>
@@ -81,13 +90,21 @@
             <div class="meMess">
               User generated content in real-time will have multiple touchpoints for offshoring.
             </div>
+            <div class="photo">
+              <img src="./../assets/user1.jpg">
+            </div>
           </div>
         </div>
 
       </div>
 
       <div class="send">
-
+        <div class="searchIcon">
+          <font-awesome-icon icon="search" size="lg"/>
+        </div>
+        <div> 
+          Search
+        </div>
       </div>
 
     </div>
@@ -95,45 +112,62 @@
 </template>
 
 <style scoped>
-.flexALL {
-  display: flex;
-  flex-direction: column;
+.ALL {
   width: 100%;
   height: 800px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(180, 180, 180, 0.7);
+  text-align: left;
+  margin-top: 4px;
 }
 .messageFlex {
   display: flex;
   flex-direction: column;
   width: 100%;
+  
 }
 .line {
   width: 100%;
+  padding: 0px 5px 5px 4px;
 }
 .me {
   width: 45%;
   float: right;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
 }
 .them {
   width: 45%;
   float: left;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
 }
 .meMess {
-  background-color: grey;
-  color: white;
+  background-color: white;
+  padding: 10px;
 }
 .themMess {
-  background-color: lightgray;
-  color: white;
+  background-color: white;
+  padding: 10px;
 }
+img {
+  width: 70px;
+  height: 70px;
 
-
-
-
+}
+.send {
+  position: absolute;
+  height: 70px;
+  right: 66px;
+  left: 270px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+.send > div {
+  margin: 20px;
+  height: 30px;
+  line-height: 30px;
+}
 
 
 
