@@ -203,7 +203,7 @@ body {
 /* Scroll Bar for SideBar */
 /* width */
 .optionsA::-webkit-scrollbar {
-  width: 12px;
+  width: 6px;
 }
 /* Track */
 .optionsA::-webkit-scrollbar-track {
