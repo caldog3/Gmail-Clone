@@ -310,14 +310,13 @@ export default {
       if (folder == "Drafts") {
         folder = "Draft";
       }
-      console.log(folder);
-      console.log("99999999");
       if(folder.includes("Label_")) {
         this.$store.state.currentFolder  = folder;
       }
       else {
         this.$store.state.currentFolder = folder.toUpperCase();
       }
+      console.log("IT has been set to: " + this.$store.state.currentFolder);
 
     },
   },

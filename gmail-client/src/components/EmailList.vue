@@ -4,6 +4,16 @@
     <template v-if="threads">
       <!-- testing how I can change things based on if anything is checked -->
       <!-- <p>{{checkedThings}}</p> -->
+
+
+      <span v-if="threads[0].labelId === 'TRASH'">
+        <div id="center-align">
+          <span>Messages that have been in Trash more than 30 days will be automatically deleted. &emsp;</span>
+          <span class="blue">&emsp;Empty Trash now</span>
+        </div>
+        <hr id="barrier">
+      </span>
+
       <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
 
@@ -134,7 +144,17 @@
 
 
 <style scoped>
-
+#center-align {
+  text-align: center;
+  padding-top:15px;
+}
+#barrier {
+  border-top: 15px solid black;
+}
+.blue {
+  color: #297be6;
+  cursor: pointer;
+  }
 .red {
   color: red;
   font-weight: 90;
@@ -631,7 +651,7 @@ export default {
           }
         });
 
-        if (labelId === "PRIMARY") {  // We'll have to adjust these label check calculations somehow
+        if (labelId === this.$store.state.currentFolder) {  //It's working so far
           for (var i = 0; i < fullThreadData.length; i++) {
             if (fullThreadData[i].unread.unread == false) {
               markAsRead(fullThreadData[i].threadId);
@@ -667,7 +687,7 @@ export default {
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, starred, conciseTo, subject, snippet, time, unread, numberOfMessages};
+            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages};
           } else {
             console.log("Not yet Ready. The Label is", labelId)
             return {};
