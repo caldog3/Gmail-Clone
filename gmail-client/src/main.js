@@ -44,11 +44,13 @@ import faPlus from "@fortawesome/fontawesome-free-solid/faPlus";
 import faEnvelope from "@fortawesome/fontawesome-free-solid/faEnvelope";
 import faPrint from "@fortawesome/fontawesome-free-solid/faPrint";
 import faFolder from "@fortawesome/fontawesome-free-solid/faFolder";
+import faUsers from "@fortawesome/fontawesome-free-solid/faUsers";
 
 fontawesome.library.add(faBars, faSearch, faInbox, faStar, faClockO, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,
   faRetweet, faSquareO, faCheckSquareO, faArrowLeft, faEllipsisV, faReply, faLongArrowAltRight, faReplyAll,
-  faCog, faKeyboard, faCaretDown, faChevronRight, faChevronLeft, faPlus, faEnvelope, faPrint, faFolder);
+  faCog, faKeyboard, faCaretDown, faChevronRight, faChevronLeft, faPlus, faEnvelope, faPrint, faFolder,
+  faUsers, faTag);
 
 Vue.config.productionTip = false
 
