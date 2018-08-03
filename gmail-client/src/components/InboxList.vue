@@ -47,6 +47,8 @@
 import EmailList from './EmailList';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { setTimeout } from 'timers';
+import eventBus from '../event_bus';
+
 
 export default {
   name: 'InboxList',
@@ -63,6 +65,17 @@ export default {
     updateCurrentFolder(tabFolder) {
       this.$store.state.currentFolder = tabFolder;
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      if(tabFolder === "SOCIAL") {
+        tabFolder = "CATEGORY_SOCIAL";
+      }
+      else if (tabFolder === "PROMOTIONS") {
+        tabFolder = "CATEGORY_PROMOTIONS";
+      }
+      else if (tabFolder === "PRIMARY") {
+        tabFolder = "INBOX";
+      }
+      eventBus.$emit("TOTAL_EMAIL_COUNT", tabFolder);
+      // maybe trigger an update here for total emails in the utilityBar
     },
   },
   beforeCreate(){
