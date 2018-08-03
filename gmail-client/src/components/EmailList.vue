@@ -94,9 +94,13 @@
                     <br class="rwd-break">
                     <i><span v-html="thread.snippet">...</span></i>
                 </div>
-
               </div>
 
+              <div class="dateTime"> 
+                <div class="rightAlign">{{ thread.time }}</div>
+              </div>
+
+            </diV>
               <div class="hoverView">
                 <div class="item">
 
@@ -133,41 +137,39 @@
                 <div class="smallHover">
                   <div class="item">
 
-                  <div class="highlightArea" v-on:click="archiveThread(thread)">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                    <span class="tooltiptext">Archive</span>
-                  </div>
+                    <div class="highlightArea" v-on:click="archiveThread(thread)">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                      <span class="tooltiptext">Archive</span>
+                    </div>
 
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                    <span class="tooltiptext">Report Spam</span>
-                  </div>
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                      <span class="tooltiptext">Report Spam</span>
+                    </div>
 
-                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                    <span class="tooltiptext">Mark as Unread</span>
-                  </div>
-                  <!-- it isn't making it to my function -->
-                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                    <span class="tooltiptext">Mark as Read</span>
-                  </div>
+                    <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                      <span class="tooltiptext">Mark as Unread</span>
+                    </div>
+                    <!-- it isn't making it to my function -->
+                    <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                      <span class="tooltiptext">Mark as Read</span>
+                    </div>
 
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                    <span class="tooltiptext">Snooze</span>
-                  </div>
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                      <span class="tooltiptext">Snooze</span>
+                    </div>
 
+                  </div>
                 </div>
-              </div>
-              <div class="highlightArea">              
-                <div class="highlightArea">
-                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                <div class="highlightArea">              
+                  <div class="highlightArea">
+                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                  </div>
                 </div>
-              </div>
             </div>
-
-          </div>
 
           </div>
         </div>
