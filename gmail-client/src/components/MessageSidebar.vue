@@ -147,7 +147,7 @@ button {
   margin-right: 10px;
 }
 .optionsA > div {
-  width: 100%;
+  width: 235px;
   height: 35px;
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;

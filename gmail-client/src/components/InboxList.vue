@@ -5,19 +5,25 @@
     <b-tabs>
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
-          <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+          <div class="backdrop">
+            <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+          </div>
         </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
-          <font-awesome-icon style="color:#297be6;;" icon="users" />&emsp; Social
+          <div class="backdrop">
+            <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+          </div>
         </template>
         <email-list labelId="SOCIAL"/>
       </b-tab>
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
-          <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+          <div class="backdrop">
+            <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+          </div>
         </template>
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
@@ -27,7 +33,13 @@
 
 <style scoped>
 #setWidth {
-  background: rgba(255, 255, 255, 0.6);
+  /* background: rgba(255, 255, 255, 0.6); */
+}
+.backdrop {
+  background-color: white;
+  width: 130px;
+  height: 25px;
+  border-radius: 5px;
 }
 </style>
 

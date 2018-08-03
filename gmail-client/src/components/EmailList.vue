@@ -20,28 +20,59 @@
         </div>
       </span>
 
-      <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
+      <div class="background">
+        <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
 
-            <div class="checkboxes">
+              <div class="checkboxes">
 
-              <div class="first">
-                <label class="container">
-                  <div class="highlightAreaCheck">
-                    <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
-                    <span class="checkmark"></span>
+                <div class="first">
+                  <label class="container">
+                    <div class="highlightAreaCheck">
+                      <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
+                      <span class="checkmark"></span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="largeOnly" v-if="labelId !== 'TRASH'">
+                  <div class="highlightArea">
+                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                  </div>
+                </div>
+
+                <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
+              </div>
+                <!-- <div class="largeOnly">
+                  <div class="highlightArea">
+                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                   </div>
                 </label>
-              </div>
+              </div> -->
                               
-              <div class="largeOnly" v-if="labelId !== 'TRASH'">
-                <div class="highlightArea">
-                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
-                </div>
-              </div>
-              <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
+              
+              
 
-            </div>
+              <!-- <div class="emailLink">
+
+                <div class="from" v-on:click="enterMessage(thread)"> 
+                    <b><span class="leftAlign">
+                      <span v-if="thread.from === userEmail"> me </span>
+                      
+                      <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
+                      <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
+                      <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
+                      <span class="threadLength" v-if="thread.numberOfMessages > 1">{{ thread.numberOfMessages }}</span>
+                    </span></b>
+                </div>
+                
+                <div class="snippit" v-on:click="enterMessage(thread)">
+                  <div class="leftAlign1">
+                      <b>{{ thread.subject }} </b>- 
+                      <br class="rwd-break">
+                      <i><span v-html="thread.snippet">...</span></i>
+                  </div>
+                </div> -->
 
             <div class="emailLink">
 
@@ -69,80 +100,80 @@
                 <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
-            </div>
-
-            <div class="hoverView">
-              <div class="item">
-
-                <div class="highlightArea" v-on:click="archiveThread(thread)">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  <span class="tooltiptext">Archive</span>
-                </div>
-
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
-                </div>
-
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  <span class="tooltiptext">Mark as Unread</span>
-                </div>
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Mark as Read</span>
-                </div>
-                
-
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="smallOnly">
-              <span>{{ thread.time }}</span>
-              <div class="smallHover">
+            </diV>
+              <div class="hoverView">
                 <div class="item">
 
-                <div class="highlightArea" v-on:click="archiveThread(thread)">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  <span class="tooltiptext">Archive</span>
-                </div>
+                  <div class="highlightArea" v-on:click="archiveThread(thread)">
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                    <span class="tooltiptext">Archive</span>
+                  </div>
 
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
-                </div>
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                    <span class="tooltiptext">Report Spam</span>
+                  </div>
 
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  <span class="tooltiptext">Mark as Unread</span>
-                </div>
-                <!-- it isn't making it to my function -->
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Mark as Read</span>
-                </div>
+                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                    <span class="tooltiptext">Mark as Unread</span>
+                  </div>
+                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                    <span class="tooltiptext">Mark as Read</span>
+                  </div>
+                  
 
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                    <span class="tooltiptext">Snooze</span>
+                  </div>
 
+                </div>
               </div>
+
+              <div class="smallOnly">
+                <span>{{ thread.time }}</span>
+                <div class="smallHover">
+                  <div class="item">
+
+                    <div class="highlightArea" v-on:click="archiveThread(thread)">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
+                      <span class="tooltiptext">Archive</span>
+                    </div>
+
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                      <span class="tooltiptext">Report Spam</span>
+                    </div>
+
+                    <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                      <span class="tooltiptext">Mark as Unread</span>
+                    </div>
+                    <!-- it isn't making it to my function -->
+                    <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                      <span class="tooltiptext">Mark as Read</span>
+                    </div>
+
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
+                      <span class="tooltiptext">Snooze</span>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="highlightArea">              
+                  <div class="highlightArea">
+                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                  </div>
+                </div>
             </div>
-            <div class="highlightArea">              
-              <div class="highlightArea">
-                <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
-              </div>
-            </div>
+
           </div>
-
         </div>
-      </div>
+        </div>
     </template>
     <template v-else>
       <h1>Not yet initialized</h1>
@@ -152,12 +183,18 @@
 
 
 <style scoped>
+.background {
+  background: rgba(255, 255, 255, 0.6);
+}
 #center-align {
   text-align: center;
-  padding-top:15px;
+  padding:15px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
 }
 #barrier {
-  border-top: 15px solid black;
+  border-top: 4px solid transparent;
+  margin: 0;
 }
 .blue {
   color: #297be6;
@@ -421,6 +458,14 @@ svg:not(:root).svg-inline--fa {
 .FlexTable:hover .hoverView {
   visibility: visible;
   display: block;
+}
+/* 
+.FlexTable:hover .emailLink {
+  font-weight: bold;
+} */
+
+.FlexTable:hover .checkmark {
+  border-width: 2px;
 }
 
 .highlightArea .tooltiptext {

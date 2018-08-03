@@ -151,6 +151,15 @@ body {
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100%;
+  width: 100%;
+  /* position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0; */
+  /* z-index: -3;
+  position: relative; */
 }
 .sideBar {
   min-width: 270px;
