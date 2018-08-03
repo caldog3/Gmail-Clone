@@ -5,19 +5,19 @@
     <b-tabs>
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
-          <font-awesome-icon style="color:black;" icon="inbox" /> Primary
+          <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
         </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
-          <font-awesome-icon style="color:black;" icon="users" /> Social
+          <font-awesome-icon style="color:#297be6;;" icon="users" />&emsp; Social
         </template>
         <email-list labelId="SOCIAL"/>
       </b-tab>
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
-          <font-awesome-icon style="color:black;" icon="tag" /> Promotions
+          <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
         </template>
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
