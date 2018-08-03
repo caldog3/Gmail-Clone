@@ -5,7 +5,9 @@
     <b-tabs>
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
-          <font-awesome-icon style="color:black;" icon="inbox" /> Primary
+          <div>
+            <font-awesome-icon style="color:black;" icon="inbox" /> Primary
+          </div>
         </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>

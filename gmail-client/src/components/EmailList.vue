@@ -22,7 +22,7 @@
 
       <div class="background">
         <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
-            <div class="FlexTable">
+          <div class="FlexTable">
 
               <div class="checkboxes">
 
@@ -34,28 +34,31 @@
                     </div>
                   </label>
                 </div>
-                                
-                <div class="largeOnly">
+
+                <div class="largeOnly" v-if="labelId !== 'TRASH'">
+                  <div class="highlightArea">
+                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                  </div>
+                </div>
+
+                <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
+              </div>
+                <!-- <div class="largeOnly">
                   <div class="highlightArea">
                     <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                   </div>
                 </label>
-              </div>
+              </div> -->
                               
-              <div class="largeOnly" v-if="labelId !== 'TRASH'">
-                <div class="highlightArea">
-                  <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
-                </div>
+              
+              
 
-              </div>
-              <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
-
-              <div class="emailLink">
+              <!-- <div class="emailLink">
 
                 <div class="from" v-on:click="enterMessage(thread)"> 
                     <b><span class="leftAlign">
                       <span v-if="thread.from === userEmail"> me </span>
-                      <!-- The on-click needs to match the conditional for just displaying draft -->
+                      
                       <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
                       <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                       <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
@@ -69,7 +72,7 @@
                       <br class="rwd-break">
                       <i><span v-html="thread.snippet">...</span></i>
                   </div>
-                </div>
+                </div> -->
 
             <div class="emailLink">
 
@@ -165,8 +168,10 @@
             </div>
 
           </div>
+
+          </div>
         </div>
-      </div>
+        </div>
     </template>
     <template v-else>
       <h1>Not yet initialized</h1>
