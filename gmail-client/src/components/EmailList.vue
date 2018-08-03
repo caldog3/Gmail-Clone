@@ -153,6 +153,7 @@
   text-align: center;
   padding:15px;
   background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
 }
 #barrier {
   border-top: 4px solid transparent;
