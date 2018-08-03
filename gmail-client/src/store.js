@@ -176,7 +176,7 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           'labelIds': labelId,
-          'maxResults': 10,
+          'maxResults': 50,
         }).then((response) => {
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
@@ -202,7 +202,7 @@ export default new Vuex.Store({
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
           // 'labelIds': "CATEGORY_" + label,
-          'maxResults': 25,
+          'maxResults': 50,
           'q': `category: ${label}`,
         }).then((response) => {
           let nextPageToken = response.result.nextPageToken;
