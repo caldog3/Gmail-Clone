@@ -3,13 +3,22 @@
 <template>
   <div id="setWidth">
     <b-tabs>
-      <b-tab title="Primary" v-on:click="updateCurrentFolder('PRIMARY')">
+      <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
+        <template slot="title">
+          <font-awesome-icon style="color:black;" icon="inbox" /> Primary
+        </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>
-      <b-tab title="Social" v-on:click="updateCurrentFolder('SOCIAL')">
+      <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
+        <template slot="title">
+          <font-awesome-icon style="color:black;" icon="users" /> Social
+        </template>
         <email-list labelId="SOCIAL"/>
       </b-tab>
-      <b-tab title="Promotions" v-on:click="updateCurrentFolder('PROMOTIONS')">
+      <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
+        <template slot="title">
+          <font-awesome-icon style="color:black;" icon="tag" /> Promotions
+        </template>
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
     </b-tabs>
