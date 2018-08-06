@@ -57,10 +57,9 @@
   margin-top: -10%;
   margin-left: -10%; */
 
-  margin-top: -0.55rem;
   margin-bottom: -0.55rem;
-  margin-left: -1.1rem;
-  margin-right: -1.1rem;
+  margin-left: -.4rem;
+  margin-right: -0.4rem;
 }
 .tabSize {
   width: 170px;
