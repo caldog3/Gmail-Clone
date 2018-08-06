@@ -127,6 +127,14 @@
     </div>
 
     <div class="encryptSide">
+      <div class="search">
+        <div class="searchIcon">
+          <font-awesome-icon icon="search" size="lg"/>
+        </div>
+        <div class="searchBar">
+          Search
+        </diV>
+      </diV>
       <div class="line">
         <div class="photo">
           <img src="./../assets/user4.jpg">
@@ -238,7 +246,25 @@
   background-color: white;
   width: 100%;
   margin: 2px 4px 2px 4px;
-  height: 70px;
+  /* height: 70px; */
+}
+
+.search {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+}
+.searchIcon {
+  width: 35px;
+  margin: 14px 0px 14px 4px;
+}
+.searchBar {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin: 10px 4px 10px 0px;
+  line-height: 30px;
+  height: 30px;
+  text-align: left;
 }
 .line {
   display: flex;
