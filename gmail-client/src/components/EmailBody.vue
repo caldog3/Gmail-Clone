@@ -99,9 +99,6 @@
       </div>
 
       <div class="send">
-        <div class="searchIcon">
-          <font-awesome-icon icon="search" size="lg"/>
-        </div>
         <div> 
           Send a message
         </div>

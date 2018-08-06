@@ -177,7 +177,10 @@
         </div>
       </div>
       <div class="messageUtility">
-
+        <div class="rightSide">
+        </div>
+        <div class="leftSide">
+        </div>
 
       </div>
   </div>
@@ -190,10 +193,21 @@
   right: 17px;
   left: 5px;
   height: 70px;
-  background-color: white;
+  display: flex;
+  flex-direction: row;
 }
-
-
+.rightSide {
+  width: 261px;
+  background-color: white;
+  height: 70px;
+}
+.leftSide {
+  flex-grow: 1;
+  flex-basis: 0;
+  background-color: white;
+  height: 70px;
+  margin-left: 4px;
+}
 
 
 
