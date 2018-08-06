@@ -189,6 +189,9 @@ button {
 .notificationPill {
   text-align: right;
 }
+.activeFolder {
+  height: 35px;
+}
 </style>
 
 <script>
