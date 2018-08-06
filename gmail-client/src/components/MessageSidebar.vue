@@ -287,6 +287,8 @@ export default {
     },
     loadInbox() {
       this.$router.push({ path: "/" });
+      this.$store.state.viewFolder = "Inbox";
+      eventBus.$emit("TOTAL_EMAIL_COUNT", "Inbox");
       
       // if we want to be reloading it to update it.
       // this.$store.state.labelMessages.PRIMARY = [];
@@ -320,6 +322,9 @@ export default {
         this.$store.state.currentFolder = folder.toUpperCase();
       }
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      eventBus.$emit("TOTAL_EMAIL_COUNT", this.$store.state.currentFolder);
+
+      // maybe trigger an update here for total emails in the utilityBar
 
     },
   },

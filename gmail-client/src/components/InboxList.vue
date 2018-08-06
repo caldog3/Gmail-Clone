@@ -7,7 +7,7 @@
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:black;" icon="inbox" /> &nbsp;&nbsp; Primary
+              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
             </div>
           </div>
         </template>
@@ -17,7 +17,7 @@
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:black;" icon="users" /> &nbsp;&nbsp; Social
+              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
             </div>
           </div>
         </template>
@@ -27,7 +27,7 @@
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:black;" icon="tag" /> &nbsp;&nbsp; Promotions
+              <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
             </div>
           </div>
         </template>
@@ -61,6 +61,8 @@
 import EmailList from './EmailList';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { setTimeout } from 'timers';
+import eventBus from '../event_bus';
+
 
 export default {
   name: 'InboxList',
@@ -77,6 +79,17 @@ export default {
     updateCurrentFolder(tabFolder) {
       this.$store.state.currentFolder = tabFolder;
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      if(tabFolder === "SOCIAL") {
+        tabFolder = "CATEGORY_SOCIAL";
+      }
+      else if (tabFolder === "PROMOTIONS") {
+        tabFolder = "CATEGORY_PROMOTIONS";
+      }
+      else if (tabFolder === "PRIMARY") {
+        tabFolder = "INBOX";
+      }
+      eventBus.$emit("TOTAL_EMAIL_COUNT", tabFolder);
+      // maybe trigger an update here for total emails in the utilityBar
     },
   },
   beforeCreate(){
