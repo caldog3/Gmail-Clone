@@ -103,7 +103,7 @@
           <font-awesome-icon icon="search" size="lg"/>
         </div>
         <div> 
-          Search
+          Send a message
         </div>
       </div>
 

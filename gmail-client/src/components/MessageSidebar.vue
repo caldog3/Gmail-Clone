@@ -134,14 +134,86 @@
         <div class="theRest">
           <div class="nameTime">
             <div>
-              <b> Buisness </b>
+              Buisness
             </div>
             <div>
-              <b> 1 hour </b>
+              1 hour 
             </div>
           </div>
           <div class="snippet">
-
+            User generated content in real-time will 
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <div class="photo">
+          <img src="./../assets/user7.jpg">
+        </div>
+        <div class="theRest">
+          <div class="nameTime">
+            <div>
+             Legal Issues
+            </div>
+            <div>
+              4 hours 
+            </div>
+          </div>
+          <div class="snippet">
+            There are no other patent rights, express or implied warranty. 
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <div class="photo">
+          <img src="./../assets/user6.jpg">
+        </div>
+        <div class="theRest">
+          <div class="nameTime">
+            <div>
+              Secret Recipes 
+            </div>
+            <div>
+              1 day 
+            </div>
+          </div>
+          <div class="snippet">
+            Beat white sugar and 1 1/2 cups butter together in a bowl with an electric mixer until light and fluffy
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <div class="photo">
+          <img src="./../assets/user3.jpg">
+        </div>
+        <div class="theRest">
+          <div class="nameTime">
+            <div>
+              Lawyers
+            </div>
+            <div>
+              3 days 
+            </div>
+          </div>
+          <div class="snippet">
+            You may choose to grant any rights of any work of authorship.
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <div class="photo">
+          <img src="./../assets/user5.jpg">
+        </div>
+        <div class="theRest">
+          <div class="nameTime">
+            <div>
+              Confidential 
+            </div>
+            <div>
+              5 days 
+            </div>
+          </div>
+          <div class="snippet">
+            Root-and-branch review where do we stand on the latest client
           </div>
         </div>
       </div>
@@ -192,6 +264,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 190px;
+  margin-top: 5px;
 }
 
 
@@ -211,6 +284,13 @@
   width: 20px;
   height: 20px;
 }
+.snippet {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+
 
 
 .sideBar {
