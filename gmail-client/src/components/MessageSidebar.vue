@@ -133,9 +133,9 @@ button {
 .optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 22px;
+  /* margin-right: 22px; */
   font-size: .9em;
-  width: 248px;
+  width: 260px;
   height: 300px;
   overflow: hidden;
   border-bottom: solid;
@@ -147,7 +147,7 @@ button {
   margin-right: 10px;
 }
 .optionsA > div {
-  width: 100%;
+  width: 253px;
   height: 35px;
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
@@ -284,6 +284,8 @@ export default {
     },
     loadInbox() {
       this.$router.push({ path: "/" });
+      this.$store.state.viewFolder = "Inbox";
+      eventBus.$emit("TOTAL_EMAIL_COUNT", "Inbox");
       
       // if we want to be reloading it to update it.
       // this.$store.state.labelMessages.PRIMARY = [];
@@ -317,6 +319,9 @@ export default {
         this.$store.state.currentFolder = folder.toUpperCase();
       }
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      eventBus.$emit("TOTAL_EMAIL_COUNT", this.$store.state.currentFolder);
+
+      // maybe trigger an update here for total emails in the utilityBar
 
     },
   },

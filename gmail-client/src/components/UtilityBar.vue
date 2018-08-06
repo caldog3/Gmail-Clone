@@ -728,7 +728,9 @@ export default {
     },
     getNumberTotal(folder) {
       gapi.client.load('gmail', 'v1').then(() => {
-        folder = folder.toUpperCase();
+        if (!folder.includes("Label_")) {
+          folder = folder.toUpperCase();
+        }
         console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
         console.log(folder);
         gapi.client.gmail.users.labels.get({
@@ -747,9 +749,8 @@ export default {
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false);
-    eventBus.$on('TOTAL_EMAIL_COUNT', messageTotal => {
-      messageTotal = messageTotal.toLocaleString('en', {useGrouping:true})
-      this.totalMessages = messageTotal;
+    eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
+      this.getNumberTotal(folder);
     });
     // let messageNumberTotal = getNumberOfMessages(this.$store.state.viewFolder);
     this.getNumberTotal(this.$store.state.viewFolder);

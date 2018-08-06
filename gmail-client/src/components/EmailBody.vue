@@ -48,7 +48,7 @@
 <style scoped>
 
 .shift-down {
-  margin-top: 20px;
+  margin-top: 31px;
 }
 .recipients {
   font-size: .8em;
@@ -59,6 +59,7 @@
 }
 .rightAlign {
   text-align: right;
+  margin-right: 10px;
 }
 .flexboxSubject {
   display:flex;
