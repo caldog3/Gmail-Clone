@@ -6,7 +6,9 @@
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+            <div class="tabSize">
+              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+            </div>
           </div>
         </template>
         <email-list labelId="PRIMARY"/>
@@ -14,7 +16,9 @@
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+            <div class="tabSize">
+              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+            </div>
           </div>
         </template>
         <email-list labelId="SOCIAL"/>
@@ -22,7 +26,9 @@
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+            <div class="tabSize">
+              <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+            </div>
           </div>
         </template>
         <email-list labelId="PROMOTIONS"/>
