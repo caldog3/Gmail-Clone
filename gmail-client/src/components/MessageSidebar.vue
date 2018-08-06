@@ -133,10 +133,10 @@
         </div>
         <div class="theRest">
           <div class="nameTime">
-            <div>
+            <div class="name">
               Buisness
             </div>
-            <div>
+            <div class="time">
               1 hour 
             </div>
           </div>
@@ -151,10 +151,10 @@
         </div>
         <div class="theRest">
           <div class="nameTime">
-            <div>
+            <div class="name">
              Legal Issues
             </div>
-            <div>
+            <div class="time">
               4 hours 
             </div>
           </div>
@@ -169,10 +169,10 @@
         </div>
         <div class="theRest">
           <div class="nameTime">
-            <div>
+            <div class="name">
               Secret Recipes 
             </div>
-            <div>
+            <div class="time">
               1 day 
             </div>
           </div>
@@ -187,10 +187,10 @@
         </div>
         <div class="theRest">
           <div class="nameTime">
-            <div>
+            <div class="name">
               Lawyers
             </div>
-            <div>
+            <div class="time">
               3 days 
             </div>
           </div>
@@ -205,10 +205,10 @@
         </div>
         <div class="theRest">
           <div class="nameTime">
-            <div>
+            <div class="name">
               Confidential 
             </div>
-            <div>
+            <div class="time">
               5 days 
             </div>
           </div>
@@ -248,6 +248,7 @@
   height: 60px;
   width: 60px;
   margin: 5px;
+  float: left;
 }
 .encryptSide img {
   height: 60px;
@@ -256,17 +257,22 @@
 .theRest {
   display: flex;
   flex-direction: column;
-  width: 190px;
+  width: 185px;
   margin: 5px 5px 5px 0px;
 }
 .nameTime {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 190px;
+  width: 185px;
   margin-top: 5px;
 }
-
+.name {
+  text-align: left;
+}
+.time {
+  text-align: right;
+}
 
 
 
@@ -276,10 +282,6 @@
   margin-left: 39px;
   line-height: 35px;
 }
-.photo {
-  float: left;
-  margin-left: 2px;
-}
 .optionsA img {
   width: 20px;
   height: 20px;
@@ -287,6 +289,7 @@
 .snippet {
   overflow: hidden;
   white-space: nowrap;
+  text-align: left;
 }
 
 

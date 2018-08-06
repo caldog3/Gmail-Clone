@@ -178,8 +178,34 @@
       </div>
       <div class="messageUtility">
         <div class="rightSide">
+          <div class="photo">
+            <img src="./../assets/user1.jpg">
+          </div>
+          <div class="plusSign">
+            +
+          </div>
         </div>
         <div class="leftSide">
+          <div class="flexUtility">
+            <div class="photo">
+              <img src="./../assets/user4.jpg">
+            </div>
+            <div class="theRest">
+              <div class="nameTime">
+                <b> Buisness </b>  
+              </div>
+              <div class="snippet">
+                Jessica Davis
+              </div>
+            </div>
+            <div class="paperclip">
+              <img src="./../assets/paperclip.png">
+            </div>
+            <div class="ellipsis">
+              <img src="./../assets/ellipsis.png">
+            </div>
+          </div>
+          
         </div>
 
       </div>
@@ -208,8 +234,49 @@
   height: 70px;
   margin-left: 4px;
 }
-
-
+img {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+}
+.plusSign {
+  float: right;
+  line-height: 70px;
+  font-size: xx-large;
+  margin-right: 12px;
+}
+.flexUtility {
+  display: flex;
+  flex-direction: row;
+}
+.ellipsis {
+  margin-right: 5px;
+  width: 60px;
+}
+.theRest {
+  display: flex;
+  flex-direction: column;
+  width: 185px;
+  margin: 5px 5px 5px 0px;
+}
+.nameTime {
+  margin-top: 5px;
+  text-align: left;
+}
+.snippet {
+  overflow: hidden;
+  width: 200px;
+  white-space: nowrap;
+  text-align: left;
+}
+.paperclip img {
+  float: right;
+}
+.paperclip {
+  flex-grow: 1;
+  flex-basis: 0;
+}
 
 
 
