@@ -6,7 +6,9 @@
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+            <div class="tabSize">
+              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+            </div>
           </div>
         </template>
         <email-list labelId="PRIMARY"/>
@@ -14,7 +16,9 @@
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+            <div class="tabSize">
+              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+            </div>
           </div>
         </template>
         <email-list labelId="SOCIAL"/>
@@ -22,7 +26,9 @@
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
           <div class="backdrop">
-            <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+            <div class="tabSize">
+              <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
+            </div>
           </div>
         </template>
         <email-list labelId="PROMOTIONS"/>
@@ -37,9 +43,29 @@
 }
 .backdrop {
   background-color: white;
-  width: 130px;
-  height: 25px;
-  border-radius: 5px;
+  /* width: 130px;
+  height: 25px; */
+
+  /* position: relative;
+  left: -1rem;
+  right: -1rem;
+  top: -0.5rem;
+  bottom: -0.5rem; */
+
+  /* width:   110%;
+  height:  110%;
+  margin-top: -10%;
+  margin-left: -10%; */
+
+  margin-top: -0.55rem;
+  margin-bottom: -0.55rem;
+  margin-left: -1.1rem;
+  margin-right: -1.1rem;
+}
+.tabSize {
+  width: 170px;
+  height: 56px;
+  line-height: 56px;
 }
 </style>
 
