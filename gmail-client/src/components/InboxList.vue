@@ -22,13 +22,7 @@
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
           <div class="backdrop">
-<<<<<<< HEAD
             <font-awesome-icon style="color:green;" icon="tag" />&emsp; Promotions
-=======
-            <div class="tabSize">
-              <font-awesome-icon style="color:black;" icon="tag" /> &nbsp;&nbsp; Promotions
-            </div>
->>>>>>> 5c2d7bc9eed7f124bab45abef37e65c8c4be418c
           </div>
         </template>
         <email-list labelId="PROMOTIONS"/>
