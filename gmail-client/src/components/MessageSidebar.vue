@@ -133,9 +133,9 @@ button {
 .optionsA {
   color: white;
   text-shadow: .5px -1px 2px #333;
-  margin-right: 22px;
+  /* margin-right: 22px; */
   font-size: .9em;
-  width: 248px;
+  width: 260px;
   height: 300px;
   overflow: hidden;
   border-bottom: solid;
@@ -147,7 +147,7 @@ button {
   margin-right: 10px;
 }
 .optionsA > div {
-  width: 235px;
+  width: 253px;
   height: 35px;
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;

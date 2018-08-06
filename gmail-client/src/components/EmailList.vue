@@ -123,7 +123,6 @@
                     <span class="tooltiptext">Mark as Read</span>
                   </div>
                   
-
                   <div class="highlightArea">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
                     <span class="tooltiptext">Snooze</span>
