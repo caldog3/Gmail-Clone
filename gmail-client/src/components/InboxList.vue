@@ -40,32 +40,20 @@
 <style scoped>
 #setWidth {
   /* background: rgba(255, 255, 255, 0.6); */
+  /* min-width: 600px; */
 }
 .backdrop {
   background-color: white;
-  /* width: 130px;
-  height: 25px; */
 
-  /* position: relative;
-  left: -1rem;
-  right: -1rem;
-  top: -0.5rem;
-  bottom: -0.5rem; */
-
-  /* width:   110%;
-  height:  110%;
-  margin-top: -10%;
-  margin-left: -10%; */
-
-  margin-top: -0.55rem;
+  border-radius: 4px 4px 0px 0px;
   margin-bottom: -0.55rem;
-  margin-left: -1.1rem;
-  margin-right: -1.1rem;
+  margin-left: -.4rem;
+  margin-right: -0.4rem;
 }
 .tabSize {
-  width: 170px;
-  height: 56px;
-  line-height: 56px;
+  width: 135px;
+  height: 34px;
+  line-height: 34px;
 }
 </style>
 
