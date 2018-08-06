@@ -237,7 +237,8 @@
 
 .encryptSide {
   width: 262px;
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 116px;
 }
@@ -308,6 +309,11 @@
   margin-left: 39px;
   line-height: 35px;
 }
+.EMline .photo {
+  width: 20px;
+  height: 20px;
+  margin: 5px 0px 0px 1px;
+}
 .optionsA img {
   width: 20px;
   height: 20px;
@@ -324,7 +330,7 @@
 
 .sideBar {
   float: left;
-  display: none;
+  /* display: none; */
   /* padding-right: -100px; */
 }
 img {
