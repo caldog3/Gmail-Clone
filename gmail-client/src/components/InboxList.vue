@@ -52,8 +52,8 @@
 }
 .tabSize {
   width: 135px;
-  height: 56px;
-  line-height: 56px;
+  height: 34px;
+  line-height: 34px;
 }
 </style>
 
