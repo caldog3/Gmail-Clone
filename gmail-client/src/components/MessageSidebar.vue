@@ -212,6 +212,7 @@ export default {
       unreadCounts: [],
       i: 0,
       labels: [
+        // a -1 value prevents it from displaying 
         {folder: "Inbox", unreadCount: 0},
         {folder: "Starred", unreadCount: -1},
         {folder: "Snoozed", unreadCount: -1},
