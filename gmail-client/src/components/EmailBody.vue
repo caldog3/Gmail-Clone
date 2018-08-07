@@ -3,8 +3,8 @@
   <div>
     <div id="body">
       <div class="flexboxSubject">
-        <h4 class="leftAlign">{{messages[0].subject}}</h4>
-        <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+        <div class="leftAlign">{{messages[0].subject}}</div>
+        <div class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></div>
       </div>
 
       <div v-for="message in messages" :key="message.messageId">
@@ -59,6 +59,8 @@
               Leverage agile frameworks to provide a robust synopsis for high level overviews. 
               Iterative approaches to corporate strategy foster collaborative thinking to further 
               the overall value proposition. 
+              
+              <i> <div class="side"> expires in 1 day </div> </i>
             </div>
             <div class="photo">
               <img src="./../assets/user1.jpg">
@@ -69,6 +71,8 @@
           <div class="them">
             <div class="themMess">
               Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. 
+              
+              <i> <div class="side"> expires in 2 days </div> </i>
             </div>  
             <div class="photo">
               <img src="./../assets/user4.jpg">
@@ -79,6 +83,8 @@
           <div class="them">
             <div class="themMess">
               Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+              
+              <i> <div class="side"> expires in 2 days </div> </i>
             </div>
             <div class="photo">
               <img src="./../assets/user4.jpg">
@@ -89,20 +95,25 @@
           <div class="me">
             <div class="meMess">
               User generated content in real-time will have multiple touchpoints for offshoring.
+              
+              <i> <div class="side"> expires in 4 days </div> </i>
             </div>
             <div class="photo">
               <img src="./../assets/user1.jpg">
             </div>
           </div>
         </div>
+        <div class="fill">
 
-      </div>
-
-      <div class="send">
-        <div> 
-          Send a message
+        </div>
+        <div class="send">
+          <div> 
+            Send a message
+          </div>
         </div>
       </div>
+
+      
 
     </div>
   </div>
@@ -114,7 +125,7 @@
   height: 800px;
   background-color: rgba(180, 180, 180, 0.7);
   text-align: left;
-  margin-top: 4px;
+  margin: 4px 0px 0px 8px;
 }
 .messageFlex {
   display: flex;
@@ -152,18 +163,23 @@ img {
 
 }
 .send {
-  position: absolute;
+  /* position: absolute; */
   height: 70px;
-  right: 66px;
-  left: 270px;
   background-color: white;
   display: flex;
   flex-direction: row;
+  margin-top: auto;
 }
 .send > div {
   margin: 20px;
   height: 30px;
   line-height: 30px;
+}
+.fill {
+  height: 40px;
+}
+.side {
+  text-align: right;
 }
 
 
@@ -192,9 +208,9 @@ img {
   margin-left: 2%;
   /* padding-bottom: 40px; */
 }
-h4 {
+/* div {
   padding-top: 15px;
-}
+} */
 .group-message {
   display: inline;
 }

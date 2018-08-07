@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="displayFlex">
     <div class="sideBar">
       <button class="button" v-on:click.stop="composeShow()">
         <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
@@ -160,14 +160,14 @@
         <div class="theRest">
           <div class="nameTime">
             <div class="name">
-             Legal Issues
+             <b> Legal Issues </b>
             </div>
             <div class="time">
-              4 hours 
+              <b> 4 hours </b>
             </div>
           </div>
           <div class="snippet">
-            There are no other patent rights, express or implied warranty. 
+            <b> There are no other patent rights, express or implied warranty.  </b>
           </div>
         </div>
       </div>
@@ -234,11 +234,16 @@
 </template>
 
 <style scoped>
+.displayFlex {
+  display: flex;
+  flex-direction: row;
+}
+
 
 .encryptSide {
   width: 262px;
-  display: none;
-  /* display: flex; */
+  /* display: none; */
+  display: flex;
   flex-direction: column;
   margin-top: 116px;
 }
