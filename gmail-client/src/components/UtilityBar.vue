@@ -36,7 +36,7 @@
                   </div>
                 </div>
                 <div class="item1">
-                  <div class="highlightArea">
+                  <div class="highlightArea" v-on:click="refreshing()">
                     <div>
                       <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
                       <span class="tooltiptext">Refresh</span>
@@ -649,6 +649,17 @@ export default {
     }
   },
   methods: {
+    refreshing() {
+      console.log(this.$store.state.currentFolder);
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      if (folder === "PRIMARY" || folder === "SOCIAL" || folder || "PROMOTIONS") {
+        this.$store.dispatch("getListOfMessages", folder);
+      }
+      else {
+        this.$store.dispatch("getFolderListOfMessages", folder);
+      }
+    },
     pageNum() {
       return this.$store.state.currentPage;
     },
