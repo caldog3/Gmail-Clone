@@ -23,9 +23,7 @@
       <div class="background">
         <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
-
               <div class="checkboxes">
-
                 <div class="first">
                   <label class="container">
                     <div class="highlightAreaCheck">
@@ -612,6 +610,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
+import Vue from 'vue';
 
 export default {
   name: 'EmailList',
@@ -642,6 +641,11 @@ export default {
     toggleUnread(thread) {
       if (thread.unread === true) {
         markAsUnread(thread.threadId);
+        //I'm working on it
+        console.log("before vue.set");
+        console.log((this.$store.state.threadMessages));
+       // Vue.set(this.$store.state.labelMessages[this.labelId][0].unread, thread.id, true);
+        //console.log("after vue.set");
       }
       else if (thread.unread === false) {
         markAsRead(thread.threadId);
