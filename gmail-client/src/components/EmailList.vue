@@ -23,9 +23,7 @@
       <div class="background">
         <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
-
               <div class="checkboxes">
-
                 <div class="first">
                   <label class="container">
                     <div class="highlightAreaCheck">
@@ -80,7 +78,7 @@
                   <b><span class="leftAlign">
                     <span v-if="thread.from === userEmail"> me </span>
                     <!-- The on-click needs to match the conditional for just displaying draft -->
-                    <span class='red' v-else-if="labelId === 'DRAFT'" v-on:click.stop="openCompose()"> {{thread.conciseTo}} Draft </span>
+                    <span class='red' v-else-if="labelId === 'DRAFT'"> {{thread.conciseTo}} Draft </span>
                     <!-- <span v-else-if="labelId === 'TRASH'"> <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> {{thread.from}}</span> -->
                     <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                     <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
@@ -612,6 +610,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
+import Vue from 'vue';
 
 export default {
   name: 'EmailList',
@@ -642,6 +641,11 @@ export default {
     toggleUnread(thread) {
       if (thread.unread === true) {
         markAsUnread(thread.threadId);
+        //I'm working on it
+        console.log("before vue.set");
+        console.log((this.$store.state.threadMessages));
+       // Vue.set(this.$store.state.labelMessages[this.labelId][0].unread, thread.id, true);
+        //console.log("after vue.set");
       }
       else if (thread.unread === false) {
         markAsRead(thread.threadId);
@@ -664,9 +668,18 @@ export default {
       //  without having to reload all of the emails
       // thread.unread = false;
       // this.readClassChanger(thread);
-      eventBus.$emit('ENTER_MESSAGE');
-      this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
-      markAsRead(thread.threadId);
+      console.log("Hi i'm a thread");
+      console.log(thread);
+      if (thread.labelId !== "DRAFT") {
+        eventBus.$emit('ENTER_MESSAGE');
+        this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
+        markAsRead(thread.threadId);
+      }
+      else {
+        console.log("In the draft else");
+        //need an if to check length of thread if length is zero, Compose_open, else open thread
+        eventBus.$emit('COMPOSE_OPEN');
+      }
     },
     check() {
       this.checked = !this.checked;
