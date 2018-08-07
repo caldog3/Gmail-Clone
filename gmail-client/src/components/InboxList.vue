@@ -7,7 +7,7 @@
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:red;" icon="inbox" />&emsp;&emsp; Primary 
+              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary 
             </div>
           </div>
         </template>
@@ -17,7 +17,7 @@
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              &emsp; <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social &emsp;
+              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social 
             </div>
           </div>
         </template>
@@ -54,6 +54,7 @@
   width: 135px;
   height: 34px;
   line-height: 34px;
+  text-align: center;
 }
 </style>
 
