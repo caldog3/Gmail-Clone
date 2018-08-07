@@ -650,10 +650,12 @@ export default {
   },
   methods: {
     refreshing() {
-      console.log(this.$store.state.currentFolder);
       let folder = this.$store.state.currentFolder;
+      console.log("refreshing");
+      console.log(this.$store.state.labelMessages);
       this.$store.state.labelMessages[folder] = [];
-      if (folder === "PRIMARY" || folder === "SOCIAL" || folder || "PROMOTIONS") {
+      console.log(folder);
+      if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
         this.$store.dispatch("getListOfMessages", folder);
       }
       else {
@@ -751,7 +753,6 @@ export default {
           'id': folder,
         }).then((response) => {
           let totalInboxEmailCount = response.result.threadsTotal;
-          console.log("still alive: " + totalInboxEmailCount);
           totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
           this.$store.state.totalMessages = totalInboxEmailCount;
           this.totalMessages = totalInboxEmailCount;
@@ -765,12 +766,7 @@ export default {
     eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
       this.getNumberTotal(folder);
     });
-    // let messageNumberTotal = getNumberOfMessages(this.$store.state.viewFolder);
     this.getNumberTotal(this.$store.state.viewFolder);
-    // console.log("Still still alive" + messageNumberTotal);
-    // messageNumberTotal = messageNumberTotal.toLocaleString('en', {useGrouping:true});
-    // this.$store.state.totalMessages = messageNumberTotal;
-    // // this.totalMessages = messageNumberTotal;
   },
 }
 
