@@ -127,7 +127,6 @@ const getNumberOfMessages = (folder) => {
       'id': folder,
     }).then((response) => {
       let totalInboxEmailCount = response.result.threadsTotal;
-      console.log("still alive");
       return totalInboxEmailCount;
     });
   });
