@@ -54,7 +54,12 @@
 }
 .flexboxSubject {
   display:flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+}
+.rightAlign {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin-right: 10px;
 }
 .response-buttons {
   padding: 40px;

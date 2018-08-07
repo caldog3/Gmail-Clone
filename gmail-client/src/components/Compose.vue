@@ -28,10 +28,10 @@
     </div>
     <div class="footerSection">
       <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send Unecrypted" @click="send">
+        <input type="submit" class="SendButton1" value="Send" @click="send">
       </div>
       <div class="sendButton">
-        <input type="submit" class="SendButton2" value="Send Encrypted" @click="send">
+        <input type="submit" class="SendButton2" value="Send Private" @click="send">
       </div>
     </div>
   </div>
@@ -157,21 +157,21 @@ textarea {
   padding: 3px;
 }
 .SendButton1 {
-  background-color: #EA4335;
+  background-color: #4285F4;
   border-radius: 5px;
   color: white;
   border: none;
   outline: none;
-  width: 150px;
+  width: 80px;
   height: 2.2em;
 }
 .SendButton2 {
-  background-color: #4DA954;
+  background-color: grey;
   border-radius: 5px;
   color: white;
   border: none;
   outline: none;
-  width: 150px;
+  width: 110px;
   height: 2.2em;
 }
 </style>
