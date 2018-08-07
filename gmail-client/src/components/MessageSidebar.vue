@@ -3,12 +3,12 @@
     <div class="sideBar">
       <button class="button" v-on:click.stop="composeShow()">
         <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
-        &nbsp; &nbsp; Compose &nbsp; 
+        &nbsp; &nbsp; Compose &nbsp;
         </button>
       <!-- <b-modal v-model="composeShow">
         Test compose block
       </b-modal> -->
-      
+
       <div class="optionsA">
 
         <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
@@ -29,7 +29,7 @@
           </div>
 
           <div class="EM">
-            Encrypted Messages 
+            Encrypted Messages
           </div>
 
         </div>
@@ -40,7 +40,7 @@
 
         <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
           <div id="sidebarFlex">
-            <div> 
+            <div>
               <font-awesome-icon style="color:black;" icon="star" />&emsp; {{labels[1].folder}}
             </div>
             <div>
@@ -80,7 +80,7 @@
             </div>
             <div>
               <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
-            </div>  
+            </div>
           </div>
         </div>
         <div v-bind:class="activeFolderClass('All mail')">
@@ -145,11 +145,11 @@
               Buisness
             </div>
             <div class="time">
-              1 hour 
+              1 hour
             </div>
           </div>
           <div class="snippet">
-            User generated content in real-time will 
+            User generated content in real-time will
           </div>
         </div>
       </div>
@@ -178,10 +178,10 @@
         <div class="theRest">
           <div class="nameTime">
             <div class="name">
-              Secret Recipes 
+              Secret Recipes
             </div>
             <div class="time">
-              1 day 
+              1 day
             </div>
           </div>
           <div class="snippet">
@@ -199,7 +199,7 @@
               Lawyers
             </div>
             <div class="time">
-              3 days 
+              3 days
             </div>
           </div>
           <div class="snippet">
@@ -214,10 +214,10 @@
         <div class="theRest">
           <div class="nameTime">
             <div class="name">
-              Confidential 
+              Confidential
             </div>
             <div class="time">
-              5 days 
+              5 days
             </div>
           </div>
           <div class="snippet">
@@ -242,8 +242,8 @@
 
 .encryptSide {
   width: 262px;
-  /* display: none; */
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 116px;
 }
@@ -307,7 +307,9 @@
 }
 
 
-
+/* .EMline {
+  background: rgba(255, 255, 255, 0.5);
+} */
 .EM {
   text-align: left;
   margin-left: 2px;
@@ -453,7 +455,7 @@ export default {
           }
           if(j <= 8) {
             theFolder = theFolder.toUpperCase();
-          
+
             if (this.labels[j].unreadCount === 0) {
               gapi.client.gmail.users.labels.get({
               'userId': 'me',
@@ -464,7 +466,7 @@ export default {
                 let unreadCount = response.result.threadsUnread;
                 this.labels[j].unreadCount = unreadCount;
               });
-            } 
+            }
           }
           else {
             gapi.client.gmail.users.labels.get({
@@ -505,7 +507,7 @@ export default {
     },
     loadInbox() {
       this.$router.push({ path: "/" });
-      
+
       // if we want to be reloading it to update it.
       // this.$store.state.labelMessages.PRIMARY = [];
       // this.$store.state.labelMessages.SOCIAL = [];
