@@ -35,7 +35,14 @@
 
                 <div class="largeOnly" v-if="labelId !== 'TRASH'">
                   <div class="highlightArea">
-                    <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                    <div class="theRestoftheTime">
+                      <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                    </div>
+                    <div class="firefoxOnly">
+                      <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(thread)" :checked="thread.starred" title="bookmark page">
+                      <label for="ffstar" class="notchecked">&#X2606;</label>
+                      <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                    </div>
                   </div>
                 </div>
 
@@ -245,7 +252,8 @@
   display: flex;
   flex-direction: row;
   width: 60px;
-  margin: 5px 4px 5px 0px
+  margin: 5px 4px 5px 0px;
+  overflow: hidden;
 }
 
 /* The Checkbox  */
@@ -339,6 +347,31 @@
   position: absolute;
   color:gold;
 }
+
+/* .firefoxOnly {
+  display: none;
+} */
+#ffstar {
+  display:none;
+}
+.checked {
+  display:none
+}
+.notchecked {
+  display:inline-block;
+}
+#ffstar:checked ~ .checked {
+  display:inline-block;
+}
+#ffstar:checked ~ .notchecked {
+  display:none;
+}
+.highlightArea label {
+  width: 30px;
+  height: 30px;
+}
+
+
 
 .item {
   display: flex;
@@ -594,10 +627,16 @@ svg:not(:root).svg-inline--fa {
 }
 
 @-moz-document url-prefix() {
-  .star[data-v-9b75054c] {
+  /* .star[data-v-9b75054c] {
     visibility: visible;
     left: 0px;
     top: 0px;
+  } */
+  .theRestoftheTime {
+    display: none;
+  }
+  .firefoxOnly {
+    display: contents;
   }
 }
 
