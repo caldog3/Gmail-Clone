@@ -54,8 +54,8 @@
 
       <div class="messageFlex">
         <div class="line">
-          <div class="me">
-            <div class="meMess">
+          <div class="me1">
+            <div class="meMess1">
               Leverage agile frameworks to provide a robust synopsis for high level overviews. 
               Iterative approaches to corporate strategy foster collaborative thinking to further 
               the overall value proposition. 
@@ -68,8 +68,8 @@
           </div>
         </div>
         <div class="line">
-          <div class="them">
-            <div class="themMess">
+          <div class="them2">
+            <div class="themMess2">
               Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. 
               
               <i> <div class="side"> expires in 2 days </div> </i>
@@ -80,8 +80,8 @@
           </div>
         </div>
         <div class="line">
-          <div class="them">
-            <div class="themMess">
+          <div class="them3">
+            <div class="themMess3">
               Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
               
               <i> <div class="side"> expires in 2 days </div> </i>
@@ -92,8 +92,8 @@
           </div>
         </div>
         <div class="line">
-          <div class="me">
-            <div class="meMess">
+          <div class="me4">
+            <div class="meMess4">
               User generated content in real-time will have multiple touchpoints for offshoring.
               
               <i> <div class="side"> expires in 4 days </div> </i>
@@ -106,14 +106,14 @@
         <div class="fill">
 
         </div>
-        <div class="send">
-          <div> 
-            Send a message
-          </div>
-        </div>
+
       </div>
 
-      
+      <div class="send">
+        <div> 
+          Send a message
+        </div>
+      </div>
 
     </div>
   </div>
@@ -122,10 +122,11 @@
 <style scoped>
 .ALL {
   width: 100%;
-  height: 800px;
+  /* height: 400px; */
   background-color: rgba(180, 180, 180, 0.7);
   text-align: left;
   margin: 4px 0px 0px 8px;
+  /* overflow-y: scroll; */
 }
 .messageFlex {
   display: flex;
@@ -137,26 +138,48 @@
   width: 100%;
   padding: 0px 5px 5px 4px;
 }
-.me {
+.me1 {
+  width: 55%;
+  float: right;
+  display: flex;
+  flex-direction: row;
+  margin: 5px 2px 2px 2px;
+}
+.meMess1 {
+  background-color: white;
+  padding: 10px;
+}
+.me4 {
   width: 45%;
   float: right;
   display: flex;
   flex-direction: row;
 }
-.them {
+.meMess4 {
+  background-color: white;
+  padding: 10px;
+}
+.them2 {
+  width: 35%;
+  float: left;
+  display: flex;
+  flex-direction: row-reverse;
+}
+.themMess2 {
+  background-color: white;
+  padding: 10px;
+}
+.them3 {
   width: 45%;
   float: left;
   display: flex;
   flex-direction: row-reverse;
 }
-.meMess {
+.themMess3 {
   background-color: white;
   padding: 10px;
 }
-.themMess {
-  background-color: white;
-  padding: 10px;
-}
+
 img {
   width: 70px;
   height: 70px;
