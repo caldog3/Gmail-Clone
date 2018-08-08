@@ -127,105 +127,17 @@
     </div>
 
     <div class="encryptSide">
-      <div class="search">
-        <div class="searchIcon">
-          <font-awesome-icon icon="search" size="lg"/>
-        </div>
-        <div class="searchBar">
-          Search
-        </diV>
-      </diV>
-      <div class="line">
-        <div class="photo">
-          <img src="./../assets/user4.jpg">
-        </div>
-        <div class="theRest">
-          <div class="nameTime">
-            <div class="name">
-              Buisness
-            </div>
-            <div class="time">
-              1 hour
-            </div>
-          </div>
-          <div class="snippet">
-            User generated content in real-time will
-          </div>
-        </div>
-      </div>
-      <div class="line">
-        <div class="photo">
-          <img src="./../assets/user7.jpg">
-        </div>
-        <div class="theRest">
-          <div class="nameTime">
-            <div class="name">
-             <b> Legal Issues </b>
-            </div>
-            <div class="time">
-              <b> 4 hours </b>
-            </div>
-          </div>
-          <div class="snippet">
-            <b> There are no other patent rights, express or implied warranty.  </b>
-          </div>
-        </div>
-      </div>
-      <div class="line">
-        <div class="photo">
-          <img src="./../assets/user6.jpg">
-        </div>
-        <div class="theRest">
-          <div class="nameTime">
-            <div class="name">
-              Secret Recipes
-            </div>
-            <div class="time">
-              1 day
-            </div>
-          </div>
-          <div class="snippet">
-            Beat white sugar and 1 1/2 cups butter together in a bowl with an electric mixer until light and fluffy
-          </div>
-        </div>
-      </div>
-      <div class="line">
-        <div class="photo">
-          <img src="./../assets/user3.jpg">
-        </div>
-        <div class="theRest">
-          <div class="nameTime">
-            <div class="name">
-              Lawyers
-            </div>
-            <div class="time">
-              3 days
-            </div>
-          </div>
-          <div class="snippet">
-            You may choose to grant any rights of any work of authorship.
-          </div>
-        </div>
-      </div>
-      <div class="line">
-        <div class="photo">
-          <img src="./../assets/user5.jpg">
-        </div>
-        <div class="theRest">
-          <div class="nameTime">
-            <div class="name">
-              Confidential
-            </div>
-            <div class="time">
-              5 days
-            </div>
-          </div>
-          <div class="snippet">
-            Root-and-branch review where do we stand on the latest client
-          </div>
-        </div>
-      </div>
+      <div class="Starred">
 
+
+      </div>
+      <div class="Recent">
+
+      </div>
+      <div class="Older">
+
+
+      </div>
 
 
     </div>
@@ -243,73 +155,13 @@
 .encryptSide {
   width: 262px;
   display: none;
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   margin-top: 116px;
-}
-
-.encryptSide > div {
   background-color: white;
-  width: 100%;
-  margin: 2px 4px 2px 4px;
-  /* height: 70px; */
-}
-
-.search {
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-}
-.searchIcon {
-  width: 35px;
-  margin: 14px 0px 14px 4px;
-}
-.searchBar {
-  flex-grow: 1;
-  flex-basis: 0;
-  margin: 10px 4px 10px 0px;
-  line-height: 30px;
-  height: 30px;
-  text-align: left;
-}
-.line {
-  display: flex;
-  flex-direction: row;
-}
-.photo {
-  height: 60px;
-  width: 60px;
-  margin: 5px;
-  float: left;
-}
-.encryptSide img {
-  height: 60px;
-  width: 60px;
-}
-.theRest {
-  display: flex;
-  flex-direction: column;
-  width: 185px;
-  margin: 5px 5px 5px 0px;
-}
-.nameTime {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 185px;
-  margin-top: 5px;
-}
-.name {
-  text-align: left;
-}
-.time {
-  text-align: right;
 }
 
 
-/* .EMline {
-  background: rgba(255, 255, 255, 0.5);
-} */
 .EM {
   text-align: left;
   margin-left: 2px;
@@ -330,9 +182,6 @@
   white-space: nowrap;
   text-align: left;
 }
-
-
-
 
 
 .sideBar {
