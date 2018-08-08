@@ -168,6 +168,10 @@
   margin-left: 39px;
   line-height: 35px;
 }
+.EMline {
+  display: flex;
+  flex-direction: row;
+}
 .EMline .photo {
   width: 20px;
   height: 20px;
