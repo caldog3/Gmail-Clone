@@ -326,6 +326,7 @@ export default new Vuex.Store({
         context.commit("setThreadTime", { threadId, unixTime });
 
         const { body, attachmentIds } = getBody(response.result.payload);
+        //sanitize/split body method
         const { unread, starred } = resolveLabels(response.result.labelIds);
         const snippet = response.result.snippet;
         const id = response.result.id;
