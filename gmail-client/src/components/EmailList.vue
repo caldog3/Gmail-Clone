@@ -447,6 +447,7 @@ a {
   height: 30px;
   border-radius: 35px;
   cursor: pointer; 
+  overflow: hidden;
 }
 .highlightArea:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
