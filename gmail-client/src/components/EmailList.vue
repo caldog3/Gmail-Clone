@@ -684,7 +684,7 @@ export default {
         //I'm working on it
         console.log("before vue.set");
         console.log((this.$store.state.threadMessages));
-       // Vue.set(this.$store.state.labelMessages[this.labelId][0].unread, thread.id, true);
+        // Vue.set(thread.unread, thread.id, false);
         //console.log("after vue.set");
       }
       else if (thread.unread === false) {
@@ -774,7 +774,7 @@ export default {
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
         const messages = this.$store.getters.getThreadMessages;
-
+      
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = messages[threadId];
           const numberOfMessages = threadMessages.length;
