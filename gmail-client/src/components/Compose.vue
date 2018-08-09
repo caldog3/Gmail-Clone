@@ -28,10 +28,10 @@
     </div>
     <div class="footerSection">
       <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send" @click="send">
+        <input type="submit" class="SendButton2" value="Send Private" @click="send">
       </div>
       <div class="sendButton">
-        <input type="submit" class="SendButton2" value="Send Private" @click="send">
+        <input type="submit" class="SendButton1" value="Send" @click="send">
       </div>
     </div>
   </div>
@@ -157,7 +157,7 @@ textarea {
   padding: 3px;
 }
 .SendButton1 {
-  background-color: #4285F4;
+  background-color: grey;
   border-radius: 5px;
   color: white;
   border: none;
@@ -166,7 +166,7 @@ textarea {
   height: 2.2em;
 }
 .SendButton2 {
-  background-color: grey;
+  background-color: #4285F4;
   border-radius: 5px;
   color: white;
   border: none;
