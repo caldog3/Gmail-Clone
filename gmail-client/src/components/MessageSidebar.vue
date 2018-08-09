@@ -29,7 +29,7 @@
           </div>
 
           <div class="EM">
-            Encrypted Messages
+            Private Messages
           </div>
 
         </div>
@@ -164,8 +164,7 @@
 
 .EM {
   text-align: left;
-  margin-left: 2px;
-  margin-left: 39px;
+  margin-left: 18px;
   line-height: 35px;
 }
 .EMline {
