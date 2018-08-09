@@ -1,7 +1,7 @@
 /*This is here for the meantime */
 
 <template>
-<i :class="`icon icon-${name}`"></i>
+  <i :class="`icon icon-${name}`"></i>
 </template>
 
 <style lang="scss" scoped>

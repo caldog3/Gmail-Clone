@@ -226,7 +226,7 @@ export default new Vuex.Store({
     //working on this
     getPageListOfMessages(context, labelId) {
       //this doesn't really work....
-      this.state.labelLastPageTokens.push(this.state.labelNextPageTokens.PRIMARY);
+      this.state.labelLastPageTokens.push(this.state.labelNextPageTokens[labelId]);
       let label = labelId;
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
@@ -234,14 +234,12 @@ export default new Vuex.Store({
           'userId': 'me',
           'maxResults': 50,
           'q': `category: ${label}`,
-          'pageToken': this.state.labelNextPageTokens.PRIMARY,
+          'pageToken': this.state.labelNextPageTokens[labelId]
         }).then((response) => {
           
           let nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
-          console.log("LastPage Tokens");
           console.log(this.state.labelLastPageTokens);
-          console.log("NEXT PAGE TOKEN AFTER");
           console.log(this.state.labelNextPageTokens);
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
@@ -326,6 +324,7 @@ export default new Vuex.Store({
         context.commit("setThreadTime", { threadId, unixTime });
 
         const { body, attachmentIds } = getBody(response.result.payload);
+        //sanitize/split body method
         const { unread, starred } = resolveLabels(response.result.labelIds);
         const snippet = response.result.snippet;
         const id = response.result.id;

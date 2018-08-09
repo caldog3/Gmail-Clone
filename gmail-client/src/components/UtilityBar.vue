@@ -1,182 +1,203 @@
 <template>
   <div class="body">
-      <div class="iconDiv">
-        <div class="spacing">
-          <div>
-
-            <span v-if=!messageBody>
-              <div class="flexIcons">
-                <!-- <div v-on:click="checkAll(this)" class="item"> -->
-                <div class="item">
-                  <label class="container">
-                    <div class="highlightAreaCheck">
-                      <input type="checkbox" @click="checkAllToggle()">
-                      <span class="tooltiptext">Select</span>
-                      <span class="checkmark"></span>
-                    </div>
-                  </label>
-                </div>
-                <div class="firefoxOnlyCaret">
-                  <div class="highlightArea2" v-on:click="caretDropdownFunction()">
-                    <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
-                    <span class="tooltiptext">Select</span>
-                    <div id="caretDropdown" class="dropdown-content">
-                      <p>  All </p>
-                      <hr>
-                      <p> None </p>
-                      <hr>
-                      <p> Read </p>
-                      <hr>
-                      <p> Unread </p>
-                      <hr>
-                      <p> Starred </p>
-                      <hr>
-                      <p> Unstarred </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="item1">
-                  <div class="highlightArea" v-on:click="refreshing()">
-                    <div>
-                      <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
-                      <span class="tooltiptext">Refresh</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
-                    <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                    <div id="ellipsesDropdown" class="dropdown-content">
-                      <p v-on:click="markAllAsRead()">  Mark all as read </p>
-                      <hr>
-                      <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </span>
-      
-            <span v-if=messageBody>
-              <div class="CenterIt">
-                <div v-on:click.stop="back()" class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
-                    <span class="tooltiptext">Back to Inbox</span>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
-                    <span class="tooltiptext">Archive</span>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                    <span class="tooltiptext">Report Spam</span>
-                  </div>
-                </div>
-                <div class="item" v-on:click="trashing()">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
-                    <span class="tooltiptext">Delete</span> 
-                  </div>
-                </div>
-                <div class="break">
-                  |
-                </div>
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-                    <span class="tooltiptext">Mark as Unread</span>
-                  </div>
-                </div>
-            
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                    <span class="tooltiptext">Snooze</span>
-                  </div>
-                </div>
-                <div class="break">
-                  |
-                </div>
-                <div class="item">
-                  <div class="highlightArea">
-                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-                    <span class="tooltiptext">Move to</span>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                    <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                    <div id="ellipsesDropdown" class="dropdown-content">
-                      <p>Mark as read</p>
-                      <hr>
-                      <p>Mark as important</p>
-                      <hr>
-                      <p>Add to tasks</p>
-                      <hr>
-                      <p>Add star</p>
-                      <hr>
-                      <p>Create Event</p>
-                      <hr>
-                      <p>Filter messages like these</p>
-                      <hr>
-                      <p>Mute</p>
-                    </div>  
-                  </div>
-                </div>
-              </div>
-            </span>          
-          </div>
-
-          <div class="right-side-utility">
+    <div class="iconDiv">
+      <div class="spacing">
+        <div>
+          <span v-if=!messageBody>
             <div class="flexIcons">
-            
-              <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
-                {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
-              </div>
-              <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
-
-              <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
-                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
-                <span class="tooltiptext">Newer</span>
-              </div>
-              <div class="paddingNeeded" v-else>
-                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
-                <span class="tooltiptext">No Newer</span>
-              </div>
-            
-              <div class="lessPadding" v-on:click="nextPageLoad">
-                <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
-                <span class="tooltiptext">Older</span>
-              </div>
-              <div class="firefoxonlyCog">
-                <div class="item">
-                  <div class="highlightArea">
-                    <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
-                    <span class="tooltiptext">Settings</span>
-                    <div id="cogDropdown" class="cog dropdown-content">
-                      <div class="dropdownEntry">Some kind of setting</div>
-                      <hr>
-                      <div class="dropdownEntry">Some kind of setting</div>
-                      <hr>
-                      <div class="dropdownEntry">Maybe a security mode</div>
-                      <hr>
-                      <div class="dropdownEntry">Some kind of setting</div>
-                      <hr>
-                      <div class="dropdownEntry">Some kind of setting</div>
-                    </div> 
+              
+               <!-- <div v-on:click="checkAll(this)" class="item"> -->
+              <div class="item">
+                <label class="container">
+                  <div class="highlightAreaCheck">
+                    <input type="checkbox" @click="checkAllToggle()">
+                    <span class="tooltiptext">Select</span>
+                    <span class="checkmark"></span>
                   </div>
+                </label>
+              </div>
+
+              <div class="firefoxOnlyCaret">
+                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
+                  <span class="tooltiptext">Select</span>
+                  <div id="caretDropdown" class="dropdown-content">
+                    <p>  All </p>
+                    <hr>
+                    <p> None </p>
+                    <hr>
+                    <p> Read </p>
+                    <hr>
+                    <p> Unread </p>
+                    <hr>
+                    <p> Starred </p>
+                    <hr>
+                    <p> Unstarred </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item1">
+                <div class="highlightArea" v-on:click="refreshing()">
+                  <div>
+                    <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                    <span class="tooltiptext">Refresh</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="ellipsesDropdown" class="dropdown-content">
+                    <p v-on:click="markAllAsRead()">  Mark all as read </p>
+                    <hr>
+                    <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </span>
+      
+          <span v-if=messageBody>
+            <div class="CenterIt">
+              <div v-on:click.stop="back()" class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
+                  <span class="tooltiptext">Back to Inbox</span>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                  <span class="tooltiptext">Archive</span>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                  <span class="tooltiptext">Report Spam</span>
+                </div>
+              </div>
+
+              <div class="item" v-on:click="trashing()">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
+                  <span class="tooltiptext">Delete</span> 
+                </div>
+              </div>
+
+              <div class="break">
+                |
+              </div>
+
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                  <span class="tooltiptext">Mark as Unread</span>
+                </div>
+              </div>
+            
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                  <span class="tooltiptext">Snooze</span>
+                </div>
+              </div>
+
+              <div class="break">
+                |
+              </div>
+
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                  <span class="tooltiptext">Move to</span>
+                </div>
+              </div>
+
+              <div class="item">
+                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
+                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                  <div id="ellipsesDropdown" class="dropdown-content">
+                    <p>Mark as read</p>
+                    <hr>
+                    <p>Mark as important</p>
+                    <hr>
+                    <p>Add to tasks</p>
+                    <hr>
+                    <p>Add star</p>
+                    <hr>
+                    <p>Create Event</p>
+                    <hr>
+                    <p>Filter messages like these</p>
+                    <hr>
+                    <p>Mute</p>
+                  </div>  
+                </div>
+              </div>
+
+            </div>
+          </span>  
+
+        </div>
+
+        <div class="right-side-utility">
+          <div class="flexIcons">
+
+            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
+              {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
+
+            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
+
+            <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+              <span class="tooltiptext">Newer</span>
+            </div>
+
+            <div class="paddingNeeded" v-else>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
+              <span class="tooltiptext">No Newer</span>
+            </div>
+            
+            <div class="lessPadding" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50" v-on:click="nextPageLoad">
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+              <span class="tooltiptext">Older</span>
+            </div>
+            <div class="lessPadding" v-else>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+              <span class="tooltiptext"> No Older</span>
+            </div>
+
+            <div class="firefoxonlyCog">
+              <div class="item">
+                <div class="highlightArea">
+                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
+                  <span class="tooltiptext">Settings</span>
+                  <div id="cogDropdown" class="cog dropdown-content">
+                    <div class="dropdownEntry">Some kind of setting</div>
+                    <hr>
+                    <div class="dropdownEntry">Some kind of setting</div>
+                    <hr>
+                    <div class="dropdownEntry">Maybe a security mode</div>
+                    <hr>
+                    <div class="dropdownEntry">Some kind of setting</div>
+                    <hr>
+                    <div class="dropdownEntry">Some kind of setting</div>
+                  </div> 
                 </div>
               </div>
             </div>
+            
           </div>
-
         </div>
-      </div>
 
+      </div>
+    </div>
   </div>
 </template>
 
@@ -312,6 +333,8 @@ button {
   float: right;
   margin-right: 20%;
 }
+
+
 
 
 
@@ -651,6 +674,7 @@ export default {
       let folder = this.$store.state.currentFolder;
       console.log("refreshing");
       console.log(this.$store.state.labelMessages);
+      this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
       console.log(folder);
       if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
@@ -672,15 +696,19 @@ export default {
       console.log(this.$store.state.labelMessages);
       //We'll have to switch it to be more universal 
       // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
-      this.$store.state.labelMessages.PRIMARY = [];
-      this.$store.dispatch("getPageListOfMessages", "PRIMARY");
+      console.log("ViewFolder:");
+      console.log(this.$store.state.currentFolder);
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getPageListOfMessages", folder);
       // not sure what the best strategy is here*
     },
     lastPageLoad() {
       eventBus.$emit("LAST_PAGE_LOAD");
       // *...or here
-      this.$store.state.labelMessages.PRIMARY = [];
-      this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getLastPageListOfMessages", folder);
     },
     trashing() {
       eventBus.$emit("TRASHING_THREAD");

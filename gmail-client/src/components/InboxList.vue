@@ -3,26 +3,29 @@
 <template>
   <div id="setWidth">
     <b-tabs>
+      
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary
+              <font-awesome-icon style="color:red;" icon="inbox" />&emsp; Primary 
             </div>
           </div>
         </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>
+
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
-              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social
+              <font-awesome-icon style="color:#297be6;" icon="users" />&emsp; Social 
             </div>
           </div>
         </template>
         <email-list labelId="SOCIAL"/>
       </b-tab>
+
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
           <div class="backdrop">
@@ -33,6 +36,7 @@
         </template>
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
+
     </b-tabs>
   </div>
 </template>
@@ -54,6 +58,7 @@
   width: 135px;
   height: 34px;
   line-height: 34px;
+  text-align: center;
 }
 </style>
 
@@ -77,8 +82,22 @@ export default {
   },
   methods: {
     updateCurrentFolder(tabFolder) {
+      let previousFolder = this.$store.state.currentFolder;
       this.$store.state.currentFolder = tabFolder;
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      //need to reset the previous folder back to its first page
+      if(this.$store.state.currentPage !== 1) {
+        this.$store.state.labelMessages[previousFolder] = [];
+        if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
+          this.$store.dispatch("getListOfMessages", previousFolder);
+        }
+        else {
+          this.$store.dispatch("getFolderListOfMessages", previousFolder);
+        }
+        this.$store.state.currentPage = 1;
+      }
+      // we have to reset the last page tokens because they no longer apply to the new label
+      this.$store.state.labelLastPageTokens = [];
       if(tabFolder === "SOCIAL") {
         tabFolder = "CATEGORY_SOCIAL";
       }

@@ -2,26 +2,30 @@
   <div class="header">
     <b-navbar toggleable="md" varaiant="faded" type="light">
       <div class="flexBox">
+
         <div class="menu">
           <font-awesome-icon icon="bars" size="lg"/>
         </div>
+
         <div class="brand">
           <b-navbar-brand href="#">
             <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV">
             Gmail
           </b-navbar-brand>
         </div>
-      <div class="search">
-        <div class="flex1">
-          <div class="searchIcon">
-            <font-awesome-icon icon="search" size="lg"/>
-          </div>
-          <div class="searchBar">
-            <input type="text" placeholder="Search Mail">  
-          </div>
-        </div>  
-      </div>
-      <div>
+
+        <div class="search">
+          <div class="flex1">
+            <div class="searchIcon">
+              <font-awesome-icon icon="search" size="lg"/>
+            </div>
+            <div class="searchBar">
+              <input type="text" placeholder="Search Mail">  
+            </div>
+          </div>  
+        </div>
+
+        <div>
           <div class="flex1">
             <div class="logoutButton">
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
@@ -38,17 +42,11 @@
                 <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
-
           </div>
-
         </div>
 
-        
-
-      </div>
-        
+      </div>   
     </b-navbar>
-    
   </div>
 </template>
 
