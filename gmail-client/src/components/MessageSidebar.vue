@@ -322,6 +322,7 @@ export default {
     },
     loadFolder(folder) {
       this.$router.push({ path: "/Folder/" + folder.toUpperCase() + "/" });
+      let previousFolder = this.$store.state.currentFolder;
       if (folder == "Drafts") {
         folder = "Draft";
       }
@@ -332,6 +333,20 @@ export default {
         this.$store.state.currentFolder = folder.toUpperCase();
       }
       console.log("IT has been set to: " + this.$store.state.currentFolder);
+      console.log("THE PAGE: " + this.$store.state.currentPage);
+      if(this.$store.state.currentPage != 1) {
+        this.$store.state.labelMessages[previousFolder] = [];
+        if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
+          this.$store.dispatch("getListOfMessages", previousFolder);
+        }
+        else {
+          this.$store.dispatch("getFolderListOfMessages", previousFolder);
+        }
+        this.$store.state.currentPage = 1;
+      }
+      console.log(this.$store.state.currentPage);
+      // we have to reset the last page tokens because they no longer apply to the new label
+      this.$store.state.labelLastPageTokens = [];
       eventBus.$emit("TOTAL_EMAIL_COUNT", this.$store.state.currentFolder);
 
       // maybe trigger an update here for total emails in the utilityBar

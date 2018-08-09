@@ -164,9 +164,13 @@
               <span class="tooltiptext">No Newer</span>
             </div>
             
-            <div class="lessPadding" v-on:click="nextPageLoad">
+            <div class="lessPadding" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50" v-on:click="nextPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
               <span class="tooltiptext">Older</span>
+            </div>
+            <div class="lessPadding" v-else>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
+              <span class="tooltiptext"> No Older</span>
             </div>
 
             <div class="firefoxonlyCog">
@@ -670,6 +674,7 @@ export default {
       let folder = this.$store.state.currentFolder;
       console.log("refreshing");
       console.log(this.$store.state.labelMessages);
+      this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
       console.log(folder);
       if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
@@ -691,15 +696,19 @@ export default {
       console.log(this.$store.state.labelMessages);
       //We'll have to switch it to be more universal 
       // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
-      this.$store.state.labelMessages.PRIMARY = [];
-      this.$store.dispatch("getPageListOfMessages", "PRIMARY");
+      console.log("ViewFolder:");
+      console.log(this.$store.state.currentFolder);
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getPageListOfMessages", folder);
       // not sure what the best strategy is here*
     },
     lastPageLoad() {
       eventBus.$emit("LAST_PAGE_LOAD");
       // *...or here
-      this.$store.state.labelMessages.PRIMARY = [];
-      this.$store.dispatch("getLastPageListOfMessages", "PRIMARY");
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getLastPageListOfMessages", folder);
     },
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
