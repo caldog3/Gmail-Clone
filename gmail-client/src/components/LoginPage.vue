@@ -6,8 +6,7 @@
     </div>
     <br>
     <button @click="authenticate()">Sign In</button>
-    <div class="whiteSpace">
-    </div>
+    <div class="whiteSpace"></div>
   </div>
 </template>
 

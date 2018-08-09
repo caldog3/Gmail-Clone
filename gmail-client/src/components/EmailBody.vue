@@ -21,9 +21,11 @@
           <font-awesome-icon class="Icon" icon="ellipsis-v" />
         </div>
       </div>
+
       <div class="leftAlign recipients">
         <p>to {{message.to}}</p>
       </div>
+      
       <div v-html="message.body" class="leftAlign"></div>
       
       <div v-if="message.attachmentIds.length > 0">
@@ -42,6 +44,7 @@
         </div>
       </div>
     </div>
+
     <div class="response-buttons"> 
       <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
@@ -52,7 +55,6 @@
       <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
-
 </template>
 
 <style scoped>

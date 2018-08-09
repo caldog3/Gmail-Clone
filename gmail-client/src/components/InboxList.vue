@@ -3,6 +3,7 @@
 <template>
   <div id="setWidth">
     <b-tabs>
+      
       <b-tab v-on:click="updateCurrentFolder('PRIMARY')">
         <template slot="title">
           <div class="backdrop">
@@ -13,6 +14,7 @@
         </template>
         <email-list labelId="PRIMARY"/>
       </b-tab>
+
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
           <div class="backdrop">
@@ -23,6 +25,7 @@
         </template>
         <email-list labelId="SOCIAL"/>
       </b-tab>
+
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
         <template slot="title">
           <div class="backdrop">
@@ -33,6 +36,7 @@
         </template>
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
+
     </b-tabs>
   </div>
 </template>

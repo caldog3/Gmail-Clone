@@ -14,8 +14,7 @@
       <div class="bar"></div>
     </div>
 
-    <div class="whiteSpace">
-    </div>
+    <div class="whiteSpace"></div>
   </div>
 </template>
 
