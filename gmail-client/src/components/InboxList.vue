@@ -86,7 +86,7 @@ export default {
       this.$store.state.currentFolder = tabFolder;
       console.log("IT has been set to: " + this.$store.state.currentFolder);
       //need to reset the previous folder back to its first page
-      if(this.$store.currentPage !== 1) {
+      if(this.$store.state.currentPage !== 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
           this.$store.dispatch("getListOfMessages", previousFolder);

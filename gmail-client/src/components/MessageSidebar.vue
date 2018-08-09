@@ -333,7 +333,8 @@ export default {
         this.$store.state.currentFolder = folder.toUpperCase();
       }
       console.log("IT has been set to: " + this.$store.state.currentFolder);
-      if(this.$store.currentPage !== 1) {
+      console.log("THE PAGE: " + this.$store.state.currentPage);
+      if(this.$store.state.currentPage != 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
           this.$store.dispatch("getListOfMessages", previousFolder);
