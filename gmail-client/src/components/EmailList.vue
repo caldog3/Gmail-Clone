@@ -352,7 +352,7 @@
   display: none;
 } */
 .firefoxOnly label {
-  margin-top: 2px;
+  margin-top: 4px;
 }
 #ffstar {
   display:none;
