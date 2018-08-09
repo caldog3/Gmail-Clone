@@ -10,22 +10,21 @@
         <a class="close" @click="close">×</a>
       </div>
     </div>
+
     <div class="sectionTop">
       <div class="unselected">
         <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
       </div>
-      <!-- <div class="selected">
-        <input class="full" type="email" v-model="composeTo" placeholder="To" @focus="focusOnSection('to')">
-      </div> -->
     </div>
+
     <div class="section">
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
+
     <div class="sectionText">
       <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
-      <!-- <div class="textSpace" contenteditable="true" v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"> </div> -->
-
     </div>
+    
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="send">

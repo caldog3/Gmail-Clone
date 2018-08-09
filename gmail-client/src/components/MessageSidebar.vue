@@ -3,7 +3,7 @@
     <button class="button" v-on:click.stop="composeShow()">
       <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
       &nbsp; &nbsp; Compose &nbsp; 
-      </button>
+    </button>
     <!-- <b-modal v-model="composeShow">
       Test compose block
     </b-modal> -->
@@ -21,6 +21,7 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
@@ -31,11 +32,13 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Snoozed')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
         <div id="sidebarFlex">
           <div>
@@ -46,6 +49,7 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
         <div id="sidebarFlex">
           <div>
@@ -56,6 +60,7 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Important')">
         <div id="sidebarFlex">
           <div>
@@ -66,11 +71,13 @@
           </div>  
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('All mail')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
       </div>
+
       <div v-for="label in labels.slice(9)" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlex">
@@ -83,6 +90,7 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
@@ -93,11 +101,13 @@
           </div>
         </div>
       </div>
+
       <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
         </div>
       </div>
+      
       <div>
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
@@ -108,7 +118,6 @@
     </div>
 
   </div>
-
 </template>
 
 <style scoped>
