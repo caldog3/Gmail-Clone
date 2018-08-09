@@ -4,10 +4,8 @@
       <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
       &nbsp; &nbsp; Compose &nbsp; 
     </button>
-    <!-- <b-modal v-model="composeShow">
-      Test compose block
-    </b-modal> -->
-    
+
+
     <div class="optionsA">
 
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
