@@ -351,6 +351,9 @@
 /* .firefoxOnly {
   display: none;
 } */
+.firefoxOnly label {
+  margin-top: 2px;
+}
 #ffstar {
   display:none;
 }
@@ -635,9 +638,6 @@ svg:not(:root).svg-inline--fa {
   } */
   .theRestoftheTime {
     display: none;
-  }
-  .firefoxOnly {
-    display: contents;
   }
 }
 
