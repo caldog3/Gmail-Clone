@@ -228,12 +228,20 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  data() {
+    return {
+      searchQuery: '',
+    }
+  },
   computed: {
     photoUrl(){
       return this.$store.getters.getCurrentUserProfile.Paa;
     }
   },
   methods: {
+    searching() {
+      this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
+    },
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });

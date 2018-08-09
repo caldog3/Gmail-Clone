@@ -170,6 +170,26 @@ export default new Vuex.Store({
         });
       });
     },
+    getQueryListOfMessages(context, query) {
+      let labelId = "SEARCH";
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.thread.list({
+          'userId': 'me',
+          'maxResults': 50,
+          'q': query,
+        }).then((response) => {
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
+        })
+      })
+    },
     getFolderListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
