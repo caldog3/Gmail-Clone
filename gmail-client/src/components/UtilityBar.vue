@@ -232,7 +232,7 @@
 .leftSide {
   flex-grow: 1;
   flex-basis: 0;
-  background-color: white;
+  background-color: lightgrey;
   height: 70px;
   margin-left: 4px;
 }
