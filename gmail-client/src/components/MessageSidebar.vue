@@ -231,7 +231,7 @@
 .encryptSide {
   width: 280px;
   display: none;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 116px;
   background-color: white;
