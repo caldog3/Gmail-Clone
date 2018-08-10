@@ -179,7 +179,7 @@
       <div class="messageUtility">
         <div class="rightSide">
           <div class="photo">
-            <img src="./../assets/user1.jpg">
+            <img src="./../assets/UserRichardTillman.jpg">
           </div>
           <div class="plusSign">
             +
@@ -188,7 +188,7 @@
         <div class="leftSide">
           <div class="flexUtility">
             <div class="photo">
-              <img src="./../assets/user4.jpg">
+              <img src="./../assets/UserJessicaDavis.jpg">
             </div>
             <div class="theRest">
               <div class="nameTime">
@@ -219,8 +219,8 @@
   right: 17px;
   left: 0px;
   height: 70px;
-  /* display: flex; */
-  display: none;
+  display: flex;
+  /* display: none; */
   flex-direction: row;
   margin-left: 270px;
 }
@@ -292,7 +292,7 @@ img {
   border-bottom: 0px;
   background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
-  /* height: 110px; */
+  height: 110px;
 } 
 .iconDiv {
   position: relative;
@@ -300,7 +300,7 @@ img {
   width: auto;
   height: 40px;
   margin-left: 270px;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 .flexIcons {
   position: relative;

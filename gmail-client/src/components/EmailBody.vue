@@ -63,7 +63,7 @@
               <i> <div class="side"> expires in 1 day </div> </i>
             </div>
             <div class="photo">
-              <img src="./../assets/user1.jpg">
+              <img src="./../assets/UserRichardTillman.jpg">
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
               <i> <div class="side"> expires in 2 days </div> </i>
             </div>  
             <div class="photo">
-              <img src="./../assets/user4.jpg">
+              <img src="./../assets/UserJessicaDavis.jpg">
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
               <i> <div class="side"> expires in 2 days </div> </i>
             </div>
             <div class="photo">
-              <img src="./../assets/user4.jpg">
+              <img src="./../assets/UserJessicaDavis.jpg">
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
               <i> <div class="side"> expires in 4 days </div> </i>
             </div>
             <div class="photo">
-              <img src="./../assets/user1.jpg">
+              <img src="./../assets/UserRichardTillman.jpg">
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
               <i> <div class="side"> expires in 4 days </div> </i>
             </div>
             <div class="photo">
-              <img src="./../assets/user1.jpg">
+              <img src="./../assets/UserRichardTillman.jpg">
             </div>
           </div>
         </div>
