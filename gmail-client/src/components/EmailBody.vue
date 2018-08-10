@@ -61,45 +61,44 @@
 
     <div class="privateMess">
       <div class="allMess">
+
         <div class="line">
-          <div class="them1">
-            We need to leverage our synergies customer centric.
-          </div> 
-          
-          <div class="themTime">
-            Sun, 12:34
+          <div class="themA">
+            <div class="them1">
+              We need to leverage our synergies customer centric.
+            </div> 
+            
+            <div class="themTime">
+              Sun, 12:34
+            </div>
           </div>
         </div>
+
         <div class="line">
-          <div class="me2">
-            Draft policy ppml proposal work but this is a no-brainer.
-          </div>
-          
-          <div class="meTime">
-            Mon, 3:51
+          <div class="meB">
+            <div class="me2">
+              API conformance is highly measurable and suppliers who claim it must be included with each copy of this License.
+            </div> 
+            
+            <div class="themTime">
+              Sun, 12:34
+            </div>
           </div>
         </div>
+       
         <div class="line">
-          <div class="them3">
-            Derived Works distributed in accordance with the Derived Work is distributed in this version of the Work,
-             thus creating a Derived Program. Any material to the general public to re-distribute and re-use their 
-             contributions freely, as long as you receive it, in any form of the Agreement is governed by this reference. 
-            Versions of the Licensed Program, and in any such warranty, support, indemnity or damages of any party.
-          </div>
-          
-          <div class="themTime">
-            Wed, 6:12
+          <div class="themC">
+            <div class="them3">
+              Core competencies let's unpack that later, we need a recap by eod, 
+              cob or whatever comes first. Please advise soonest bells and whistles critical mass run it up the flagpole. 
+            </div> 
+            
+            <div class="themTime">
+              Sun, 12:34
+            </div>
           </div>
         </div>
-        <div class="line">
-          <div class="me4">
-            Work and assume any risks associated with its exercise of rights under a third party.
-          </div>
-          
-          <div class="meTime">
-            Wed, 7:02
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -214,8 +213,12 @@
 .line {
   width: auto;
   margin: 10px 25px 0px 25px;
+  text-align: left;
+}
+.themA {
   display: flex;
   flex-direction: column;
+  width: 395px;
 }
 .them1 {
   float: left;
@@ -223,7 +226,6 @@
 	background: white;
 	border-radius: .4em;
   padding: 10px;
-  width: 45%;
 }
 .them1:after {
 	content: '';
@@ -239,6 +241,11 @@
 	margin-top: -10px;
 	margin-left: -20px;
 }
+.themC {
+  display: flex;
+  flex-direction: column;
+  width: 849px;
+}
 .them3 {
   float: left;
   position: relative;
@@ -251,7 +258,7 @@
 	content: '';
 	position: absolute;
 	left: 0;
-	top: 90%;
+	top: 80%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
@@ -261,20 +268,24 @@
 	margin-top: -10px;
 	margin-left: -20px;
 }
+.meB {
+  display: flex;
+  flex-direction: column;
+  width: 427px;
+  float: right;
+}
 .me2 {
   float: right;
   position: relative;
 	background: white;
 	border-radius: .4em;
   padding: 10px;
-  width: 48%;
-  margin-left: 52%;
 }
 .me2:after {
 	content: '';
 	position: absolute;
 	right: 0;
-	top: 65%;
+	top: 75%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
