@@ -64,11 +64,19 @@
         <div class="line">
           <div class="them1">
             We need to leverage our synergies customer centric.
+          </div> 
+          
+          <div class="themTime">
+            Sun, 12:34
           </div>
         </div>
         <div class="line">
           <div class="me2">
             Draft policy ppml proposal work but this is a no-brainer.
+          </div>
+          
+          <div class="meTime">
+            Mon, 3:51
           </div>
         </div>
         <div class="line">
@@ -77,6 +85,19 @@
              thus creating a Derived Program. Any material to the general public to re-distribute and re-use their 
              contributions freely, as long as you receive it, in any form of the Agreement is governed by this reference. 
             Versions of the Licensed Program, and in any such warranty, support, indemnity or damages of any party.
+          </div>
+          
+          <div class="themTime">
+            Wed, 6:12
+          </div>
+        </div>
+        <div class="line">
+          <div class="me4">
+            Work and assume any risks associated with its exercise of rights under a third party.
+          </div>
+          
+          <div class="meTime">
+            Wed, 7:02
           </div>
         </div>
       </div>
@@ -115,6 +136,8 @@
 .line {
   width: auto;
   margin: 10px 25px 0px 25px;
+  display: flex;
+  flex-direction: column;
 }
 .them1 {
   float: left;
@@ -122,6 +145,7 @@
 	background: white;
 	border-radius: .4em;
   padding: 10px;
+  width: 45%;
 }
 .them1:after {
 	content: '';
@@ -165,6 +189,8 @@
 	background: white;
 	border-radius: .4em;
   padding: 10px;
+  width: 48%;
+  margin-left: 52%;
 }
 .me2:after {
 	content: '';
@@ -180,6 +206,43 @@
 	margin-top: -10px;
 	margin-right: -20px;
 }
+.me4 {
+  float: right;
+  position: relative;
+	background: white;
+	border-radius: .4em;
+  padding: 10px;
+  width: 45%;
+  margin-left: 55%;
+}
+.me4:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 65%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: white;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+.themTime {
+  text-align: left;
+  color: white;
+}
+.meTime {
+  text-align: right;
+  color: white;
+}
+
+
+
+
+
+
 
 
 .shift-down {
