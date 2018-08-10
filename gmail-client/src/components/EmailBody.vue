@@ -69,7 +69,8 @@
             </div> 
             
             <div class="themTime">
-              Sun, 12:34
+              <div>Sun, 12:34</div>
+              <div>expires in 7 days</div>
             </div>
           </div>
         </div>
@@ -80,8 +81,9 @@
               API conformance is highly measurable and suppliers who claim it must be included with each copy of this License.
             </div> 
             
-            <div class="themTime">
-              Sun, 12:34
+            <div class="meTime">
+              <div>Mon, 4:03</div>
+              <div>expires in 8 days</div>
             </div>
           </div>
         </div>
@@ -94,9 +96,28 @@
             </div> 
             
             <div class="themTime">
-              Sun, 12:34
+              <div>Mon, 9:54</div>
+              <div>expires in 8 days</div>
             </div>
           </div>
+        </div>
+
+        <div class="line">
+          <div class="meD">
+            <div class="me4">
+              This proposal is a win-win 
+              situation which will cause a stellar paradigm shift, and produce a multi-fold increase in deliverables.
+            </div> 
+            
+            <div class="meTime">
+              <div>Mon, 4:03</div>
+              <div>expires in 8 days</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="search">
+          Search
         </div>
 
       </div>
@@ -196,6 +217,7 @@
 }
 .current {
   background: rgba(255, 255, 255, 0.4);
+  border-radius: 0px 20px 20px 0px;
 }
 .hide {
   display: none;
@@ -205,6 +227,7 @@
   background: rgba(255, 255, 255, 0.4);
   flex-grow: 1;
   flex-basis: 0;
+  border-radius: 20px;
 }
 .allMess {
   display: flex;
@@ -215,6 +238,16 @@
   margin: 10px 25px 0px 25px;
   text-align: left;
 }
+.search {
+  height: 50px;
+  line-height: 50px;
+  background-color:rgba(255, 255, 255, 0.4);
+  text-align: left;
+  padding-left: 10px;
+  margin: 10px;
+  border-radius: 20px;
+}
+
 .themA {
   display: flex;
   flex-direction: column;
@@ -224,14 +257,14 @@
   float: left;
   position: relative;
 	background: white;
-	border-radius: .4em;
+	border-radius: 20px;
   padding: 10px;
 }
 .them1:after {
 	content: '';
 	position: absolute;
-	left: 0;
-	top: 65%;
+	left: -1;
+	top: 55%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
@@ -244,21 +277,20 @@
 .themC {
   display: flex;
   flex-direction: column;
-  width: 849px;
+  width: 526px;
 }
 .them3 {
   float: left;
   position: relative;
 	background: white;
-	border-radius: .4em;
+	border-radius: 20px;
   padding: 10px;
-  width: 55%;
 }
 .them3:after {
 	content: '';
 	position: absolute;
-	left: 0;
-	top: 80%;
+	left: 9px;
+	top: 77%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
@@ -278,13 +310,13 @@
   float: right;
   position: relative;
 	background: white;
-	border-radius: .4em;
+	border-radius: 20px;
   padding: 10px;
 }
 .me2:after {
 	content: '';
 	position: absolute;
-	right: 0;
+	right: 9px;
 	top: 75%;
 	width: 0;
 	height: 0;
@@ -295,20 +327,24 @@
 	margin-top: -10px;
 	margin-right: -20px;
 }
+.meD {
+  display: flex;
+  flex-direction: column;
+  width: 427px;
+  float: right;
+}
 .me4 {
   float: right;
   position: relative;
 	background: white;
-	border-radius: .4em;
+	border-radius: 20px;
   padding: 10px;
-  width: 45%;
-  margin-left: 55%;
 }
 .me4:after {
 	content: '';
 	position: absolute;
-	right: 0;
-	top: 65%;
+	right: 9px;
+	top: 79%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
@@ -321,10 +357,16 @@
 .themTime {
   text-align: left;
   color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .meTime {
   text-align: right;
   color: white;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 
