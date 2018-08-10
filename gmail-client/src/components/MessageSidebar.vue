@@ -8,7 +8,7 @@
 
     <div class="optionsA">
 
-      <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
           <div>
             <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
             <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
@@ -31,13 +31,13 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Snoozed')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Snoozed')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Important')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Important')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
@@ -70,15 +70,15 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('All mail')">
+      <div class="normalRow" v-bind:class="activeFolderClass('All mail')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
         </div>
       </div>
 
-      <div v-for="label in labels.slice(9)" :key="label.folder">
+      <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
-          <div id="sidebarFlex">
+          <div id="sidebarFlexfull">
             <div>
               <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
             </div>
@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
@@ -100,7 +100,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
         </div>
@@ -153,11 +153,19 @@ button {
   overflow-y: scroll;
   margin-right: 10px;
 }
-.optionsA > div {
+.normalRow {
   width: 253px;
   height: 35px;
   padding-left: 25px;
   border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fullLength {
+  padding-left: 0;
+  border-radius: 0px 20px 20px 0px;
+  height: 35px;
   cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
@@ -177,6 +185,16 @@ button {
   flex-direction: row;
   justify-content: space-between;
   padding-left: 5px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 7px;
+}
+#sidebarFlexfull {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 31px;
   padding-right: 10px;
   text-shadow: none;
   height: 100%;
