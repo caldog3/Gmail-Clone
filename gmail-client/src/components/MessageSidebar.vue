@@ -307,9 +307,9 @@
 }
 
 
-/* .EMline {
-  background: rgba(255, 255, 255, 0.5);
-} */
+.EMline {
+  /* background: rgba(255, 255, 255, 0.5); */
+}
 .EM {
   text-align: left;
   margin-left: 2px;
