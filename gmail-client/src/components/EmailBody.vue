@@ -105,6 +105,70 @@
 
 
     <div class="altSidebar">
+      <div class="entry">
+        <div class="name">
+          Darren A. Myers
+        </div>
+        <div class="time">
+          7 mins
+        </div>
+      </div>
+      <div class="entry current">
+        <div class="name">
+          Louise	Osborne
+        </div>
+        <div class="time">
+          2 hours
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Chris	Holloway
+        </div>
+        <div class="time">
+          7 hours
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Dianne	Mason
+        </div>
+        <div class="time">
+          1 day
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Grant	Burns
+        </div>
+        <div class="time">
+          1 day
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Philip	Cross
+        </div>
+        <div class="time">
+          2 days
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Ginger	Wolfe
+        </div>
+        <div class="time">
+          3 days
+        </div>
+      </div>
+      <div class="entry">
+        <div class="name">
+          Erika	Gonzales
+        </div>
+        <div class="time">
+          5 days
+        </div>
+      </div>
 
 
     </div>
@@ -119,6 +183,20 @@
 .altSidebar {
   width: 270px;
   height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+  height: 40px;
+  line-height: 40px;
+  padding: 3px 6px 3px 6px;
+}
+.current {
+  background: rgba(255, 255, 255, 0.4);
 }
 .hide {
   display: none;
