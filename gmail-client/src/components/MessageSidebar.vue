@@ -22,6 +22,18 @@
         </div>
       </div>
 
+      <div class="myFolder">
+        <div id="sidebarFlex1">
+          <div>
+            <img src="./../assets/whiteLock.png">  
+          </div>
+          <div class="title">
+            Private Messages
+          </div>
+        </div>
+      </div>
+
+
       <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
@@ -183,6 +195,22 @@ button {
   text-shadow: none;
   height: 100%;
   padding-top: 7px;
+}
+#sidebarFlex1 {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 7px;
+}
+#sidebarFlex1 img {
+  width: 27px;
+  height: 22px;
+}
+.title {
+  padding-left: 12px;
 }
 .notInbox {
   float: left;

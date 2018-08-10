@@ -1,63 +1,186 @@
 /* eslint-disable */
 <template>
-  <div id="body">
-    <div class="flexboxSubject">
-      <h4 class="leftAlign">{{messages[0].subject}}</h4>
-      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
-    </div>
-
-    <div v-for="message in messages" :key="message.messageId">
-      <div class="flexboxSubject">
-        <div class="leftAlign">
-          <hr>
-          <b>{{message.detailedFrom}}</b>
+  <div class="flexIt">
+    <div class="hide">
+      <div id="body">
+        <div class="flexboxSubject">
+          <h4 class="leftAlign">{{messages[0].subject}}</h4>
+          <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
         </div>
-        <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }} ago)
-          <span class="highlightArea">
-            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
-          </span> 
-          <font-awesome-icon class="Icon" icon="reply" />
-          <font-awesome-icon class="Icon" icon="ellipsis-v" />
-        </div>
-      </div>
 
-      <div class="leftAlign recipients">
-        <p>to {{message.to}}</p>
-      </div>
-      
-      <div v-html="message.body" class="leftAlign"></div>
-      
-      <div v-if="message.attachmentIds.length > 0">
-        <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
-          <div class="attachment-container">
-            <div class="attachment">
-              <a href="#openModal">
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </a>
-              <div id="openModal" class="modalDialog">
-                <a href="#close" title="Close" class="close">X</a>
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
+        <div v-for="message in messages" :key="message.messageId">
+          <div class="flexboxSubject">
+            <div class="leftAlign">
+              <hr>
+              <b>{{message.detailedFrom}}</b>
+            </div>
+            <div class="rightAlign shift-down">
+              {{message.time}} ({{ timeAgo }} ago)
+              <span class="highlightArea">
+                <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
+              </span> 
+              <font-awesome-icon class="Icon" icon="reply" />
+              <font-awesome-icon class="Icon" icon="ellipsis-v" />
+            </div>
+          </div>
+
+          <div class="leftAlign recipients">
+            <p>to {{message.to}}</p>
+          </div>
+          
+          <div v-html="message.body" class="leftAlign"></div>
+          
+          <div v-if="message.attachmentIds.length > 0">
+            <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
+              <div class="attachment-container">
+                <div class="attachment">
+                  <a href="#openModal">
+                    <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
+                  </a>
+                  <div id="openModal" class="modalDialog">
+                    <a href="#close" title="Close" class="close">X</a>
+                    <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="response-buttons"> 
+          <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+          &emsp;
+          <span v-bind:class="ifGroupMessage()">
+            <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+          &emsp;
+          </span>
+          <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="privateMess">
+      <div class="allMess">
+        <div class="line">
+          <div class="them1">
+            We need to leverage our synergies customer centric.
+          </div>
+        </div>
+        <div class="line">
+          <div class="me2">
+            Draft policy ppml proposal work but this is a no-brainer.
+          </div>
+        </div>
+        <div class="line">
+          <div class="them3">
+            Derived Works distributed in accordance with the Derived Work is distributed in this version of the Work,
+             thus creating a Derived Program. Any material to the general public to re-distribute and re-use their 
+             contributions freely, as long as you receive it, in any form of the Agreement is governed by this reference. 
+            Versions of the Licensed Program, and in any such warranty, support, indemnity or damages of any party.
           </div>
         </div>
       </div>
     </div>
 
-    <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
-      &emsp;
-      <span v-bind:class="ifGroupMessage()">
-        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
-      &emsp;
-      </span>
-      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+
+    <div class="altSidebar">
+
+
     </div>
   </div>
 </template>
 
 <style scoped>
+.flexIt {
+  display: flex;
+  flex-direction: row;
+}
+.altSidebar {
+  width: 270px;
+  height: 500px;
+}
+.hide {
+  display: none;
+  visibility: hidden;
+}
+.privateMess {
+  background: rgba(255, 255, 255, 0.4);
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.allMess {
+  display: flex;
+  flex-direction: column;
+}
+.line {
+  width: auto;
+  margin: 10px 25px 0px 25px;
+}
+.them1 {
+  float: left;
+  position: relative;
+	background: white;
+	border-radius: .4em;
+  padding: 10px;
+}
+.them1:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 65%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: white;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+.them3 {
+  float: left;
+  position: relative;
+	background: white;
+	border-radius: .4em;
+  padding: 10px;
+  width: 55%;
+}
+.them3:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 90%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: white;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+.me2 {
+  float: right;
+  position: relative;
+	background: white;
+	border-radius: .4em;
+  padding: 10px;
+}
+.me2:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 65%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: white;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
+
 
 .shift-down {
   margin-top: 31px;
