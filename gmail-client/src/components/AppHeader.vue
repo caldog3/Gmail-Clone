@@ -20,10 +20,11 @@
               <font-awesome-icon icon="search" size="lg"/>
             </div>
             <div class="searchBar">
-              <input type="text" placeholder="Search Mail">  
+              <input type="text" v-model="searchQuery" placeholder="Search Mail">  
             </div>
           </div>  
         </div>
+        <input type="submit" class="searchButton" value="Search" @click="searching">
 
         <div>
           <div class="flex1">
@@ -51,6 +52,10 @@
 </template>
 
 <style scoped>
+.searchButton {
+  width: 200px;
+  background-color: aqua;
+}
 .header {
   /* height: 64px; */
   border-bottom: 1px;
@@ -240,6 +245,11 @@ export default {
   },
   methods: {
     searching() {
+      console.log("AM I SEARCHING?");
+      console.log(this.searchQuery);
+      // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
+      this.$router.push({ path: '/SEARCH/'});
+      this.$store.state.currentFolder  = "SEARCH";
       this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
     },
     signOut(){
