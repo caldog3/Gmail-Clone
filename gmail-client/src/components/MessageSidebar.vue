@@ -72,9 +72,11 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('All mail')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
+      <div v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="envelope"/>&emsp;  All Mail
+          </div>
         </div>
       </div>
 

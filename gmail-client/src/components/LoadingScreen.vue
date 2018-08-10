@@ -106,6 +106,15 @@
     if(trashMessages === undefined) {
       this.$store.dispatch("getFolderListOfMessages", "TRASH");
     }
+    let allMailMessages = this.$store.getters.getLabelMessages["ALL_MAIL"];
+    if(allMailMessages === undefined) {
+      this.$store.dispatch("getAllMessages", "ALL_MAIL");
+    }
+    // For some reason snoozed behaves weird...
+    // let snoozedMessages = this.$store.getters.getLabelMessages["SNOOZED"];
+    // if(snoozedMessages === undefined) {
+    //   this.$store.dispatch("getFolderListOfMessages", "SNOOZED");
+    // }
 
     
    },
