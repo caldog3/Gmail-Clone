@@ -137,7 +137,7 @@
       </diV>
       <div class="line">
         <div class="photo">
-          <img src="./../assets/user4.jpg">
+          <img src="./../assets/UserJessicaDavis.jpg">
         </div>
         <div class="theRest">
           <div class="nameTime">
@@ -155,7 +155,7 @@
       </div>
       <div class="line">
         <div class="photo">
-          <img src="./../assets/user7.jpg">
+          <img src="./../assets/UserLarryPearson.jpg">
         </div>
         <div class="theRest">
           <div class="nameTime">
@@ -173,7 +173,7 @@
       </div>
       <div class="line">
         <div class="photo">
-          <img src="./../assets/user6.jpg">
+          <img src="./../assets/UserAliceWalker.jpg">
         </div>
         <div class="theRest">
           <div class="nameTime">
@@ -191,7 +191,7 @@
       </div>
       <div class="line">
         <div class="photo">
-          <img src="./../assets/user3.jpg">
+          <img src="./../assets/UserMarkShaine.jpg">
         </div>
         <div class="theRest">
           <div class="nameTime">
@@ -209,7 +209,7 @@
       </div>
       <div class="line">
         <div class="photo">
-          <img src="./../assets/user5.jpg">
+          <img src="./../assets/UserNitaEllis.jpg">
         </div>
         <div class="theRest">
           <div class="nameTime">
@@ -242,8 +242,8 @@
 
 .encryptSide {
   width: 262px;
-  display: none;
-  /* display: flex; */
+  /* display: none; */
+  display: flex;
   flex-direction: column;
   margin-top: 116px;
 }
