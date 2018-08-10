@@ -127,16 +127,61 @@
     </div>
 
     <div class="encryptSide">
+      <div class="filter">
+        <font-awesome-icon icon="search" size="lg"/>
+        &emsp; Filter 
+      </div>
       <div class="Starred">
-
-
+        <div class="lines">
+          <div>Starred</div>
+          <div class="entry">
+            <div>Mabel West</div>
+            <div>51 mins</div>
+          </div>
+          <div class="entry">
+            <div>Forrest Evans</div>
+            <div>4 days</div>
+          </div>
+        </div>
       </div>
       <div class="Recent">
-
+        <div class="lines">
+          <div>Recent</div>
+          <div class="entry">
+            <div><b>Jessica Davis</b></div>
+            <div><b>5 mins</b></div>
+          </div>
+          <div class="entry">
+            <div>Tim Carlson</div>
+            <div>6 hours</div>
+          </div>
+          
+          <div class="entry">
+            <div>Everett Powers</div>
+            <div>1 day</div>
+          </div>
+        </div>
       </div>
       <div class="Older">
-
-
+        <div class="lines">
+          <div>Older</div>
+          <div class="entry">
+            <div>Natalie Martin</div>
+            <div>2 days</div>
+          </div>
+          <div class="entry">
+            <div>Gina Mason</div>
+            <div>2 days</div>
+          </div>
+          <div class="entry">
+            <div>Carl Shelton</div>
+            <div>5 days</div>
+          </div>
+          <div class="entry">
+            <div>Rosalie Fox</div>
+            <div>1 week</div>
+          </div>
+        </div>
       </div>
 
 
@@ -146,6 +191,37 @@
 </template>
 
 <style scoped>
+
+.filter {
+  height: 35px;
+  border-bottom: 1px solid lightgrey;
+  margin: 4px 4px 25px 4px;
+  float: left;
+  text-align: left;
+  line-height: 35px;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid lightgrey;
+  margin: 2px 4px 25px 4px;
+  text-align: left;
+}
+
+.lines div {
+  height: 30px;
+  margin: 0px 4px 2px 4px;
+}
+.entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+
 .displayFlex {
   display: flex;
   flex-direction: row;
@@ -153,7 +229,7 @@
 
 
 .encryptSide {
-  width: 262px;
+  width: 280px;
   display: none;
   display: flex;
   flex-direction: column;
@@ -231,11 +307,11 @@ button {
   white-space: nowrap;
 }
 .optionsA > div:hover {
-  /* background: rgba(153, 153, 153, 0.4); */
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(153, 153, 153, 0.4);
+  /* background: rgba(255, 255, 255, 0.4); */
 }
 .activeFolder {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(153, 153, 153, 0.4);
 }
 /* .inactiveFolder {
   not sure

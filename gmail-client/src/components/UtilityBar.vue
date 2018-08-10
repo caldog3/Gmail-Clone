@@ -217,7 +217,7 @@
 .messageUtility {
   position: absolute;
   right: 17px;
-  left: 5px;
+  left: 0px;
   height: 70px;
   display: flex;
   /* display: none; */
@@ -225,8 +225,8 @@
   margin-left: 270px;
 }
 .rightSide {
-  width: 261px;
-  background-color: white;
+  width: 280px;
+  background-color: lightgrey;
   height: 70px;
 }
 .leftSide {

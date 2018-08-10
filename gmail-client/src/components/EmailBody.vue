@@ -103,6 +103,18 @@
             </div>
           </div>
         </div>
+        <div class="line">
+          <div class="me5">
+            <div class="meMess5">
+              Shoot me an email I have zero cycles for this, but quarterly sales are at an all-time low. 
+              
+              <i> <div class="side"> expires in 4 days </div> </i>
+            </div>
+            <div class="photo">
+              <img src="./../assets/user1.jpg">
+            </div>
+          </div>
+        </div>
         <div class="fill">
 
         </div>
@@ -123,7 +135,7 @@
 .ALL {
   width: 100%;
   /* height: 400px; */
-  background-color: rgba(180, 180, 180, 0.7);
+  background-color: white;
   text-align: left;
   margin: 4px 0px 0px 8px;
   /* overflow-y: scroll; */
@@ -147,7 +159,7 @@
 }
 .meMess1 {
   background-color: white;
-  padding: 10px;
+  padding: 0px 4px 0px 0px;
 }
 .me4 {
   width: 45%;
@@ -157,7 +169,17 @@
 }
 .meMess4 {
   background-color: white;
-  padding: 10px;
+  padding: 0px 4px 0px 0px;
+}
+.me5 {
+  width: 45%;
+  float: right;
+  display: flex;
+  flex-direction: row;
+}
+.meMess5 {
+  background-color: white;
+  padding: 0px 4px 0px 0px;
 }
 .them2 {
   width: 35%;
@@ -167,7 +189,7 @@
 }
 .themMess2 {
   background-color: white;
-  padding: 10px;
+  padding: 0px 0px 0px 4px;
 }
 .them3 {
   width: 45%;
@@ -177,7 +199,7 @@
 }
 .themMess3 {
   background-color: white;
-  padding: 10px;
+  padding: 0px 0px 0px 4px;
 }
 
 img {
