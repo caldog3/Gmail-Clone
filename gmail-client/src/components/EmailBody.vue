@@ -117,7 +117,7 @@
         </div>
 
         <div class="search">
-          Search
+          Send
         </div>
 
       </div>
@@ -125,6 +125,9 @@
 
 
     <div class="altSidebar">
+      <div class="topBar">
+        Start a chat 
+      </div>
       <div class="entry">
         <div class="name">
           Darren A. Myers
@@ -214,6 +217,10 @@
   height: 40px;
   line-height: 40px;
   padding: 3px 6px 3px 6px;
+}
+.topBar {
+  color: white;
+  margin-top: 20px;
 }
 .current {
   background: rgba(255, 255, 255, 0.4);
