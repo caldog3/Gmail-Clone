@@ -1,3 +1,8 @@
+Mockup 2
+
+get lock icon with unread emails
+
+
 # gmail-client
 
 > A Vue.js project
