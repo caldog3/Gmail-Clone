@@ -1,130 +1,260 @@
 <template>
   <div class="sideBar">
-    <button class="button" v-on:click.stop="composeShow()">
-      <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
-      &nbsp; &nbsp; Compose &nbsp; 
-    </button>
-    <!-- <b-modal v-model="composeShow">
-      Test compose block
-    </b-modal> -->
-    
-    <div class="optionsA">
+    <div>
+      <button class="button" v-on:click.stop="composeShow()">
+        <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
+        &nbsp; &nbsp; Compose &nbsp; 
+      </button>
+      <!-- <b-modal v-model="composeShow">
+        Test compose block
+      </b-modal> -->
+      
+      <div class="optionsA">
 
-      <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
-        <div id="sidebarFlex" v-on:click="loadInbox()">
-          <div>
-            <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
-          </div>
-          <div>
-            <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
-            <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
+        <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
+          <div id="sidebarFlex" v-on:click="loadInbox()">
+            <div>
+              <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
+            </div>
+            <div>
+              <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
+              <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
-        <div id="sidebarFlex">
-          <div> 
-            <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
-          </div>
-          <div>
-            <p class="notificationPill" v-if="labels[1].unreadCount > 0">{{labels[1].unreadCount}}</p>
-          </div>
-        </div>
-      </div>
-
-      <div v-bind:class="activeFolderClass('Snoozed')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
-        </div>
-      </div>
-
-      <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
-          </div>
-          <div>
-            <p class="notificationPill" v-if="labels[3].unreadCount > 0">{{labels[3].unreadCount}}</p>
+        <div v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
+          <div id="sidebarFlex">
+            <div> 
+              <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
+            </div>
+            <div>
+              <p class="notificationPill" v-if="labels[1].unreadCount > 0">{{labels[1].unreadCount}}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
-          </div>
-          <div>
-            <p class="notificationPill" v-if="draftNum > 0">{{draftNum}}</p>
+        <div v-bind:class="activeFolderClass('Snoozed')">
+          <div class="notInbox">
+            <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
           </div>
         </div>
-      </div>
 
-      <div v-bind:class="activeFolderClass('Important')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
-          </div>
-          <div>
-            <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
-          </div>  
-        </div>
-      </div>
-
-      <div v-bind:class="activeFolderClass('All mail')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
-        </div>
-      </div>
-
-      <div v-for="label in labels.slice(9)" :key="label.folder">
-        <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
+        <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
           <div id="sidebarFlex">
             <div>
-              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+              <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
             </div>
             <div>
-              <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+              <p class="notificationPill" v-if="labels[3].unreadCount > 0">{{labels[3].unreadCount}}</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
+        <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
+            </div>
+            <div>
+              <p class="notificationPill" v-if="draftNum > 0">{{draftNum}}</p>
+            </div>
           </div>
-          <div>
-            <p class="notificationPill" v-if="labels[7].unreadCount > 0">{{labels[7].unreadCount}}</p>
+        </div>
+
+        <div v-bind:class="activeFolderClass('Important')">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
+            </div>
+            <div>
+              <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
+            </div>  
           </div>
         </div>
+
+        <div v-bind:class="activeFolderClass('All mail')">
+          <div class="notInbox">
+            <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
+          </div>
+        </div>
+
+        <div v-for="label in labels.slice(9)" :key="label.folder">
+          <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
+            <div id="sidebarFlex">
+              <div>
+                <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+              </div>
+              <div>
+                <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
+          <div id="sidebarFlex">
+            <div>
+              <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
+            </div>
+            <div>
+              <p class="notificationPill" v-if="labels[7].unreadCount > 0">{{labels[7].unreadCount}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
+          <div class="notInbox">
+            <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
+          </div>
+        </div>
+        
+        <div>
+          <div class="notInbox">
+            <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="bottomSidebar">
+
+      <div class="privateMess">
+        <div class="rightMess">Private Messages</div>
+        <div class="leftPlus">+</div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
-        </div>
-      </div>
-      
-      <div>
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
-        </div>
-      </div>
+      <div class="messList">
 
+        <div class="entry">
+          <div class="image">
+            <img src="./../assets/UserLaurenShay.jpg">
+          </div>
+          <div class="nameSnip">
+            <div class="name">Lauren Shay</div>
+            <div class="snip">However, you may not include anything that is true depends on what </div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="image">
+            <img src="./../assets/UserKennethWoods.jpg">
+          </div>
+          <div class="nameSnip">
+            <div class="name"><b>Kenny Woods</b></div>
+            <div class="snip"><b> Quarterly sales are at an all-time low </b></div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="image">
+            <img src="./../assets/UserLarryPearson.jpg">
+          </div>
+          <div class="nameSnip">
+            <div class="name">Kenny Woods</div>
+            <div class="snip">We just need to put these last issues to bed</div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="image">
+            <img src="./../assets/UserJessicaDavis.jpg">
+          </div>
+          <div class="nameSnip">
+            <div class="name">Jessica Davis</div>
+            <div class="snip"> You do not modify or delete any preexisting copyright notices contained within such </div>
+          </div>
+        </div>
+
+        <div class="entry">
+          <div class="image">
+            <img src="./../assets/UserRichardTillman.jpg">
+          </div>
+          <div class="nameSnip">
+            <div class="name">Richard Tillman</div>
+            <div class="snip"> Many works provide ways to control compilation and installation of </div>
+          </div>
+        </div>
+
+      </div>
 
     </div>
-
   </div>
 </template>
 
 <style scoped>
 .sideBar {
   float: left;
+  display: flex;
+  flex-direction: column;
   /* padding-right: -100px; */
 }
+.bottomSidebar {
+  width: 260px;
+  margin-top: 20px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+.privateMess {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 15px 2px 29px;
+  justify-content: space-between;
+}
+.rightMess {
+  text-align: left;
+  height: 30px;
+  line-height: 30px;
+}
+.leftPlus {
+  text-align: right;
+  font-size: x-large;
+  height: 30px;
+  line-height: 30px;
+}
+
+
+.messList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid white;
+  margin: 2px 15px 0px 28px;
+}
+.entry {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px 6px 0px;
+}
+.image img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.nameSnip {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-left: 4px;
+}
+.name {
+  font-size: small;
+  height: 17px;
+  line-height: 17px;
+}
+.snip {
+  overflow: hidden;
+  font-size: x-small;
+  height: 13px;
+  line-height: 13px;
+}
+
+
+
+
+
+
+
 img {
   width: 30px;
 }

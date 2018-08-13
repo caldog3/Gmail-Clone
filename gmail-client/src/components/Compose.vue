@@ -2,45 +2,146 @@
 
 <template>
   <div class="compose" v-if="active" @click.stop>
-    <div class="headerSection">
-      <div class="head">
-        <h2>New Message</h2>
+    <div class="notToday">
+      <div class="headerSection">
+        <div class="head">
+          <h2>New Message</h2>
+        </div>
+        <div class="alterCompose">
+          <a class="close" @click="close">×</a>
+        </div>
       </div>
-      <div class="alterCompose">
-        <a class="close" @click="close">×</a>
+
+      <div class="sectionTop">
+        <div class="unselected">
+          <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
+        </div>
+      </div>
+
+      <div class="section">
+        <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
+      </div>
+
+      <div class="sectionText">
+        <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+      </div>
+      
+      <div class="footerSection">
+        <div class="sendButton">
+          <input type="submit" class="SendButton1" value="Send" @click="send">
+        </div>
       </div>
     </div>
 
-    <div class="sectionTop">
-      <div class="unselected">
-        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
+    <div class="privateMess">
+      <div class="headSec">
+        <div class="rightMess">Kenny Woods</div>
+        <div class="leftPlus">+</div>
       </div>
+      <div class="bodyMess">
+        <div class="lineMe">
+          <div class="meMess">
+
+            <div class="meMessInside">
+              Is the software is covered in a commercial product offering?
+            </div>
+            <div class="details">
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="sendSec">
+        Send a private message
+      </div>
+
     </div>
 
-    <div class="section">
-      <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
-    </div>
-
-    <div class="sectionText">
-      <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
-    </div>
-    
-    <div class="footerSection">
-      <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send" @click="send">
-      </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
+.notToday {
+  display: none;
+}
+.privateMess {
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+}
+.headSec {
+  width: 270px;
+  height: 35px;
+  background-color: #404040;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: white;
+  padding: 0px 10px 0px 5px;
+}
+.rightMess {
+  line-height: 35px;
+}
+.leftPlus {
+  line-height: 35px;
+  font-size: x-large;
+}
+.bodyMess {
+  height: 290px;
+  width: 100%;
+  background-color: #EBEEF0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  font-size: small;
+}
+.lineMe {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.meMess {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  float: right;
+  margin: 3px;
+}
+.meMessInside {
+  background-color: white;
+  color: black;
+  padding: 3px;
+}
+
+
+
+
+
+
+.sendSec {
+  width: 100%;
+  height: 35px;
+  background-color: #FFFFFF;
+  color: #878787;
+  text-align: left;
+  line-height: 35px;
+  padding-left: 5px;
+  box-shadow: 0px -2px 5px #DFE1E3;;
+}
+
+
+
+
+
+
 .compose {
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   position: fixed;
   bottom: 0;
   right: 10px;
-  width: 510px;
+  /* width: 510px; */
   display: flex;
   /* height: 500px; */
   flex-direction: column;
