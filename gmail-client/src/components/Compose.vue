@@ -36,17 +36,30 @@
     <div class="privateMess">
       <div class="headSec">
         <div class="rightMess">Kenny Woods</div>
-        <div class="leftPlus">+</div>
+        <div class="leftPlus">x</div>
       </div>
       <div class="bodyMess">
         <div class="lineMe">
           <div class="meMess">
 
             <div class="meMessInside">
-              Is the software is covered in a commercial product offering?
+              Is the software covered in a commercial product offering?
             </div>
-            <div class="details">
+            <div class="detailsMe">
+              34 mins
+            </div>
 
+          </div>
+        </div>
+
+        <div class="lineThem">
+          <div class="themMess">
+
+            <div class="themMessInside">
+              Yes, however, in accepting such obligations, you have to cooperate with the distribution.
+            </div>
+            <div class="detailsThem">
+              34 mins
             </div>
 
           </div>
@@ -96,23 +109,96 @@
   flex-direction: column;
   overflow-y: scroll;
   font-size: small;
+  text-align: left;
 }
+
+
 .lineMe {
   display: flex;
   flex-direction: row-reverse;
+  padding: 5px 0px 3px 0px;
 }
 .meMess {
   display: flex;
   flex-direction: column;
   width: 150px;
   float: right;
-  margin: 3px;
+  margin-right: 15px;
 }
 .meMessInside {
+  position: relative;
+  background-color: #CED7DB;
+  color: black;
+  padding: 3px;
+  border-radius: 3px 0px 3px 3px;
+}
+.meMessInside:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 5px;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: #CED7DB;
+	border-right: 0;
+	border-top: 0;
+	margin-top: -5px;
+	margin-right: -10px;
+}
+.detailsMe {
+  font-size: small;
+  color:#404040;
+  text-align: right;
+}
+
+.lineThem {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0px 3px 0px;
+}
+.themMess {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  float: left;
+  margin-left: 35px;
+}
+.themMessInside {
+  position: relative;
   background-color: white;
   color: black;
   padding: 3px;
+  border-radius: 0px 3px 3px 3px;
 }
+.themMessInside:after {
+	content: '';
+	position: absolute;
+	left: -10px;
+	top: 2px;
+	width: 0;
+	height: 0;
+	border: 15px solid transparent;
+	border-right-color: white;
+	border-left: 0;
+	border-top: 0;
+	margin-top: -2px;
+	margin-left: -3px;
+}
+.detailsThem {
+  font-size: small;
+  color:#404040;
+  text-align: left;
+}
+
+
+
+
+
+
+
+
+
 
 
 
