@@ -53,8 +53,19 @@
 
 <style scoped>
 .searchButton {
-  width: 200px;
-  background-color: aqua;
+  width: 73px;
+  background-color: #6c757d;
+  border-radius: 5px;
+  height: 31px;
+  line-height: 31px;
+}
+.searchButton input:focus {
+  background-color: #6c757d;
+  color: white;
+}
+.search:focus-within .searchButton {
+  background-color: #6c757d;
+  color: white;
 }
 .header {
   /* height: 64px; */
