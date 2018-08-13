@@ -104,10 +104,10 @@
                   <span class="tooltiptext">Mark as Read</span>
                 </div>
                   
-                <div class="highlightArea">
+                <!-- <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
                   <span class="tooltiptext">Snooze</span>
-                </div>
+                </div> -->
 
               </div>
             </div>
@@ -138,10 +138,10 @@
                     <span class="tooltiptext">Mark as Read</span>
                   </div>
 
-                  <div class="highlightArea">
+                  <!-- <div class="highlightArea">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
                     <span class="tooltiptext">Snooze</span>
-                  </div>
+                  </div> -->
 
                 </div>
               </div>
@@ -756,6 +756,11 @@ export default {
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
+        // one way to try and fix the duplicates in the threads
+          //haven't done like anything yet  
+        // var messageDuplicatesCheck = this.$store.getteres.getThreadMessages;
+        //end duplicate fix
+
         const messages = this.$store.getters.getThreadMessages;
       
         const fullThreadData = labelIdThreads.map((threadId) => {

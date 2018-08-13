@@ -86,7 +86,7 @@
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
             <div>
-              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.folder}}
+              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.shortName}}
             </div>
             <div>
               <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
@@ -401,7 +401,16 @@ export default {
     //Probably a much better way to do this
     eventBus.$on("CUSTOM_FOLDERS", customs => {
       for (let i = 0; i < customs.length; i+=1) {
-        this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id});
+        let shortName = customs[i].name;
+        if (shortName.includes("/")) {
+          shortName = shortName.substring(shortName.indexOf("/") + 1);
+        }
+        let shortLength = 23;
+        if (shortName.length > shortLength) {
+          shortName = shortName.substring(0, shortLength-1);
+          shortName += "..";
+        }
+        this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id, shortName: shortName});
         //maybe something can be added to include a parent folder
       }
       this.unreadCount();
