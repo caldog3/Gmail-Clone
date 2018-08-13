@@ -1,3 +1,8 @@
+Mockup 4
+
+The lock logos are added to unread emails
+
+
 # gmail-client
 
 > A Vue.js project
