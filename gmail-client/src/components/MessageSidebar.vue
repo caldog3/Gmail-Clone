@@ -107,7 +107,7 @@
       </div>
       
       <div>
-        <div class="notInbox">
+        <div class="notInboxFinal">
           <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
         </div>
       </div>
@@ -207,6 +207,15 @@ button {
   text-shadow: none;
   height: 100%;
   padding-top: 8px;
+}
+.notInboxFinal {
+  float: left;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 8px;
+  margin-left: 24px;
 }
 #bootstrap-overrides {
   text-align: left;
