@@ -55,9 +55,13 @@
 .searchButton {
   width: 73px;
   background-color: #6c757d;
-  border-radius: 5px;
+  border-radius: 0.2rem;
   height: 31px;
   line-height: 31px;
+}
+.searchButton:focus {
+  background-color: #6c757d;
+  color: white;
 }
 .searchButton input:focus {
   background-color: #6c757d;

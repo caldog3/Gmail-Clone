@@ -432,6 +432,8 @@ a {
   border-radius: 35px;
   cursor: pointer; 
   overflow: hidden;
+  position: relative;
+  z-index: 0;
 }
 .highlightArea:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
