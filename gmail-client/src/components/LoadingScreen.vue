@@ -106,6 +106,10 @@
     if(trashMessages === undefined) {
       this.$store.dispatch("getFolderListOfMessages", "TRASH");
     }
+    let importantMessages = this.$store.getters.getLabelMessages["IMPORTANT"];
+    if(importantMessages === undefined) {
+      this.$store.dispatch("getFolderListOfMessages", "IMPORTANT");
+    }
     let allMailMessages = this.$store.getters.getLabelMessages["ALL_MAIL"];
     if(allMailMessages === undefined) {
       this.$store.dispatch("getAllMessages", "ALL_MAIL");
