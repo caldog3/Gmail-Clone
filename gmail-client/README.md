@@ -1,3 +1,9 @@
+Mockup 5
+
+to access the message screen (Mockup5b) click on any email. To alter which sidebar line
+is highlighted inspect and alter html from webpage so that the private message line
+is now the active folder.
+
 # gmail-client
 
 > A Vue.js project
