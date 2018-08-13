@@ -49,10 +49,11 @@
 .backdrop {
   background-color: white;
 
+  background-color: white;
   border-radius: 4px 4px 0px 0px;
   margin-bottom: -0.55rem;
-  margin-left: -.4rem;
-  margin-right: -0.4rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
 }
 .tabSize {
   width: 135px;
