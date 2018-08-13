@@ -61,7 +61,16 @@ export default new Vuex.Store({
       const threadMessages = state.threadMessages;
 
       if (threadMessages[threadId] !== undefined) {
-        threadMessages[threadId].push(message);
+        //add a check for duplicate messageIds...
+        var notDuplicate = true;
+        for (var i =0; i < threadMessages[threadId].length; ++i) {
+          if (message.messageId === threadMessages[threadId][i].messageId) {
+            notDuplicate = false;
+          }
+        }
+        if (notDuplicate) {
+          threadMessages[threadId].push(message);
+        }
       }
     },
     addLabelId(state, labelId) {

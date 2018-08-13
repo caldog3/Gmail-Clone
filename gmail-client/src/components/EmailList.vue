@@ -753,6 +753,11 @@ export default {
       
       const labelIdThreads = labelThreads[labelId];
       if (labelIdThreads !== undefined) {
+        // one way to try and fix the duplicates in the threads
+          //haven't done like anything yet  
+        // var messageDuplicatesCheck = this.$store.getteres.getThreadMessages;
+        //end duplicate fix
+
         const messages = this.$store.getters.getThreadMessages;
       
         const fullThreadData = labelIdThreads.map((threadId) => {
