@@ -52,7 +52,7 @@
   margin-left: -1rem;
   margin-right: -1rem;
   margin-bottom: -0.55rem;
-  /* margin-top: -0.55rem; */
+  margin-top: -0.55rem;
   border-radius: 3px 3px 0px 0px;
 }
 .tabSize {
