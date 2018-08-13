@@ -33,11 +33,12 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Snoozed')">
+<!-- I think we should just get rid of this Snoozed tab altogether -->
+      <!-- <div v-bind:class="activeFolderClass('Snoozed')">
         <div class="notInbox">
           <font-awesome-icon style="color:white;" icon="clock"/>&emsp;  Snoozed
         </div>
-      </div>
+      </div> -->
 
       <div v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
         <div id="sidebarFlex">
@@ -49,6 +50,7 @@
           </div>
         </div>
       </div>
+      
 
       <div v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
         <div id="sidebarFlex">
@@ -61,7 +63,7 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('Important')">
+      <div v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
         <div id="sidebarFlex">
           <div>
             <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
@@ -72,9 +74,11 @@
         </div>
       </div>
 
-      <div v-bind:class="activeFolderClass('All mail')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="envelope" />&emsp;  All Mail
+      <div v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
+        <div id="sidebarFlex">
+          <div>
+            <font-awesome-icon style="color:white;" icon="envelope"/>&emsp;  All Mail
+          </div>
         </div>
       </div>
 

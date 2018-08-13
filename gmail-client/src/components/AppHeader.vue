@@ -20,10 +20,11 @@
               <font-awesome-icon icon="search" size="lg"/>
             </div>
             <div class="searchBar">
-              <input type="text" placeholder="Search Mail">  
+              <input type="text" v-model="searchQuery" placeholder="Search Mail">  
             </div>
           </div>  
         </div>
+        <input type="submit" class="searchButton" value="Search" @click="searching">
 
         <div>
           <div class="flex1">
@@ -51,6 +52,10 @@
 </template>
 
 <style scoped>
+.searchButton {
+  width: 200px;
+  background-color: aqua;
+}
 .header {
   /* height: 64px; */
   border-bottom: 1px;
@@ -228,12 +233,33 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  data() {
+    return {
+      searchQuery: '',
+    }
+  },
   computed: {
     photoUrl(){
       return this.$store.getters.getCurrentUserProfile.Paa;
     }
   },
   methods: {
+    searching() {
+
+      if (this.$store.state.labelMessages.SEARCH !== undefined) {
+        this.$store.state.labelMessages.SEARCH = [];
+      }
+      this.$router.push({ path: '/SEARCH/'});
+      console.log("AM I SEARCHING?");
+      console.log(this.searchQuery);
+      // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
+      this.$store.state.currentFolder  = "SEARCH";
+      console.log("IT has been set to: " + this.$store.state.currentFolder);
+      this.$store.state.viewFolder = "Search";
+      this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
+      console.log("State of the store");
+      console.log(this.$store.state.labelMessages.SEARCH);
+    },
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
