@@ -245,14 +245,16 @@ export default {
   },
   methods: {
     searching() {
+
       if (this.$store.state.labelMessages.SEARCH !== undefined) {
         this.$store.state.labelMessages.SEARCH = [];
       }
+      this.$router.push({ path: '/SEARCH/'});
       console.log("AM I SEARCHING?");
       console.log(this.searchQuery);
       // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
-      this.$router.push({ path: '/SEARCH/'});
       this.$store.state.currentFolder  = "SEARCH";
+      console.log("IT has been set to: " + this.$store.state.currentFolder);
       this.$store.state.viewFolder = "Search";
       this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
       console.log("State of the store");
