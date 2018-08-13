@@ -75,7 +75,7 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
         <div id="sidebarFlex">
-          <div class="notInbox">
+          <div class="notInbox1">
             <font-awesome-icon style="color:white;" icon="envelope"/>&emsp;  All Mail
           </div>
         </div>
@@ -206,6 +206,14 @@ button {
   padding-top: 7px;
 }
 .notInbox {
+  float: left;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 8px;
+}
+notInbox1 {
   float: left;
   padding-left: 5px;
   padding-right: 10px;
