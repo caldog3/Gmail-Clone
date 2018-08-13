@@ -1,3 +1,15 @@
+Mockup 3
+
+To reach the second screen (Mockup3b):
+Click on an email
+MessageSidebar.vue lines 233 & 234 comment out display: none and uncomment out display: flex;
+
+UtilityBar.vue line 222 & 223 comment out display: none and uncomment out display: flex
+	line 295 uncomment out height: 110px, line 303 uncomment out visiblity: hidden
+
+
+
+
 # gmail-client
 
 > A Vue.js project
