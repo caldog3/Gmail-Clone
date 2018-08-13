@@ -36,7 +36,7 @@
     <div class="privateMess">
       <div class="headSec">
         <div class="rightMess">Kenny Woods</div>
-        <div class="leftPlus">x</div>
+        <div class="leftPlus"><a class="close" @click="close">×</a></div>
       </div>
       <div class="bodyMess">
         <div class="lineMe">
@@ -53,15 +53,17 @@
         </div>
 
         <div class="lineThem">
-          <div class="themMess">
+          <div class="image">
+            <img src="./../assets/UserKennethWoods.jpg">
+          </div>
 
+          <div class="themMess">
             <div class="themMessInside">
               Yes, however, in accepting such obligations, you have to cooperate with the distribution.
             </div>
             <div class="detailsThem">
-              34 mins
+              12 mins
             </div>
-
           </div>
         </div>
 
@@ -99,7 +101,7 @@
 }
 .leftPlus {
   line-height: 35px;
-  font-size: x-large;
+  margin-top: 4px;
 }
 .bodyMess {
   height: 290px;
@@ -162,7 +164,7 @@
   flex-direction: column;
   width: 150px;
   float: left;
-  margin-left: 35px;
+  margin-left: 5px;
 }
 .themMessInside {
   position: relative;
@@ -190,7 +192,13 @@
   color:#404040;
   text-align: left;
 }
-
+.image img {
+  margin-top: 8px;
+  margin-left: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 
 
 

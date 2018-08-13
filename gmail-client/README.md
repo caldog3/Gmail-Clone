@@ -1,3 +1,10 @@
+Mockup 6
+
+To locate the message popup, click on compose
+
+
+
+
 # gmail-client
 
 > A Vue.js project
