@@ -2,7 +2,10 @@
 <template>
   <div class="everything">
     <template v-if="threads">
-      <p>{{this.$store.state.currentFolder}}</p>
+      <div class="currentFolderLine">
+        <p>{{this.$store.state.currentFolder}}</p>
+      </div>     
+      <!-- Is this line required? -->
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
           <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
@@ -90,17 +93,17 @@
 
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
+                  <span class="tooltiptext">Spam</span>
                 </div>
 
                 <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  <span class="tooltiptext">Mark as Unread</span>
+                  <span class="tooltiptext">Unread</span>
                 </div>
 
                 <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Mark as Read</span>
+                  <span class="tooltiptext">Read</span>
                 </div>
                   
                 <!-- <div class="highlightArea">
@@ -124,17 +127,17 @@
 
                   <div class="highlightArea">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                    <span class="tooltiptext">Report Spam</span>
+                    <span class="tooltiptext">Spam</span>
                   </div>
 
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                    <span class="tooltiptext">Mark as Unread</span>
+                    <span class="tooltiptext">Unread</span>
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                    <span class="tooltiptext">Mark as Read</span>
+                    <span class="tooltiptext">Read</span>
                   </div>
 
                   <!-- <div class="highlightArea">
@@ -191,6 +194,12 @@
 .threadLength {
   color: gray;
   font-size: .9em;
+}
+.currentFolderLine {
+  height: 35px;
+  line-height: 35px;
+  color: white;
+  font-weight: bold;
 }
 .everything {
   width: 100%;
@@ -431,6 +440,8 @@ a {
   border-radius: 35px;
   cursor: pointer; 
   overflow: hidden;
+  position: relative;
+  z-index: 0;
 }
 .highlightArea:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
@@ -459,7 +470,7 @@ svg:not(:root).svg-inline--fa {
   visibility: hidden;
   position: relative;
   display: none;
-  width: 200px;
+  width: 130px;
   overflow: hidden;
   white-space:nowrap; 
   justify-content: flex-end;
@@ -494,9 +505,9 @@ svg:not(:root).svg-inline--fa {
   position: relative;
   z-index: 1;
   bottom: 7px;
-  left: -23px;
+  left: 1px;
   margin-left: -30px;
-  font-size:x-small;
+  font-size:xx-small;
   white-space: nowrap;
 
   /* Fade in tooltip */
