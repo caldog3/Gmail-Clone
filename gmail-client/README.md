@@ -1,6 +1,8 @@
 Mockup 6
 
-To locate the message popup, click on compose
+To locate the message popup, click on compose.
+To alter active folder, from webpage, unselcted activeFolder background styling 
+and select entry1 background color
 
 
 
