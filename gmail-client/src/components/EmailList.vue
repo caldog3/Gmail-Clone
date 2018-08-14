@@ -101,7 +101,7 @@
                   
                 </div>
 
-                <div class="highlightAreaRead" tooltip="Mark Unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
+                <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   
                 </div>
@@ -130,7 +130,7 @@
 
                   </div>
                     <!-- it isn't making it to my function -->
-                  <div class="highlightArea" tooltip="Mark Unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
+                  <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
 
                   </div>
@@ -256,20 +256,21 @@
   opacity: 0;
   cursor: pointer;
 }
-/* Create a custom checkbox */
+Create a custom checkbox
 .checkmark {
   position: absolute;
   top: 7px;
   left: 6px;
   height: 17px;
   width: 17px;
-  background-color: rgba(255, 255, 255, 0.0); 
+  background-color: rgba(255, 255, 255);
+
   border-color: black;
   border-style: solid;
   border-width: 1px;
   border-radius: 4px;
 }
-/* On mouse-over, add a grey background color */
+/* On mouse-over, add a grey backgroun */
 .container:hover input ~ .checkmark {
   background-color: rgba(255, 255, 255, 0.0); 
 }
