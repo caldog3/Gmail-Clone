@@ -236,7 +236,7 @@
   overflow: hidden;
 }
 
-/* The Checkbox  */
+/*******************************The Checkbox*******************************/
 /* The container */
 .container {
   display: block;
@@ -304,7 +304,7 @@
   height: 30px;
 }
 
-/*  The Star Checkbox   */
+/******************************The Star Checkbox******************************/
 .star {
   visibility: hidden;
   font-size: 20px;
@@ -328,6 +328,7 @@
   color:gold;
 }
 
+/******************************ToolTip******************************/
 [tooltip]:before {            
   position: absolute;
   content: attr(tooltip);
@@ -342,8 +343,6 @@
   height: 30px;
   padding-top: 1px;
   white-space: pre-line
-  /* margin-top: -50px;
-  margin-left: 20px;     */
 }
 
 [tooltip]:not([tooltip-persistent]):before {
