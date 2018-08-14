@@ -47,17 +47,18 @@
   /* min-width: 600px; */
 }
 .backdrop {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
 
-  border-radius: 4px 4px 0px 0px;
+  margin-left: -1rem;
+  margin-right: -1rem;
   margin-bottom: -0.55rem;
-  margin-left: -.4rem;
-  margin-right: -0.4rem;
+  /* margin-top: -0.55rem; */
+  border-radius: 3px 3px 0px 0px;
 }
 .tabSize {
-  width: 135px;
-  height: 34px;
-  line-height: 34px;
+  width: 172px;
+  height: 41px;
+  line-height: 41px;
   text-align: center;
 }
 </style>

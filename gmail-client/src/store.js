@@ -61,7 +61,16 @@ export default new Vuex.Store({
       const threadMessages = state.threadMessages;
 
       if (threadMessages[threadId] !== undefined) {
-        threadMessages[threadId].push(message);
+        //add a check for duplicate messageIds...
+        var notDuplicate = true;
+        for (var i =0; i < threadMessages[threadId].length; ++i) {
+          if (message.messageId === threadMessages[threadId][i].messageId) {
+            notDuplicate = false;
+          }
+        }
+        if (notDuplicate) {
+          threadMessages[threadId].push(message);
+        }
       }
     },
     addLabelId(state, labelId) {
@@ -170,6 +179,30 @@ export default new Vuex.Store({
         });
       });
     },
+    getQueryListOfMessages(context, query) {
+      console.log("query checkpoint: 1")
+      let labelId = "SEARCH";
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 5,
+          'q': query,
+        }).then((response) => {
+          console.log("query checkpoint 2");
+          console.log(response);
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              console.log("query checkpoint 3");
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
+        })
+      })
+    },
     getFolderListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
@@ -223,9 +256,29 @@ export default new Vuex.Store({
         console.log(err);
       });
     },
-    //working on this
+    getAllMessages(context, labelId) {
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'maxResults': 50,
+        }).then((response) => {
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
+
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
+        });  
+      }).catch((err) => {
+        console.log(err);
+      });
+    },
+
     getPageListOfMessages(context, labelId) {
-      //this doesn't really work....
       this.state.labelLastPageTokens.push(this.state.labelNextPageTokens[labelId]);
       let label = labelId;
       context.commit("addLabelId", labelId);
