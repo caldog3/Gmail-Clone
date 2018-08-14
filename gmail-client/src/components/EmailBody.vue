@@ -270,8 +270,8 @@
 .them1:after {
 	content: '';
 	position: absolute;
-	left: -1;
-	top: 55%;
+	left: 9px;
+	top: 75%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
