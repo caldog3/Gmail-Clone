@@ -256,21 +256,20 @@
   opacity: 0;
   cursor: pointer;
 }
-Create a custom checkbox
+/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 7px;
   left: 6px;
   height: 17px;
   width: 17px;
-  background-color: rgba(255, 255, 255);
-
+  background-color: rgba(255, 255, 255, 0.0); 
   border-color: black;
   border-style: solid;
   border-width: 1px;
   border-radius: 4px;
 }
-/* On mouse-over, add a grey backgroun */
+/* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: rgba(255, 255, 255, 0.0); 
 }
@@ -304,7 +303,6 @@ Create a custom checkbox
   width: 30px;
   height: 30px;
 }
-
 /******************************The Star Checkbox******************************/
 .star {
   visibility: hidden;
