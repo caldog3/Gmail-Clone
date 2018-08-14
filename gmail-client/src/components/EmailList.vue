@@ -86,17 +86,17 @@
             <div class="hoverView">
               <div class="item">
 
-                <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
+                <div class="highlightArea" tooltip="Archive" tooltip-other v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
                   
                 </div>
 
-                <div class="highlightArea" tooltip="Spam">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                <div class="highlightArea" tooltip="Spam" tooltip-other >
+                  <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
                   
                 </div>
 
-                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent tooltip-other v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   
                 </div>
@@ -349,6 +349,10 @@
 [tooltip]:not([tooltip-persistent]):before {
   background: white;
   padding-top: 9px;
+}
+
+[tooltip]:not([tooltip-other]):before {
+  padding-top: 0px;
 }
 
 
