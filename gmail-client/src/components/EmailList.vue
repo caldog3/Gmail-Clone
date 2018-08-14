@@ -86,17 +86,17 @@
             <div class="hoverView">
               <div class="item">
 
-                <div class="highlightArea" tooltip="Archive" tooltip-other v-on:click="archiveThread(thread)">
+                <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
                   
                 </div>
 
-                <div class="highlightArea" tooltip="Spam" tooltip-other >
+                <div class="highlightArea" tooltip="Spam">
                   <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
                   
                 </div>
 
-                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent tooltip-other v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   
                 </div>
@@ -115,22 +115,22 @@
               <div class="smallHover">
                 <div class="item">
 
-                  <div class="highlightArea" v-on:click="archiveThread(thread)">
+                  <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
 
                   </div>
 
-                  <div class="highlightArea">
+                  <div class="highlightArea" tooltip="Spam">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
 
                   </div>
 
-                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                  <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
 
                   </div>
                     <!-- it isn't making it to my function -->
-                  <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
+                  <div class="highlightArea" tooltip="Mark Unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
 
                   </div>
@@ -351,9 +351,6 @@
   padding-top: 9px;
 }
 
-[tooltip]:not([tooltip-other]):before {
-  padding-top: 0px;
-}
 
 
 /* .firefoxOnly {
