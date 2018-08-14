@@ -96,12 +96,12 @@
                   
                 </div>
 
-                <div class="highlightArea" tooltip="Mark as Read" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   
                 </div>
 
-                <div class="highlightArea" tooltip="Mark as Unread" v-on:click="toggleUnread(thread)" v-else>
+                <div class="highlightAreaRead" tooltip="Mark Unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   
                 </div>
@@ -333,16 +333,24 @@
   content: attr(tooltip);
   opacity: 0;
 }
+
 [tooltip]:hover:before {        
   opacity : 1;
   background: white;
   font-size: xx-small;
   width: 30px;
   height: 30px;
-  padding-top: 9px;
+  padding-top: 2px;
+  white-space: pre-line
   /* margin-top: -50px;
   margin-left: 20px;     */
 }
+
+[tooltip]:not([tooltip-persistent]):before {
+  background: white;
+  padding-top: 9px;
+}
+
 
 
 /* .firefoxOnly {
@@ -452,6 +460,18 @@ a {
   z-index: 0;
 }
 .highlightArea:hover {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+.highlightAreaRead {
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
+  cursor: pointer; 
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+.highlightAreaRead:hover {
   background-color: rgba(255, 255, 255, 0.7) !important;
 }
 .highlightAreaCheck {
