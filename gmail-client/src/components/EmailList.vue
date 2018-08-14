@@ -340,7 +340,7 @@
   font-size: xx-small;
   width: 30px;
   height: 30px;
-  padding-top: 2px;
+  padding-top: 1px;
   white-space: pre-line
   /* margin-top: -50px;
   margin-left: 20px;     */
@@ -350,7 +350,6 @@
   background: white;
   padding-top: 9px;
 }
-
 
 
 /* .firefoxOnly {
