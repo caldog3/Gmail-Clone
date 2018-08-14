@@ -136,13 +136,13 @@
           </div>
         </div>
 
-        <div class="entry">
+        <div class="entry1">
           <div class="image">
             <img src="./../assets/UserKennethWoods.jpg">
           </div>
           <div class="nameSnip">
-            <div class="name"><b>Kenny Woods</b></div>
-            <div class="snip"><b> Quarterly sales are at an all-time low </b></div>
+            <div class="name">Kenny Woods</div>
+            <div class="snip">Quarterly sales are at an all-time low</div>
           </div>
         </div>
 
@@ -225,6 +225,14 @@
   display: flex;
   flex-direction: row;
   margin: 10px 0px 6px 0px;
+}
+.entry1 {
+  display: flex;
+  flex-direction: row;
+  margin: 8px -7px 4px -30px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0px 20px 20px 0px;
+  padding: 2px 2px 2px 30px;
 }
 .image img {
   width: 30px;
