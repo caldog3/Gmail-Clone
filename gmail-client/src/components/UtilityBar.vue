@@ -694,18 +694,14 @@ export default {
     nextPageLoad() {
       eventBus.$emit("NEXT_PAGE_LOAD");
       console.log(this.$store.state.labelMessages);
-      //We'll have to switch it to be more universal 
-      // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
       console.log("ViewFolder:");
       console.log(this.$store.state.currentFolder);
       let folder = this.$store.state.currentFolder;
       this.$store.state.labelMessages[folder] = [];
       this.$store.dispatch("getPageListOfMessages", folder);
-      // not sure what the best strategy is here*
     },
     lastPageLoad() {
       eventBus.$emit("LAST_PAGE_LOAD");
-      // *...or here
       let folder = this.$store.state.currentFolder;
       this.$store.state.labelMessages[folder] = [];
       this.$store.dispatch("getLastPageListOfMessages", folder);

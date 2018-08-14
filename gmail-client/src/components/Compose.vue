@@ -21,10 +21,21 @@
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
 
-    <div class="sectionText">
+    <!-- <div class="sectionText">
       <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
-    </div>
-    
+    </div> -->
+
+    <!-- quill testing -->
+    <!-- <div class="quill-editor"> -->
+      <quill-editor class="sectionText"
+       v-model="composeMessage"
+       v-quill:myQuillEditor="editorOption"></quill-editor>
+       <span>
+         {{composeMessage}}
+         </span>
+    <!-- </div> -->
+    <!-- end -->
+
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="send">
@@ -169,17 +180,24 @@ import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
 
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+ 
+import { quillEditor } from 'vue-quill-editor'
+
 export default {
   name: 'Compose',
   components: {
-    Icon
+    Icon,
+    quillEditor
   },
   data() {
     return {
       composeTo: '',
+      editorOption: { /* quill options */ },
       composeSubject: '',
-      composeMessage: '',
-        
+      composeMessage: 'We can bind draft stuff to here i think',
       currentUser: window.currentUser,
       active: false,
       activeSection: 'to',
@@ -218,6 +236,6 @@ export default {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
-  }
+  },
 }
 </script>

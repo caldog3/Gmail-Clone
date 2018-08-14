@@ -106,7 +106,8 @@ export default {
         tabFolder = "CATEGORY_PROMOTIONS";
       }
       else if (tabFolder === "PRIMARY") {
-        tabFolder = "INBOX";
+        tabFolder = "CATEGORY_PERSONAL";
+        //ideally we'll do the math for primary = inbox - social - promotions
       }
       eventBus.$emit("TOTAL_EMAIL_COUNT", tabFolder);
       // maybe trigger an update here for total emails in the utilityBar

@@ -5,6 +5,14 @@ import App from './App'
 import router from './router'
 import store from "./store";
 
+//Quill import
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor, /* { default global options } */)
+
+
 //Bootstrap Import
 import BootstrapVue from "bootstrap-vue/dist/bootstrap-vue.esm"
 import "bootstrap/dist/css/bootstrap.css";
