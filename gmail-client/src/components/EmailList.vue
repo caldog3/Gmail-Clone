@@ -86,30 +86,25 @@
             <div class="hoverView">
               <div class="item">
 
-                <div class="highlightArea" v-on:click="archiveThread(thread)">
+                <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  <span class="tooltiptext">Archive</span>
-                </div>
-
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Spam</span>
-                </div>
-
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  <span class="tooltiptext">Unread</span>
-                </div>
-
-                <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Read</span>
-                </div>
                   
-                <!-- <div class="highlightArea">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div> -->
+                </div>
+
+                <div class="highlightArea" tooltip="Spam">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
+                  
+                </div>
+
+                <div class="highlightArea" tooltip="Mark as Read" v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                  
+                </div>
+
+                <div class="highlightArea" tooltip="Mark as Unread" v-on:click="toggleUnread(thread)" v-else>
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                  
+                </div>
 
               </div>
             </div>
@@ -122,28 +117,24 @@
 
                   <div class="highlightArea" v-on:click="archiveThread(thread)">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                    <span class="tooltiptext">Archive</span>
+
                   </div>
 
                   <div class="highlightArea">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                    <span class="tooltiptext">Spam</span>
+
                   </div>
 
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                    <span class="tooltiptext">Unread</span>
+
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                    <span class="tooltiptext">Read</span>
+
                   </div>
 
-                  <!-- <div class="highlightArea">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="clock" /> 
-                    <span class="tooltiptext">Snooze</span>
-                  </div> -->
 
                 </div>
               </div>
@@ -337,6 +328,23 @@
   color:gold;
 }
 
+[tooltip]:before {            
+  position: absolute;
+  content: attr(tooltip);
+  opacity: 0;
+}
+[tooltip]:hover:before {        
+  opacity : 1;
+  background: white;
+  font-size: xx-small;
+  width: 30px;
+  height: 30px;
+  padding-top: 9px;
+  /* margin-top: -50px;
+  margin-left: 20px;     */
+}
+
+
 /* .firefoxOnly {
   display: none;
 } */
@@ -459,6 +467,7 @@ a {
 }
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;
+  margin-right: 6px;
 }
 
 .FlexTable:hover .dateTime {
@@ -491,34 +500,6 @@ svg:not(:root).svg-inline--fa {
 
 .FlexTable:hover .checkmark {
   border-width: 2px;
-}
-
-.highlightArea .tooltiptext {
-  visibility: hidden;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  padding: 1px;
-  border-radius: 6px;
-  
-  /* Position the tooltip text */
-  position: relative;
-  z-index: 1;
-  bottom: 7px;
-  left: 1px;
-  margin-left: -30px;
-  font-size:xx-small;
-  white-space: nowrap;
-
-  /* Fade in tooltip */
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-/* Show the tooltip text when you mouse over the tooltip container */
-.highlightArea:hover .tooltiptext {
-  visibility: visible;
-  /* z-index: 999999999999999999999999999999999; */
-  opacity: 1;
 }
 
 .Icon {
@@ -591,33 +572,6 @@ svg:not(:root).svg-inline--fa {
   .FlexTable:hover .hoverView {
     visibility: hidden;
     display: none;
-  }
-  .highlightArea .tooltiptext {
-    visibility: hidden;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    padding: 1px;
-    border-radius: 6px;
-    
-    /* Position the tooltip text */
-    position: relative;
-    z-index: 1;
-    bottom: 0px;
-    left: 0px;
-    margin-left: 0px;
-    font-size: x-small;
-    white-space: nowrap;
-
-    /* Fade in tooltip */
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-/* Show the tooltip text when you mouse over the tooltip container */
-  .highlightArea:hover .tooltiptext {
-    visibility: visible;
-    /* z-index: 999999999999999999999999999999999; */
-    opacity: 1;
   }
 }
 
