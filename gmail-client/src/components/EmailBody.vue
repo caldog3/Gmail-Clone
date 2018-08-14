@@ -271,7 +271,7 @@
 	content: '';
 	position: absolute;
 	left: 9px;
-	top: 75%;
+	top: 70%;
 	width: 0;
 	height: 0;
 	border: 20px solid transparent;
