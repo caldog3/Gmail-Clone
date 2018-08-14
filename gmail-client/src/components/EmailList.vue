@@ -91,17 +91,17 @@
 
                 <div class="highlightArea">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
+                  <span class="tooltiptext">Spam</span>
                 </div>
 
                 <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  <span class="tooltiptext">Mark as Unread</span>
+                  <span class="tooltiptext">Unread</span>
                 </div>
 
                 <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Mark as Read</span>
+                  <span class="tooltiptext">Read</span>
                 </div>
                   
                 <!-- <div class="highlightArea">
@@ -125,17 +125,17 @@
 
                   <div class="highlightArea">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-                    <span class="tooltiptext">Report Spam</span>
+                    <span class="tooltiptext">Spam</span>
                   </div>
 
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                    <span class="tooltiptext">Mark as Unread</span>
+                    <span class="tooltiptext">Unread</span>
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                    <span class="tooltiptext">Mark as Read</span>
+                    <span class="tooltiptext">Read</span>
                   </div>
 
                   <!-- <div class="highlightArea">
@@ -462,7 +462,7 @@ svg:not(:root).svg-inline--fa {
   visibility: hidden;
   position: relative;
   display: none;
-  width: 200px;
+  width: 130px;
   overflow: hidden;
   white-space:nowrap; 
   justify-content: flex-end;
@@ -497,9 +497,9 @@ svg:not(:root).svg-inline--fa {
   position: relative;
   z-index: 1;
   bottom: 7px;
-  left: -23px;
+  left: 1px;
   margin-left: -30px;
-  font-size:x-small;
+  font-size:xx-small;
   white-space: nowrap;
 
   /* Fade in tooltip */
