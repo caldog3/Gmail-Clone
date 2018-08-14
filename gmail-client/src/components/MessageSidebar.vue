@@ -1,7 +1,8 @@
 <template>
   <div class="sideBar">
     <button class="button" v-on:click.stop="composeShow()">
-      <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV">
+      <!-- <img src="./../assets/plus.png" class="d-inline-block align-top" alt="BV"> -->
+      <img src="./../assets/RainbowLock.png">
       &nbsp; &nbsp; Compose &nbsp; 
       </button>
     <!-- <b-modal v-model="composeShow">
