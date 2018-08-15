@@ -44,7 +44,7 @@
 <style scoped>
 #setWidth {
   /* background: rgba(255, 255, 255, 0.6); */
-  /* min-width: 600px; */
+  /* min-width: 800px; */
 }
 .backdrop {
   background-color: rgba(255, 255, 255, 0.8);
@@ -56,7 +56,7 @@
   border-radius: 3px 3px 0px 0px;
 }
 .tabSize {
-  width: 172px;
+  width: 150px;
   height: 41px;
   line-height: 41px;
   text-align: center;

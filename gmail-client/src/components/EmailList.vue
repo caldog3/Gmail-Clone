@@ -524,7 +524,7 @@ svg:not(:root).svg-inline--fa {
   margin-left: 7px;
 }
 
-@media screen and (max-width : 830px) {
+@media screen and (max-width : 930px) {
   .FlexTable {
     height: 110px;
   }
