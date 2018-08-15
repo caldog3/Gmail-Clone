@@ -126,7 +126,6 @@ h4 {
   overflow: hidden;
   border-style: solid;
   border-width: 5px;
-
   /* margin: auto; position: relative;  */
   max-width: 100%; max-height: 100%;
 }

@@ -5,7 +5,6 @@
       <div class="currentFolderLine">
         <p>{{this.$store.state.currentFolder}}</p>
       </div>     
-      <!-- Is this line required? -->
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
           <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
