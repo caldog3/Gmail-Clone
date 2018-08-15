@@ -230,8 +230,8 @@
 
 .encryptSide {
   width: 280px;
-  /* display: none; */
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: column;
   margin-top: 116px;
   background-color: white;
@@ -246,7 +246,7 @@
 .EMline {
   display: flex;
   flex-direction: row;
-  background: rgba(153, 153, 153, 0.4);
+  /* background: rgba(153, 153, 153, 0.4); */
 }
 .EMline .photo {
   width: 20px;
