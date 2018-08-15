@@ -37,7 +37,7 @@
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
 
-      <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
+      <b-tab v-on:click="updateCurrentFolder('Private')">
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">

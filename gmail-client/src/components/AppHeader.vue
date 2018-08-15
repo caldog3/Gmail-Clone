@@ -32,16 +32,8 @@
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
             <div class="userPhoto"> 
-              <svg width="70" height="70" viewBox="0 0 100 100" 
-                  preserveAspectRatio="xMidYMid meet">
-                <defs>
-                  <clipPath id="myCircle">
-                    <circle cx="45" cy="44" r="40"/>
-                  </clipPath>
-                </defs>
-                <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
-                <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
-              </svg>
+              <img src="./../assets/UserAliceWalker.jpg">
+              
             </div>
           </div>
         </div>
@@ -134,8 +126,11 @@ img {
 .logoutButton {
   margin: 10px;
 }
-.userPhoto {
-  margin-top: 15px;
+.userPhoto img {
+  width: 60px;
+  height: 60px;
+  padding-right: 0;
+  border-radius: 50%;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
