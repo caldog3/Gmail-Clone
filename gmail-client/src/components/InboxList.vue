@@ -37,6 +37,18 @@
         <email-list labelId="PROMOTIONS"/>
       </b-tab>
 
+      <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
+        <template slot="title">
+          <div class="backdrop">
+            <div class="tabSize">
+              <img src="./../assets/goldLock.png">
+              &emsp; Private
+            </div>
+          </div>
+        </template>
+        <email-list labelId="PRIMARY"/>
+      </b-tab>
+
     </b-tabs>
   </div>
 </template>
@@ -60,6 +72,11 @@
   height: 41px;
   line-height: 41px;
   text-align: center;
+}
+img {
+  width: 25px;
+  height: 20px;
+  margin-bottom: 5px;
 }
 </style>
 
