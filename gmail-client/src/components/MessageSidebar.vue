@@ -230,7 +230,7 @@
   display: flex;
   flex-direction: row;
   margin: 8px -7px 4px -30px;
-  background: rgba(255, 255, 255, 0.5);
+  /* background: rgba(255, 255, 255, 0.5); */
   border-radius: 0px 20px 20px 0px;
   padding: 2px 2px 2px 30px;
 }
