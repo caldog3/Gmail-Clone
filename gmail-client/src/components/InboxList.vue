@@ -42,10 +42,10 @@
 </template>
 
 <style scoped>
-#setWidth {
-  /* background: rgba(255, 255, 255, 0.6); */
-  /* min-width: 800px; */
-}
+/* #setWidth {
+  background: rgba(255, 255, 255, 0.6);
+  min-width: 800px;
+} */
 .backdrop {
   background-color: rgba(255, 255, 255, 0.8);
 
