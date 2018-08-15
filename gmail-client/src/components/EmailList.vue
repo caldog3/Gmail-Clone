@@ -96,12 +96,12 @@
                   
                 </div>
 
-                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   
                 </div>
 
-                <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
+                <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   
                 </div>
@@ -125,12 +125,12 @@
 
                   </div>
 
-                  <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
+                  <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
 
                   </div>
                     <!-- it isn't making it to my function -->
-                  <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
+                  <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
 
                   </div>
@@ -340,7 +340,7 @@
   font-size: xx-small;
   width: 30px;
   height: 30px;
-  padding-top: 1px;
+  padding-top: 0px;
   white-space: pre-line
 }
 
