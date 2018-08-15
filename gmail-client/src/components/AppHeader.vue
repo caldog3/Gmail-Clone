@@ -39,7 +39,7 @@
                     <circle cx="45" cy="44" r="40"/>
                   </clipPath>
                 </defs>
-                <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+
                 <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
