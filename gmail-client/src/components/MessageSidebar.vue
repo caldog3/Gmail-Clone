@@ -5,9 +5,6 @@
       <!-- <img src="./../assets/RainbowLock.png"> -->
       &nbsp; &nbsp; Compose &nbsp; 
       </button>
-    <!-- <b-modal v-model="composeShow">
-      Test compose block
-    </b-modal> -->
 
     <div class="options">
       <div v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
