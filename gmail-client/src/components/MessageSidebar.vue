@@ -27,7 +27,7 @@
             <img src="./../assets/whiteLock.png">  
           </div>
           <div class="title">
-            Private Messages
+            Private
           </div>
         </div>
       </div>
