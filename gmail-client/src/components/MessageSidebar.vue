@@ -246,11 +246,13 @@
 .EMline {
   display: flex;
   flex-direction: row;
+  /* background: rgba(153, 153, 153, 0.4); */
 }
 .EMline .photo {
   width: 20px;
   height: 20px;
   margin: 5px 0px 0px 1px;
+  
 }
 .optionsA img {
   width: 20px;
