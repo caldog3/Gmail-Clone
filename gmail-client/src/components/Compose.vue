@@ -26,6 +26,10 @@
     </div>
     
     <div class="footerSection">
+      <div class="sendButtonP">
+        <img src="./../assets/whiteLock.png">  Send Private
+        <!-- <input type="submit" class="SendButton1P" value="Send Private" @click="send"> -->
+      </div>
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="send">
       </div>
@@ -145,6 +149,8 @@ textarea {
   width: 510px;
   padding: 4px;
   height: 55px;
+  display: flex;
+  flex-direction: row;
 }
 .sendButton {
   float: left;
@@ -160,7 +166,21 @@ textarea {
   outline: none;
   width: 4.5em;
   height: 2.2em;
-
+}
+.sendButtonP {
+  float: left;
+  margin: 7px 4px 4px 4px;
+  color: white;
+  padding: 1px 14px 3px 9px;
+  background-color: #297be6;
+  border-radius: 5px;
+  height: 2.2em;
+  line-height: 2.2em;
+}
+.sendButtonP img {
+  height: 1.3em;
+  width: 1.8em;
+  margin-top: -2px;
 }
 </style>
 
