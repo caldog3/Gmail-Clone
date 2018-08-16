@@ -770,26 +770,53 @@ export default {
         if (!folder.includes("Label_")) {
           folder = folder.toUpperCase();
         }
-        if (folder = "INBOX") {
+        console.log("GET NUMBER FOLDER: " + folder);
+        var totalInboxEmailCount = 0;
+        if (folder == "INBOX") {
+          console.log("SHOULD ONLY be primary");
           gapi.client.gmail.users.labels.get({
             userId: 'me',
             'id': "INBOX"
           }).then((response) => {
-            let emailCountTotal = response.result.threadsTotal;
-          });
-          
+            totalInboxEmailCount = response.result.threadsTotal;
+            console.log("progress = " + totalInboxEmailCount);
+
+            gapi.client.gmail.users.labels.get({
+              userId: 'me',
+              'id': "CATEGORY_SOCIAL"
+            }).then((response) => {
+              totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+              console.log("progress = " + totalInboxEmailCount);
+
+              gapi.client.gmail.users.labels.get({
+                userId: 'me',
+                'id': "CATEGORY_PROMOTIONS"
+              }).then((response) => {
+                totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+                console.log("progress = " + totalInboxEmailCount);
+
+                console.log("AND THE TOTAL = " + totalInboxEmailCount);
+                totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+                this.$store.state.totalMessages = totalInboxEmailCount;
+                this.totalMessages = totalInboxEmailCount;
+              });    
+            });  
+          });          
         }
         else {
           gapi.client.gmail.users.labels.get({
             'userId': 'me',
             'id': folder,
           }).then((response) => {
-            let totalInboxEmailCount = response.result.threadsTotal;
+            totalInboxEmailCount = response.result.threadsTotal;
+                
+            console.log("AND THE TOTAL = " + totalInboxEmailCount);
             totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
             this.$store.state.totalMessages = totalInboxEmailCount;
             this.totalMessages = totalInboxEmailCount;
           });
         }
+
       });
     }
   },
