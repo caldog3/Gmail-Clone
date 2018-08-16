@@ -18,6 +18,7 @@ const sendMessage = (headers, message) => {
   }).then((response) => {
     console.log(`Email Sent. Response =>:`, response);
   }).catch((err) => {
+    console.log("SO WE HAVE A SEND ERROR");
     console.log(err);
   });
 }

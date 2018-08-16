@@ -28,11 +28,13 @@
     <!-- quill testing -->
     <!-- <div class="quill-editor"> -->
       <quill-editor class="sectionText"
-       v-model="composeMessage"
-       v-quill:myQuillEditor="editorOption"></quill-editor>
-       <span>
-         {{composeMessage}}
-         </span>
+        v-model="composeMessage"
+        v-quill:myQuillEditor="editorOption">
+       </quill-editor>
+      <span>
+        what it's saved as: <br>
+        "{{composeMessage}}"
+      </span>
     <!-- </div> -->
     <!-- end -->
 

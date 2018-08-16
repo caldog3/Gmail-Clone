@@ -7,6 +7,8 @@ const Base64Decode = (str, encoding = "utf-8") => {
 }
 
 const Base64Encode = (str, encoding = 'utf-8') => {
+  // i think the error is here...
+  console.log("is the error in the base64encode function?");
   let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
   return base64js.fromByteArray(bytes);
 }
@@ -93,6 +95,7 @@ const getBody = (payload) => {
           }
         }
         else {
+          console.log(payload);
           if (payload.parts[0].parts[1].body.data !== undefined){
             let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
             body = Base64Decode(multipartMixedAlternativeBody);
