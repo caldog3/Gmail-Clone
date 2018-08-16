@@ -60,7 +60,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>Also, for each non-standard executable and testcase that clearly documents how it differs from the Program (independent of having been made by such Participant to </b>
+                      <b>Non-standard executable</b>
                     </div>
                     <div class="timeName">
                       <div>Nita Ellis</div>
@@ -88,7 +88,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>We are a non-profit organization what you've given us is texty, we want sexy I think we need to start from scratch thanks for taking the time to make the website</b>
+                      <b>Non-profit organization</b>
                     </div>
                     <div class="timeName">
                       <div>Ty Amjed</div>
@@ -102,7 +102,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>Can you lower the price for the website? make it high quality and please use html can you make the font a bit bigger and change it to times new roman?</b>
+                      <b>High Quality</b>
                     </div>
                     <div class="timeName">
                       <div>Ken Woods</div>
@@ -116,7 +116,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">New Email
-                      <b>If that CommeNew Email becomes identical to those performance claims and warranties are such Commercial Contributor's responsibility alone. </b>
+                      <b>Performance Claims</b>
                     </div>
                     <div class="timeName">
                       <div>Lauren Shay</div>
@@ -130,7 +130,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>Even if your work under the terms of this section is intended to, or may choose any version of the standards mode test cases </b>
+                      <b>Terms of this section </b>
                     </div>
                     <div class="timeName">
                       <div>Alice</div>
@@ -144,7 +144,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>Remember, everything is the same or better you are lucky to even be doing this for us </b>
+                      <b>Paperword</b>
                     </div>
                     <div class="timeName">
                       <div>Rich Tillman</div>
@@ -158,7 +158,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>We need to have a Come to Jesus meeting with Phil about his attitude put your feelers out. </b>
+                      <b>Come to Jesus</b>
                     </div>
                     <div class="timeName">
                       <div>Jessie Davis</div>
@@ -172,7 +172,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>You may charge a reasonable royalty and payment arrangement are not compelled to copy the source form of the Work</b>
+                      <b>Royalty and payment arrangement</b>
                     </div>
                     <div class="timeName">
                       <div>Mark S</div>
@@ -196,7 +196,7 @@
                     <div class="flexGrow">
                       <div class="snipTimeName">
                         <div class="snip1">
-                          <b>If that CommeNew Email becomes identical to those performance claims and warranties are such Commercial Contributor's responsibility alone. </b>
+                          <b>Performance Claims</b>
                         </div>
                         <div class="timeName">
                           <div>Lauren Shay</div>
