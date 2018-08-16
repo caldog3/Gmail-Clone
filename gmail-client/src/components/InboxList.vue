@@ -49,7 +49,7 @@
           <div class="top">
             <div class="topBar">
               <div class="newMail">
-                <font-awesome-icon style="color:white;" class="Icon" icon="envelope" /> <b>New Email</b>
+                <font-awesome-icon style="color:white;" class="Icon" icon="envelope" /> <b>New private message</b>
               </div>
             </div>
             <div class="allPrivate">
@@ -115,7 +115,7 @@
                     <img src="./../assets/UserLaurenShay.jpg">
                   </div>
                   <div class="snipTimeName">
-                    <div class="snip">New Email
+                    <div class="snip">
                       <b>Performance Claims</b>
                     </div>
                     <div class="timeName">
@@ -206,7 +206,15 @@
                     </div>
                   </div> 
                   <div class="theRest">
-
+                    <p>Hey, Larry</p>
+                    <p>
+                      Ownership. Subject to the public, the best way to achieve your goal while meeting these conditions, then read the document `cfgguide.tex' and `modguide.tex' in the page itself, they should generally be preserved by re-users. Copyleft/Share Alike: If you develop a new program, and you have found elsewhere or that Derived Work can only do in order to preserve the integrity of the Work prove defective, you assume the cost of developing and maintaining multi-platform application software.
+                    </p>
+                    <p>
+                      For suppliers: In-depth testing increases customer satisfaction and keeps development and support it yourself. Derived Works distributed in conjunction with the Derived Program is void, and will automatically terminate at the time of people involved, and so on. License are distributed by Motosoto.Com B.V.
+                    </p>
+                    <br>
+                    <p>Lauren</p>
                   </div>
                 </div>
               </div>
@@ -219,6 +227,16 @@
 </template>
 
 <style scoped>
+p {
+  margin-bottom: 9px;
+  text-align: left;
+}
+.theRest {
+  height: 532px;
+  margin-top: 4px;
+  background-color: rgba(255, 255, 255, 0.6); 
+  padding: 20px;
+}
 .flexGrow {
   flex-basis: 0;
   flex-grow: 1;
