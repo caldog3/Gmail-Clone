@@ -110,7 +110,7 @@
                     </div>
                   </div>
                 </div>   
-                <div class="line">
+                <div class="line2">
                   <div class="img">
                     <img src="./../assets/UserLaurenShay.jpg">
                   </div>
@@ -217,6 +217,9 @@
                     <p>Lauren</p>
                   </div>
                 </div>
+                <div class="compose">
+
+                </div>
               </div>
             </div>
           </div>
@@ -227,6 +230,12 @@
 </template>
 
 <style scoped>
+.compose {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  display: none;
+}
 p {
   margin-bottom: 9px;
   text-align: left;
@@ -234,7 +243,7 @@ p {
 .theRest {
   height: 532px;
   margin-top: 4px;
-  background-color: rgba(255, 255, 255, 0.6); 
+  background-color: rgba(255, 255, 255, 0.8); 
   padding: 20px;
 }
 .flexGrow {
@@ -244,6 +253,7 @@ p {
 .selected {
   display: flex;
   flex-direction: column;
+  display: none;
 }
 .snip1 {
   overflow: hidden;
@@ -254,7 +264,7 @@ p {
 .line1 {
   display: flex;
   flex-direction: row;
-  background-color: rgba(255, 255, 255, 0.6); 
+  background-color: rgba(255, 255, 255, 0.8); 
   padding: 5px;
 }
 .memo {
@@ -296,6 +306,17 @@ p {
 .snipTimeName {
   display: flex;
   flex-direction: column;
+}
+.line2 {
+  display: flex;
+  flex-direction: row;
+  /* background-color: rgba(255, 255, 255, 0.8); 
+  margin: 4px 0px 0px 4px; */
+  
+  background-color: rgba(255, 255, 255, 0.6); 
+  margin: 4px 4px 0px 4px;
+
+  padding: 5px;
 }
 .line {
   display: flex;
