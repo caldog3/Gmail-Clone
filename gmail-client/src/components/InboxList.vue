@@ -384,7 +384,7 @@ p {
   flex-direction: column;
   border-width: 10px;
   border-style: solid;
-  border-image: linear-gradient( rgb(255, 255, 255), rgb(255, 255, 255, 0.1)) 1 20%
+  border-image: linear-gradient( rgb(255, 255, 255), rgb(255, 255, 255, 0.3), rgb(255, 255, 255, 0.0)) 1 20%
 }
 
 
