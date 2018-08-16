@@ -382,7 +382,9 @@ p {
 .top {
   display: flex;
   flex-direction: column;
-  border: 10px solid white;
+  border-width: 10px;
+  border-style: solid;
+  border-image: linear-gradient( rgb(255, 255, 255), rgb(255, 255, 255, 0.1)) 1 20%
 }
 
 
