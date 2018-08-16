@@ -218,7 +218,15 @@
                   </div>
                 </div>
                 <div class="compose">
+                  <div class="to">
+                    To
+                  </div>
+                  <div class="subject">
+                    Subject
+                  </div>
+                  <div class="mesBody">
 
+                  </div>
                 </div>
               </div>
             </div>
@@ -230,11 +238,34 @@
 </template>
 
 <style scoped>
+.to {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
+  border-bottom: 2px solid grey;
+  width: 100%;
+}
+.subject {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
+  border-bottom: 2px solid grey;
+  width: 100%;
+}
+.mesBody {
+  flex-basis: 0;
+  flex-grow: 1;
+  width: 100%;
+}
 .compose {
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.6);
-  display: none;
+  /* display: none; */
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  text-align: left;
 }
 p {
   margin-bottom: 9px;
