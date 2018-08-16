@@ -46,139 +46,172 @@
             </div>
           </div>
         </template>
-        <div class="allPrivate">
-          <div class="privateInbox">
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserNitaEllis.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>Also, for each non-standard executable and testcase that clearly documents how it differs from the Program (independent of having been made by such Participant to </b>
-                </div>
-                <div class="timeName">
-                  <div>Nita Ellis</div>
-                  <div>Aug 13</div>
-                </div>
+          <div class="top">
+            <div class="topBar">
+              <div class="newMail">
+                <font-awesome-icon style="color:white;" class="Icon" icon="envelope" /> <b>New Email</b>
               </div>
             </div>
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserAndrewGarrard.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>You should also announce your new status</b>
+            <div class="allPrivate">
+              <div class="privateInbox">
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserNitaEllis.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>Also, for each non-standard executable and testcase that clearly documents how it differs from the Program (independent of having been made by such Participant to </b>
+                    </div>
+                    <div class="timeName">
+                      <div>Nita Ellis</div>
+                      <div>expires Aug 13</div>
+                    </div>
+                  </div>
                 </div>
-                <div class="timeName">
-                  <div>Andrew Garrard</div>
-                  <div>Aug 12</div>
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserAndrewGarrard.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>You should also announce your new status</b>
+                    </div>
+                    <div class="timeName">
+                      <div>Andrew Garrard</div>
+                      <div>expires Aug 12</div>
+                    </div>
+                  </div>
                 </div>
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserTylerAmjed.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>We are a non-profit organization what you've given us is texty, we want sexy I think we need to start from scratch thanks for taking the time to make the website</b>
+                    </div>
+                    <div class="timeName">
+                      <div>Ty Amjed</div>
+                      <div>expires Aug 10</div>
+                    </div>
+                  </div>
+                </div>     
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserKennethWoods.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>Can you lower the price for the website? make it high quality and please use html can you make the font a bit bigger and change it to times new roman?</b>
+                    </div>
+                    <div class="timeName">
+                      <div>Ken Woods</div>
+                      <div>expires Aug 10</div>
+                    </div>
+                  </div>
+                </div>   
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserLaurenShay.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">New Email
+                      <b>If that CommeNew Email becomes identical to those performance claims and warranties are such Commercial Contributor's responsibility alone. </b>
+                    </div>
+                    <div class="timeName">
+                      <div>Lauren Shay</div>
+                      <div>expires Aug 10</div>
+                    </div>
+                  </div>
+                </div>     
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserAliceWalker.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>Even if your work under the terms of this section is intended to, or may choose any version of the standards mode test cases </b>
+                    </div>
+                    <div class="timeName">
+                      <div>Alice</div>
+                      <div>expires Aug 8</div>
+                    </div>
+                  </div>
+                </div>   
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserRichardTillman.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>Remember, everything is the same or better you are lucky to even be doing this for us </b>
+                    </div>
+                    <div class="timeName">
+                      <div>Rich Tillman</div>
+                      <div>expires Aug 7</div>
+                    </div>
+                  </div>
+                </div>  
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserJessicaDavis.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>We need to have a Come to Jesus meeting with Phil about his attitude put your feelers out. </b>
+                    </div>
+                    <div class="timeName">
+                      <div>Jessie Davis</div>
+                      <div>expires Aug 5</div>
+                    </div>
+                  </div>
+                </div>  
+                <div class="line">
+                  <div class="img">
+                    <img src="./../assets/UserMarkShaine.jpg">
+                  </div>
+                  <div class="snipTimeName">
+                    <div class="snip">
+                      <b>You may charge a reasonable royalty and payment arrangement are not compelled to copy the source form of the Work</b>
+                    </div>
+                    <div class="timeName">
+                      <div>Mark S</div>
+                      <div>expires Aug 5</div>
+                    </div>
+                  </div>
+                </div>  
               </div>
-            </div>
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserTylerAmjed.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>We are a non-profit organization what you've given us is texty, we want sexy I think we need to start from scratch thanks for taking the time to make the website</b>
+              <div class="selctedemail">
+                <div class="unselected">
+                  <div class="memo">
+                    <b>No email selected </b>
+                  </div>
+                 
                 </div>
-                <div class="timeName">
-                  <div>Ty Amjed</div>
-                  <div>Aug 10</div>
-                </div>
-              </div>
-            </div>     
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserKennethWoods.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>Can you lower the price for the website? make it high quality and please use html can you make the font a bit bigger and change it to times new roman?</b>
-                </div>
-                <div class="timeName">
-                  <div>Ken Woods</div>
-                  <div>Aug 10</div>
-                </div>
-              </div>
-            </div>   
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserLaurenShay.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>If that Commercial Contributor in the hope that it becomes identical to those performance claims and warranties are such Commercial Contributor's responsibility alone. </b>
-                </div>
-                <div class="timeName">
-                  <div>Lauren Shay</div>
-                  <div>Aug 10</div>
-                </div>
-              </div>
-            </div>     
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserAliceWalker.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>Even if your work under the terms of this section is intended to, or may choose any version of the standards mode test cases </b>
-                </div>
-                <div class="timeName">
-                  <div>Alice</div>
-                  <div>Aug 8</div>
-                </div>
-              </div>
-            </div>   
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserRichardTillman.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>Remember, everything is the same or better you are lucky to even be doing this for us </b>
-                </div>
-                <div class="timeName">
-                  <div>Rich Tillman</div>
-                  <div>Aug 7</div>
-                </div>
-              </div>
-            </div>  
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserJessicaDavis.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>We need to have a Come to Jesus meeting with Phil about his attitude put your feelers out. </b>
-                </div>
-                <div class="timeName">
-                  <div>Jessie Davis</div>
-                  <div>Aug 5</div>
-                </div>
-              </div>
-            </div>  
-            <div class="line">
-              <div class="img">
-                <img src="./../assets/UserMarkShaine.jpg">
-              </div>
-              <div class="snipTimeName">
-                <div class="snip">
-                  <b>You may charge a reasonable royalty and payment arrangement are not compelled to copy the source form of the Work</b>
-                </div>
-                <div class="timeName">
-                  <div>Mark S</div>
-                  <div>Aug 5</div>
-                </div>
-              </div>
-            </div>  
-          </div>
-          <div class="selcted email">
+                <div class="selected">
+                  <div class="line1">
+                    <div class="img">
+                      <img src="./../assets/UserLaurenShay.jpg">
+                    </div>
+                    <div class="flexGrow">
+                      <div class="snipTimeName">
+                        <div class="snip1">
+                          <b>If that CommeNew Email becomes identical to those performance claims and warranties are such Commercial Contributor's responsibility alone. </b>
+                        </div>
+                        <div class="timeName">
+                          <div>Lauren Shay</div>
+                          <div>expires Aug 10</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="theRest">
 
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
       </b-tab>
 
     </b-tabs>
@@ -186,6 +219,43 @@
 </template>
 
 <style scoped>
+.flexGrow {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+.selected {
+  display: flex;
+  flex-direction: column;
+}
+.snip1 {
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  width: 100%;
+}
+.line1 {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(255, 255, 255, 0.6); 
+  padding: 5px;
+}
+.memo {
+  padding-top: 100px;
+}
+.unselected {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  display: none;
+}
+.selctedemail {
+  height: 607px;
+  width: 100%;
+  padding: 4px 4px 4px 0px;
+  flex-basis: 0;
+  flex-grow: 1;
+  /* background: rgba(255, 255, 255, 0.6);  */
+}
 .img img {
   width: 40px;
   height: 40px;
@@ -221,14 +291,33 @@
   flex-direction: column;
   width: 700px;
   margin-bottom: 4px;
+  height: auto;
 }
 .allPrivate {
-  border: 10px solid white;
   /* border-radius: 3px 3px 0px 0px; */
   display: flex;
   flex-direction: row;
   
 }
+.newMail {
+  float: right;
+  margin: 8px;
+}
+.topBar {
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.6); 
+  margin: 4px 4px 0px 4px;
+  float: right;
+}
+.top {
+  display: flex;
+  flex-direction: column;
+  border: 10px solid white;
+}
+
+
+
+
 
 
 
