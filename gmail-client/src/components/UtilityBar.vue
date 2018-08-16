@@ -192,10 +192,8 @@
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -772,17 +770,26 @@ export default {
         if (!folder.includes("Label_")) {
           folder = folder.toUpperCase();
         }
-        console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
-        console.log(folder);
-        gapi.client.gmail.users.labels.get({
-          'userId': 'me',
-          'id': folder,
-        }).then((response) => {
-          let totalInboxEmailCount = response.result.threadsTotal;
-          totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
-          this.$store.state.totalMessages = totalInboxEmailCount;
-          this.totalMessages = totalInboxEmailCount;
-        });
+        if (folder = "INBOX") {
+          gapi.client.gmail.users.labels.get({
+            userId: 'me',
+            'id': "INBOX"
+          }).then((response) => {
+            let emailCountTotal = response.result.threadsTotal;
+          });
+          
+        }
+        else {
+          gapi.client.gmail.users.labels.get({
+            'userId': 'me',
+            'id': folder,
+          }).then((response) => {
+            let totalInboxEmailCount = response.result.threadsTotal;
+            totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+            this.$store.state.totalMessages = totalInboxEmailCount;
+            this.totalMessages = totalInboxEmailCount;
+          });
+        }
       });
     }
   },
