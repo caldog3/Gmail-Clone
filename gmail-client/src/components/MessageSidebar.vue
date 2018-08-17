@@ -151,7 +151,7 @@
             <img src="./../assets/UserLarryPearson.jpg">
           </div>
           <div class="nameSnip">
-            <div class="name">Kenny Woods</div>
+            <div class="name">Larry Pearson</div>
             <div class="snip">We just need to put these last issues to bed</div>
           </div>
         </div>
