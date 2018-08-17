@@ -299,7 +299,7 @@ p {
 .selected {
   display: flex;
   flex-direction: column;
-  /* display: none; */
+  display: none;
 }
 .snip1 {
   overflow: hidden;
@@ -320,7 +320,7 @@ p {
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.6);
-  display: none;
+  /* display: none; */
 }
 .selctedemail {
   height: 607px;
@@ -356,11 +356,11 @@ p {
 .line2 {
   display: flex;
   flex-direction: row;
-  background-color: rgba(255, 255, 255, 0.8); 
-  margin: 4px 0px 0px 4px;
+  /* background-color: rgba(255, 255, 255, 0.8); 
+  margin: 4px 0px 0px 4px; */
   
-  /* background-color: rgba(255, 255, 255, 0.6); 
-  margin: 4px 4px 0px 4px; */
+  background-color: rgba(255, 255, 255, 0.6); 
+  margin: 4px 4px 0px 4px;
 
   padding: 5px;
 }
