@@ -39,6 +39,7 @@ export default {
   methods: {
     getFolder() {
       let folder = this.$store.state.currentFolder;
+      console.log("getting folder: " + folder);
       return folder;
     },
   },
