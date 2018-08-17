@@ -39,7 +39,7 @@
                     <circle cx="45" cy="44" r="40"/>
                   </clipPath>
                 </defs>
-                <!-- There's an error with the xlink stuff here that needs to be binded properly or something... -->
+
                 <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
               </svg>
             </div>
@@ -57,7 +57,7 @@
   background-color: #6c757d;
   border-radius: 0.2rem;
   height: 31px;
-  line-height: 31px;
+  padding-top: 3px;
 }
 .searchButton:focus {
   background-color: #6c757d;
