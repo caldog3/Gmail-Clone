@@ -110,7 +110,6 @@ a:not([href]):not([tabindex]) {
 .TO {
   width: 15px;
 }
-
 .full2 {
   width: 100%;
   border: none;
@@ -130,7 +129,6 @@ textarea {
   height: 100%;
   min-height: 285px;
   resize: none;
-  /* for now */
 }
 .textSpace {
   width: 100%;
