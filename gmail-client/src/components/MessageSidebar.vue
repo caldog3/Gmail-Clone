@@ -136,12 +136,14 @@ button {
   margin: 20px 90px 20px 5px;
   cursor: pointer;
   outline: none;
+  border: none;
   background-color: white;
 }
 .button {
   padding: 13px 15px;
   border-radius: 40px;
   outline: none;
+  border: none;
 }
 .optionsA {
   color: white;
