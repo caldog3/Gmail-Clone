@@ -276,8 +276,8 @@
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.6);
-  /* display: none; */
-  display: flex;
+  display: none;
+  /* display: flex; */
   flex-direction: column;
   padding: 4px;
   text-align: left;
@@ -299,7 +299,7 @@ p {
 .selected {
   display: flex;
   flex-direction: column;
-  display: none;
+  /* display: none; */
 }
 .snip1 {
   overflow: hidden;

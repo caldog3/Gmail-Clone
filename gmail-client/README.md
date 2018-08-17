@@ -1,3 +1,10 @@
+Mockup 8
+to get the second screen (Mockup8b) clip on the private tab.
+
+to get the thrid screen (Mockup8c) from second screen: uncomment out InboxList.vue lines 323 & 359 & 360 and comment out InboxList.vue lines 362 & 363 & 302, 
+
+to get the fourth screen (Mockupd) from third screen: uncomment out InboxList.vue lines 362 & 363 & 302 and 280 and comment out lines 279 & 359 & 360.
+
 # gmail-client
 
 > A Vue.js project
@@ -21,7 +28,7 @@ Select Web application and give it a name
 
 In the Authorized JavaScript origins enter http://localhost:8081
 
-In the redirect URIs also enter http://localhost:8081   
+In the redirect URIs also enter http://localhost:8081
 
 #create api key
 click CreateCredentials - create API key
