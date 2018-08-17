@@ -356,11 +356,11 @@ p {
 .line2 {
   display: flex;
   flex-direction: row;
-  /* background-color: rgba(255, 255, 255, 0.8); 
-  margin: 4px 0px 0px 4px; */
+  background-color: rgba(255, 255, 255, 0.8); 
+  margin: 4px 0px 0px 4px;
   
-  background-color: rgba(255, 255, 255, 0.6); 
-  margin: 4px 4px 0px 4px;
+  /* background-color: rgba(255, 255, 255, 0.6); 
+  margin: 4px 4px 0px 4px; */
 
   padding: 5px;
 }
