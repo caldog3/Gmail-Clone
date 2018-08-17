@@ -144,7 +144,7 @@
                   </div>
                   <div class="snipTimeName">
                     <div class="snip">
-                      <b>Paperword</b>
+                      <b>Paperwork</b>
                     </div>
                     <div class="timeName">
                       <div>Rich Tillman</div>
