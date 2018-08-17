@@ -1,4 +1,6 @@
 Mockup 8
+after the first screen, uncomment UtilityBar.vue line 213
+
 to get the second screen (Mockup8b) clip on the private tab.
 
 to get the thrid screen (Mockup8c) from second screen: uncomment out InboxList.vue lines 323 & 359 & 360 and comment out InboxList.vue lines 362 & 363 & 302, 
