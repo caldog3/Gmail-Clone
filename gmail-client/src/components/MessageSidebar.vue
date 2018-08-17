@@ -126,14 +126,39 @@
       <div class="privateTitle">
         Private Messages 
       </div>
-      
+      <div class="me">
+          <div class="pic">
+            <img src="./../assets/UserNitaEllis.jpg">
+            Nita
+          </div>
+          <div class="plus">+</div>
+      </div>
 
     </div>
   </div>
 </template>
 
 <style scoped>
-
+/* .pic {
+  margin-top: 2px;
+} */
+.plus {
+  font-size: x-large;
+}
+.privateAll img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.me {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2px 4px 2px 4px;
+  /* font-size: xx-large; */
+  border-bottom: 1px solid white;
+  color: white;
+}
 .privateTitle {
   /* text-align: left; */
   color: white;
