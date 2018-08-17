@@ -23,7 +23,8 @@ export default new Router({
       path: "/Folder/:labelId",
       name: "FolderEmailList",
       component: FolderEmailList
-    }
+    },
+    // path: ""
 
   ],
   // scrollBehavior(to, from, savedPosition) {
