@@ -210,6 +210,7 @@
   border-bottom: 0px;
   background-color: rgba(255, 255, 255, 0.0);
   width: 100%;
+  visibility: hidden;
 } 
 .iconDiv {
   position: relative;

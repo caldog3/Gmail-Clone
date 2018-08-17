@@ -227,6 +227,11 @@
                   <div class="mesBody">
 
                   </div>
+                  <div class="send">
+                    <div class="sendButton">
+                      <b>Send private message</b>
+                    </div>                  
+                  </div>
                 </div>
               </div>
             </div>
@@ -238,6 +243,16 @@
 </template>
 
 <style scoped>
+.sendButton {
+  float: right;
+}
+.send {
+  height: 40px;
+  line-height: 40px;
+  padding-left: 10px;
+  border-top: 2px solid grey;
+  width: 100%;
+}
 .to {
   height: 35px;
   line-height: 35px;
@@ -261,8 +276,8 @@
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.6);
-  display: none;
-  /* display: flex; */
+  /* display: none; */
+  display: flex;
   flex-direction: column;
   padding: 4px;
   text-align: left;
@@ -305,7 +320,7 @@ p {
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.6);
-  /* display: none; */
+  display: none;
 }
 .selctedemail {
   height: 607px;
