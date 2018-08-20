@@ -133,17 +133,104 @@
           </div>
           <div class="plus">+</div>
       </div>
+      <div class="entry">
+        <div class="pic">
+          <img src="./../assets/UserKennethWoods.jpg">
+        </div>
+        <div class="nameSnip">
+          <div class="name">
+            <b>Kenneth Woods</b>
+          </div>
+          <div class="Snip">
+            Here is an example of such entity, whether by contract or otherwise
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="pic">
+          <img src="./../assets/UserAliceWalker.jpg">
+        </div>
+        <div class="nameSnip">
+          <div class="name">
+            <b>Ally Walker</b>
+          </div>
+          <div class="Snip">
+            We can synchronise ourselves at a later timepoint
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="pic">
+          <img src="./../assets/UserLarryPearson.jpg">
+        </div>
+        <div class="nameSnip">
+          <div class="name">
+            <b>Lawrence Pearson</b>
+          </div>
+          <div class="Snip">
+            Alternately, this acknowledgment may appear in your possession
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="pic">
+          <img src="./../assets/UserLaurenShay.jpg">
+        </div>
+        <div class="nameSnip">
+          <div class="name">
+            <b>Lauren Shay</b>
+          </div>
+          <div class="Snip">
+            Your work on this project has been really impactful
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="pic">
+          <img src="./../assets/UserAndrewGarrard.jpg">
+        </div>
+        <div class="nameSnip">
+          <div class="name">
+            <b>Andrew Garrad</b>
+          </div>
+          <div class="Snip">
+            We need a paradigm shift strategic staircase it just needs more cowbell. 
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
 </template>
 
 <style scoped>
+.Snip {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 170px;
+}
+.nameSnip {
+  display: flex;
+  flex-direction: column;
+  font-size: x-small;
+  text-align: left;
+  margin-left: 2px;
+}
+.entry {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 4px 0px 4px;
+  padding-bottom: 5px;
+  /* font-size: xx-large; */
+  border-bottom: 1px solid white;
+  color: white;
+}
 /* .pic {
   margin-top: 2px;
 } */
 .plus {
   font-size: x-large;
+  margin-top: -5px;
 }
 .privateAll img {
   width: 30px;
@@ -158,6 +245,7 @@
   /* font-size: xx-large; */
   border-bottom: 1px solid white;
   color: white;
+  padding-bottom: 5px;
 }
 .privateTitle {
   /* text-align: left; */
