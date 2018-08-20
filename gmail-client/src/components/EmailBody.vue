@@ -2,8 +2,8 @@
 <template>
   <div id="body">
     <div class="flexboxSubject">
-      <h4 class="leftAlign">{{messages[0].subject}}</h4>
-      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+      <h5 class="leftAlign">{{messages[0].subject}}</h5>
+      <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
@@ -76,6 +76,11 @@
 </template>
 
 <style scoped>
+button {
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
 .starBound {
   width: 30px;
   height: 30px;
