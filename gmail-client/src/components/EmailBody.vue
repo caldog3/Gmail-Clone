@@ -80,6 +80,11 @@ button {
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 4px;
+  padding: 5px 25px;
+  outline: none;
+}
+button:hover {
+  background-color: #F2F2F2;
 }
 .starBound {
   width: 30px;
