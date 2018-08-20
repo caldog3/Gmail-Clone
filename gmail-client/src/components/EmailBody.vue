@@ -13,12 +13,30 @@
           <b>{{message.detailedFrom}}</b>
         </div>
         <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }} ago)
-          <span class="highlightArea">
-            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
-          </span> 
-          <font-awesome-icon class="Icon" icon="reply" />
-          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+          <div class="flexRight">
+              <div>
+                {{message.time}} ({{ timeAgo }} ago)
+              </div>
+              <div class="starBound">
+                <div class="theRestoftheTime">
+                  <span class="highlightArea">
+                    <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
+                  </span> 
+                </div>
+                <div class="firefoxOnly">
+                  <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(message)" :checked="message.starred" title="bookmark page">
+                  <label for="ffstar" class="notchecked">&#X2606;</label>
+                  <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                </div>
+              </div>
+              <div>
+                <font-awesome-icon class="Icon" icon="reply" />
+              </div>
+              <div>
+                <font-awesome-icon class="Icon" icon="ellipsis-v" />
+              </div>
+
+          </div>
         </div>
       </div>
 
@@ -58,7 +76,40 @@
 </template>
 
 <style scoped>
+.starBound {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+.firefoxOnly label {
+  margin-right: 4px;
+}
+#ffstar {
+  display:none;
+}
+.checked {
+  display:none
+}
+.notchecked {
+  display:inline-block;
+}
+#ffstar:checked ~ .checked {
+  display:inline-block;
+}
+#ffstar:checked ~ .notchecked {
+  display:none;
+}
+.highlightArea label {
+  width: 30px;
+  height: 30px;
+}
 
+.flexRight {
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  justify-content: space-between
+}
 .shift-down {
   margin-top: 31px;
 }
@@ -104,7 +155,7 @@ h4 {
   cursor: pointer;
   position: relative;
   left: 5px;
-  top: 1px;
+  top: -4px;
   width: 30px;
   height: 30px;
 }
@@ -183,6 +234,13 @@ h4 {
 }
 
 .close:hover { background: #00d9ff; }
+
+@-moz-document url-prefix() {
+  .theRestoftheTime {
+    display: none;
+  }
+}
+
 </style>
 
 <script>
