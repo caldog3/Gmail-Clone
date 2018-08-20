@@ -80,7 +80,7 @@ button {
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 4px;
-  padding: 5px 25px;
+  padding: 10px 25px 5px 25px;
   outline: none;
 }
 button:hover {
@@ -118,7 +118,8 @@ button:hover {
   display: flex;
   flex-direction: row;
   width: 250px;
-  justify-content: space-between
+  justify-content: space-between;
+  font-size: small;
 }
 .shift-down {
   margin-top: 31px;
@@ -165,7 +166,7 @@ h4 {
   cursor: pointer;
   position: relative;
   left: 5px;
-  top: -4px;
+  top: -6px;
   width: 30px;
   height: 30px;
 }
