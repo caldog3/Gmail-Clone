@@ -142,11 +142,11 @@
             <b>Kenneth Woods</b>
           </div>
           <div class="Snip">
-            Here is an example of such entity, whether by contract or otherwise
+            Contracts
           </div>
         </div>
       </div>
-      <div class="entry">
+      <div class="entry1">
         <div class="pic">
           <img src="./../assets/UserAliceWalker.jpg">
         </div>
@@ -155,7 +155,7 @@
             <b>Ally Walker</b>
           </div>
           <div class="Snip">
-            We can synchronise ourselves at a later timepoint
+            Synchronize
           </div>
         </div>
       </div>
@@ -168,7 +168,7 @@
             <b>Lawrence Pearson</b>
           </div>
           <div class="Snip">
-            Alternately, this acknowledgment may appear in your possession
+            Legal
           </div>
         </div>
       </div>
@@ -181,7 +181,7 @@
             <b>Lauren Shay</b>
           </div>
           <div class="Snip">
-            Your work on this project has been really impactful
+            Yearly Review
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@
             <b>Andrew Garrad</b>
           </div>
           <div class="Snip">
-            We need a paradigm shift strategic staircase it just needs more cowbell. 
+            Human Resources 
           </div>
         </div>
       </div>
@@ -215,6 +215,19 @@
   font-size: x-small;
   text-align: left;
   margin-left: 2px;
+}
+.entry1 {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 4px 0px -30px;
+  padding-left: 34px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  /* font-size: xx-large; */
+  border-bottom: 1px solid white;
+  color: white;
+  border-radius: 0px 20px 20px 0px;
+  background: rgba(255, 255, 255, 0.5);
 }
 .entry {
   display: flex;

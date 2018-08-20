@@ -2,63 +2,71 @@
 <template>
   <div id="body">
     <div class="flexboxSubject">
-      <h4 class="leftAlign">{{messages[0].subject}}</h4>
-      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+      <h4 class="leftAlign">Synchronize</h4>
+      
+      <img src="./../assets/lock.png">
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
       <div class="flexboxSubject">
         <div class="leftAlign">
           <hr>
-          <b>{{message.detailedFrom}}</b>
+          <b>Ally Walker</b>
         </div>
         <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }} ago)
-          <span class="highlightArea">
-            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
-          </span> 
-          <font-awesome-icon class="Icon" icon="reply" />
-          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+          expires in 4 days
         </div>
       </div>
 
-      <div class="leftAlign recipients">
-        <p>to {{message.to}}</p>
+
+      <div class="leftAlign">
+        <p>
+ 			    Quick win moving the goalposts, or run it up the flagpole I have zero 
+          cycles for this, or where the metal hits the meat but UX. We just need
+          to put these last issues to bed. Let's prioritize the low-hanging 
+          fruit strategic staircase that jerk from finance really threw me under
+          the bus, baseline accountable talk. Timeframe. Tbrand terrorists gain
+          traction what's the status on the deliverables for eow?, for close 
+          the loop so we want to see more charts. Back to the drawing-board 
+          loop back we are running out of runway yet root-and-branch review on
+          your plate, or quick win. Peel the onion. Data-point action item, 
+          nor quick-win or overcome key issues to meet key milestones, and 
+          streamline, yet game-plan timeframe. Run it up the flagpole, ping the
+          boss and circle back peel the onion to be inspired is to become 
+          creative, innovative and energized we want this philosophy to trickle 
+          down to all our stakeholders. Closer to the metal. Timeframe. 
+          Player-coach drink from the firehose, digitalize nor imagineer. On your 
+          plate level the playing field. Digitalize innovation is hot right now. 
+          I have zero cycles for this blue sky but we need to start advertising on 
+          social media please advise soonest so strategic staircase. Win-win. We 
+          need to future-proof this wiggle room, but productize. 
+        </p>
+        <p>
+          Accountable talk tbrand terrorists, nor game plan, nor put a record on 
+          and see who dances, yet good optics so highlights . Can you send me an 
+          invite? golden goose. We don't want to boil the ocean curate quick win 
+          streamline. Please use "solutionise" instead of solution ideas! :). I 
+          have zero cycles for this parallel path, yet product management breakout 
+          fastworks and parallel path and upsell yet deploy. 
+        </p>
       </div>
       
-      <div v-html="message.body" class="leftAlign"></div>
       
-      <div v-if="message.attachmentIds.length > 0">
-        <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
-          <div class="attachment-container">
-            <div class="attachment">
-              <a href="#openModal">
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </a>
-              <div id="openModal" class="modalDialog">
-                <a href="#close" title="Close" class="close">X</a>
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
-      &emsp;
-      <span v-bind:class="ifGroupMessage()">
-        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
-      &emsp;
-      </span>
-      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
-    </div>
+ 
   </div>
 </template>
 
 <style scoped>
-
+img {
+  width: 40px;
+  height: 40px;
+  margin-top: 8px;
+}
+p {
+  margin-right: 73px;
+}
 .shift-down {
   margin-top: 31px;
 }
@@ -76,6 +84,7 @@
 .flexboxSubject {
   display:flex;
   justify-content: space-between;
+  margin-bottom: 15px;
 }
 .response-buttons {
   padding: 40px;
@@ -97,6 +106,7 @@ h4 {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
+  padding-bottom: 2%;
 }
 .star {
   visibility: hidden;

@@ -69,77 +69,6 @@
                 </div>
               </div>
 
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
-                  <span class="tooltiptext">Archive</span>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
-                </div>
-              </div>
-
-              <div class="item" v-on:click="trashing()">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
-                  <span class="tooltiptext">Delete</span> 
-                </div>
-              </div>
-
-              <div class="break">
-                |
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-                  <span class="tooltiptext">Mark as Unread</span>
-                </div>
-              </div>
-            
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
-              </div>
-
-              <div class="break">
-                |
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-                  <span class="tooltiptext">Move to</span>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="ellipsesDropdown" class="dropdown-content">
-                    <p>Mark as read</p>
-                    <hr>
-                    <p>Mark as important</p>
-                    <hr>
-                    <p>Add to tasks</p>
-                    <hr>
-                    <p>Add star</p>
-                    <hr>
-                    <p>Create Event</p>
-                    <hr>
-                    <p>Filter messages like these</p>
-                    <hr>
-                    <p>Mute</p>
-                  </div>  
-                </div>
-              </div>
-
             </div>
           </span>  
 
@@ -311,6 +240,7 @@
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+  visibility: hidden;
 }
 .paddingNeeded {
   margin-right: 30px;
