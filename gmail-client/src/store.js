@@ -186,7 +186,7 @@ export default new Vuex.Store({
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
-          'maxResults': 5,
+          'maxResults': 50,
           'q': query,
         }).then((response) => {
           console.log("query checkpoint 2");
