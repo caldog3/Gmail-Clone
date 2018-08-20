@@ -308,8 +308,8 @@
   font-size: 20px;
   cursor: pointer;
   position: relative;
-  left: 5px;
-  top: 1px;
+  left: 6px;
+  top: 0px;
   width: 30px;
   height: 30px;
   
