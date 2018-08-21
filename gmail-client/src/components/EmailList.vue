@@ -26,8 +26,8 @@
             <div class="checkboxes">
 
               <div class="first">
-                <label class="container" v-on:click="checking()">
-                  <div class="highlightAreaCheck">
+                <label class="container">
+                  <div class="highlightAreaCheck"  v-on:click="checking()">
                     <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
@@ -636,9 +636,10 @@ export default {
         eventBus.$emit("CHECKED_MESSAGES");
       }
       else {
-        console.log("THIS.CHECKEDEMAILS: " + this.checkedEmails);
+        console.log("THIS.CHECKEDEMAILS: ");
+        console.log(this.checkedEmails);
         // eventBus.$emit("UNCHECKED");
-        if (this.checkedEmails == []) {
+        if (this.checkedEmails.length == 0) {
           console.log("UNCECKING?");
           this.hadValues = false;
           eventBus.$emit("UNCHECKED");
