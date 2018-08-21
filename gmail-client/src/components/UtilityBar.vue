@@ -825,6 +825,8 @@ export default {
   },
   created() {
     eventBus.$on('ENTER_MESSAGE', this.true);
+    eventBus.$on('CHECKED_MESSAGES', this.true);
+    eventBus.$on('UNCHECKED', this.false);
     eventBus.$on('MESSAGE_LIST', this.false);
     eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
       this.getNumberTotal(folder);
