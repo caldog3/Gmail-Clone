@@ -2,7 +2,7 @@ Mockup 9
 
 Get first screen (Mockup9a) by selecting the ALly Walker line under Private Messages and inspecting. Then click on the code in the browser and edit html in browser. Change div from class entry1 to class entry.
 
-Get second screen (Mockup9b) by selecting the Inbox line and inspecting. Then click on the code in the browser and edit html in browser. Change dive form class active to inactive.
+Get second screen (Mockup9b) by selecting the Inbox line and inspecting. Then click on the code in the browser and edit html in browser. Change dive form class active to inactive. The select an email.
 
 # gmail-client
 
