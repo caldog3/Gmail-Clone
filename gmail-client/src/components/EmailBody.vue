@@ -140,7 +140,7 @@ button:hover {
   justify-content: space-between;
 }
 .response-buttons {
-  padding: 40px;
+  padding: 40px 0px;
   text-align: left;
   margin-left: 2%;
   /* padding-bottom: 40px; */

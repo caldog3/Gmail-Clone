@@ -519,6 +519,10 @@ svg:not(:root).svg-inline--fa {
   border-width: 2px;
 }
 
+.FlexTable:hover .star:before {
+  font-weight: bold;
+}
+
 .Icon {
   margin-left: 7px;
 }
