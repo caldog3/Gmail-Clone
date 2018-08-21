@@ -631,21 +631,18 @@ export default {
   },
   methods: {
     checking() {
-      if (!this.hadValues) {
-        this.hadValues = true;
-        eventBus.$emit("CHECKED_MESSAGES");
-      }
-      else {
-        console.log("THIS.CHECKEDEMAILS: ");
-        console.log(this.checkedEmails);
-        // eventBus.$emit("UNCHECKED");
-        if (this.checkedEmails.length == 0) {
-          console.log("UNCECKING?");
-          this.hadValues = false;
-          eventBus.$emit("UNCHECKED");
+      setTimeout(() => {      
+        if (this.checkedEmails.length > 0) {
+          eventBus.$emit("CHECKED_MESSAGES");
         }
-        
-      }
+        else {
+
+          // eventBus.$emit("UNCHECKED");
+          console.log("UNCECKING?");
+          eventBus.$emit("UNCHECKED");
+          
+        }
+      }, 150);
     },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
