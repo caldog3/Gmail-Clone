@@ -2,8 +2,8 @@
 <template>
   <div id="body">
     <div class="flexboxSubject">
-      <h4 class="leftAlign">{{messages[0].subject}}</h4>
-      <h4 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h4>
+      <h5 class="leftAlign">{{messages[0].subject}}</h5>
+      <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
@@ -13,12 +13,30 @@
           <b>{{message.detailedFrom}}</b>
         </div>
         <div class="rightAlign shift-down">
-          {{message.time}} ({{ timeAgo }} ago)
-          <span class="highlightArea">
-            <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
-          </span> 
-          <font-awesome-icon class="Icon" icon="reply" />
-          <font-awesome-icon class="Icon" icon="ellipsis-v" />
+          <div class="flexRight">
+              <div>
+                {{message.time}} ({{ timeAgo }} ago)
+              </div>
+              <div class="starBound">
+                <div class="theRestoftheTime">
+                  <span class="highlightArea">
+                    <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
+                  </span> 
+                </div>
+                <div class="firefoxOnly">
+                  <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(message)" :checked="message.starred" title="bookmark page">
+                  <label for="ffstar" class="notchecked">&#X2606;</label>
+                  <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                </div>
+              </div>
+              <div>
+                <font-awesome-icon class="Icon" icon="reply" />
+              </div>
+              <div>
+                <font-awesome-icon class="Icon" icon="ellipsis-v" />
+              </div>
+
+          </div>
         </div>
       </div>
 
@@ -58,7 +76,51 @@
 </template>
 
 <style scoped>
+button {
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 10px 25px 5px 25px;
+  outline: none;
+}
+button:hover {
+  background-color: #F2F2F2;
+}
+.starBound {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+.firefoxOnly label {
+  margin-right: 4px;
+}
+#ffstar {
+  display:none;
+}
+.checked {
+  display:none
+}
+.notchecked {
+  display:inline-block;
+}
+#ffstar:checked ~ .checked {
+  display:inline-block;
+}
+#ffstar:checked ~ .notchecked {
+  display:none;
+}
+.highlightArea label {
+  width: 30px;
+  height: 30px;
+}
 
+.flexRight {
+  display: flex;
+  flex-direction: row;
+  width: 250px;
+  justify-content: space-between;
+  font-size: small;
+}
 .shift-down {
   margin-top: 31px;
 }
@@ -78,7 +140,7 @@
   justify-content: space-between;
 }
 .response-buttons {
-  padding: 40px;
+  padding: 40px 0px;
   text-align: left;
   margin-left: 2%;
   /* padding-bottom: 40px; */
@@ -104,7 +166,7 @@ h4 {
   cursor: pointer;
   position: relative;
   left: 5px;
-  top: 1px;
+  top: -6px;
   width: 30px;
   height: 30px;
 }
@@ -183,6 +245,13 @@ h4 {
 }
 
 .close:hover { background: #00d9ff; }
+
+@-moz-document url-prefix() {
+  .theRestoftheTime {
+    display: none;
+  }
+}
+
 </style>
 
 <script>
