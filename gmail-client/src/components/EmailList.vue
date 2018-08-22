@@ -263,9 +263,9 @@
   height: 17px;
   width: 17px;
   background-color: rgba(255, 255, 255, 0.0); 
-  border-color: black;
+  border-color: grey;
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
@@ -275,6 +275,7 @@
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: black;
+  border-color: black;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -302,6 +303,11 @@
   width: 30px;
   height: 30px;
 }
+
+.FlexTable:hover .checkmark {
+  border-color: black;
+}
+
 /******************************The Star Checkbox******************************/
 .star {
   visibility: hidden;
@@ -318,12 +324,21 @@
   content: "\2606";
   position: absolute;
   visibility:visible;
-
+  font-weight: bold;
+  color: grey;
 }
 .star:checked:before {
   content: "\2605";
   position: absolute;
-  color:gold;
+  color: gold;
+}
+
+.FlexTable:hover .star:before {
+  color: black;
+}
+
+.FlexTable:hover .star:checked:before  {
+  color: gold;
 }
 
 /******************************ToolTip******************************/
@@ -374,7 +389,12 @@
 .highlightArea label {
   width: 30px;
   height: 30px;
+  color: grey;
 }
+.FlexTable:hover .highlightArea label {
+  color: black;
+}
+
 
 
 
@@ -515,13 +535,9 @@ svg:not(:root).svg-inline--fa {
   font-weight: bold;
 } */
 
-.FlexTable:hover .checkmark {
-  border-width: 2px;
-}
 
-.FlexTable:hover .star:before {
-  font-weight: bold;
-}
+
+
 
 .Icon {
   margin-left: 7px;
