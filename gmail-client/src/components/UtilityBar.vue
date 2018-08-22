@@ -126,6 +126,13 @@
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>
+              
+              <div class="item">
+                <div class="highlightArea">
+                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
+                  <span class="tooltiptext">Mark as Read</span>
+                </div>
+              </div>
             
               <div class="item">
                 <div class="highlightArea">
@@ -208,7 +215,7 @@
                   <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
-              </div>
+              </div>              
             
               <div class="item">
                 <div class="highlightArea">

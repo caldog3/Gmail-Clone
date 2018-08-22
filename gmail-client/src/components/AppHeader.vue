@@ -20,12 +20,11 @@
               <font-awesome-icon icon="search" size="lg"/>
             </div>
             <div class="searchBar">
-              <input type="text" v-model="searchQuery" placeholder="Search Mail">  
+              <input @keyup.enter="searching" type="text" v-model="searchQuery" placeholder="Search Mail">  
             </div>
           </div>  
         </div>
-        <input type="submit" class="searchButton" value="Search" @click="searching">
-
+        
         <div>
           <div class="flex1">
             <div class="logoutButton">
