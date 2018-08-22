@@ -41,8 +41,8 @@
                   </div>
                   <div class="firefoxOnly">
                     <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(thread)" :checked="thread.starred" title="bookmark page">
-                    <label for="ffstar" class="notchecked">&#X2606;</label>
-                    <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                    <label for="ffstar" style="font-size: 22px" class="notchecked">&#X2606;</label>
+                    <label for="ffstar" style="color:gold;font-size: 22px" class="checked">&#X2605;</label>
                   </div>
                 </div>
               </div>
@@ -354,7 +354,7 @@
   display: none;
 } */
 .firefoxOnly label {
-  margin-top: 4px;
+  /* margin-top: 4px; */
 }
 #ffstar {
   display:none;
