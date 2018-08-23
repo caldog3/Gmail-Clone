@@ -234,18 +234,19 @@ export default new Vuex.Store({
       const getThreads = async (response) => {
           const nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+          
+          if (response.result.threads !== undefined) {
+            const dataPromise = response.result.threads
+              .map(async thread => {
+                const threadId = thread.id;
 
-          const dataPromise = response.result.threads
-            .map(async thread => {
-              const threadId = thread.id;
-
-              context.commit("addThreadId", { threadId, labelId });
-              context.commit("initializeThreadTime", { threadId });
+                context.commit("addThreadId", { threadId, labelId });
+                context.commit("initializeThreadTime", { threadId });
 
               return await context.dispatch("getThreadData", { threadId, labelId });
             });
-
-          return await Promise.all(dataPromise);
+            return await Promise.all(dataPromise);
+          }
         };
 
       return await getThreads(response);
