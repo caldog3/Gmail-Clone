@@ -30,15 +30,14 @@
 </style>
 
 <script>
-
  export default {
    name: 'LoginPage',
    methods: {
     authenticate(){
-       let googleAuth = this.$store.getters.googleAuth;
+       const googleAuth = this.$store.getters.googleAuth;
       googleAuth.signIn().then(() => {
-        let currentUser = googleAuth.currentUser.get();
-		    let currentUserProfile = currentUser.getBasicProfile();
+        const currentUser = googleAuth.currentUser.get();
+		    const currentUserProfile = currentUser.getBasicProfile();
 
         this.$store.commit('currentUser', currentUser);
         this.$store.commit('currentUserProfile', currentUserProfile);

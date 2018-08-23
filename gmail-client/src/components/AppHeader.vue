@@ -239,9 +239,7 @@ input:focus {
 
 
 <script>
-import { getProfileEmail } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import eventBus from './../event_bus';
 
 export default {
   name: 'AppHeader',

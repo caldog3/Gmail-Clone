@@ -51,7 +51,6 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
-import { setTimeout } from 'timers';
 
 export default {
   name: "App",
@@ -95,21 +94,17 @@ export default {
       }
     },
     loaded(ourBool) {
-      console.log("reached loaded");
       let returnVal = ourBool;
       this.updateLoading();
       return returnVal;
     },
     updateLoading() {
-      console.log("Reached update loading");
       if (this.loading === false) {
-        setTimeout(() => {
-          console.log("passed the timeout");
+        eventBus.$on('DATA_FETCHING_COMPLETE', () => {
           this.loading = true;
           this.loaded(true);
-        }, 4500);
+        });
       }
-      //   ^^ HERES THE TIME IN MILISECONDS
     },
 
   },
@@ -124,7 +119,7 @@ export default {
   },
   mounted() {
     this.setEmailListHeight();   
-  }
+  },
 };
 </script>
 
