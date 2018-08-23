@@ -74,7 +74,6 @@ export default new Vuex.Store({
       }
     },
     addLabelId(state, labelId) {
-      console.log("LabelMessages: ", labelId);
       if (state.labelMessages[labelId] === undefined){
         Vue.set(state.labelMessages, labelId, []);
       }
@@ -108,13 +107,9 @@ export default new Vuex.Store({
       }
     },
     setThreadMessages(state, messages) {
-      // console.log("WHATS GOING ON:")
-      // console.log(messages);
       Vue.set(state.threadMessages, threadId, messages);
-
     },
     addAttachmentId(state, payload) {
-      // console.log(payload);
       Vue.set(state.attachments, payload.attachmentId, {
         messageId: payload.messageId,
         mimeType: payload.mimeType,
@@ -122,7 +117,6 @@ export default new Vuex.Store({
       });
     },
     setAttachmentData(state, payload) {
-      // console.log(payload);
       state.attachments[payload.attachmentId].data = payload.data;
     },
     currentUser(state, payload) {
@@ -225,39 +219,38 @@ export default new Vuex.Store({
         console.log(err);
       });
     },
-    getListOfMessages(context, labelId) {
-      let label = labelId;
-      // if (labelId === 'PRIMARY') {
-      //   label = "PERSONAL";
-      // }
+    async getListOfMessages(context, labelId) {
       context.commit("addLabelId", labelId);
-      gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.threads.list({
-          'userId': 'me',
-          // 'labelIds': "CATEGORY_" + label,
-          'maxResults': 50,
-          'q': `category: ${label}`,
-        }).then((response) => {
-          let nextPageToken = response.result.nextPageToken;
+
+      const response = await gapi.client.load('gmail', 'v1')
+        .then(async () => {
+          return await gapi.client.gmail.users.threads.list({
+            'userId': 'me',
+            'maxResults': 50,
+            'q': `category: ${labelId}`
+          });
+        });
+
+      const getThreads = async (response) => {
+          const nextPageToken = response.result.nextPageToken;
           context.commit("addLabelNextPageToken", { labelId, nextPageToken });
 
-          if (response.result.threads !== undefined) {
-            response.result.threads.forEach(thread => {
-              let threadId = thread.id;
+          const dataPromise = response.result.threads
+            .map(async thread => {
+              const threadId = thread.id;
 
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
-              
-              context.dispatch("getThreadData", { threadId, labelId });
+
+              return await context.dispatch("getThreadData", { threadId, labelId });
             });
-          }          
-        });
-      }).catch((err) => {
-        console.log(err);
-      });
+
+          return await Promise.all(dataPromise);
+        };
+
+      return await getThreads(response);
     },
     getAllMessages(context, labelId) {
-      context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
           'userId': 'me',
@@ -265,163 +258,163 @@ export default new Vuex.Store({
         }).then((response) => {
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
-              let threadId = thread.id;
+              const threadId = thread.id;
+
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
 
               context.dispatch("getThreadData", { threadId, labelId });
             });
           }
-        });  
+        });
       }).catch((err) => {
         console.log(err);
       });
     },
-
     getPageListOfMessages(context, labelId) {
       this.state.labelLastPageTokens.push(this.state.labelNextPageTokens[labelId]);
-      let label = labelId;
-      context.commit("addLabelId", labelId);
-      gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.threads.list({
-          'userId': 'me',
-          'maxResults': 50,
-          'q': `category: ${label}`,
-          'pageToken': this.state.labelNextPageTokens[labelId]
-        }).then((response) => {
-          
-          let nextPageToken = response.result.nextPageToken;
-          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
-          console.log(this.state.labelLastPageTokens);
-          console.log(this.state.labelNextPageTokens);
-          if (response.result.threads !== undefined) {
-            response.result.threads.forEach(thread => {
-              let threadId = thread.id;
 
-              context.commit("addThreadId", { threadId, labelId });
-              context.commit("initializeThreadTime", { threadId });
-              
-              context.dispatch("getThreadData", { threadId, labelId });
-            });
-          }
-          this.state.currentPage += 1;          
-        });
+      gapi.client.gmail.users.threads.list({
+        'userId': 'me',
+        'maxResults': 50,
+        'q': `category: ${labelId}`,
+        'pageToken': this.state.labelNextPageTokens[labelId]
+      }).then((response) => {
+        const nextPageToken = response.result.nextPageToken;
+        context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+
+        console.log(this.state.labelLastPageTokens);
+        console.log(this.state.labelNextPageTokens);
+
+        if (response.result.threads !== undefined) {
+          response.result.threads.forEach(thread => {
+            const threadId = thread.id;
+
+            context.commit("addThreadId", { threadId, labelId });
+            context.commit("initializeThreadTime", { threadId });
+
+            context.dispatch("getThreadData", { threadId, labelId });
+          });
+        }
+        this.state.currentPage += 1;
       }).catch((err) => {
         console.log(err);
       });
     },
     // also a work in progress
     getLastPageListOfMessages(context, labelId) {
-      let page = this.state.currentPage;
-      let label = labelId;
-      context.commit("addLabelId", labelId);
-      gapi.client.load('gmail', 'v1').then(() => {
-        gapi.client.gmail.users.threads.list({
-          'userId': 'me',
-          'maxResults': 50,
-          'q': `category: ${label}`,
-          'pageToken': this.state.labelLastPageTokens[page - 1],
-        }).then((response) => {
-          let nextPageToken = response.result.nextPageToken;
-          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
-          // console.log("LastPage Tokens");
-          // console.log(this.state.labelLastPageTokens);
-          // console.log("NEXT PAGE TOKEN AFTER");
-          // console.log(this.state.labelNextPageTokens);
-          if (response.result.threads !== undefined) {
-            response.result.threads.forEach(thread => {
-              let threadId = thread.id;
+      const page = this.state.currentPage;
+      
+      gapi.client.gmail.users.threads.list({
+        'userId': 'me',
+        'maxResults': 50,
+        'q': `category: ${labelId}`,
+        'pageToken': this.state.labelLastPageTokens[page - 1],
+      }).then((response) => {
+        const nextPageToken = response.result.nextPageToken;
+        context.commit("addLabelNextPageToken", { labelId, nextPageToken });
 
-              context.commit("addThreadId", { threadId, labelId });
-              context.commit("initializeThreadTime", { threadId });
-              
-              context.dispatch("getThreadData", { threadId, labelId });
-            });
-          }    
-          this.state.currentPage -= 1;      
-        });
+        // console.log("LastPage Tokens");
+        // console.log(this.state.labelLastPageTokens);
+        // console.log("NEXT PAGE TOKEN AFTER");
+        // console.log(this.state.labelNextPageTokens);
+        if (response.result.threads !== undefined) {
+          response.result.threads.forEach(thread => {
+            let threadId = thread.id;
+
+            context.commit("addThreadId", { threadId, labelId });
+            context.commit("initializeThreadTime", { threadId });
+
+            context.dispatch("getThreadData", { threadId, labelId });
+          });
+        }
+        this.state.currentPage -= 1;
       }).catch((err) => {
         console.log(err);
       });
     },
-    getThreadData(context, payload) {
+    async getThreadData(context, payload) {
       const threadId = payload.threadId;
       const labelId = payload.labelId;
       
-      gapi.client.gmail.users.threads.get({
+      return await gapi.client.gmail.users.threads.get({
         'userId': 'me',
         'id': threadId,
-      }).then((response) => {
-        response.result.messages.forEach(message => {
+      }).then(async (response) => {
+       const dataPromise = response.result.messages.map(async message => {
           let messageId = message.id;
-          context.dispatch("getMessageContent", { labelId, messageId, threadId });
+          return await context.dispatch("getMessageContent", { labelId, messageId, threadId });
         });
+        
+        return await Promise.all(dataPromise);
       }).catch((err) => {
         console.log(err);
       });
     },
     getMessageContent(context, payload) {
-      const threadId = payload.threadId;
-      const messageId = payload.messageId;
-      const labelId = payload.labelId;
+      return new Promise((resolve) => {
+        const threadId = payload.threadId;
+        const messageId = payload.messageId;
+        const labelId = payload.labelId;
 
-      gapi.client.gmail.users.messages.get({
-        'userId': 'me',
-        'id': messageId,
-      }).then((response) => {
-        const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
-          response.result.payload.headers
-        );
+        gapi.client.gmail.users.messages.get({
+            'userId': 'me',
+            'id': messageId,
+          }).then((response) => {
+            const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
+              response.result.payload.headers
+            );
         
-        const { time, unixTime } = getTimeFormat(response.result.internalDate);
-        context.commit("setThreadTime", { threadId, unixTime });
+            const { time, unixTime } = getTimeFormat(response.result.internalDate);
+            context.commit("setThreadTime", { threadId, unixTime });
 
-        const { body, attachmentIds } = getBody(response.result.payload);
-        //sanitize/split body method
-        const { unread, starred } = resolveLabels(response.result.labelIds);
-        const snippet = response.result.snippet;
-        const id = response.result.id;
-        const message = {
-          threadId,
-          messageId,
-          from,
-          detailedFrom,
-          to,
-          conciseTo,
-          cc,
-          subject,
-          snippet,
-          body,
-          time,
-          id,
-          labelId,
-          unread,
-          starred,
-          unixTime,
-          attachmentIds
-        };
-        context.commit("addMessage", message);
+            const { body, attachmentIds } = getBody(response.result.payload);
+            //sanitize/split body method
+            const { unread, starred } = resolveLabels(response.result.labelIds);
+            const snippet = response.result.snippet;
+            const id = response.result.id;
+            const message = {
+              threadId,
+              messageId,
+              from,
+              detailedFrom,
+              to,
+              conciseTo,
+              cc,
+              subject,
+              snippet,
+              body,
+              time,
+              id,
+              labelId,
+              unread,
+              starred,
+              unixTime,
+              attachmentIds
+            };
+            context.commit("addMessage", message);
 
-        return { messageId, attachmentIds };
-      }).then((payload) => {
-        if (payload.attachmentIds.length >= 1) {
-          payload.attachmentIds.forEach((attachmentId) => {
-            context.commit("addAttachmentId", {
-              attachmentId: attachmentId.attachmentId,
-              mimeType: attachmentId.mimeType,
-              messageId: payload.messageId              
+          return { messageId, attachmentIds };
+        }).then((payload) => {
+          if (payload.attachmentIds.length >= 1) {
+            payload.attachmentIds.forEach((attachmentId) => {
+              context.commit("addAttachmentId", {
+                attachmentId: attachmentId.attachmentId,
+                mimeType: attachmentId.mimeType,
+                messageId: payload.messageId
+              });
             });
-          });
-        }
-      }).catch((err) => {
-        // console.log("but first: " + from);
-        console.log(err);
+          }
+        }).then(() => {
+          return resolve();
+        }).catch((err) => {
+          console.log(err);
+        });
       });
     },
     getAttachments(context) {
       const attachments = context.getters.getAttachments;
       const attachmentIds = Object.keys(attachments);
-      console.log("Attachments from getter", attachments);
       
       for (const attachmentId of attachmentIds) {
         const messageId = attachments[attachmentId].messageId;

@@ -770,8 +770,8 @@ export default {
         if (!folder.includes("Label_")) {
           folder = folder.toUpperCase();
         }
-        console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
-        console.log(folder);
+        // console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
+        // console.log(folder);
         gapi.client.gmail.users.labels.get({
           'userId': 'me',
           'id': folder,
