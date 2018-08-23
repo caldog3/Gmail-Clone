@@ -388,9 +388,6 @@ export default {
       // we have to reset the last page tokens because they no longer apply to the new label
       this.$store.state.labelLastPageTokens = [];
       eventBus.$emit("TOTAL_EMAIL_COUNT", this.$store.state.currentFolder);
-
-      // maybe trigger an update here for total emails in the utilityBar
-
     },
   },
   computed: {

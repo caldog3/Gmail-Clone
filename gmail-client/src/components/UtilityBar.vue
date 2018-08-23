@@ -151,7 +151,9 @@
             <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
             </div>
-
+            <div class="rightTopPad" v-else-if="totalMessages == 'many'">
+              {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
             <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
@@ -192,10 +194,8 @@
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -770,17 +770,56 @@ export default {
         if (!folder.includes("Label_")) {
           folder = folder.toUpperCase();
         }
-        // console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
-        // console.log(folder);
-        gapi.client.gmail.users.labels.get({
-          'userId': 'me',
-          'id': folder,
-        }).then((response) => {
-          let totalInboxEmailCount = response.result.threadsTotal;
-          totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
-          this.$store.state.totalMessages = totalInboxEmailCount;
-          this.totalMessages = totalInboxEmailCount;
-        });
+        var totalInboxEmailCount = 0;
+        if (folder == "INBOX") {
+          gapi.client.gmail.users.labels.get({
+            userId: 'me',
+            'id': "INBOX"
+          }).then((response) => {
+            totalInboxEmailCount = response.result.threadsTotal;
+
+            gapi.client.gmail.users.labels.get({
+              userId: 'me',
+              'id': "CATEGORY_SOCIAL"
+            }).then((response) => {
+              totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+
+              gapi.client.gmail.users.labels.get({
+                userId: 'me',
+                'id': "CATEGORY_PROMOTIONS"
+              }).then((response) => {
+                totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+                totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+                this.$store.state.totalMessages = totalInboxEmailCount;
+                this.totalMessages = totalInboxEmailCount;
+              });    
+            });  
+          });          
+        }
+        else if (folder == "ALL_MAIL") {
+          // gapi.client.gmail.users.labels.get({
+          //   'userId': 'me',
+          // }).then((response) => {
+          //   totalInboxEmailCount = response.result.threadsTotal;
+          //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+          //   this.$store.state.totalMessages = totalInboxEmailCount;
+          //   this.totalMessages = totalInboxEmailCount;
+          // })
+          this.$store.state.totalMessages = "many";
+          this.totalMessages = "many";
+        }
+        else {
+          gapi.client.gmail.users.labels.get({
+            'userId': 'me',
+            'id': folder,
+          }).then((response) => {
+            totalInboxEmailCount = response.result.threadsTotal;
+            totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+            this.$store.state.totalMessages = totalInboxEmailCount;
+            this.totalMessages = totalInboxEmailCount;
+          });
+        }
+
       });
     }
   },

@@ -262,7 +262,7 @@ export default {
       if (this.$store.state.labelMessages.SEARCH !== undefined) {
         this.$store.state.labelMessages.SEARCH = [];
       }
-      this.$router.push({ path: '/SEARCH/'});
+      this.$router.push({ path: 'Folder/SEARCH/'});
       console.log("AM I SEARCHING?");
       console.log(this.searchQuery);
       // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});

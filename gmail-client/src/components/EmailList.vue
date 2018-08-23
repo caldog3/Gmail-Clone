@@ -722,6 +722,7 @@ export default {
     },
   },
   computed: {
+    //just messing around here
     checkedThings: function() {
       if(this.checkedEmails === []) {
         return "hey there are checked things";
@@ -731,6 +732,7 @@ export default {
 
     threads() {
       const labelId = this.labelId;
+      console.log(labelId + ": is the threads labelId");
       const labelThreads = this.$store.getters.getLabelMessages;
       
       const labelIdThreads = labelThreads[labelId];
