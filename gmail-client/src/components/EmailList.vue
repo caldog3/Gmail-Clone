@@ -363,8 +363,7 @@
   padding-top: 9px;
 }
 
-
-
+/******************************FireFox Only Star******************************/
 /* .firefoxOnly {
   display: none;
 } */
