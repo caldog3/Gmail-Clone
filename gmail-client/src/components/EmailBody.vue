@@ -90,9 +90,12 @@ button:hover {
   width: 30px;
   height: 30px;
   overflow: hidden;
+  position: relative;
+  top: -6px;
 }
 .firefoxOnly label {
   margin-right: 4px;
+  font-size: 22px;
 }
 #ffstar {
   display:none;
@@ -112,6 +115,7 @@ button:hover {
 .highlightArea label {
   width: 30px;
   height: 30px;
+  
 }
 
 .flexRight {
@@ -166,7 +170,7 @@ h4 {
   cursor: pointer;
   position: relative;
   left: 5px;
-  top: -6px;
+  /* top: -6px; */
   width: 30px;
   height: 30px;
 }
