@@ -20,6 +20,23 @@
         </div>
       </div>
 
+      <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
+        <div id="sidebarFlex">
+          <div class="privateLock">
+            <div class="blackLock">
+              <img src="./../assets/lockBlack.png">
+            </div>
+            <div class="redLock">
+              <img src="./../assets/lockRed.png">
+            </div>
+            Private Messages
+          </div>
+          <div>
+            <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
+          </div>  
+        </div>
+      </div>
+
       <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
@@ -62,16 +79,7 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon icon="arrow-right" />&emsp;  Important
-          </div>
-          <div>
-            <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
-          </div>  
-        </div>
-      </div>
+      
 
       <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
         <div id="sidebarFlex">
@@ -245,6 +253,29 @@ notInbox1 {
 }
 .activeFolder {
   height: 35px;
+}
+
+
+.redLock {
+  display: none;
+  margin-right: 9px;
+}
+.activeFolder .blackLock {
+  display: none;
+}
+.blackLock {
+  display: inline;
+  margin-right: 9px;
+}
+.activeFolder .redLock {
+  display: inline;
+}
+.normalRow img {
+  width: 25px;
+  height: 20px;
+}
+.privateLock {
+  margin-left: -5px;
 }
 </style>
 

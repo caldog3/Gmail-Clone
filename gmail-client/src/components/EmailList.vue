@@ -12,10 +12,10 @@
         </div>
         <hr id="barrier">
       </span>
-      
+
       <span v-if="threads[0] === undefined">
-        <div id="center-align">
-          <span>There are no messages in this folder</span>
+        <div id="PrivateMessaging">
+          Testing
         </div>
       </span>
 
@@ -160,6 +160,17 @@
 
 
 <style scoped>
+#PrivateMessaging {
+  width: 100%;
+  height: 600px;
+  background-color: rgba(245, 245, 245, 1);
+}
+
+
+
+
+
+
 .background {
   background: rgba(255, 255, 255, 0.6);
 }
@@ -188,7 +199,7 @@
 .currentFolderLine {
   height: 35px;
   line-height: 35px;
-  color: white;
+  color: black;
   font-weight: bold;
 }
 .everything {
