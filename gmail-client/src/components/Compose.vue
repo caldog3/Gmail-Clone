@@ -27,7 +27,19 @@
     
     <div class="footerSection">
       <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send" @click="send">
+        <input type="submit" class="SendButton1" value="Send Private" @click="send">
+      </div>
+      <div class="sendButton">
+        <input type="submit" class="SendButton2" value="Send" @click="send">
+      </div>
+      <div class="time">
+        <div class="text">email expires in 10 days</div>
+        <div>
+          <img src="./../assets/clock.png">
+        </div>
+      </div>
+      <div class="paperclip">
+        <img src="./../assets/paperclip.png">
       </div>
     </div>
   </div>
@@ -143,6 +155,8 @@ textarea {
   width: 510px;
   padding: 4px;
   height: 55px;
+  display: flex;
+  flex-direction: row;
 }
 .sendButton {
   float: left;
@@ -156,9 +170,35 @@ textarea {
   color: white;
   border: none;
   outline: none;
+  width: 7.5em;
+  height: 2.2em;
+}
+.SendButton2 {
+  background-color: grey;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  outline: none;
   width: 4.5em;
   height: 2.2em;
-
+}
+.time {
+  display: flex;
+  flex-direction: row;
+  margin: 6px;
+  margin-left: 106px;
+}
+img {
+  height: 30px;
+  width: 30px;
+  margin: 4px;
+}
+.text {
+  font-size: small;
+  width: 90px;
+}
+.paperclip {
+  margin: 6px;
 }
 </style>
 
