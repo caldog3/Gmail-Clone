@@ -49,6 +49,13 @@
 
               <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
 
+              <div class="lockGrey">
+                <img src="./../assets/lockGrey.png">
+              </div>
+              <div class="lockBlack">
+                <img src="./../assets/lockBlack.png">
+              </div>
+
             </div>
 
 
@@ -230,7 +237,7 @@
 .checkboxes {
   display: flex;
   flex-direction: row;
-  width: 60px;
+  width: 90px;
   margin: 5px 4px 5px 0px;
   overflow: hidden;
 }
@@ -393,6 +400,29 @@
 }
 .FlexTable:hover .highlightArea label {
   color: black;
+}
+
+/******************************Lock******************************/
+img {
+  width: 25px;
+  height: 20px;
+  margin-top: 2px;
+
+}
+.unreadClass .checkboxes {
+  width: 60px;
+}
+.readClass .from {
+  width: 170px;
+}
+.FlexTable:hover .lockGrey {
+  display: none;
+}
+.lockBlack {
+  display: none;
+}
+.FlexTable:hover .lockBlack {
+  display: inline;
 }
 
 

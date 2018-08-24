@@ -20,6 +20,25 @@
         </div>
       </div>
 
+      <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
+        <div id="sidebarFlex">
+          <div class="lockFlex">
+            <div class="lockRed">
+              <img src="./../assets/lockRed.png">
+            </div>
+            <div class="lockBlack">
+              <img src="./../assets/lockBlack.png">
+            </div>
+            <div class="words">
+              Private
+            </div>
+          </div>
+          <div>
+            <p class="notificationPill">7</p>
+          </div>  
+        </div>
+      </div>
+
       <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div> 
@@ -62,16 +81,6 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
-        <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon icon="arrow-right" />&emsp;  Important
-          </div>
-          <div>
-            <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
-          </div>  
-        </div>
-      </div>
 
       <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
         <div id="sidebarFlex">
@@ -125,6 +134,30 @@
 </template>
 
 <style scoped>
+.normalRow img {
+  width: 25px;
+  height: 20px;
+  margin-top: 2px;
+}
+.inactiveFolder .lockRed {
+  display: none;
+}
+.activeFolder .lockBlack {
+  display: none;
+}
+.activeFolder .lockRed {
+  display: inline;
+}
+.lockFlex {
+  display: flex;
+  flex-direction: row;
+  margin-left: -5px;
+}
+.words {
+  margin-left: 13px;
+}
+
+
 .sideBar {
   float: left;
   /* padding-right: -100px; */
@@ -185,7 +218,7 @@ button {
 }
 .activeFolder {
   background: #FCE7E5;
-  color: red;
+  color: #FF0000;
   font-weight: bold;
 }
 
