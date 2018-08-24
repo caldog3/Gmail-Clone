@@ -33,7 +33,7 @@
         <input type="submit" class="SendButton2" value="Send" @click="send">
       </div>
       <div class="time">
-        <div class="text">email expires in 10 days</div>
+        <div class="text">email will expire in 10 days</div>
         <div>
           <img src="./../assets/clock.png">
         </div>
