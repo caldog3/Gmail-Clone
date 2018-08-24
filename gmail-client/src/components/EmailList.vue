@@ -2,9 +2,8 @@
 <template>
   <div class="everything">
     <template v-if="threads">
-      <div class="currentFolderLine">
-        <p>{{this.$store.state.currentFolder}}</p>
-      </div>     
+
+ 
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
           <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
@@ -15,7 +14,24 @@
 
       <span v-if="threads[0] === undefined">
         <div id="PrivateMessaging">
-          Testing
+          <div class="topBar">
+
+          </div>
+          <div class="bottomBar">
+            <div class="sideBar">
+
+            </div>
+            <div class="message">
+              <div class="nested">
+                <div class="messageList">
+
+                </div>
+                <div class="sendMessage">
+                  
+                </div>
+              </div>    
+            </div>
+          </div>
         </div>
       </span>
 
@@ -163,8 +179,56 @@
 #PrivateMessaging {
   width: 100%;
   height: 600px;
-  background-color: rgba(245, 245, 245, 1);
+  background-color: #E5E5E5;
+  display: flex;
+  flex-direction: column;
 }
+.topBar {
+  width: 100%;
+  height: 60px;
+}
+.bottomBar {
+  display: flex;
+  flex-direction: row;
+}
+.sideBar {
+  width: 170px;
+  height: 520px;
+  margin: 10px;
+  background-color: white;
+}
+.sideBar:hover {
+  overflow-y: scroll;
+}
+.message {
+  height: 520px;
+  flex-grow: 1;
+  flex-basis: 0;
+  background-color: white;
+  margin: 10px 10px 10px 0px
+}
+.nested {
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+  width: 100px;
+}
+.messageList {
+  flex-grow: 1;
+  flex-basis: 0;
+  width: 100%;
+}
+.messageList:hover {
+  overflow-y: scroll;
+}
+.sendMessage {
+  width: 100%;
+  height: 50px;
+}
+
+
+
+
 
 
 
