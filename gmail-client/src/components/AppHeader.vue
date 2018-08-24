@@ -24,7 +24,7 @@
             </div>
           </div>  
         </div>
-        <input type="submit" class="searchButton" value="Search" @click="searching">
+        <!-- <input type="submit" class="searchButton" value="Search" @click="searching"> -->
 
         <div>
           <div class="flex1">
@@ -79,7 +79,7 @@
   min-width: 770px;
   overflow: hidden;
   height: 91px;
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .flexBox {
@@ -105,7 +105,7 @@ img {
   padding-right: 10px;
 }
 .navbar-light .navbar-brand {
-  color: white;
+  color: black;
   /* change here ^ */
 }
 .search {
@@ -114,11 +114,13 @@ img {
   width: 60%;
   margin-right: 10px;
   height: 45px;
-  color: white;
+  color: black;
+  background-color: rgb(245, 245, 245);
 }
 .search:focus-within {
   background-color: white;
-  color: black
+  color: black;
+  border: 2px solid grey;
 }
 .flex1 {
   display: flex;
@@ -138,18 +140,18 @@ img {
   margin-top: 15px;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: white;
+  color: black;
   /* change here ^ */
   opacity: 1; /* Firefox */
   font-weight: bold;
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: white;
+  color: black;
   /* change here ^ */
   font-weight: bold;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: white;
+  color: black;
   /* change here ^ */
   font-weight: bold;
 }
@@ -158,7 +160,7 @@ img {
 }
 input {
   background-color: rgba(255, 255, 255, 0.0);
-  color: white;
+  color: black;
   width: 100%;
   -webkit-appearance: none;
   border: none;

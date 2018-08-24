@@ -195,9 +195,9 @@
   width: 100%;
   border-top: none;
 }
-.readClass {
+.unreadClass {
   color: none;
-  background: rgba(255, 255, 255, 0.6); 
+  background: rgba(245, 245, 245, 1);
   width: 100%;
   position: relative;
   /* z-index: 1; */
