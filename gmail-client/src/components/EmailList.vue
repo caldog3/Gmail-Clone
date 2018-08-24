@@ -203,7 +203,7 @@
   /* z-index: 1; */
 }
 .readClass:hover {
-  box-shadow: 2px 0px 5px grey;
+  box-shadow: 0px 1px 4px 1px #888888;
 }
 .unreadClass {
   width: 100%;
@@ -212,7 +212,7 @@
   /* z-index: 1; */
 }
 .unreadClass:hover {
-  box-shadow: 2px 0px 5px grey;
+  box-shadow: 0px 1px 4px 1px #888888;
 }
 .FlexTable {
   position: relative;
