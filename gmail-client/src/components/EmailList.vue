@@ -506,7 +506,7 @@ a {
   z-index: 0;
 }
 .highlightArea:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: lightgrey !important;
 }
 .highlightAreaRead {
   width: 30px;
@@ -518,7 +518,7 @@ a {
   z-index: 0;
 }
 .highlightAreaRead:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: lightgrey !important;
 }
 .highlightAreaCheck {
   width: 30px;
@@ -529,7 +529,7 @@ a {
   left: 6px;
 }
 .highlightAreaCheck:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: lightgrey !important;
 }
 svg:not(:root).svg-inline--fa {
   margin-top: 7px;

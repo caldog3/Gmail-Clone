@@ -106,7 +106,7 @@ img {
   width: 60%;
   margin-right: 10px;
   height: 45px;
-  color: black;
+  color: grey;
   background-color: rgb(245, 245, 245);
 }
 .search:focus-within {
@@ -135,18 +135,18 @@ img {
   padding: 0px;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: black;
+  color: grey;
   /* change here ^ */
   opacity: 1; /* Firefox */
   font-weight: bold;
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: black;
+  color: grey;
   /* change here ^ */
   font-weight: bold;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: black;
+  color: grey;
   /* change here ^ */
   font-weight: bold;
 }
@@ -155,7 +155,7 @@ img {
 }
 input {
   background-color: rgba(255, 255, 255, 0.0);
-  color: black;
+  color: grey;
   width: 100%;
   -webkit-appearance: none;
   border: none;

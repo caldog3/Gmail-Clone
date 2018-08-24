@@ -272,7 +272,7 @@
   border-radius: 35px;
 }
 .highlightArea:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: lightgrey;
   z-index: 999999999999999;
 }
 .highlightArea1 {
@@ -282,7 +282,7 @@
   cursor: pointer;
 }
 .highlightArea1:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: lightgrey;
 }
 .highlightArea2 {
   position: fixed;
@@ -296,7 +296,7 @@
   left: 303px;
 }
 .highlightArea2:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: lightgrey;
 }
 .CenterIt {
   display: flex;
@@ -368,7 +368,7 @@ button {
   left: 1px;
 }
 .highlightAreaCheck:hover {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: lightgrey !important;
 }
 .highlightAreaCheck .tooltiptext {
   visibility: hidden;
@@ -408,7 +408,7 @@ button {
 }
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: rgba(255, 255, 255, 0.0); 
+  background-color: lightgrey; 
 }
 /* When the checkbox is checked, add a black background */
 .container input:checked ~ .checkmark {
