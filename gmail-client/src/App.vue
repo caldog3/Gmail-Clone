@@ -189,11 +189,11 @@ body {
 }
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: lightgrey; 
 }
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+ background: lightgrey;
 }
 
 /* Scroll Bar for SideBar */
@@ -207,11 +207,11 @@ body {
 }
 /* Handle */
 .optionsA::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: lightgrey; 
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+ background: lightgrey;
 }
 
 
