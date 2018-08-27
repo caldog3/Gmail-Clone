@@ -636,9 +636,6 @@ export default {
           eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
-
-          // eventBus.$emit("UNCHECKED");
-          console.log("UNCECKING?");
           eventBus.$emit("UNCHECKED");
           
         }
@@ -784,9 +781,13 @@ export default {
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
+          console.log("just checking");
+          eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
           document.getElementsByName('checks')[i].checked = false;
+          console.log("just UNCECKING?");
+          eventBus.$emit("UNCHECKED");
         }
       }
     });
