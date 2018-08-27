@@ -19,7 +19,69 @@
           </div>
           <div class="bottomBar">
             <div class="sideBar">
+              <div class="filter">
+                <font-awesome-icon icon="search"/> &emsp; Filter
+              </div>
+              <div class="entry">
+                <div class="catagory">
+                  <div>Starred</div>
+                  <div class="line">
+                    <div>Alice Walker</div>
+                    <div>10 minutes</div>
+                  </div>
+                  <div class="line">
+                    <div>Kenny Woods</div>
+                    <div>3 days</div>
+                  </div>
+                  <div class="line">
+                    <div>Sales</div>
+                    <div>5 days</div>
+                  </div>
+                  <div class="line">
+                    <div>Rich Tillman</div>
+                    <div>10 days</div>
+                  </div>
+                </div>
+                <div class="catagory"> 
+                  <div>Recent</div>
+                  <div class="line">
+                    <div>Andrew Garrad</div>
+                    <div>38 minutes</div>
+                  </div>
+                  <div class="line">
+                    <div>Jessica Davis</div>
+                    <div>4 hours</div>
+                  </div>
+                  <div class="line">
+                    <div>Marketing</div>
+                    <div>9 hours</div>
+                  </div>
+                  <div class="line">
+                    <div>Larry Pearson</div>
+                    <div>1 day</div>
+                  </div>
+                  
+                </div>
+                <div class="catagory"> 
+                  <div>Older</div>
+                  <div class="line">
+                    <div>Tyler Amjed</div>
+                    <div>5 days</div>
+                  </div>
+                  <div class="line">
+                    <div>Tyler Amjed</div>
+                    <div>7 days</div>
+                  </div>
+                  <div class="line">
+                    <div>Nita Ellis</div>
+                    <div>11 days</div>
+                  </div>
+                </div>
 
+              </div>
+              <div class="new">
+                + &emsp; Add 
+              </div>
             </div>
             <div class="message">
               <div class="nested">
@@ -27,7 +89,8 @@
 
                 </div>
                 <div class="sendMessage">
-                  
+                  <div>Send a private message</div>
+                  <div><img src="./../assets/paperclip.png"></div>
                 </div>
               </div>    
             </div>
@@ -192,13 +255,27 @@
   flex-direction: row;
 }
 .sideBar {
-  width: 170px;
+  width: 270px;
   height: 520px;
   margin: 10px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
-.sideBar:hover {
+.entry {
+  height: 485px;
+  width: 270px;
+  overflow: hidden;
+}
+.entry:hover {
   overflow-y: scroll;
+}
+.new {
+  width: 270px;
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  padding-left: 25px;
 }
 .message {
   height: 520px;
@@ -211,12 +288,12 @@
   display: flex;
   flex-direction: column;
   height: 520px;
-  width: 100px;
+  width: 100%;
 }
 .messageList {
-  flex-grow: 1;
-  flex-basis: 0;
+  height: 470px;
   width: 100%;
+  overflow: hidden;
 }
 .messageList:hover {
   overflow-y: scroll;
@@ -224,12 +301,42 @@
 .sendMessage {
   width: 100%;
   height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 50px;
+  text-align: left;
+  border-top: 1px solid #E5E5E5;
 }
-
-
-
-
-
+.sendMessage img {
+  height: 15px;
+  width: 25px;
+}
+.filter {
+  height: 35px;
+  width: 270px;
+  line-height: 35px;
+  margin: 5px 0px;
+  border-bottom: 1px solid #E5E5E5;
+  text-align: left;
+  padding-left: 25px;
+}
+.catagory {
+  width: 270px;
+  margin: 5px 0px;
+  border-bottom: 1px solid #E5E5E5;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.catagory > div {
+  margin: 5px 20px;
+}
+.line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 
 
