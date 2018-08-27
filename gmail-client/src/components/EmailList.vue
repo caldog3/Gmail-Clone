@@ -31,15 +31,15 @@
                   </div>
                   <div class="line">
                     <div>Tyler Amjed</div>
-                    <div>3 days</div>
+                    <div>7 hours</div>
                   </div>
                   <div class="line">
                     <div>Sales</div>
-                    <div>5 days</div>
+                    <div>2 days</div>
                   </div>
                   <div class="line">
                     <div>Rich Tillman</div>
-                    <div>10 days</div>
+                    <div>6 days</div>
                   </div>
                 </div>
                 <div class="catagory"> 
@@ -66,11 +66,11 @@
                   <div>Older</div>
                   <div class="line">
                     <div>Communications</div>
-                    <div>5 days</div>
+                    <div>3 days</div>
                   </div>
                   <div class="line">
                     <div>Nita Ellis</div>
-                    <div>11 days</div>
+                    <div>4 days</div>
                   </div>
                 </div>
 

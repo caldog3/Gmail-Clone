@@ -203,16 +203,55 @@ body {
 }
 /* Track */
 .optionsA::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
 }
 /* Handle */
 .optionsA::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: lightgrey; 
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
 }
+
+/* Scroll Bar for SideBar */
+/* width */
+.entry::-webkit-scrollbar {
+  width: 6px;
+}
+/* Track */
+.entry::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.9);
+}
+/* Handle */
+.entry::-webkit-scrollbar-thumb {
+  background: lightgrey; 
+}
+/* Handle on hover */
+.entry::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
+}
+
+
+
+/* Scroll Bar for SideBar */
+/* width */
+.messageList::-webkit-scrollbar {
+  width: 6px;
+}
+/* Track */
+.messageList::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.9);
+}
+/* Handle */
+.messageList::-webkit-scrollbar-thumb {
+  background: lightgrey; 
+}
+/* Handle on hover */
+.messageList::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
+}
+
 
 
 .termsUnderneath a:link {
