@@ -41,8 +41,8 @@
                   </div>
                   <div class="firefoxOnly">
                     <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(thread)" :checked="thread.starred" title="bookmark page">
-                    <label for="ffstar" class="notchecked">&#X2606;</label>
-                    <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                    <label for="ffstar" style="font-size: 22px" class="notchecked">&#X2606;</label>
+                    <label for="ffstar" style="color:gold;font-size: 22px" class="checked">&#X2605;</label>
                   </div>
                 </div>
               </div>
@@ -263,9 +263,9 @@
   height: 17px;
   width: 17px;
   background-color: rgba(255, 255, 255, 0.0); 
-  border-color: black;
+  border-color: grey;
   border-style: solid;
-  border-width: 1px;
+  border-width: 2px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
@@ -275,6 +275,7 @@
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: black;
+  border-color: black;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -302,14 +303,19 @@
   width: 30px;
   height: 30px;
 }
+
+.FlexTable:hover .checkmark {
+  border-color: black;
+}
+
 /******************************The Star Checkbox******************************/
 .star {
   visibility: hidden;
   font-size: 20px;
   cursor: pointer;
   position: relative;
-  left: 5px;
-  top: 1px;
+  left: 6px;
+  top: 0px;
   width: 30px;
   height: 30px;
   
@@ -318,12 +324,21 @@
   content: "\2606";
   position: absolute;
   visibility:visible;
-
+  font-weight: bold;
+  color: grey;
 }
 .star:checked:before {
   content: "\2605";
   position: absolute;
-  color:gold;
+  color: gold;
+}
+
+.FlexTable:hover .star:before {
+  color: black;
+}
+
+.FlexTable:hover .star:checked:before  {
+  color: gold;
 }
 
 /******************************ToolTip******************************/
@@ -348,13 +363,12 @@
   padding-top: 9px;
 }
 
-
-
+/******************************FireFox Only Star******************************/
 /* .firefoxOnly {
   display: none;
 } */
 .firefoxOnly label {
-  margin-top: 4px;
+  /* margin-top: 4px; */
 }
 #ffstar {
   display:none;
@@ -374,7 +388,13 @@
 .highlightArea label {
   width: 30px;
   height: 30px;
+  color: grey;
+  font-size: 22px;
 }
+.FlexTable:hover .highlightArea label {
+  color: black;
+}
+
 
 
 
@@ -515,9 +535,9 @@ svg:not(:root).svg-inline--fa {
   font-weight: bold;
 } */
 
-.FlexTable:hover .checkmark {
-  border-width: 2px;
-}
+
+
+
 
 .Icon {
   margin-left: 7px;

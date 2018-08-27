@@ -85,7 +85,7 @@ export default {
     updateCurrentFolder(tabFolder) {
       let previousFolder = this.$store.state.currentFolder;
       this.$store.state.currentFolder = tabFolder;
-      console.log("IT has been set to: " + this.$store.state.currentFolder);
+      // console.log("IT has been set to: " + this.$store.state.currentFolder);
       //need to reset the previous folder back to its first page
       if(this.$store.state.currentPage !== 1) {
         this.$store.state.labelMessages[previousFolder] = [];
@@ -116,12 +116,7 @@ export default {
     //MOVED TO LoadingScreen.vue Created
   },
   created(){
-    console.log("INBOX LIST MOUNTED")
-    setTimeout(() => {
-      console.log("GetAttachments DISPATCHED")
-      this.$store.dispatch("getAttachments");
-    }, 1000);
-    
+    setTimeout(() => this.$store.dispatch("getAttachments"), 1000);
   },
 }
 </script>

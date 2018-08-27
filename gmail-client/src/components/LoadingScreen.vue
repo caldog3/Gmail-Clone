@@ -73,54 +73,55 @@
 
 <script>
 // WE NEED TO MAKE ALMOST ALL OF THE CALLS START BEING EXECUTED HERE
+import { mapGetters, mapActions } from 'vuex';
+import eventBus from './../event_bus';
+
  export default {
    name: 'LoginPage',
    methods: {
+     ...mapGetters([
+      'getLabelMessages'
+    ]),
+     ...mapActions([
+       'getListOfMessages',
+       'getFolderListOfMessages',
+       'getAllMessages'
+    ]),
+    async getInboxLabels(label){
+      if(this.getLabelMessages[label] === undefined){
+        await this.getListOfMessages(label);
+      }
+    },
+    getFolderLabels(label){
+      if(this.getLabelMessages[label] === undefined){
+        this.getFolderListOfMessages(label);
+      }
+    },
+    getAllLabels(){
+      if(this.getLabelMessages['ALL_MAIL'] === undefined) {
+        this.getAllMessages('ALL_MAIL');
+      }
+    }
    },
-   created() {
-    let primaryMessages = this.$store.getters.getLabelMessages["PRIMARY"];
-    if(primaryMessages === undefined){
-      this.$store.dispatch("getListOfMessages", "PRIMARY");
-    }
-    let socialMessages = this.$store.getters.getLabelMessages["SOCIAL"];
-    if(socialMessages === undefined){
-      this.$store.dispatch("getListOfMessages", "SOCIAL");
-    }
-    let promoMessages = this.$store.getters.getLabelMessages["PROMOTIONS"];
-    if(promoMessages === undefined){
-      this.$store.dispatch("getListOfMessages", "PROMOTIONS");
-    }
-    let draftMessages = this.$store.getters.getLabelMessages["DRAFT"];
-    if(draftMessages === undefined){
-      this.$store.dispatch("getFolderListOfMessages", "DRAFT");
-    }
-    let sentMessages = this.$store.getters.getLabelMessages["SENT"];
-    if(sentMessages === undefined){
-      this.$store.dispatch("getFolderListOfMessages", "SENT");
-    }
-    let starredMessages = this.$store.getters.getLabelMessages["STARRED"];
-    if(starredMessages === undefined){
-      this.$store.dispatch("getFolderListOfMessages", "STARRED");
-    }
-    let trashMessages = this.$store.getters.getLabelMessages["TRASH"];
-    if(trashMessages === undefined) {
-      this.$store.dispatch("getFolderListOfMessages", "TRASH");
-    }
-    let importantMessages = this.$store.getters.getLabelMessages["IMPORTANT"];
-    if(importantMessages === undefined) {
-      this.$store.dispatch("getFolderListOfMessages", "IMPORTANT");
-    }
-    let allMailMessages = this.$store.getters.getLabelMessages["ALL_MAIL"];
-    if(allMailMessages === undefined) {
-      this.$store.dispatch("getAllMessages", "ALL_MAIL");
-    }
-    // For some reason snoozed behaves weird...
-    // let snoozedMessages = this.$store.getters.getLabelMessages["SNOOZED"];
-    // if(snoozedMessages === undefined) {
-    //   this.$store.dispatch("getFolderListOfMessages", "SNOOZED");
-    // }
-
+   async created() {
+    //I Did not use the Array.forEach() since it hurt performance a lot. (Will revisit)
+    const inboxLabelPromises = [
+      this.getInboxLabels('PRIMARY'),
+      this.getInboxLabels('SOCIAL'),
+      this.getInboxLabels('PROMOTIONS')
+    ];
     
+    Promise.all(inboxLabelPromises).then(() => {
+      eventBus.$emit('DATA_FETCHING_COMPLETE');
+    });
+
+    this.getFolderLabels('DRAFT');
+    this.getFolderLabels('SENT');
+    this.getFolderLabels('STARRED');
+    this.getFolderLabels('IMPORTANT');
+    this.getFolderLabels('TRASH');
+   
+    this.getAllLabels();
    },
  }
 </script>
