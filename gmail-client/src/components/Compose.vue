@@ -186,7 +186,7 @@ textarea {
   display: flex;
   flex-direction: row;
   margin: 6px;
-  margin-left: 106px;
+  margin-left: 92px;
 }
 img {
   height: 30px;
@@ -195,7 +195,7 @@ img {
 }
 .text {
   font-size: small;
-  width: 90px;
+  width: 100px;
 }
 .paperclip {
   margin: 6px;
