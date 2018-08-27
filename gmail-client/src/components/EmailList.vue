@@ -49,10 +49,10 @@
               <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
 
               <div class="lockGrey">
-                <img src="./../assets/lockGrey.png">
+                <img src="./../assets/greyLock.png">
               </div>
               <div class="lockBlack">
-                <img src="./../assets/lockBlack.png">
+                <img src="./../assets/blackLock.png">
               </div>
 
             </div>
@@ -404,8 +404,8 @@
 /******************************Lock******************************/
 img {
   width: 25px;
-  height: 20px;
-  margin-top: 2px;
+  height: 24px;
+  margin-top: 3px;
 
 }
 .unreadClass .checkboxes {

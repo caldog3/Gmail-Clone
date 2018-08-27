@@ -24,10 +24,10 @@
         <div id="sidebarFlex">
           <div class="lockFlex">
             <div class="lockRed">
-              <img src="./../assets/lockRed.png">
+              <img src="./../assets/redLock.png">
             </div>
             <div class="lockBlack">
-              <img src="./../assets/lockBlack.png">
+              <img src="./../assets/blackLock.png">
             </div>
             <div class="words">
               Private
@@ -136,8 +136,8 @@
 <style scoped>
 .normalRow img {
   width: 25px;
-  height: 20px;
-  margin-top: 2px;
+  height: 24px;
+  margin-top: -4px;
 }
 .inactiveFolder .lockRed {
   display: none;
@@ -218,7 +218,7 @@ button {
 }
 .activeFolder {
   background: #FCE7E5;
-  color: #FF0000;
+  color: #B30000;
   font-weight: bold;
 }
 

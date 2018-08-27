@@ -2,7 +2,7 @@
 <template>
   <div id="body">
     <div class="flexboxSubject">
-      <h5 class="leftAlign"><img src="./../assets/lockBlack.png">  {{messages[0].subject}}</h5>
+      <h5 class="leftAlign"><img src="./../assets/blackLock.png">  {{messages[0].subject}}</h5>
       <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
     </div>
 
@@ -81,6 +81,7 @@
 img {
   width: 30px;
   height: 30px;
+  margin-top: -7px;
 }
 button {
   background-color: white;
