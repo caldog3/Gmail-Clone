@@ -195,15 +195,15 @@
   width: 100%;
   border-top: none;
 }
-.unreadClass {
+.readClass {
   color: none;
-  background: rgba(245, 245, 245, 1);
+  background: rgba(255, 255, 255, 0.6); 
   width: 100%;
   position: relative;
   /* z-index: 1; */
 }
 .readClass:hover {
-  box-shadow: 0px 1px 4px 1px #888888;
+  box-shadow: 2px 0px 5px grey;
 }
 .unreadClass {
   width: 100%;
@@ -212,7 +212,7 @@
   /* z-index: 1; */
 }
 .unreadClass:hover {
-  box-shadow: 0px 1px 4px 1px #888888;
+  box-shadow: 2px 0px 5px grey;
 }
 .FlexTable {
   position: relative;
