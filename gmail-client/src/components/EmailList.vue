@@ -168,6 +168,14 @@
                   </div>
                   
 
+
+
+
+
+
+
+                  <div class="them empty"></div>
+
                 </div>
                 <div class="sendMessage">
                   <div>Send a private message</div>
@@ -376,6 +384,7 @@
   width: 100%;
   overflow: hidden;
   overflow-y: scroll;
+  margin-bottom: 5px;
 }
 /* .messageList:hover {
   overflow-y: scroll;
@@ -424,26 +433,68 @@
 .active {
   background-color: #E5E5E5;
 }
+.empty {
+  height: 100px;
+  width: 100%;
+}
 .me {
   display: flex;
   flex-direction: row-reverse;
   float: right;
   text-align: left;
-  margin: 10px 20px 0px 10px;
+  margin: 5px 25px 0px 15px;
+  padding: 5px;
+  background-color: #E5E5E5;
+  border-radius: 5px 5px 0px 5px;
+  position: relative;
+}
+.me :after { 
+  content: ''; 
+  position: absolute; 
+  right: 0; 
+  bottom: 0%; 
+  width: 0; 
+  height: 0; 
+  border: 20px solid transparent; 
+  border-left-color: #E5E5E5; 
+  border-right: 0; 
+  border-bottom: 0; 
+  margin-top: -10px; 
+  margin-right: -20px; 
 }
 .them {
   display: flex;
   flex-direction: row;
   float: left;
   text-align: left;
-  margin: 10px 20px 0px 10px;
+  margin: 5px 15px 0px 15px;
 }
 .them > div {
   text-align: right;
 }
+.them .body {
+  background-color: #a2b9eb;
+  padding: 5px;
+  border-radius: 0px 5px 5px 5px;
+  position: relative;
+}
+.them .body:after { 
+  content: ''; 
+  position: absolute;
+  left: 0;
+  top: 10px; 
+  width: 0; 
+  height: 0; 
+  border: 20px solid transparent; 
+  border-right-color: #a2b9eb; 
+  border-left: 0; 
+  border-top: 0; 
+  margin-top: -10px; 
+  margin-left: -20px;
+}
 .photo {
   width: 35px;
-  margin: 0px 10px 0px 0px;
+  margin: 5px 20px 0px 0px;
   /* height: 35px; */
 }
 .photo img {
@@ -478,7 +529,7 @@
   margin-left: 125px;
 }
 .five {
-  width: 413px;
+  width: 430px;
 }
 
 
