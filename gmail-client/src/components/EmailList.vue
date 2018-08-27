@@ -87,22 +87,18 @@
 
                 <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  
                 </div>
 
                 <div class="highlightArea" tooltip="Spam">
                   <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
-                  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  
                 </div>
 
               </div>
@@ -116,22 +112,18 @@
 
                   <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Spam">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-
                   </div>
 
 
