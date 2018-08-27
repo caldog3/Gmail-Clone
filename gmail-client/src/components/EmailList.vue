@@ -363,8 +363,7 @@
   padding-top: 9px;
 }
 
-
-
+/******************************FireFox Only Star******************************/
 /* .firefoxOnly {
   display: none;
 } */
@@ -390,6 +389,7 @@
   width: 30px;
   height: 30px;
   color: grey;
+  font-size: 22px;
 }
 .FlexTable:hover .highlightArea label {
   color: black;
