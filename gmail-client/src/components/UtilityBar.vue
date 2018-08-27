@@ -5,10 +5,9 @@
         <div>
 
           <!-- just for sitting in an unchecked email list -->
-          <span v-if="!messageBody && !checkedEmails">
-            <div class="flexIcons">
-              
-               <!-- <div v-on:click="checkAll(this)" class="item"> -->
+          <span v-if="!messageBody">
+
+            <div class="flexIcons">  <!-- this guy is having problems-->
               <div class="item">
                 <label class="container">
                   <div class="highlightAreaCheck">
@@ -18,7 +17,6 @@
                   </div>
                 </label>
               </div>
-
               <div class="firefoxOnlyCaret">
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
@@ -39,142 +37,116 @@
                 </div>
               </div>
 
-              <div class="item1">
-                <div class="highlightArea" v-on:click="refreshing()">
-                  <div>
-                    <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
-                    <span class="tooltiptext">Refresh</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
-                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="ellipsesDropdown" class="dropdown-content">
-                    <p v-on:click="markAllAsRead()">  Mark all as read </p>
-                    <hr>
-                    <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </span>
-
-          <!-- with checkeditems -->
-          <span v-if="!messageBody && checkedEmails">
-            <div class="CenterIt">
-              <div class="item">
-                <label class="container">
-                  <div class="highlightAreaCheck">
-                    <input type="checkbox" @click="checkAllToggle()">
-                    <span class="tooltiptext">Select</span>
-                    <span class="checkmark"></span>
-                  </div>
-                </label>
-              </div>
-
-              <div class="firefoxOnlyCaret">
-                <div class="highlightArea2" v-on:click="caretDropdownFunction()">
-                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
-                  <span class="tooltiptext">Select</span>
-                  <div id="caretDropdown" class="dropdown-content">
-                    <p>  All </p>
-                    <hr>
-                    <p> None </p>
-                    <hr>
-                    <p> Read </p>
-                    <hr>
-                    <p> Unread </p>
-                    <hr>
-                    <p> Starred </p>
-                    <hr>
-                    <p> Unstarred </p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
-                  <span class="tooltiptext">Archive</span>
-                </div>
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
-                </div>
-              </div>
-
-              <div class="item" v-on:click="trashing()">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
-                  <span class="tooltiptext">Delete</span> 
-                </div>
-              </div>
-
-              <div class="break">
-                |
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
-                  <span class="tooltiptext">Mark as Unread</span>
-                </div>
-              </div>
-              
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
-                  <span class="tooltiptext">Mark as Read</span>
-                </div>
-              </div>
             
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
+              <!-- with checkeditems -->
+              <span v-if="checkedEmails">
+              
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                    <span class="tooltiptext">Archive</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="break">
-                |
-              </div>
-
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
-                  <span class="tooltiptext">Move to</span>
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                    <span class="tooltiptext">Report Spam</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="item">
-                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="ellipsesDropdown" class="dropdown-content">
-                    <p>Mark as read</p>
-                    <hr>
-                    <p>Mark as important</p>
-                    <hr>
-                    <p>Add to tasks</p>
-                    <hr>
-                    <p>Add star</p>
-                    <hr>
-                    <p>Create Event</p>
-                    <hr>
-                    <p>Filter messages like these</p>
-                    <hr>
-                    <p>Mute</p>
-                  </div>  
+                <div class="item" v-on:click="trashing()">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
+                    <span class="tooltiptext">Delete</span> 
+                  </div>
                 </div>
-              </div>
 
+                <div class="break">
+                  |
+                </div>
+
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                    <span class="tooltiptext">Mark as Unread</span>
+                  </div>
+                </div>
+                
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
+                    <span class="tooltiptext">Mark as Read</span>
+                  </div>
+                </div>
+              
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
+                    <span class="tooltiptext">Snooze</span>
+                  </div>
+                </div>
+
+                <div class="break">
+                  |
+                </div>
+
+                <div class="item">
+                  <div class="highlightArea">
+                    <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                    <span class="tooltiptext">Move to</span>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
+                    <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                    <div id="ellipsesDropdown" class="dropdown-content">
+                      <p>Mark as read</p>
+                      <hr>
+                      <p>Mark as important</p>
+                      <hr>
+                      <p>Add to tasks</p>
+                      <hr>
+                      <p>Add star</p>
+                      <hr>
+                      <p>Create Event</p>
+                      <hr>
+                      <p>Filter messages like these</p>
+                      <hr>
+                      <p>Mute</p>
+                    </div>  
+                  </div>
+                </div>
+              </span>
+
+              <!-- this is for unchecked status after checkbox -->
+              <span v-else>
+                <div class="item1">
+                  <div class="highlightArea" v-on:click="refreshing()">
+                    <div>
+                      <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                      <span class="tooltiptext">Refresh</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
+                    <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                    <div id="ellipsesDropdown" class="dropdown-content">
+                      <p v-on:click="markAllAsRead()">  Mark all as read </p>
+                      <hr>
+                      <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                    </div>
+                  </div>
+                </div>
+              </span> 
             </div>
           </span>
+
+
+  
           <!-- inside a message body -->
           <span v-if=messageBody>
             <div class="CenterIt">

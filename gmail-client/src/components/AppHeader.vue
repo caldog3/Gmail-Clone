@@ -24,7 +24,7 @@
             </div>
           </div>  
         </div>
-        
+
         <div>
           <div class="flex1">
             <div class="logoutButton">
@@ -264,21 +264,17 @@ export default {
         this.$store.state.labelMessages.SEARCH = [];
       }
       this.$router.push({ path: 'Folder/SEARCH/'});
-      console.log("AM I SEARCHING?");
-      console.log(this.searchQuery);
       // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
       this.$store.state.currentFolder  = "SEARCH";
       console.log("IT has been set to: " + this.$store.state.currentFolder);
       this.$store.state.viewFolder = "Search";
       this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
-      console.log("State of the store");
-      console.log(this.$store.state.labelMessages.SEARCH);
     },
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
     },
-    DropdownFunction() { 
+    DropdownFunction() {
       document.getElementById("Dropdown").classList.toggle("show");
     },
     // Close the dropdown if the user clicks outside of it
