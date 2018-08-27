@@ -27,7 +27,7 @@
 
               <div class="first">
                 <label class="container">
-                  <div class="highlightAreaCheck">
+                  <div class="highlightAreaCheck"  v-on:click="checking()">
                     <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
@@ -646,9 +646,24 @@ export default {
       starCheck: false,
       checkedEmails: [],
       userEmail: '',
+      hadValues: false,
     }
   },
   methods: {
+    checking() {
+      setTimeout(() => {      
+        if (this.checkedEmails.length > 0) {
+          eventBus.$emit("CHECKED_MESSAGES");
+        }
+        else {
+
+          // eventBus.$emit("UNCHECKED");
+          console.log("UNCECKING?");
+          eventBus.$emit("UNCHECKED");
+          
+        }
+      }, 150);
+    },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
       if(thread.starred === true) {
