@@ -185,9 +185,7 @@ button {
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
-/* .inactiveFolder {
-  not sure
-} */
+
 #sidebarFlex {
   display: flex;
   flex-direction: row;
@@ -415,7 +413,7 @@ export default {
       this.unreadCount();
       for (let j = 9; j < this.labels.length; j++) {
         let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
-        console.log(messages);
+        // console.log(messages);
         if(messages === undefined){
           this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
         }

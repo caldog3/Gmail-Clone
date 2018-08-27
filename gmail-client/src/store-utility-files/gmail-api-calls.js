@@ -96,9 +96,7 @@ const getLabels = () => {
   gapi.client.gmail.users.labels.list({
     'userId': 'me'
   }).then(response => {
-      console.log("Labels");
       let allLabels = response.result.labels;
-      console.log(allLabels);
       var customLabels = [];
       for (var i = 0; i < allLabels.length; i+=1) {
         if (allLabels[i].id.startsWith("Label_")) {
@@ -167,7 +165,6 @@ export {
   markAsUnread,
   markAsStarred,
   unMarkAsStarred,
-  getProfileEmail,
   getLabels,
   getLabelsForUnread,
   getNumberOfMessages,

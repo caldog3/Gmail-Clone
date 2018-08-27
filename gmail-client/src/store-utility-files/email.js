@@ -45,9 +45,18 @@ const getBody = (payload) => {
       if (htmlBodyData !== undefined) {
         body = Base64Decode(htmlBodyData);
       } else {
-
         if (payload.parts[0].body.data !== undefined){
           body = Base64Decode(payload.parts[0].body.data);
+        }
+        else if(payload.parts[0].body.attachmentId !== undefined){
+          for (let part of payload.parts) {
+            if (part.mimeType.includes('application')) {
+              attachmentIds.push({
+                mimeType: part.mimeType,
+                attachmentId: part.body.attachmentId,
+              });
+            }
+          }
         }
         else if (payload.parts[0].parts[0] === undefined) {
           console.log("Edge case = " + payload.parts[0]);
