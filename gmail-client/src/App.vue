@@ -214,7 +214,6 @@ body {
  background: rgba(255, 255, 255, 0.9);
 }
 
-
 .termsUnderneath a:link {
   text-decoration: none;
   color: white;
