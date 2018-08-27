@@ -26,11 +26,11 @@
                 <div class="catagory">
                   <div>Starred</div>
                   <div class="line">
-                    <div>Alice Walker</div>
-                    <div>10 minutes</div>
+                    <div><b>Alice Walker</b></div>
+                    <div><b>10 minutes</b></div>
                   </div>
                   <div class="line">
-                    <div>Kenny Woods</div>
+                    <div>Tyler Amjed</div>
                     <div>3 days</div>
                   </div>
                   <div class="line">
@@ -45,10 +45,10 @@
                 <div class="catagory"> 
                   <div>Recent</div>
                   <div class="line">
-                    <div>Andrew Garrad</div>
-                    <div>38 minutes</div>
+                    <div><b>Andrew Garrad</b></div>
+                    <div><b>38 minutes</b></div>
                   </div>
-                  <div class="line">
+                  <div class="line active">
                     <div>Jessica Davis</div>
                     <div>4 hours</div>
                   </div>
@@ -65,12 +65,8 @@
                 <div class="catagory"> 
                   <div>Older</div>
                   <div class="line">
-                    <div>Tyler Amjed</div>
+                    <div>Communications</div>
                     <div>5 days</div>
-                  </div>
-                  <div class="line">
-                    <div>Tyler Amjed</div>
-                    <div>7 days</div>
                   </div>
                   <div class="line">
                     <div>Nita Ellis</div>
@@ -86,6 +82,91 @@
             <div class="message">
               <div class="nested">
                 <div class="messageList">
+                  <div class="me one">
+                    <!-- <div class="photo">
+
+                    </div> -->
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                          This License Agreement along with the Standard or Modified Versions for any purpose and without further action by the acts or omissions of such claim.
+                        </div>
+                        <div><i>expires in 2 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="them two">
+                    <div class="photo">
+                      <img src="./../assets/UserJessicaDavis.jpg">
+                    </div>
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                           If NetHack is modified by someone else and passed on, where a user 
+                           would be likely to look for such licenses are given in the software without 
+                           prior written permission. 
+                        </div>
+                        <div><i>expires in 3 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="me three">
+                    <!-- <div class="photo">
+
+                    </div> -->
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                          To apply any bug fixes, portability fixes and other intellectual property of Licensor or any other party
+                        </div>
+                        <div><i>expires in 5 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="them four">
+                    <div class="photo">
+                      <img src="./../assets/UserJessicaDavis.jpg">
+                    </div>
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                          It shall not affect any rights granted by such Contributor
+                        </div>
+                        <div><i>expires in 5 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="them five">
+                    <div class="photo">
+                      <img src="./../assets/UserJessicaDavis.jpg">
+                    </div>
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                          In which You contribute are governed by the parties hereto, such provision valid and enforceable.
+                        </div>
+                        <div><i>expires in 5 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="me six">
+                    <!-- <div class="photo">
+
+                    </div> -->
+                    <div class="body">
+                      <div class="flexBody">
+                        <div class="line2">
+                          Under claims of patents that are compatible with the terms and conditions for use
+                        </div>
+                        <div><i>expires in 7 days</i></div>
+                      </div>
+                    </div>
+                  </div>
+                  
 
                 </div>
                 <div class="sendMessage">
@@ -294,10 +375,11 @@
   height: 470px;
   width: 100%;
   overflow: hidden;
-}
-.messageList:hover {
   overflow-y: scroll;
 }
+/* .messageList:hover {
+  overflow-y: scroll;
+} */
 .sendMessage {
   width: 100%;
   height: 50px;
@@ -307,6 +389,7 @@
   line-height: 50px;
   text-align: left;
   border-top: 1px solid #E5E5E5;
+  padding: 0px 19px;
 }
 .sendMessage img {
   height: 15px;
@@ -330,13 +413,77 @@
   flex-direction: column;
 }
 .catagory > div {
-  margin: 5px 20px;
+  margin: 3px 10px;
+  padding: 2px 10px;
 }
 .line {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+.active {
+  background-color: #E5E5E5;
+}
+.me {
+  display: flex;
+  flex-direction: row-reverse;
+  float: right;
+  text-align: left;
+  margin: 10px 20px 0px 10px;
+}
+.them {
+  display: flex;
+  flex-direction: row;
+  float: left;
+  text-align: left;
+  margin: 10px 20px 0px 10px;
+}
+.them > div {
+  text-align: right;
+}
+.photo {
+  width: 35px;
+  margin: 0px 10px 0px 0px;
+  /* height: 35px; */
+}
+.photo img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.body {
+  flex-grow: 1;
+  flex-basis: 0;
+  height: 100%;
+}
+.flexBody {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.line2 {
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: left;
+}
+.one {
+  width: 511px;
+}
+.two {
+  width: 590px;
+}
+.three {
+  width: 370px;
+  margin-left: 125px;
+}
+.five {
+  width: 413px;
+}
+
+
+
+
 
 
 

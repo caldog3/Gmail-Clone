@@ -32,16 +32,8 @@
               <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signOut">Sign Out</b-button>        
             </div>
             <div class="userPhoto"> 
-              <svg width="70" height="70" viewBox="0 0 100 100" 
-                  preserveAspectRatio="xMidYMid meet">
-                <defs>
-                  <clipPath id="myCircle">
-                    <circle cx="45" cy="44" r="40"/>
-                  </clipPath>
-                </defs>
+              <img src="./../assets/UserKennethWoods.jpg">
 
-                <image width="90" height="90" v-bind:href="photoUrl" clip-path="url(#myCircle)" />
-              </svg>
             </div>
           </div>
         </div>
@@ -136,8 +128,12 @@ img {
 .logoutButton {
   margin: 10px;
 }
-.userPhoto {
-  margin-top: 15px;
+.userPhoto img {
+  padding: 0;
+  margin: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: black;
