@@ -802,10 +802,10 @@ export default {
       eventBus.$emit("TRASHING_CHECKED_THREADS");
     },
     unreadSet() {
-
+      eventBus.$emit("READ_SET");
     },
     readSet() {
-
+      eventBus.$emit("UNREAD_SET");
     },
     checking() {
       this.checkedEmails = true;

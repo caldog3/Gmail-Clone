@@ -131,9 +131,7 @@
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-
                   </div>
-
 
                 </div>
               </div>
@@ -725,13 +723,26 @@ export default {
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
     },
+    readSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsRead(this.checkedEmails[i]);
+        console.log("marking one of them as read");
+      }
+      //probably do some refreshing here too...
+    },
+    unreadSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsUnread(this.checkedEmails[i]);
+        console.log("marking one of them as unread");
+      }
+      //probably do some refreshing here too...
+    },
     trashCheckedThreads() {
-
       for(let i = 0; i < this.checkedEmails.length; i++) {
         trashMessage(this.checkedEmails[i]);
-        console.log("Trashing one of them");
+        console.log("Trashing one of them here");
       }
-
+      //We should refresh so trashed threads don't remain in the inbox...
       setTimeout(() => {
         this.checkedEmails = [];
         
@@ -745,7 +756,7 @@ export default {
           this.$store.dispatch("getFolderListOfMessages", folder);
         }
         eventBus.$emit("UNCHECKED");  
-      }, 8000); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
+      }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
@@ -836,6 +847,8 @@ export default {
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
+    eventBus.$on("READ_SET", this.readSet);
+    eventBus.$on("UNREAD_SET", this.unreadSet);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
