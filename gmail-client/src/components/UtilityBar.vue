@@ -184,13 +184,6 @@
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>              
-            
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
-              </div>
 
               <div class="break">
                 |
