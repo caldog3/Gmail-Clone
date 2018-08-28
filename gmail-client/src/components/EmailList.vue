@@ -2,9 +2,6 @@
 <template>
   <div class="everything">
     <template v-if="threads">
-      <div class="currentFolderLine">
-        <p>{{this.$store.state.currentFolder}}</p>
-      </div>     
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
           <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
@@ -87,22 +84,18 @@
 
                 <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  
                 </div>
 
                 <div class="highlightArea" tooltip="Spam">
                   <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
-                  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  
                 </div>
 
               </div>
@@ -116,22 +109,18 @@
 
                   <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Spam">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-
                   </div>
 
 
