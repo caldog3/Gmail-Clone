@@ -14,8 +14,8 @@
             <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
           </div>
           <div>
-            <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
-            <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
+            <!-- took this out until we can figure out a way to make it more accurate -->
+            <!-- <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p> -->
           </div>
         </div>
       </div>
