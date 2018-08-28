@@ -204,6 +204,7 @@
 <style scoped>
 /* ----------------------BASIC STYLES---------------------- */
 .body {
+  /* visibility: hidden; */
   position: relative;
   height: 40px;
   z-index: 1;

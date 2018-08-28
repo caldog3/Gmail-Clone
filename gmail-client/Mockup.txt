@@ -1,0 +1,7 @@
+For the Message Mockup, you'll need an email address with
+the important folder empty.
+
+The first mockup screen, MockupMessage1.png, is what happens when you first log in.
+
+The second mockup screen, MockupMessage2.png, is found by clicking on 
+Private Messages. Then in UtlityBar.vue line 207, uncomment out visiblity:hidden;
