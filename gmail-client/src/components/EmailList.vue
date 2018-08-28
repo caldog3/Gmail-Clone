@@ -15,6 +15,17 @@
       <span v-if="threads[0] === undefined">
         <div id="PrivateMessaging">
           <div class="topBar">
+            <div class="logo">
+              Private Messaging 
+            </div>
+            <div class="other">
+              <div class="inside">
+                <div>Jessica Davis</div>
+                <div class="icons">
+
+                </div>
+              </div>
+            </div>
 
           </div>
           <div class="bottomBar">
@@ -166,13 +177,6 @@
                       </div>
                     </div>
                   </div>
-                  
-
-
-
-
-
-
 
                   <div class="them empty"></div>
 
@@ -330,15 +334,39 @@
 <style scoped>
 #PrivateMessaging {
   width: 100%;
-  height: 600px;
+  /* height: 600px; */
   background-color: #E5E5E5;
   display: flex;
   flex-direction: column;
 }
 .topBar {
   width: 100%;
-  height: 60px;
+  height: 30px;
+  padding: 10px 10px 0px 10px;
+  display: flex;
+  flex-direction: row;
 }
+.logo {
+  width: 270px;
+  margin-right: 10px;
+}
+.other {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+.logo img {
+  width: 70px;
+  float: left;
+  margin-top: -9px;
+}
+.inside {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+
 .bottomBar {
   display: flex;
   flex-direction: row;

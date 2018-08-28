@@ -24,10 +24,10 @@
         <div id="sidebarFlex">
           <div class="privateLock">
             <div class="blackLock">
-              <img src="./../assets/lockBlack.png">
+              <img src="./../assets/lock.png">
             </div>
             <div class="redLock">
-              <img src="./../assets/lockRed.png">
+              <img src="./../assets/redLock.png">
             </div>
             Private Messages
           </div>
@@ -193,7 +193,7 @@ button {
 }
 .activeFolder {
   background: #FCE7E5;
-  color: red;
+  color: #B30000;
   font-weight: bold;
 }
 
@@ -272,7 +272,8 @@ notInbox1 {
 }
 .normalRow img {
   width: 25px;
-  height: 20px;
+  height: 26px;
+  margin-top: -3px;
 }
 .privateLock {
   margin-left: -5px;
