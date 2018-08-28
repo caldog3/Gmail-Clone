@@ -142,9 +142,8 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  /* background-image: url(assets/Background10.jpg); */
-  background-color: white;
-  /* box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25); */
+  background-image: url(assets/Background10.jpg);
+  box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
@@ -161,6 +160,8 @@ body {
   min-width: 270px;
   height: 860px;
   float: left;
+  position: relative;
+  z-index: 4;
 }
 .emailList {
   overflow-y: auto;

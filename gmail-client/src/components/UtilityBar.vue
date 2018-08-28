@@ -19,7 +19,7 @@
               </div>
               <div class="firefoxOnlyCaret">
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
-                  <div class="dropbtn"><font-awesome-icon style="color:black;" class="Icon" icon="caret-down"/></div>
+                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
                   <span class="tooltiptext">Select</span>
                   <div id="caretDropdown" class="dropdown-content">
                     <p>  All </p>
@@ -55,7 +55,7 @@
                     </div>
                   </div>
 
-                  <div class="item" v-on:click="trashing()">
+                  <div class="item" v-on:click="trashingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
                       <span class="tooltiptext">Delete</span> 
@@ -66,24 +66,17 @@
                     |
                   </div>
 
-                  <div class="item">
+                  <div class="item" v-on:click="unreadSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                       <span class="tooltiptext">Mark as Unread</span>
                     </div>
                   </div>
                   
-                  <div class="item">
+                  <div class="item" v-on:click="readSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
                       <span class="tooltiptext">Mark as Read</span>
-                    </div>
-                  </div>
-                
-                  <div class="item">
-                    <div class="highlightArea">
-                      <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                      <span class="tooltiptext">Snooze</span>
                     </div>
                   </div>
 
@@ -155,28 +148,28 @@
             <div class="CenterIt">
               <div v-on:click.stop="back()" class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="arrow-left"/>
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-left"/>
                   <span class="tooltiptext">Back to Inbox</span>
                 </div>
               </div>
 
               <div class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="archive"/> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
                   <span class="tooltiptext">Archive</span>
                 </div>
               </div>
 
               <div class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="exclamation-circle" /> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
                   <span class="tooltiptext">Report Spam</span>
                 </div>
               </div>
 
               <div class="item" v-on:click="trashing()">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="trash" />
+                  <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
                   <span class="tooltiptext">Delete</span> 
                 </div>
               </div>
@@ -187,14 +180,14 @@
 
               <div class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="envelope-open" /> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>              
             
               <div class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="clock" /> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
                   <span class="tooltiptext">Snooze</span>
                 </div>
               </div>
@@ -205,14 +198,14 @@
 
               <div class="item">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:black;" class="Icon" icon="arrow-circle-right" /> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
                   <span class="tooltiptext">Move to</span>
                 </div>
               </div>
 
               <div class="item">
                 <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
-                  <div  class="dropbtn"><font-awesome-icon style="color:black;" class="Icon" icon="ellipsis-v"/></div>
+                  <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
                   <div id="ellipsesDropdown" class="dropdown-content">
                     <p>Mark as read</p>
                     <hr>
@@ -248,28 +241,28 @@
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
             <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
-              <font-awesome-icon style="color:black;" class="Icon" icon="chevron-left"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
               <span class="tooltiptext">Newer</span>
             </div>
 
             <div class="paddingNeeded" v-else>
-              <font-awesome-icon style="color:black;" class="Icon" icon="chevron-left"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
               <span class="tooltiptext">No Newer</span>
             </div>
             
             <div class="lessPadding" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50" v-on:click="nextPageLoad">
-              <font-awesome-icon style="color:black;" class="Icon" icon="chevron-right"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
               <span class="tooltiptext">Older</span>
             </div>
             <div class="lessPadding" v-else>
-              <font-awesome-icon style="color:black;" class="Icon" icon="chevron-right"/>
+              <font-awesome-icon style="color:white;" class="Icon" icon="chevron-right"/>
               <span class="tooltiptext"> No Older</span>
             </div>
 
             <div class="firefoxonlyCog">
               <div class="item">
                 <div class="highlightArea">
-                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:black;" class="Icon" icon="cog"/></div>
+                  <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
                     <div class="dropdownEntry">Some kind of setting</div>
@@ -415,7 +408,7 @@
   padding-right: 30px;
   padding-top: 5px;
   font-size: .9em;
-  color: black;
+  color: white;
 }
 input {
   margin-top: 7px;
@@ -497,9 +490,9 @@ button {
   height: 17px;
   width: 17px;
   background-color: rgba(255, 255, 255, 0.0); 
-  border-color: black;
+  border-color: white;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-radius: 4px;
 }
 /* On mouse-over, add a grey background color */
@@ -508,7 +501,7 @@ button {
 }
 /* When the checkbox is checked, add a black background */
 .container input:checked ~ .checkmark {
-  background-color: black;
+  background-color: white;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -526,7 +519,7 @@ button {
   top: 1px;
   width: 5px;
   height: 10px;
-  border: solid white;
+  border: solid black;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -780,6 +773,7 @@ export default {
       else {
         this.$store.dispatch("getFolderListOfMessages", folder);
       }
+      this.checkedEmails = false;
     },
     pageNum() {
       return this.$store.state.currentPage;
@@ -810,6 +804,15 @@ export default {
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
       console.log("Clicked the button");
+    },
+    trashingSet() {
+      eventBus.$emit("TRASHING_CHECKED_THREADS");
+    },
+    unreadSet() {
+
+    },
+    readSet() {
+
     },
     checking() {
       this.checkedEmails = true;
@@ -927,6 +930,7 @@ export default {
     }
   },
   created() {
+    eventBus.$on("REFRESH", this.refreshing);
     eventBus.$on('CHECKED_MESSAGES', this.checking);
     eventBus.$on('UNCHECKED', this.notChecked);
 
