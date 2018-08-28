@@ -1,0 +1,8 @@
+With MockupEmail, you'll want an email where all emails you want
+designated encrypted are unread, and are the only emails unread.
+These emails also need to be in important and the only emails in 
+important.
+
+Whether or not the encrypted lock symbol appears on an email in 
+Emaillist depends on if its read or not. Then the Private folder
+is actually important.
