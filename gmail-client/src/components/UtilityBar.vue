@@ -55,7 +55,7 @@
                     </div>
                   </div>
 
-                  <div class="item" v-on:click="trashing()">
+                  <div class="item" v-on:click="trashingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
                       <span class="tooltiptext">Delete</span> 
@@ -66,24 +66,17 @@
                     |
                   </div>
 
-                  <div class="item">
+                  <div class="item" v-on:click="unreadSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                       <span class="tooltiptext">Mark as Unread</span>
                     </div>
                   </div>
                   
-                  <div class="item">
+                  <div class="item" v-on:click="readSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
                       <span class="tooltiptext">Mark as Read</span>
-                    </div>
-                  </div>
-                
-                  <div class="item">
-                    <div class="highlightArea">
-                      <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                      <span class="tooltiptext">Snooze</span>
                     </div>
                   </div>
 
@@ -780,6 +773,7 @@ export default {
       else {
         this.$store.dispatch("getFolderListOfMessages", folder);
       }
+      this.checkedEmails = false;
     },
     pageNum() {
       return this.$store.state.currentPage;
@@ -810,6 +804,15 @@ export default {
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
       console.log("Clicked the button");
+    },
+    trashingSet() {
+      eventBus.$emit("TRASHING_CHECKED_THREADS");
+    },
+    unreadSet() {
+
+    },
+    readSet() {
+
     },
     checking() {
       this.checkedEmails = true;
@@ -927,6 +930,7 @@ export default {
     }
   },
   created() {
+    eventBus.$on("REFRESH", this.refreshing);
     eventBus.$on('CHECKED_MESSAGES', this.checking);
     eventBus.$on('UNCHECKED', this.notChecked);
 

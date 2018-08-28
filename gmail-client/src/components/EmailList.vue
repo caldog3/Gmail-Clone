@@ -618,9 +618,10 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
+import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages, trashMessage } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
+import { setTimeout } from 'timers';
 import Vue from 'vue';
 
 export default {
@@ -645,9 +646,6 @@ export default {
           eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
-
-          // eventBus.$emit("UNCHECKED");
-          console.log("UNCECKING?");
           eventBus.$emit("UNCHECKED");
           
         }
@@ -715,6 +713,28 @@ export default {
     },
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
+    },
+    trashCheckedThreads() {
+
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        trashMessage(this.checkedEmails[i]);
+        console.log("Trashing one of them");
+      }
+
+      setTimeout(() => {
+        this.checkedEmails = [];
+        
+        let folder = this.$store.state.currentFolder;
+        this.$store.state.currentPage = 1;
+        this.$store.state.labelMessages[folder] = [];
+        if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
+          this.$store.dispatch("getListOfMessages", folder);
+        }
+        else {
+          this.$store.dispatch("getFolderListOfMessages", folder);
+        }
+        eventBus.$emit("UNCHECKED");  
+      }, 8000); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
@@ -793,13 +813,18 @@ export default {
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
+          console.log("just checking");
+          eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
           document.getElementsByName('checks')[i].checked = false;
+          console.log("just UNCECKING?");
+          eventBus.$emit("UNCHECKED");
         }
       }
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
+    eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
