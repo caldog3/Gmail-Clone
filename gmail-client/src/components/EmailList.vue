@@ -196,7 +196,7 @@
 }
 .unreadClass {
   width: 100%;
-  font-weight: 90;
+  font-weight: lighter;;
   position: relative;
   /* z-index: 1; */
 }
