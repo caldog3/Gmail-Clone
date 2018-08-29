@@ -101,6 +101,7 @@
               </div>
             </div>
 
+
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
 
@@ -125,6 +126,7 @@
 
                 </div>
               </div>
+
 
               <div class="highlightArea">              
                 <div class="theRestoftheTime">
