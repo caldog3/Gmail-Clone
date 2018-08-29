@@ -184,13 +184,6 @@
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>              
-            
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
-              </div>
 
               <div class="break">
                 |
@@ -237,6 +230,9 @@
             </div>
             <div class="rightTopPad" v-else-if="totalMessages == 'many'">
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
+            <div class="rightTopPad" v-else-if="totalMessages == 'unknown'">
+              serch results
             </div>
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
@@ -762,7 +758,7 @@ export default {
   methods: {
     refreshing() {
       let folder = this.$store.state.currentFolder;
-      console.log("refreshing");
+      console.log("refreshing", folder);
       console.log(this.$store.state.labelMessages);
       this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
@@ -807,12 +803,13 @@ export default {
     },
     trashingSet() {
       eventBus.$emit("TRASHING_CHECKED_THREADS");
+      console.log("----------trashingSet--------------");
     },
     unreadSet() {
-
+      eventBus.$emit("UNREAD_SET");
     },
     readSet() {
-
+      eventBus.$emit("READ_SET");
     },
     checking() {
       this.checkedEmails = true;
@@ -905,6 +902,7 @@ export default {
         else if (folder == "ALL_MAIL") {
           // gapi.client.gmail.users.labels.get({
           //   'userId': 'me',
+          //   'q': '',
           // }).then((response) => {
           //   totalInboxEmailCount = response.result.threadsTotal;
           //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
@@ -913,6 +911,10 @@ export default {
           // })
           this.$store.state.totalMessages = "many";
           this.totalMessages = "many";
+        }
+        else if (folder == "SEARCH"){
+          this.$store.state.totalMessages = "unknown";
+          this.totalMessages = "unknown";
         }
         else {
           gapi.client.gmail.users.labels.get({
