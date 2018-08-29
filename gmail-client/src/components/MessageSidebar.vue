@@ -178,13 +178,22 @@ button {
   overflow: hidden;
   white-space: nowrap;
 }
-.optionsA > div:hover {
+.normalRow:hover {
+  /* background: rgba(153, 153, 153, 0.4); */
+  background: rgba(255, 255, 255, 0.4);
+}
+.fullLength:hover {
   /* background: rgba(153, 153, 153, 0.4); */
   background: rgba(255, 255, 255, 0.4);
 }
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
+.activeFolder:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
 
 #sidebarFlex {
   display: flex;

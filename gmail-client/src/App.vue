@@ -160,6 +160,8 @@ body {
   min-width: 270px;
   height: 860px;
   float: left;
+  position: relative;
+  z-index: 4;
 }
 .emailList {
   overflow-y: auto;
