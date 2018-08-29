@@ -141,7 +141,7 @@
         </div>
       </div>
       
-      <div class="normalRow">
+      <div class="altRow">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="cog" />
@@ -197,6 +197,15 @@ button {
   margin-right: 10px;
 }
 .normalRow {
+  width: 253px;
+  height: 35px;
+  padding-left: 25px;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.altRow {
   width: 253px;
   height: 35px;
   padding-left: 25px;
