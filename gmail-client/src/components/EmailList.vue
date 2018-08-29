@@ -123,7 +123,6 @@
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   </div>
 
-
                 </div>
               </div>
 
@@ -628,6 +627,7 @@ import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 import { setTimeout } from 'timers';
 import Vue from 'vue';
+import { resolve } from 'url';
 
 export default {
   name: 'EmailList',
@@ -719,27 +719,46 @@ export default {
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
     },
-    trashCheckedThreads() {
-
+    readSet() {
       for(let i = 0; i < this.checkedEmails.length; i++) {
-        trashMessage(this.checkedEmails[i]);
-        console.log("Trashing one of them");
+        markAsRead(this.checkedEmails[i]);
+        console.log("marking one of them as read");
       }
-
-      setTimeout(() => {
-        this.checkedEmails = [];
+      //probably do some refreshing here too...
+    },
+    unreadSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsUnread(this.checkedEmails[i]);
+        console.log("marking one of them as unread");
+      }
+      //probably do some refreshing here too...
+    },
+    trashCheckedThreads() {
+      console.log("BEFORE trashCheckedThreads()");
+      
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        console.log("Trashing+++++++++++++++++++++++++++++");
+        trashMessage(this.checkedEmails[i]);
+        console.log("Trashing one of them here");
+      }
+      
+      console.log("trashCheckedThreads():----------")
+      eventBus.$emit("REFRESH");
+      //We should refresh so trashed threads don't remain in the inbox...
+      // setTimeout(() => {
+      //   this.checkedEmails = [];
         
-        let folder = this.$store.state.currentFolder;
-        this.$store.state.currentPage = 1;
-        this.$store.state.labelMessages[folder] = [];
-        if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-          this.$store.dispatch("getListOfMessages", folder);
-        }
-        else {
-          this.$store.dispatch("getFolderListOfMessages", folder);
-        }
-        eventBus.$emit("UNCHECKED");  
-      }, 8000); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
+      //   let folder = this.$store.state.currentFolder;
+      //   this.$store.state.currentPage = 1;
+      //   this.$store.state.labelMessages[folder] = [];
+      //   if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
+      //     this.$store.dispatch("getListOfMessages", folder);
+      //   }
+      //   else {
+      //     this.$store.dispatch("getFolderListOfMessages", folder);
+      //   }
+      //   eventBus.$emit("UNCHECKED");  
+      // }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
@@ -830,6 +849,8 @@ export default {
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
     eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
+    eventBus.$on("READ_SET", this.readSet);
+    eventBus.$on("UNREAD_SET", this.unreadSet);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
