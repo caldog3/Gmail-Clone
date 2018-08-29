@@ -803,10 +803,10 @@ export default {
       console.log("----------trashingSet--------------");
     },
     unreadSet() {
-      eventBus.$emit("READ_SET");
+      eventBus.$emit("UNREAD_SET");
     },
     readSet() {
-      eventBus.$emit("UNREAD_SET");
+      eventBus.$emit("READ_SET");
     },
     checking() {
       this.checkedEmails = true;
