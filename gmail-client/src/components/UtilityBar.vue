@@ -755,7 +755,7 @@ export default {
   methods: {
     refreshing() {
       let folder = this.$store.state.currentFolder;
-      console.log("refreshing");
+      console.log("refreshing", folder);
       console.log(this.$store.state.labelMessages);
       this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
@@ -800,6 +800,7 @@ export default {
     },
     trashingSet() {
       eventBus.$emit("TRASHING_CHECKED_THREADS");
+      console.log("----------trashingSet--------------");
     },
     unreadSet() {
       eventBus.$emit("READ_SET");
@@ -898,6 +899,7 @@ export default {
         else if (folder == "ALL_MAIL") {
           // gapi.client.gmail.users.labels.get({
           //   'userId': 'me',
+          //   'q': '',
           // }).then((response) => {
           //   totalInboxEmailCount = response.result.threadsTotal;
           //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});

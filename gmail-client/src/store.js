@@ -407,9 +407,10 @@ export default new Vuex.Store({
             });
           }
         }).then(() => {
-          return resolve();
+         resolve();
         }).catch((err) => {
           console.log(err);
+          resolve();
         });
       });
     },

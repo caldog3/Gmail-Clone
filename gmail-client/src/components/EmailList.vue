@@ -632,6 +632,7 @@ import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
 import { setTimeout } from 'timers';
 import Vue from 'vue';
+import { resolve } from 'url';
 
 export default {
   name: 'EmailList',
@@ -738,25 +739,31 @@ export default {
       //probably do some refreshing here too...
     },
     trashCheckedThreads() {
+      console.log("BEFORE trashCheckedThreads()");
+      
       for(let i = 0; i < this.checkedEmails.length; i++) {
+        console.log("Trashing+++++++++++++++++++++++++++++");
         trashMessage(this.checkedEmails[i]);
         console.log("Trashing one of them here");
       }
+      
+      console.log("trashCheckedThreads():----------")
+      eventBus.$emit("REFRESH");
       //We should refresh so trashed threads don't remain in the inbox...
-      setTimeout(() => {
-        this.checkedEmails = [];
+      // setTimeout(() => {
+      //   this.checkedEmails = [];
         
-        let folder = this.$store.state.currentFolder;
-        this.$store.state.currentPage = 1;
-        this.$store.state.labelMessages[folder] = [];
-        if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-          this.$store.dispatch("getListOfMessages", folder);
-        }
-        else {
-          this.$store.dispatch("getFolderListOfMessages", folder);
-        }
-        eventBus.$emit("UNCHECKED");  
-      }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
+      //   let folder = this.$store.state.currentFolder;
+      //   this.$store.state.currentPage = 1;
+      //   this.$store.state.labelMessages[folder] = [];
+      //   if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
+      //     this.$store.dispatch("getListOfMessages", folder);
+      //   }
+      //   else {
+      //     this.$store.dispatch("getFolderListOfMessages", folder);
+      //   }
+      //   eventBus.$emit("UNCHECKED");  
+      // }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
