@@ -231,6 +231,9 @@
             <div class="rightTopPad" v-else-if="totalMessages == 'many'">
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
             </div>
+            <div class="rightTopPad" v-else-if="totalMessages == 'unknown'">
+              serch results
+            </div>
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
             <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
@@ -908,6 +911,10 @@ export default {
           // })
           this.$store.state.totalMessages = "many";
           this.totalMessages = "many";
+        }
+        else if (folder == "SEARCH"){
+          this.$store.state.totalMessages = "unknown";
+          this.totalMessages = "unknown";
         }
         else {
           gapi.client.gmail.users.labels.get({
