@@ -238,6 +238,7 @@ input:focus {
 
 
 <script>
+import eventBus from '../event_bus'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -266,6 +267,7 @@ export default {
       this.$store.state.currentFolder  = "SEARCH";
       console.log("IT has been set to: " + this.$store.state.currentFolder);
       this.$store.state.viewFolder = "Search";
+      eventBus.$emit("TOTAL_EMAIL_COUNT", "SEARCH");
       this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
     },
     signOut(){

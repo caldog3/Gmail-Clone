@@ -232,7 +232,7 @@
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
             </div>
             <div class="rightTopPad" v-else-if="totalMessages == 'unknown'">
-              serch results
+              search results
             </div>
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
@@ -913,6 +913,7 @@ export default {
           this.totalMessages = "many";
         }
         else if (folder == "SEARCH"){
+          console.log("searching folder total update -------------------------");
           this.$store.state.totalMessages = "unknown";
           this.totalMessages = "unknown";
         }
