@@ -128,8 +128,13 @@
               </div>
 
               <div class="highlightArea">              
-                <div class="highlightArea">
+                <div class="theRestoftheTime">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                </div>
+                <div class="firefoxOnly">
+                  <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(thread)" :checked="thread.starred" title="bookmark page">
+                  <label for="ffstar" style="font-size: 22px" class="notchecked">&#X2606;</label>
+                  <label for="ffstar" style="color:gold;font-size: 22px" class="checked">&#X2605;</label>
                 </div>
               </div>
 
