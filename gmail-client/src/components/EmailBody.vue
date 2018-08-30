@@ -35,7 +35,6 @@
               <div>
                 <font-awesome-icon class="Icon" icon="ellipsis-v" />
               </div>
-
           </div>
         </div>
       </div>

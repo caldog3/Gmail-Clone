@@ -3,10 +3,11 @@
     <div class="iconDiv">
       <div class="spacing">
         <div>
-          <span v-if=!messageBody>
-            <div class="flexIcons">
-              
-               <!-- <div v-on:click="checkAll(this)" class="item"> -->
+
+          <!-- just for sitting in an unchecked email list -->
+          <span v-if="!messageBody">
+
+            <div class="flexIcons">  <!-- this guy is having problems-->
               <div class="item">
                 <label class="container">
                   <div class="highlightAreaCheck">
@@ -16,7 +17,6 @@
                   </div>
                 </label>
               </div>
-
               <div class="firefoxOnlyCaret">
                 <div class="highlightArea2" v-on:click="caretDropdownFunction()">
                   <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="caret-down"/></div>
@@ -37,29 +37,113 @@
                 </div>
               </div>
 
-              <div class="item1">
-                <div class="highlightArea" v-on:click="refreshing()">
-                  <div>
-                    <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
-                    <span class="tooltiptext">Refresh</span>
+            
+              <!-- with checkeditems -->
+              <span v-if="checkedEmails">
+                <div class="wrapper large">
+                  <div class="item">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
+                      <span class="tooltiptext">Archive</span>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
+                      <span class="tooltiptext">Report Spam</span>
+                    </div>
+                  </div>
+
+                  <div class="item" v-on:click="trashingSet()">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="trash" />
+                      <span class="tooltiptext">Delete</span> 
+                    </div>
+                  </div>
+
+                  <div class="break">
+                    |
+                  </div>
+
+                  <div class="item" v-on:click="unreadSet()">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                      <span class="tooltiptext">Mark as Unread</span>
+                    </div>
+                  </div>
+                  
+                  <div class="item" v-on:click="readSet()">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
+                      <span class="tooltiptext">Mark as Read</span>
+                    </div>
+                  </div>
+
+                  <div class="break">
+                    |
+                  </div>
+
+                  <div class="item">
+                    <div class="highlightArea">
+                      <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
+                      <span class="tooltiptext">Move to</span>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
+                      <div  class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="ellipsesDropdown" class="dropdown-content">
+                        <p>Mark as read</p>
+                        <hr>
+                        <p>Mark as important</p>
+                        <hr>
+                        <p>Add to tasks</p>
+                        <hr>
+                        <p>Add star</p>
+                        <hr>
+                        <p>Create Event</p>
+                        <hr>
+                        <p>Filter messages like these</p>
+                        <hr>
+                        <p>Mute</p>
+                      </div>  
+                    </div>
                   </div>
                 </div>
-              </div>
+              </span>
 
-              <div class="item">
-                <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
-                  <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
-                  <div id="ellipsesDropdown" class="dropdown-content">
-                    <p v-on:click="markAllAsRead()">  Mark all as read </p>
-                    <hr>
-                    <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+              <!-- this is for unchecked status after checkbox -->
+              <span v-else>
+                <div class="wrapper">
+                  <div class="item1">
+                    <div class="highlightArea" v-on:click="refreshing()">
+                      <div>
+                        <font-awesome-icon style="color:white;" class="Icon" icon="retweet"/>
+                        <span class="tooltiptext">Refresh</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="item">
+                    <div class="highlightArea" v-on:click="ellipsesDropdownFunction()">
+                      <div class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="ellipsis-v"/></div>
+                      <div id="ellipsesDropdown" class="dropdown-content">
+                        <p v-on:click="markAllAsRead()">  Mark all as read </p>
+                        <hr>
+                        <div class="noHighlightDiv" disabled>Select messages to see more actions</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-
+              </span> 
             </div>
           </span>
-      
+
+
+  
+          <!-- inside a message body -->
           <span v-if=messageBody>
             <div class="CenterIt">
               <div v-on:click.stop="back()" class="item">
@@ -99,14 +183,7 @@
                   <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
-              </div>
-            
-              <div class="item">
-                <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="clock" /> 
-                  <span class="tooltiptext">Snooze</span>
-                </div>
-              </div>
+              </div>              
 
               <div class="break">
                 |
@@ -153,6 +230,9 @@
             </div>
             <div class="rightTopPad" v-else-if="totalMessages == 'many'">
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
+            </div>
+            <div class="rightTopPad" v-else-if="totalMessages == 'unknown'">
+              search results
             </div>
             <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
 
@@ -333,8 +413,13 @@ button {
   float: right;
   margin-right: 20%;
 }
-
-
+.wrapper {
+  display: flex;
+  flex-direction: row;
+}
+.large {
+  margin-left: 20px;
+}
 
 
 
@@ -664,6 +749,7 @@ export default {
   data() {
     return {
       messageBody: false,
+      checkedEmails: false,
       checked: false,
       totalMessages: "50",
       check: false,
@@ -672,7 +758,7 @@ export default {
   methods: {
     refreshing() {
       let folder = this.$store.state.currentFolder;
-      console.log("refreshing");
+      console.log("refreshing", folder);
       console.log(this.$store.state.labelMessages);
       this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
@@ -683,6 +769,7 @@ export default {
       else {
         this.$store.dispatch("getFolderListOfMessages", folder);
       }
+      this.checkedEmails = false;
     },
     pageNum() {
       return this.$store.state.currentPage;
@@ -713,6 +800,22 @@ export default {
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
       console.log("Clicked the button");
+    },
+    trashingSet() {
+      eventBus.$emit("TRASHING_CHECKED_THREADS");
+      console.log("----------trashingSet--------------");
+    },
+    unreadSet() {
+      eventBus.$emit("UNREAD_SET");
+    },
+    readSet() {
+      eventBus.$emit("READ_SET");
+    },
+    checking() {
+      this.checkedEmails = true;
+    },
+    notChecked() {
+      this.checkedEmails = false;
     },
     true() {
       this.messageBody = true;
@@ -799,6 +902,7 @@ export default {
         else if (folder == "ALL_MAIL") {
           // gapi.client.gmail.users.labels.get({
           //   'userId': 'me',
+          //   'q': '',
           // }).then((response) => {
           //   totalInboxEmailCount = response.result.threadsTotal;
           //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
@@ -807,6 +911,11 @@ export default {
           // })
           this.$store.state.totalMessages = "many";
           this.totalMessages = "many";
+        }
+        else if (folder == "SEARCH"){
+          console.log("searching folder total update -------------------------");
+          this.$store.state.totalMessages = "unknown";
+          this.totalMessages = "unknown";
         }
         else {
           gapi.client.gmail.users.labels.get({
@@ -824,6 +933,10 @@ export default {
     }
   },
   created() {
+    eventBus.$on("REFRESH", this.refreshing);
+    eventBus.$on('CHECKED_MESSAGES', this.checking);
+    eventBus.$on('UNCHECKED', this.notChecked);
+
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false);
     eventBus.$on('TOTAL_EMAIL_COUNT', folder => {

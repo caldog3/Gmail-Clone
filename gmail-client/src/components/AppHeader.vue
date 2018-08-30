@@ -20,11 +20,10 @@
               <font-awesome-icon icon="search" size="lg"/>
             </div>
             <div class="searchBar">
-              <input type="text" v-model="searchQuery" placeholder="Search Mail">  
+              <input @keyup.enter="searching" type="text" v-model="searchQuery" placeholder="Search Mail">  
             </div>
           </div>  
         </div>
-        <input type="submit" class="searchButton" value="Search" @click="searching">
 
         <div>
           <div class="flex1">
@@ -239,6 +238,7 @@ input:focus {
 
 
 <script>
+import eventBus from '../event_bus'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -263,21 +263,18 @@ export default {
         this.$store.state.labelMessages.SEARCH = [];
       }
       this.$router.push({ path: 'Folder/SEARCH/'});
-      console.log("AM I SEARCHING?");
-      console.log(this.searchQuery);
       // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
       this.$store.state.currentFolder  = "SEARCH";
       console.log("IT has been set to: " + this.$store.state.currentFolder);
       this.$store.state.viewFolder = "Search";
+      eventBus.$emit("TOTAL_EMAIL_COUNT", "SEARCH");
       this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
-      console.log("State of the store");
-      console.log(this.$store.state.labelMessages.SEARCH);
     },
     signOut(){
       this.$store.dispatch('signOut');
       this.$router.push({ path: '/' });
     },
-    DropdownFunction() { 
+    DropdownFunction() {
       document.getElementById("Dropdown").classList.toggle("show");
     },
     // Close the dropdown if the user clicks outside of it

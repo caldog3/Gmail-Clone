@@ -2,9 +2,6 @@
 <template>
   <div class="everything">
     <template v-if="threads">
-      <div class="currentFolderLine">
-        <p>{{this.$store.state.currentFolder}}</p>
-      </div>     
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
           <span>Messages that have been in {{threads[0].labelId}} more than 30 days will be automatically deleted. &emsp;</span>
@@ -27,7 +24,7 @@
 
               <div class="first">
                 <label class="container">
-                  <div class="highlightAreaCheck">
+                  <div class="highlightAreaCheck"  v-on:click="checking()">
                     <input type="checkbox" checked="checked" name="checks" :value="thread.threadId" v-model="checkedEmails">
                     <span class="checkmark"></span>
                   </div>
@@ -87,26 +84,23 @@
 
                 <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                  
                 </div>
 
                 <div class="highlightArea" tooltip="Spam">
                   <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
-                  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-                  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  
                 </div>
 
               </div>
             </div>
+
 
             <div class="smallOnly">
               <span>{{ thread.time }}</span>
@@ -116,31 +110,32 @@
 
                   <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Spam">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="exclamation-circle" /> 
-
                   </div>
 
                   <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
-
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
                     <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
-
                   </div>
-
 
                 </div>
               </div>
 
+
               <div class="highlightArea">              
-                <div class="highlightArea">
+                <div class="theRestoftheTime">
                   <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
+                </div>
+                <div class="firefoxOnly">
+                  <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(thread)" :checked="thread.starred" title="bookmark page">
+                  <label for="ffstar" style="font-size: 22px" class="notchecked">&#X2606;</label>
+                  <label for="ffstar" style="color:gold;font-size: 22px" class="checked">&#X2605;</label>
                 </div>
               </div>
 
@@ -207,7 +202,7 @@
 }
 .unreadClass {
   width: 100%;
-  font-weight: 90;
+  font-weight: lighter;;
   position: relative;
   /* z-index: 1; */
 }
@@ -629,10 +624,12 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages } from './../store-utility-files/gmail-api-calls';
+import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages, trashMessage } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { sortBy } from 'lodash'
+import { setTimeout } from 'timers';
 import Vue from 'vue';
+import { resolve } from 'url';
 
 export default {
   name: 'EmailList',
@@ -646,9 +643,21 @@ export default {
       starCheck: false,
       checkedEmails: [],
       userEmail: '',
+      hadValues: false,
     }
   },
   methods: {
+    checking() {
+      setTimeout(() => {      
+        if (this.checkedEmails.length > 0) {
+          eventBus.$emit("CHECKED_MESSAGES");
+        }
+        else {
+          eventBus.$emit("UNCHECKED");
+          
+        }
+      }, 150);
+    },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
       if(thread.starred === true) {
@@ -711,6 +720,47 @@ export default {
     },
     openCompose() {
       eventBus.$emit('COMPOSE_OPEN');
+    },
+    readSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsRead(this.checkedEmails[i]);
+        console.log("marking one of them as read");
+      }
+      //probably do some refreshing here too...
+    },
+    unreadSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsUnread(this.checkedEmails[i]);
+        console.log("marking one of them as unread");
+      }
+      //probably do some refreshing here too...
+    },
+    trashCheckedThreads() {
+      console.log("BEFORE trashCheckedThreads()");
+      
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        console.log("Trashing+++++++++++++++++++++++++++++");
+        trashMessage(this.checkedEmails[i]);
+        console.log("Trashing one of them here");
+      }
+      
+      console.log("trashCheckedThreads():----------")
+      eventBus.$emit("REFRESH");
+      //We should refresh so trashed threads don't remain in the inbox...
+      // setTimeout(() => {
+      //   this.checkedEmails = [];
+        
+      //   let folder = this.$store.state.currentFolder;
+      //   this.$store.state.currentPage = 1;
+      //   this.$store.state.labelMessages[folder] = [];
+      //   if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
+      //     this.$store.dispatch("getListOfMessages", folder);
+      //   }
+      //   else {
+      //     this.$store.dispatch("getFolderListOfMessages", folder);
+      //   }
+      //   eventBus.$emit("UNCHECKED");  
+      // }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
@@ -789,13 +839,20 @@ export default {
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
+          console.log("just checking");
+          eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
           document.getElementsByName('checks')[i].checked = false;
+          console.log("just UNCECKING?");
+          eventBus.$emit("UNCHECKED");
         }
       }
     });
     eventBus.$on('MARK_ALL_AS_READ', this.readAll);
+    eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
+    eventBus.$on("READ_SET", this.readSet);
+    eventBus.$on("UNREAD_SET", this.unreadSet);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }
