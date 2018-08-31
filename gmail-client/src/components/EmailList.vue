@@ -16,7 +16,7 @@
         </div>
       </span>
 
-      <div class="background">
+      <div class="background" v-if="!threads.includes(undefined)">
         <div v-for="thread in threads" :key="thread.threadId" v-bind:class="readClassChanger(thread)">
           <div class="FlexTable">
 
@@ -626,10 +626,9 @@ import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages, trashMessage } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
-import { sortBy } from 'lodash'
 import { setTimeout } from 'timers';
+import { sortBy } from 'lodash';
 import Vue from 'vue';
-import { resolve } from 'url';
 
 export default {
   name: 'EmailList',
@@ -736,31 +735,10 @@ export default {
       //probably do some refreshing here too...
     },
     trashCheckedThreads() {
-      console.log("BEFORE trashCheckedThreads()");
-      
-      for(let i = 0; i < this.checkedEmails.length; i++) {
-        console.log("Trashing+++++++++++++++++++++++++++++");
-        trashMessage(this.checkedEmails[i]);
-        console.log("Trashing one of them here");
+      if (this.checkedEmails.length > 0){
+        const trashingPromises = this.checkedEmails.map(email => trashMessage(email));
+        Promise.all(trashingPromises).then(() => eventBus.$emit("REFRESH"));
       }
-      
-      console.log("trashCheckedThreads():----------")
-      eventBus.$emit("REFRESH");
-      //We should refresh so trashed threads don't remain in the inbox...
-      // setTimeout(() => {
-      //   this.checkedEmails = [];
-        
-      //   let folder = this.$store.state.currentFolder;
-      //   this.$store.state.currentPage = 1;
-      //   this.$store.state.labelMessages[folder] = [];
-      //   if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-      //     this.$store.dispatch("getListOfMessages", folder);
-      //   }
-      //   else {
-      //     this.$store.dispatch("getFolderListOfMessages", folder);
-      //   }
-      //   eventBus.$emit("UNCHECKED");  
-      // }, 1500); //doesnt work.... gets duplicates of every email...but this same code WORKS for refreshing in the utility bar
     },
     readAll() {
       let labelId = this.labelId;
@@ -802,7 +780,6 @@ export default {
 
     threads() {
       const labelId = this.labelId;
-      console.log(labelId + ": is the threads labelId");
       const labelThreads = this.$store.getters.getLabelMessages;
       
       const labelIdThreads = labelThreads[labelId];
@@ -823,13 +800,10 @@ export default {
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages};
-          } else {
-            console.log("Not yet Ready. The Label is", labelId)
-            return {};
+            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
           }
         });
-        return fullThreadData;
+        return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
       }
     },
   },
