@@ -10,10 +10,13 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Inbox')" v-on:click="activateFolder('Inbox')">
         <div id="sidebarFlex" v-on:click="loadInbox()">
-          <div>
-            <font-awesome-icon style="color:white;" icon="inbox" />&emsp;  {{labels[0].folder}}
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="inbox" />
           </div>
           <div>
+            {{labels[0].folder}}
+          </div>
+          <div class="unreadCount">
             <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
             <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
           </div>
@@ -22,10 +25,13 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
-          <div> 
-            <font-awesome-icon style="color:white;" icon="star" />&emsp; {{labels[1].folder}}
-          </div>
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="star" />
+          </div>  
           <div>
+            {{labels[1].folder}}
+          </div>
+          <div class="unreadCount">
             <p class="notificationPill" v-if="labels[1].unreadCount > 0">{{labels[1].unreadCount}}</p>
           </div>
         </div>
@@ -41,10 +47,13 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Sent')" v-on:click="generalHandle('Sent')">
         <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="paper-plane" />&emsp;  Sent
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="paper-plane" />
           </div>
           <div>
+            Sent
+          </div>
+          <div class="unreadCount">
             <p class="notificationPill" v-if="labels[3].unreadCount > 0">{{labels[3].unreadCount}}</p>
           </div>
         </div>
@@ -53,10 +62,13 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
         <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="file"/>&emsp;  Drafts
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="file"/>
           </div>
           <div>
+            Drafts
+          </div>
+          <div class="unreadCount">
             <p class="notificationPill" v-if="draftNum > 0">{{draftNum}}</p>
           </div>
         </div>
@@ -64,10 +76,13 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
         <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="arrow-right" />&emsp;  Important
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="arrow-right" />
           </div>
           <div>
+            Important
+          </div>
+          <div class="unreadCount">
             <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
           </div>  
         </div>
@@ -75,8 +90,11 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
         <div id="sidebarFlex">
-          <div class="notInbox1">
-            <font-awesome-icon style="color:white;" icon="envelope"/>&emsp;  All Mail
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="envelope"/>
+          </div>
+          <div>
+            All Mail
           </div>
         </div>
       </div>
@@ -85,10 +103,13 @@
       <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
-            <div>
-              <font-awesome-icon style="color:white;" icon="folder" />&emsp;  {{label.shortName}}
+            <div class="Icon">
+              <font-awesome-icon style="color:white;" icon="folder" />
             </div>
             <div>
+              {{label.shortName}}
+            </div>
+            <div class="unreadCount">
               <p class="notificationPill" v-if="label.unreadCount > 0">{{label.unreadCount}}</p>
             </div>
           </div>
@@ -97,24 +118,37 @@
 
       <div class="normalRow" v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
-          <div>
-            <font-awesome-icon style="color:white;" icon="exclamation-circle"/>&emsp;  Spam
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="exclamation-circle"/>
           </div>
           <div>
+            Spam
+          </div>
+          <div class="unreadCount">
             <p class="notificationPill" v-if="labels[7].unreadCount > 0">{{labels[7].unreadCount}}</p>
           </div>
         </div>
       </div>
 
       <div class="normalRow" v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
-        <div class="notInbox">
-          <font-awesome-icon style="color:white;" icon="trash" />&emsp;  Trash
+        <div id="sidebarFlex">
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="trash" />
+          </div>
+          <div>
+            Trash
+          </div>
         </div>
       </div>
       
-      <div>
-        <div class="notInboxFinal">
-          <font-awesome-icon style="color:white;" icon="cog" />&emsp;  Manage Labels
+      <div class="altRow">
+        <div id="sidebarFlex">
+          <div class="Icon">
+            <font-awesome-icon style="color:white;" icon="cog" />
+          </div>
+          <div>
+            Manage Labels
+          </div>
         </div>
       </div>
 
@@ -144,6 +178,7 @@ button {
   border-radius: 40px;
   outline: none;
   border: none;
+  line-height: 28px;
 }
 .optionsA {
   color: white;
@@ -170,6 +205,15 @@ button {
   overflow: hidden;
   white-space: nowrap;
 }
+.altRow {
+  width: 253px;
+  height: 35px;
+  padding-left: 25px;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .fullLength {
   padding-left: 0;
   border-radius: 0px 20px 20px 0px;
@@ -178,57 +222,46 @@ button {
   overflow: hidden;
   white-space: nowrap;
 }
-.optionsA > div:hover {
+.normalRow:hover {
+  /* background: rgba(153, 153, 153, 0.4); */
+  background: rgba(255, 255, 255, 0.4);
+}
+.fullLength:hover {
   /* background: rgba(153, 153, 153, 0.4); */
   background: rgba(255, 255, 255, 0.4);
 }
 .activeFolder {
   background: rgba(255, 255, 255, 0.5);
 }
+.activeFolder:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
 
 #sidebarFlex {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   padding-left: 5px;
   padding-right: 10px;
   text-shadow: none;
   height: 100%;
   padding-top: 7px;
 }
+.unreadCount {
+  margin-left: auto;
+}
 #sidebarFlexfull {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   padding-left: 31px;
   padding-right: 10px;
   text-shadow: none;
   padding-top: 7px;
 }
-.notInbox {
-  float: left;
-  padding-left: 5px;
+.Icon {
   padding-right: 10px;
-  text-shadow: none;
-  height: 100%;
-  padding-top: 8px;
-}
-notInbox1 {
-  float: left;
-  padding-left: 5px;
-  padding-right: 10px;
-  text-shadow: none;
-  height: 100%;
-  padding-top: 8px;
-}
-.notInboxFinal {
-  float: left;
-  padding-left: 5px;
-  padding-right: 10px;
-  text-shadow: none;
-  height: 100%;
-  padding-top: 8px;
-  margin-left: 24px;
+  width: 30px;
 }
 #bootstrap-overrides {
   text-align: left;

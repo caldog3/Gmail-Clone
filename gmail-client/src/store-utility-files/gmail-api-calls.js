@@ -118,8 +118,6 @@ const getLabels = () => {
 const getNumberOfMessages = (folder) => {
   gapi.client.load('gmail', 'v1').then(() => {
     folder = folder.toUpperCase();
-    console.log("THE TOTAL NUMBER OF MESSAGES FOLDER IS:");
-    console.log(folder);
     gapi.client.gmail.users.labels.get({
       'userId': 'me',
       'id': folder,
