@@ -159,10 +159,13 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
 
   if (parsedMessage !== undefined && bodyAndAttachments === undefined) {
     body = parsedMessage.message;
-    attachmentIds = parsedMessage.attachments;
-
-    if (attachmentIds.length > 0) {
-      console.log("Unexpected Attachment(s)", attachmentIds);
+    const parsedAttachments = parsedMessage.attachments;
+    
+    for (let attachment of parsedAttachments) {
+      attachmentIds.push({
+        mimeType: attachment.mimetype,
+        attachmentId: attachment.id,
+      });
     }
   } else {
     body = bodyAndAttachments.body;
