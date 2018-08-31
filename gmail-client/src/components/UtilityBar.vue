@@ -48,7 +48,7 @@
                     </div>
                   </div>
 
-                  <div class="item">
+                  <div class="item" v-on:click="spammingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
                       <span class="tooltiptext">Report Spam</span>
@@ -160,10 +160,10 @@
                 </div>
               </div>
 
-              <div class="item">
+              <div class="item" v-on:click="spamming()">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
-                  <span class="tooltiptext">Report Spam</span>
+                  <span class="tooltiptext">Move to Spam</span>
                 </div>
               </div>
 
@@ -796,6 +796,13 @@ export default {
       let folder = this.$store.state.currentFolder;
       this.$store.state.labelMessages[folder] = [];
       this.$store.dispatch("getLastPageListOfMessages", folder);
+    },
+    spamming() {
+      eventBus.$emit("SPAMMING_THREAD");
+
+    },
+    spammingSet() {
+      eventBus.$emit("SPAMMING_CHECKED_THREADS");
     },
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
