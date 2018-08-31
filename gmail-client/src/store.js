@@ -2,12 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { initializeGoogleClient } from './main';
 import { getAttachment } from './store-utility-files/gmail-api-calls';
-import {
-  getTimeFormat,
-  getBody, 
-  resolveLabels, 
-  getEmailInfo
-} from './store-utility-files/email';
+import { getBody, getMessage } from './store-utility-files/email';
+import parse from 'parse-gmail-email';
 
 Vue.use(Vuex);
 
@@ -297,7 +293,7 @@ export default new Vuex.Store({
             context.dispatch("getThreadData", { threadId, labelId });
           });
         }
-        this.state.currentPage += 1;
+        this.state.currentPage++;
       }).catch((err) => {
         console.log(err);
       });
@@ -329,7 +325,7 @@ export default new Vuex.Store({
             context.dispatch("getThreadData", { threadId, labelId });
           });
         }
-        this.state.currentPage -= 1;
+        this.state.currentPage--;
       }).catch((err) => {
         console.log(err);
       });
@@ -344,6 +340,7 @@ export default new Vuex.Store({
       }).then(async (response) => {
        const dataPromise = response.result.messages.map(async message => {
           let messageId = message.id;
+
           return await context.dispatch("getMessageContent", { labelId, messageId, threadId });
         });
         
@@ -353,65 +350,72 @@ export default new Vuex.Store({
       });
     },
     getMessageContent(context, payload) {
+      const messageId = payload.messageId;
+      const threadId = payload.threadId;
+      const labelId = payload.labelId;
+      
       return new Promise((resolve) => {
-        const threadId = payload.threadId;
-        const messageId = payload.messageId;
-        const labelId = payload.labelId;
+        gapi.client.gmail.users.messages.get({ 'userId': 'me', 'id': messageId })
+        .then((response) => {
+          const result = response.result;
+          let parsedMessage, bodyAndAttachments;
 
-        gapi.client.gmail.users.messages.get({
-            'userId': 'me',
-            'id': messageId,
-          }).then((response) => {
-            const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(
-              response.result.payload.headers
-            );
-        
-            const { time, unixTime } = getTimeFormat(response.result.internalDate);
-            context.commit("setThreadTime", { threadId, unixTime });
-
-            const { body, attachmentIds } = getBody(response.result.payload);
-            //sanitize/split body method
-            const { unread, starred } = resolveLabels(response.result.labelIds);
-            const snippet = response.result.snippet;
-            const id = response.result.id;
-            const message = {
-              threadId,
-              messageId,
-              from,
-              detailedFrom,
-              to,
-              conciseTo,
-              cc,
-              subject,
-              snippet,
-              body,
-              time,
-              id,
-              labelId,
-              unread,
-              starred,
-              unixTime,
-              attachmentIds
-            };
-            context.commit("addMessage", message);
-
-          return { messageId, attachmentIds };
-        }).then((payload) => {
-          if (payload.attachmentIds.length >= 1) {
-            payload.attachmentIds.forEach((attachmentId) => {
-              context.commit("addAttachmentId", {
-                attachmentId: attachmentId.attachmentId,
-                mimeType: attachmentId.mimeType,
-                messageId: payload.messageId
-              });
-            });
+          if (result.payload.mimeType.includes('text')){
+            bodyAndAttachments = getBody(result.payload);
           }
-        }).then(() => {
-         resolve();
-        }).catch((err) => {
+          else{
+            try {
+              parse(result, (err, data) => {
+                if (err) {
+                  throw (err);
+                } else {
+                  parsedMessage = data;
+                  if (parsedMessage.message === undefined) {
+                    bodyAndAttachments = getBody(result.payload);
+                  }
+                }
+              })
+            } catch (exception) {
+              // console.log("CALLBACK ERROR", exception);
+              bodyAndAttachments = getBody(result.payload);
+            }
+          }
+
+          const message = getMessage(parsedMessage, bodyAndAttachments, {
+            labelId,
+            threadId,
+            result
+          });
+
+          context.commit("setThreadTime", {
+            unixTime: message.unixTime,
+            threadId
+          });
+
+          context.commit("addMessage", message);
+
+          return {
+            messageId: message.messageId,
+            attachmentIds: message.attachmentIds
+          };
+        }).then((payload) => {
+          if (payload.attachmentIds !== undefined) {
+            if (payload.attachmentIds.length >= 1) {
+              payload.attachmentIds.forEach((attachmentId) => {
+                if (attachmentId !== undefined) {
+                  context.commit("addAttachmentId", {
+                    attachmentId: attachmentId.attachmentId,
+                    mimeType: attachmentId.mimeType,
+                    messageId: payload.messageId
+                  });
+                }
+              });
+            }
+          }
+        }).then(() => resolve()).catch((err) => {
           console.log(err);
           resolve();
-        });
+        })
       });
     },
     getAttachments(context) {
