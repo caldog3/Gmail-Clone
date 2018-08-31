@@ -624,7 +624,8 @@ svg:not(:root).svg-inline--fa {
 <script>
 import eventBus from '../event_bus';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred, getNumberOfMessages, trashMessage } from './../store-utility-files/gmail-api-calls';
+import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
+         getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
@@ -734,6 +735,18 @@ export default {
       }
       //probably do some refreshing here too...
     },
+    spamThread() {
+      if (this.checkedEmails.length > 0) {
+        console.log("SpamThread function ---- not implemented yet");
+      }
+    },
+    spamCheckedThreads() {
+      if (this.checkedEmails.length > 0) {
+        console.log("SpamCheckedThreads function");
+        const spammingPromises = this.checkedEmails.map(email => markSpam(email));
+        Promise.all(spammingPromises).then(() => eventBus.$emit("REFRESH"));
+      }
+    },
     trashCheckedThreads() {
       if (this.checkedEmails.length > 0){
         const trashingPromises = this.checkedEmails.map(email => trashMessage(email));
@@ -827,6 +840,8 @@ export default {
     eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
     eventBus.$on("READ_SET", this.readSet);
     eventBus.$on("UNREAD_SET", this.unreadSet);
+    eventBus.$on("SPAMMING_THREAD", this.spamThread);
+    eventBus.$on("SPAMMING_CHECKED_THREADS", this.spamCheckedThreads);
     this.userEmail = this.$store.state.currentUserProfile.U3;
   },
 }

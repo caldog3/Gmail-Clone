@@ -56,6 +56,18 @@ const archiveMessage = (messageId) => {
   });
 }
 
+const markSpam = (threadId) => {
+  console.log("Marking the spam in api");
+  gapi.client.gmail.users.threads.modify({
+    'userId': 'me',
+    'id': threadId,
+    'addLabelIds': ['SPAM'],
+    'removeLabelIds': ['INBOX', 'CATEGORY_SOCIAL', 'CATEGORY_PROMOTIONS', 'CATEGORY_PERSONAL'],
+
+  }).then((response) => {
+    console.log("Marking as Spam", response);
+  });
+}
 
 const trashMessage = (threadId) => {
   console.log("In the trash message api call");
@@ -170,5 +182,6 @@ export {
   getLabelsForUnread,
   getNumberOfMessages,
   getAttachment,
-  trashMessage
+  trashMessage,
+  markSpam
 };
