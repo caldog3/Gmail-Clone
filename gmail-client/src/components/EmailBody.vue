@@ -324,11 +324,7 @@ export default {
       }
     },
     trash() {
-      console.log("in the trash folder");
-      console.log("thread Id: ");
-      console.log(this.messages);
       let thisThreadid = this.messages[0].threadId;
-      console.log(thisThreadid);
       trashMessage(thisThreadid);
       eventBus.$emit('MESSAGE_LIST');
       this.$router.go(-1);

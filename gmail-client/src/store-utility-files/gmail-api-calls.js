@@ -56,6 +56,7 @@ const archiveMessage = (messageId) => {
   });
 }
 
+
 const trashMessage = (threadId) => {
   console.log("In the trash message api call");
   gapi.client.gmail.users.threads.trash({
