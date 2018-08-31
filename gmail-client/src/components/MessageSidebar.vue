@@ -425,7 +425,9 @@ export default {
 
   },
   created() {
-    this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
+    if(this.$store.getters.getLabelMessages["DRAFT"] !== undefined){
+      this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
+    }
 
     getLabels();
     //Probably a much better way to do this

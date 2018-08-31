@@ -31,120 +31,103 @@ const getTimeFormat = (internalDate) => {
   };
 }
 
-const getBody = (payload) => {
+const getTextBody = (payload) => {
+  const bodyData = payload.body.data;
+  const body = Base64Decode(bodyData);
+
+  return body;
+}
+
+const getMultipartAlternativeBody = (payload) => {
+  const bodyData = payload.parts[1].body.data;
   let body;
-  let attachmentIds = [];  
 
-  if (payload.parts === undefined) {
-    body = Base64Decode(payload.body.data);
+  if (bodyData !== undefined) {
+    body = Base64Decode(bodyData);
   } else {
-    let htmlPart = payload.parts[1];
-    if (htmlPart !== undefined) {
-      
-      let htmlBodyData = htmlPart.body.data;
-      if (htmlBodyData !== undefined) {
-        body = Base64Decode(htmlBodyData);
-      } else {
-        if (payload.parts[0].body.data !== undefined){
-          body = Base64Decode(payload.parts[0].body.data);
-        }
-        else if(payload.parts[0].body.attachmentId !== undefined){
-          for (let part of payload.parts) {
-            if (part.mimeType.includes('application')) {
-              attachmentIds.push({
-                mimeType: part.mimeType,
-                attachmentId: part.body.attachmentId,
-              });
-            }
-          }
-        }
-        else if (payload.parts[0].parts[0] === undefined) {
-          console.log("Edge case = " + payload.parts[0]);
-        }
-        else if (payload.parts[0].parts[0].parts !== undefined){
-          if (payload.parts[0].parts[0].parts[1].body.data !== undefined) {
-            let multipartSignedMixedAlternativeBody = payload.parts[0].parts[0].parts[1].body.data;
-            body = Base64Decode(multipartSignedMixedAlternativeBody);
-          }
-          else if (payload.parts[0].parts[0].parts[1].parts[0].body.data !== undefined) {
-            let multipartSignedMixedAlternativeRelatedBody = payload.parts[0].parts[0].parts[1].parts[0].body.data;
-            body = Base64Decode(multipartSignedMixedAlternativeRelatedBody);
-            
-            let part = payload.parts[1];
-            if (part.mimeType.includes('application')) {
-              attachmentIds.push({
-                mimeType: part.mimeType,
-                attachmentId: part.body.attachmentId,
-              });
-            }
-            else{
-              let multipartMixedAlternativeBodyEdge = payload.parts[0].parts[0].parts[1].body.data;
-              if (multipartMixedAlternativeBodyEdge !== undefined) {
-                body = Base64Decode(multipartMixedAlternativeBodyEdge);
+    let partsArray = payload.parts;
 
-                let bodyAndAttachmentObject = payload.parts;
-                for (let part of bodyAndAttachmentObject) {
-                  if (part.mimeType.includes('application')) {
-                    attachmentIds.push({
-                      mimeType: part.mimeType,
-                      attachmentId: part.body.attachmentId,
-                    });
-                  }
-                  else if (part.mimeType.includes('image')) {
-                    attachmentIds.push({
-                      mimeType: part.mimeType,
-                      attachmentId: part.body.attachmentId,
-                    });
-                  }
-                }
-              }
-            }
-          }
-        }
-        else {
-          if (payload.parts[0].parts[1].body.data !== undefined){
-            let multipartMixedAlternativeBody = payload.parts[0].parts[1].body.data;
-            body = Base64Decode(multipartMixedAlternativeBody);
-
-            let bodyAndAttachmentArray = payload.parts;
-            for (let part of bodyAndAttachmentArray) {
-              if (part.mimeType.includes('image')) {
-                attachmentIds.push({
-                  mimeType: part.mimeType,
-                  attachmentId: part.body.attachmentId,
-                });
-              }
-              else if (part.mimeType.includes('application')) {
-                attachmentIds.push({
-                  mimeType: part.mimeType,
-                  attachmentId: part.body.attachmentId,
-                });
-              }
-            }
-          }
-        } 
-      }
-    } else {
-      let multipartAlternativeBody = payload.parts[0].body.data;
-      if (multipartAlternativeBody !== undefined) {
-        body = Base64Decode(multipartAlternativeBody);
-      } else {
-        let multipartMixedRelatedBody = payload.parts[0].parts[0].body.data;
-        if (multipartMixedRelatedBody !== undefined) {
-          body = Base64Decode(multipartMixedRelatedBody);
-        } else {
-          let multipartMixedRelatedAlternativeBody = payload.parts[0].parts[0].parts[1].body.data;
-          if (multipartMixedRelatedAlternativeBody !== undefined) {
-            body = Base64Decode(multipartMixedRelatedAlternativeBody);
-          }
-        }
+    for (let part of partsArray) {
+      if (part.mimeType === 'multipart/related') {
+        body = getMultipartRelatedBody(part);
+      } else if (part.mimeType.includes('text')) {
+        body = getTextBody(part);
       }
     }
+    return body;
   }
+
+  return { body };
+}
+
+const getMultipartRelatedBody = (payload) => {
+  const bodyData = payload.body.data;
+  let body;
+
+  if (bodyData !== undefined) {
+    body = Base64Decode(bodyData);
+  } else {
+    let partsArray = payload.parts;
+
+    for (let part of partsArray) {
+      if (part.mimeType === 'multipart/alternative') {
+        body = getMultipartAlternativeBody(part);
+      } else if (part.mimeType.includes('text')) {
+        body = getTextBody(part);
+      }
+    }
+    return body;
+  }
+
+  return { body };
+}
+
+const getMultipartMixedData = (payload) => {
+  let bodyAndAttachmentsArray = payload.parts;
+  let attachmentIds = [];
+  let body;
+  
+  for (let part of bodyAndAttachmentsArray) {
+    if (part.mimeType === 'multipart/alternative') {
+      body = getMultipartAlternativeBody(part);
+    } else if (part.mimeType === 'multipart/related') {
+      body = getMultipartRelatedBody(part);
+    } else if (part.mimeType.includes('image') || part.mimeType.includes('application')) {
+      attachmentIds.push({
+        mimeType: part.mimeType,
+        attachmentId: part.body.attachmentId,
+      });
+    }
+  }
+  
+  if (body.body !== undefined) {
+    body = body.body;
+  }
+
   return {
     body,
     attachmentIds
   };
+}
+
+const getBody = (payload) => {
+  let bodyData;
+  let attachmentIds = [];
+
+  if (payload.mimeType === 'multipart/alternative'){
+    bodyData = getMultipartAlternativeBody(payload);
+  } else if (payload.mimeType === 'multipart/mixed') {
+    bodyData = getMultipartMixedData(payload);
+  } else if (payload.mimeType === 'multipart/related') {
+    bodyData = getMultipartRelatedBody(payload);
+  } else if (payload.mimeType.includes('text')) {
+    bodyData = {
+      body: getTextBody(payload),
+      attachmentIds
+    }
+  }
+
+  return bodyData;
 }
 
 const resolveLabels = (tempLabelIds) => {
@@ -163,6 +146,49 @@ const resolveLabels = (tempLabelIds) => {
     unread,
     starred,
   };
+}
+
+const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
+  const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(payload.result.payload.headers);
+  const { time, unixTime } = getTimeFormat(payload.result.internalDate);
+  const { unread, starred } = resolveLabels(payload.result.labelIds);
+  const snippet = payload.result.snippet;
+  const messageId = payload.result.id;
+  let attachmentIds = [];
+  let body;
+
+  if (parsedMessage !== undefined && bodyAndAttachments === undefined) {
+    body = parsedMessage.message;
+    attachmentIds = parsedMessage.attachments;
+
+    if (attachmentIds.length > 0) {
+      console.log("Unexpected Attachment(s)", attachmentIds);
+    }
+  } else {
+    body = bodyAndAttachments.body;
+    attachmentIds = bodyAndAttachments.attachmentIds;
+  }
+  
+  const message = {
+    threadId: payload.threadId,
+    labelId: payload.labelId,
+    messageId,
+    from,
+    detailedFrom,
+    to,
+    conciseTo,
+    cc,
+    subject,
+    snippet,
+    body,
+    unixTime,
+    time,
+    unread,
+    starred,
+    attachmentIds
+  };
+
+  return message;
 }
 
 const getEmailInfo = (headers) => {
@@ -233,10 +259,8 @@ const getEmailInfo = (headers) => {
 }
 
 export {
-  getAuthHeader,
   getTimeFormat,
   getBody,
-  resolveLabels,
-  getEmailInfo,
+  getMessage,
   Base64Encode
 };
