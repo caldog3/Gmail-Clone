@@ -191,9 +191,6 @@ h4 {
   /* margin: auto; position: relative;  */
   max-width: 100%; max-height: 100%;
 }
-/* object {
-    pointer-events: none;
-} */
 .modalDialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
