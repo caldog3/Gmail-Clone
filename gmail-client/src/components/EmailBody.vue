@@ -294,11 +294,20 @@ export default {
           }
           if (times[3] === 0) {
             if (times[2] === 0) {
-              s = times[1] + " minutes";
+              if (times[1] != 1) {
+                s = times[1] + " minutes";
+              }
+              else { s = times[1] + " minute"}
             }
-            else {s = times[2] + " hours"}
+            else {
+              if (times[2] != 1) {s = times[2] + " hours"}
+              else { s = times[2] + " hour"}
+            }
           }
-          else {s = times[3] + " days"}
+          else {
+            if (times[3] != 1) {s = times[3] + " days"}
+            else {s = times[3] + " day"}
+          }
           // eslint-disable-next-line
           this.timeAgo = s.slice();
 // This is all in this property because it overflows the stack if I call another function...
