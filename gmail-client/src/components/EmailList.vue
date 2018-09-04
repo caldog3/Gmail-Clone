@@ -744,13 +744,19 @@ export default {
       if (this.checkedEmails.length > 0) {
         console.log("SpamCheckedThreads function");
         const spammingPromises = this.checkedEmails.map(email => markSpam(email));
-        Promise.all(spammingPromises).then(() => eventBus.$emit("REFRESH"));
+        Promise.all(spammingPromises).then(() => {
+          this.checkedEmails = [];
+          eventBus.$emit("REFRESH");
+        });
       }
     },
     trashCheckedThreads() {
       if (this.checkedEmails.length > 0){
         const trashingPromises = this.checkedEmails.map(email => trashMessage(email));
-        Promise.all(trashingPromises).then(() => eventBus.$emit("REFRESH"));
+        Promise.all(trashingPromises).then(() => {
+          this.checkedEmails = [];
+          eventBus.$emit("REFRESH");
+        });
       }
     },
     readAll() {
