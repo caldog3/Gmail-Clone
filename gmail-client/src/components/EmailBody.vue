@@ -294,9 +294,7 @@ export default {
           }
           if (times[3] === 0) {
             if (times[2] === 0) {
-              if (times[1] != 1) {
-                s = times[1] + " minutes";
-              }
+              if (times[1] != 1) { s = times[1] + " minutes"}
               else { s = times[1] + " minute"}
             }
             else {
