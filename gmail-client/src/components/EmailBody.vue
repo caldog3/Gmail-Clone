@@ -42,7 +42,7 @@
       <div class="leftAlign recipients">
         <p>to {{message.to}}</p>
       </div>
-      
+      <!-- here's the body; need to break the body into 2 pieces -->
       <div v-html="message.body" class="leftAlign"></div>
       
       <div v-if="message.attachmentIds.length > 0">

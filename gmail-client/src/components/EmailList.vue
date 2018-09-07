@@ -1,6 +1,7 @@
 /* eslint-disable */
 <template>
   <div class="everything">
+    {{checkedEmails}}
     <template v-if="threads">
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
@@ -829,6 +830,7 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', source => {
+      //need to modify this.checkedEmails here
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
