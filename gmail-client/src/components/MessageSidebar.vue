@@ -16,10 +16,9 @@
           <div>
             {{labels[0].folder}}
           </div>
-          <div class="unreadCount">
-            <!-- trying to figure out how to determine the object that has the right label from up here in the html -->
+          <!-- <div class="unreadCount">
             <p class="notificationPill" v-if="labels[0].unreadCount > 0">{{labels[0].unreadCount}}</p>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -80,7 +79,7 @@
             <font-awesome-icon style="color:white;" icon="arrow-right" />
           </div>
           <div>
-            Important
+            Important (still implementing)
           </div>
           <div class="unreadCount">
             <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
@@ -94,7 +93,7 @@
             <font-awesome-icon style="color:white;" icon="envelope"/>
           </div>
           <div>
-            All Mail
+            All Mail (still implementing)
           </div>
         </div>
       </div>
