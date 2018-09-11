@@ -1,6 +1,8 @@
 /* eslint-disable */
 <template>
   <div class="everything">
+    <!-- This was for viewing what emails are checked -->
+    <!-- {{checkedEmails}} -->
     <template v-if="threads">
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
@@ -789,14 +791,6 @@ export default {
     },
   },
   computed: {
-    //just messing around here
-    checkedThings: function() {
-      if(this.checkedEmails === []) {
-        return "hey there are checked things";
-      }
-      else { return "nah" };
-    },
-
     threads() {
       const labelId = this.labelId;
       const labelThreads = this.$store.getters.getLabelMessages;
@@ -829,10 +823,13 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', source => {
+      //need to modify this.checkedEmails here to fill the array
+      this.checkedEmails = [];
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
-          console.log("just checking");
+          this.checkedEmails.push(document.getElementsByName('checks')[i].value);
+          // console.log("just checking", document.getElementsByName('checks')[i]);
           eventBus.$emit("CHECKED_MESSAGES");
         }
         else {
