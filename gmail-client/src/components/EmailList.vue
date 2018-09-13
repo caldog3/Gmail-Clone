@@ -808,6 +808,7 @@ export default {
           const threadMessages = messages[threadId];
           const numberOfMessages = threadMessages.length;
 
+
           if (numberOfMessages > 0) {
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
