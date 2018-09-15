@@ -7,6 +7,42 @@
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
+        <!-- This is for collapsing emails to not take up so much space -->
+      <div class="notExpanded" v-if="notExpanded">
+        <div class="flexboxSubject" >
+          <div class="leftAlign">
+            <hr>
+            <b>{{message.from}}</b>
+          </div>
+          <div class="rightAlign shift-down">
+            <div class="flexRight">
+              <span>{{message.time}} ({{timeAgo}} ago)</span>
+              <!-- need to fix the styling here FIXME -->
+              <div class="starBound">
+                <div class="theRestoftheTime">
+                  <span class="highlightArea">
+                    <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
+                  </span> 
+                </div>
+                <div class="firefoxOnly">
+                  <input id="ffstar"  type="checkbox" v-on:click="starredLabelToggle(message)" :checked="message.starred" title="bookmark page">
+                  <label for="ffstar" class="notchecked">&#X2606;</label>
+                  <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overflow">
+          <!-- maybe doing this?... -->
+          <!-- {{message.plainBody}} -->
+          <!-- need some better styling -->
+          <div v-html="message.body" class="leftAlign overflow"></div>
+        </div>    
+      
+
+      </div>
+      <!-- <div class="expandedBody" v-else> -->
       <div class="flexboxSubject">
         <div class="leftAlign">
           <hr>
@@ -75,6 +111,12 @@
 </template>
 
 <style scoped>
+.overflow {
+  margin-right: 10px;
+  overflow:hidden;
+  position: relative;
+  white-space:nowrap;
+}
 button {
   background-color: white;
   border: 1px solid lightgrey;
@@ -270,6 +312,7 @@ export default {
     return {
       timeAgo: "1 hour",
       messageUnix: 0,
+      notExpanded: false,
     }
   },
   computed: {
