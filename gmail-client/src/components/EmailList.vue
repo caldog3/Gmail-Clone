@@ -703,6 +703,8 @@ export default {
       // this.readClassChanger(thread);
       console.log("Hi i'm a thread");
       console.log(thread);
+      //Refreshing the whole list to show updates in read...
+      eventBus.$emit("REFRESH");
       if (thread.labelId !== "DRAFT") {
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
