@@ -9,7 +9,7 @@
     <div v-for="message in messages" :key="message.messageId">
         <!-- This is for collapsing emails to not take up so much space -->
       <div class="notExpanded" v-if="notExpanded">
-        <div class="flexboxSubject" >
+        <div class="flexboxSubject" v-on:click="expand()">
           <div class="leftAlign">
             <hr>
             <b>{{message.from}}</b>
@@ -37,13 +37,12 @@
           <!-- maybe doing this?... -->
           <!-- {{message.plainBody}} -->
           <!-- need some better styling -->
-          <div v-html="message.body" class="leftAlign overflow"></div>
+          <!-- <div v-html="message.body" class="leftAlign overflow"></div> -->
         </div>    
-      
-
       </div>
-      <!-- <div class="expandedBody" v-else> -->
-      <div class="flexboxSubject">
+
+      <div class="expandedBody" v-else>
+      <div class="flexboxSubject" v-on:click="unexpand()">
         <div class="leftAlign">
           <hr>
           <b>{{message.detailedFrom}}</b>
@@ -74,6 +73,7 @@
           </div>
         </div>
       </div>
+      
 
       <div class="leftAlign recipients">
         <p>to {{message.to}}</p>
@@ -95,6 +95,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
@@ -361,6 +362,12 @@ export default {
 
   },
   methods: {
+    expand() {
+      this.notExpanded = false;
+    },
+    unexpand() {
+      this.notExpanded = true;
+    },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
       if(thread.starred === true) {
