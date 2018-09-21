@@ -1,6 +1,8 @@
 /* eslint-disable */
 <template>
   <div class="everything">
+    <!-- This was for viewing what emails are checked -->
+    <!-- {{checkedEmails}} -->
     <template v-if="threads">
       <span v-if="threads[0] !== undefined && (threads[0].labelId === 'TRASH' || threads[0].labelId === 'SPAM')">
         <div id="center-align">
@@ -711,6 +713,8 @@ export default {
         //need an if to check length of thread if length is zero, Compose_open, else open thread
         eventBus.$emit('COMPOSE_OPEN');
       }
+      //Refreshing the whole list to show updates in read...
+      eventBus.$emit("REFRESH");
     },
     check() {
       this.checked = !this.checked;
@@ -789,14 +793,6 @@ export default {
     },
   },
   computed: {
-    //just messing around here
-    checkedThings: function() {
-      if(this.checkedEmails === []) {
-        return "hey there are checked things";
-      }
-      else { return "nah" };
-    },
-
     threads() {
       const labelId = this.labelId;
       const labelThreads = this.$store.getters.getLabelMessages;
@@ -814,8 +810,10 @@ export default {
           const threadMessages = messages[threadId];
           const numberOfMessages = threadMessages.length;
 
+
           if (numberOfMessages > 0) {
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
+            console.log("at 0:", messages);
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
@@ -829,10 +827,13 @@ export default {
   created() {
     eventBus.$emit('MESSAGE_LIST');
     eventBus.$on('CHECK_ALL', source => {
+      //need to modify this.checkedEmails here to fill the array
+      this.checkedEmails = [];
       for(var i = 0; i < document.getElementsByName('checks').length; i++) {
         if (source === true) {
           document.getElementsByName('checks')[i].checked = true;
-          console.log("just checking");
+          this.checkedEmails.push(document.getElementsByName('checks')[i].value);
+          // console.log("just checking", document.getElementsByName('checks')[i]);
           eventBus.$emit("CHECKED_MESSAGES");
         }
         else {

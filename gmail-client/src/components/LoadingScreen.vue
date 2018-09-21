@@ -120,7 +120,6 @@ import eventBus from './../event_bus';
     this.getFolderLabels('STARRED');
     this.getFolderLabels('IMPORTANT');
     this.getFolderLabels('TRASH');
-   
     this.getAllLabels();
    },
  }
