@@ -713,6 +713,8 @@ export default {
         //need an if to check length of thread if length is zero, Compose_open, else open thread
         eventBus.$emit('COMPOSE_OPEN');
       }
+      //Refreshing the whole list to show updates in read...
+      eventBus.$emit("REFRESH");
     },
     check() {
       this.checked = !this.checked;
