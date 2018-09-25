@@ -8,8 +8,8 @@
 
     <div v-for="message in messages" :key="message.messageId">
         <!-- This is for collapsing emails to not take up so much space -->
-      <div class="notExpanded" v-if="notExpanded">
-        <div class="flexboxSubject" v-on:click="expand()">
+      <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
+        <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
             <b>{{message.from}}</b>
@@ -36,13 +36,14 @@
         <div class="overflow">
           <!-- maybe doing this?... -->
           <!-- {{message.plainBody}} -->
-          <!-- need some better styling -->
+          <!-- need some better styling to hide overflow...maybe just use the snippet-->
           <!-- <div v-html="message.body" class="leftAlign overflow"></div> -->
+          <div v-html="message.snippet"></div>
         </div>    
       </div>
 
       <div class="expandedBody" v-else>
-      <div class="flexboxSubject" v-on:click="unexpand()">
+      <div class="flexboxSubject cursorHover" v-on:click="unexpand()">
         <div class="leftAlign">
           <hr>
           <b>{{message.detailedFrom}}</b>
@@ -112,6 +113,9 @@
 </template>
 
 <style scoped>
+.cursorHover {
+  cursor: pointer;
+}
 .overflow {
   margin-right: 10px;
   overflow:hidden;
@@ -363,9 +367,11 @@ export default {
   },
   methods: {
     expand() {
+      console.log("Expanding");
       this.notExpanded = false;
     },
     unexpand() {
+      console.log("Collapsing");
       this.notExpanded = true;
     },
     starredLabelToggle(thread) {

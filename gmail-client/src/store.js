@@ -170,7 +170,7 @@ export default new Vuex.Store({
       });
     },
     getQueryListOfMessages(context, query) {
-      console.log("query checkpoint: 1")
+      // console.log("query checkpoint: 1")
       let labelId = "SEARCH";
       context.commit("addLabelId", labelId);
       gapi.client.load('gmail', 'v1').then(() => {
@@ -179,11 +179,11 @@ export default new Vuex.Store({
           'maxResults': 50,
           'q': query,
         }).then((response) => {
-          console.log("query checkpoint 2");
+          // console.log("query checkpoint 2");
           console.log(response);
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
-              console.log("query checkpoint 3");
+              // console.log("query checkpoint 3");
               let threadId = thread.id;
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
