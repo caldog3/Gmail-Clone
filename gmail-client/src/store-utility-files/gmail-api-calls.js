@@ -13,7 +13,8 @@ const sendMessage = (headers, message) => {
   gapi.client.gmail.users.messages.send({
     'userId': 'me',
     'resource': {
-      'raw': Base64Encode(email)
+      'raw': Base64Encode(email),
+      // 'threadId': 'threadIdVariable'   pretty sure this is how this works
     }
   }).then((response) => {
     console.log(`Email Sent. Response =>:`, response);
@@ -21,6 +22,7 @@ const sendMessage = (headers, message) => {
     console.log(err);
   });
 }
+
 
 const markAsRead = (messageId) => {
   gapi.client.gmail.users.messages.modify({
@@ -34,6 +36,7 @@ const markAsRead = (messageId) => {
   });
 }
 const markAsUnread = (messageId) => {
+  // testing stuff
   gapi.client.gmail.users.messages.modify({
     'userId': 'me',
     'id': messageId,

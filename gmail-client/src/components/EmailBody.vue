@@ -8,7 +8,7 @@
 
     <div v-for="message in messages" :key="message.messageId">
         <!-- This is for collapsing emails to not take up so much space -->
-      <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
+      <div class="notExpanded" v-if="!expanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
         <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
@@ -34,15 +34,12 @@
           </div>
         </div>
         <div class="overflow">
-          <!-- maybe doing this?... -->
-          <!-- {{message.plainBody}} -->
-          <!-- need some better styling to hide overflow...maybe just use the snippet-->
-          <!-- <div v-html="message.body" class="leftAlign overflow"></div> -->
-          <div v-html="message.snippet"></div>
+
+          <div class="left-align" v-html="message.snippet"></div>
         </div>    
       </div>
 
-      <div class="expandedBody" v-else>
+    <div class="expandedBody" v-else-if="expanded"> <!-- checkk for final email in list -->
       <div class="flexboxSubject cursorHover" v-on:click="unexpand()">
         <div class="leftAlign">
           <hr>
@@ -113,6 +110,10 @@
 </template>
 
 <style scoped>
+.leftAlign {
+  text-align: left;
+}
+
 .cursorHover {
   cursor: pointer;
 }
@@ -317,7 +318,7 @@ export default {
     return {
       timeAgo: "1 hour",
       messageUnix: 0,
-      notExpanded: false,
+      expanded: false,
     }
   },
   computed: {
@@ -325,6 +326,7 @@ export default {
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
         let object = sortBy(threadMessages, m => m.unixTime);
+        console.log("This object", object[0].unixTime); // soo.....it does work..just throws up errors
         let time = object[0].unixTime;
         // this.messageUnix = time;
           var ts = Math.round((new Date()).getTime() / 1000);
@@ -368,11 +370,11 @@ export default {
   methods: {
     expand() {
       console.log("Expanding");
-      this.notExpanded = false;
+      this.expanded = true;
     },
     unexpand() {
       console.log("Collapsing");
-      this.notExpanded = true;
+      this.expanded = false;
     },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
@@ -399,6 +401,16 @@ export default {
       }
       return theClass;
     },
+    // we'll need this at some point
+    // sendReply() {
+    //   this.close();
+    //   let headerSection = {
+    //     'To': ,
+    //     'Subject': 'Re: ' + ////,
+    //   }
+    //   sendMessage(headerSection, this.composeMessage);
+    //   this.composeTidy();
+    // },
 
   },
   created() {

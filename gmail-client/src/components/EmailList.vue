@@ -683,6 +683,10 @@ export default {
       else if (thread.unread === false) {
         markAsRead(thread.threadId);
       }
+      setTimeout(() => {      
+        eventBus.$emit("REFRESH");
+      }, 1000);
+
     },
     archiveThread(thread) {
       console.log("archiving");
@@ -730,14 +734,23 @@ export default {
         markAsRead(this.checkedEmails[i]);
         console.log("marking one of them as read");
       }
+      setTimeout(() => {      
+        eventBus.$emit("REFRESH");
+      }, 150);
       //probably do some refreshing here too...
+      // eventBus.$emit("REFRESH");
     },
     unreadSet() {
       for(let i = 0; i < this.checkedEmails.length; i++) {
         markAsUnread(this.checkedEmails[i]);
         console.log("marking one of them as unread");
       }
+      setTimeout(() => {      
+        eventBus.$emit("REFRESH");
+      }, 150);
       //probably do some refreshing here too...
+      // eventBus.$emit("REFRESH");
+
     },
     spamThread() {
       if (this.checkedEmails.length > 0) {
@@ -813,7 +826,7 @@ export default {
 
           if (numberOfMessages > 0) {
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
-            console.log("at 0:", messages);
+            // console.log("at 0:", messages);
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           

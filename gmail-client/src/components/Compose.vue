@@ -27,7 +27,7 @@
     
     <div class="footerSection">
       <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send" @click="send">
+        <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
       </div>
     </div>
   </div>
@@ -192,7 +192,7 @@ export default {
     close() {
       this.active = false
     },
-    send() {
+    sendCompose() {
       this.close();
       let headerSection = {
         'To': this.composeTo,
