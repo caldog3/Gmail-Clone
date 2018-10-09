@@ -813,7 +813,7 @@ export default {
 
           if (numberOfMessages > 0) {
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
-            console.log("at 0:", messages);
+
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
