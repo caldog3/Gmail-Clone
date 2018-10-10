@@ -100,8 +100,10 @@ const getMultipartMixedData = (payload) => {
     }
   }
   
-  if (body.body !== undefined) {
-    body = body.body;
+  if(body !== undefined){
+    if (body.body !== undefined) {
+      body = body.body;
+    }
   }
 
   return {
