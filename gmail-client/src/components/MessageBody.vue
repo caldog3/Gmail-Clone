@@ -1,14 +1,6 @@
-/* eslint-disable */
 <template>
-  <div id="body" v-if="messages[0] !== undefined">
-    <div class="flexboxSubject">
-      <h5 class="leftAlign">{{messages[0].subject}}</h5>
-      <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
-    </div>
-
-    <div v-for="message in messages" :key="message.messageId">
-        <!-- This is for collapsing emails to not take up so much space -->
-      <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
+ <div>
+     <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
         <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
@@ -82,30 +74,84 @@
       <!-- here's the body; need to break the body into 2 pieces -->
       <div v-html="message.body" class="leftAlign"></div>
 
-      <div v-if="getAttachments(message).length > 0" >
-        <gallery :images="getAttachments(message)" :index="index" @close="index = null"></gallery>
+      <div v-if="attachments.length > 0" >
+        <gallery :images="attachments" :index="index" @close="index = null"></gallery>
         <div
           class="image"
-          v-for="(image, imageIndex) in getAttachments(message)"
+          v-for="(image, imageIndex) in attachments"
           :key="imageIndex"
           @click="index = imageIndex"
           :style="{ backgroundImage: 'url(' + image + ')', width: '300px', height: '210px' }"
         ></div>
       </div>
       </div>
-    </div>
-
-    <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
-      &emsp;
-      <span v-bind:class="ifGroupMessage()">
-        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
-      &emsp;
-      </span>
-      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
-    </div>
-  </div>
+ </div>
 </template>
+
+<script>
+import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import VueGallery from 'vue-gallery';
+
+export default {
+  name: 'ThreadBody',
+  props: ['message'],
+  components: {
+    FontAwesomeIcon,
+    'gallery': VueGallery
+  },
+  data() {
+    return {
+      timeAgo: "1 hour",
+      notExpanded: false,
+    //   attachments: [],
+      index: null,
+    };
+  },
+  filters: {
+    getFirstNames(users) {
+      if (!users) {
+        return '';
+      }
+      const usersArray = users.split(",");
+      return usersArray.map((person) => {
+        if(person.charAt(0) === " " || person.charAt(0) === '\"'){
+          const newPerson = person.substr(1);
+          return newPerson.substr(0, newPerson.indexOf(" "));
+        }
+        return person.substr(0, person.indexOf(" "));
+      }).toString();
+    }
+  },
+  computed: {
+    attachments(){
+      const attachmentIds = this.$store.getters.getAttachments;
+      return this.message.attachmentIds.map((id) => {
+        return `data:${attachmentIds[id.attachmentId].mimeType};base64,${attachmentIds[id.attachmentId].data}`;
+      });
+    },
+  },
+  methods: {
+    expand() {
+      console.log("Expanding");
+      this.notExpanded = false;
+    },
+    unexpand() {
+      console.log("Collapsing");
+      this.notExpanded = true;
+    },
+    starredLabelToggle(thread) {
+      thread.starred = !thread.starred;
+      if(thread.starred === true) {
+        markAsStarred(thread.threadId);
+      }
+      else {
+        unMarkAsStarred(thread.threadId);
+      }
+    },  
+  }
+}
+</script>
 
 <style scoped>
 .cursorHover {
@@ -293,131 +339,6 @@ h4 {
     display: none;
   }
 }
-
 </style>
 
-<script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import { sortBy } from 'lodash'
-import eventBus from '../event_bus';
-import { trashMessage, markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
-import VueGallery from 'vue-gallery';
-import Vue from 'vue';
 
-export default {
-  name: 'EmailBody',
-  components: {
-    FontAwesomeIcon,
-    'gallery': VueGallery
-  },
-  data() {
-    return {
-      timeAgo: "1 hour",
-      notExpanded: false,
-      index: null,
-    };
-  },
-  filters: {
-    getFirstNames(users) {
-      if (!users) {
-        return '';
-      }
-      let usersArray = users.split(",");
-      return usersArray.map((person) => {
-        if(person.charAt(0) === " " || person.charAt(0) === '\"'){
-          const newPerson = person.substr(1);
-          return newPerson.substr(0, newPerson.indexOf(" "));
-        }
-        return person.substr(0, person.indexOf(" "));
-      }).toString();
-    }
-  },
-  methods: {
-    getMessages(){
-      let messages = this.$store.state.threadMessages;
-      const threadMessages = messages[this.$route.params.id];
-        let object = sortBy(threadMessages, m => m.unixTime);
-        let time = object[0].unixTime;
-
-          var ts = Math.round((new Date()).getTime() / 1000);
-          var diff = Math.floor((ts - time)), units = [
-            { d: 60, l: "seconds" },
-            { d: 60, l: "minutes" },
-            { d: 24, l: "hours" },
-            { d: 7, l: "days" }
-          ];
-          var s = '';
-          var times = [];
-          for (var i = 0; i < units.length; ++i) {
-            times[i] = (diff % units[i].d);
-            diff = Math.floor(diff / units[i].d);
-          }
-          if (times[3] === 0) {
-            if (times[2] === 0) {
-              if (times[1] != 1) { s = times[1] + " minutes"}
-              else { s = times[1] + " minute"}
-            }
-            else {
-              if (times[2] != 1) {s = times[2] + " hours"}
-              else { s = times[2] + " hour"}
-            }
-          }
-          else {
-            if (times[3] != 1) {s = times[3] + " days"}
-            else {s = times[3] + " day"}
-          }
-          // eslint-disable-next-line
-          this.timeAgo = s.slice();
-// This is all in this property because it overflows the stack if I call another function...
-      this.messages = object;
-    },
-    expand() {
-      console.log("Expanding");
-      this.notExpanded = false;
-    },
-    unexpand() {
-      console.log("Collapsing");
-      this.notExpanded = true;
-    },
-    starredLabelToggle(thread) {
-      thread.starred = !thread.starred;
-      if(thread.starred === true) {
-        markAsStarred(thread.threadId);
-      }
-      else {
-        unMarkAsStarred(thread.threadId);
-      }
-    },
-    trash() {
-      let thisThreadid = this.messages[0].threadId;
-      trashMessage(thisThreadid);
-      eventBus.$emit('MESSAGE_LIST');
-      this.$router.go(-1);
-    },
-    ifGroupMessage() {
-      let to = this.messages[0].to;
-      //console.log(to);
-      var theClass = 'not-group-message';
-      //console.log(message.unread);
-      if(to.includes(",")){
-          theClass = 'group-message';
-      }
-      return theClass;
-    },
-    getAttachments(message){
-      const attachmentIds = this.$store.getters.getAttachments;
-      // console.log("in the attachments folder")
-      if(message !== undefined){
-        return message.attachmentIds.map((id)=>{
-          return `data:${attachmentIds[id.attachmentId].mimeType};base64,${attachmentIds[id.attachmentId].data}`;
-        });
-      }
-      return [];
-    },
-  },
-  created() {
-    this.getMessages();
-    eventBus.$on("TRASHING_THREAD", this.trash);
-  }
-}
-</script>

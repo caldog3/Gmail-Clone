@@ -12,7 +12,7 @@
             </div>
           </div>
         </template>
-        <email-list labelId="PRIMARY"/>
+        <thread-list labelId="PRIMARY"/>
       </b-tab>
 
       <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
@@ -23,7 +23,7 @@
             </div>
           </div>
         </template>
-        <email-list labelId="SOCIAL"/>
+        <thread-list labelId="SOCIAL"/>
       </b-tab>
 
       <b-tab v-on:click="updateCurrentFolder('PROMOTIONS')">
@@ -34,7 +34,7 @@
             </div>
           </div>
         </template>
-        <email-list labelId="PROMOTIONS"/>
+        <thread-list labelId="PROMOTIONS"/>
       </b-tab>
 
     </b-tabs>
@@ -64,7 +64,7 @@
 </style>
 
 <script>
-import EmailList from './EmailList';
+import ThreadList from './ThreadList';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { setTimeout } from 'timers';
 import eventBus from '../event_bus';
@@ -73,7 +73,7 @@ import eventBus from '../event_bus';
 export default {
   name: 'InboxList',
   components: {
-    EmailList,
+    ThreadList,
     FontAwesomeIcon
   },
   data() {
@@ -112,11 +112,8 @@ export default {
       // maybe trigger an update here for total emails in the utilityBar
     },
   },
-  beforeCreate(){
-    //MOVED TO LoadingScreen.vue Created
-  },
   created(){
-    setTimeout(() => this.$store.dispatch("getAttachments"), 1000);
+    setTimeout(() => this.$store.dispatch("getAttachments"), 10);
   },
 }
 </script>

@@ -156,6 +156,237 @@
 </template>
 
 
+<script>
+import eventBus from '../event_bus';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
+         getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
+import { getTimeFormat } from './../store-utility-files/email';
+import { setTimeout } from 'timers';
+import { sortBy } from 'lodash';
+import Vue from 'vue';
+
+export default {
+  name: 'ThreadList',
+  props: ['labelId'],
+  components: {
+    FontAwesomeIcon,
+  },
+  data() {
+    return {
+      checked: false,
+      starCheck: false,
+      checkedEmails: [],
+      userEmail: '',
+      hadValues: false,
+    }
+  },
+  methods: {
+    checking() {
+      setTimeout(() => {      
+        if (this.checkedEmails.length > 0) {
+          eventBus.$emit("CHECKED_MESSAGES");
+        }
+        else {
+          eventBus.$emit("UNCHECKED");
+          
+        }
+      }, 150);
+    },
+    starredLabelToggle(thread) {
+      thread.starred = !thread.starred;
+      if(thread.starred === true) {
+        markAsStarred(thread.threadId);
+      }
+      else {
+        unMarkAsStarred(thread.threadId);
+      }
+    this.$store.state.labelMessages.STARRED = [];
+    this.$store.dispatch("getFolderListOfMessages", "STARRED");
+    },
+    toggleUnread(thread) {
+      if (thread.unread === true) {
+        markAsUnread(thread.threadId);
+        //I'm working on it
+        console.log("before vue.set");
+        console.log((this.$store.state.threadMessages));
+        // Vue.set(thread.unread, thread.id, false);
+        //console.log("after vue.set");
+      }
+      else if (thread.unread === false) {
+        markAsRead(thread.threadId);
+      }
+    },
+    archiveThread(thread) {
+      console.log("archiving");
+      archiveMessage(thread.threadId);
+    },
+    readClassChanger(message){
+      var theClass = 'readClass';
+      //console.log(message.unread);
+      if(message.unread == true){
+          theClass = 'unreadClass';
+      }
+      return theClass;
+    },
+    enterMessage(thread) {
+      // Trying to have an email show as read after you've clicked on it
+      //  without having to reload all of the emails
+      // thread.unread = false;
+      // this.readClassChanger(thread);
+      console.log("Hi i'm a thread");
+      console.log(thread);
+      if (thread.labelId !== "DRAFT") {
+        eventBus.$emit('ENTER_MESSAGE');
+        this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
+        markAsRead(thread.threadId);
+      }
+      else {
+        console.log("In the draft else");
+        //need an if to check length of thread if length is zero, Compose_open, else open thread
+        eventBus.$emit('COMPOSE_OPEN');
+      }
+      //Refreshing the whole list to show updates in read...
+      eventBus.$emit("REFRESH");
+    },
+    check() {
+      this.checked = !this.checked;
+    },
+    checkStar() {
+      this.starCheck = !this.starCheck;
+    },
+    openCompose() {
+      eventBus.$emit('COMPOSE_OPEN');
+    },
+    readSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsRead(this.checkedEmails[i]);
+        console.log("marking one of them as read");
+      }
+      //probably do some refreshing here too...
+    },
+    unreadSet() {
+      for(let i = 0; i < this.checkedEmails.length; i++) {
+        markAsUnread(this.checkedEmails[i]);
+        console.log("marking one of them as unread");
+      }
+      //probably do some refreshing here too...
+    },
+    spamThread() {
+      if (this.checkedEmails.length > 0) {
+        console.log("SpamThread function ---- not implemented yet");
+      }
+    },
+    spamCheckedThreads() {
+      if (this.checkedEmails.length > 0) {
+        console.log("SpamCheckedThreads function");
+        const spammingPromises = this.checkedEmails.map(email => markSpam(email));
+        Promise.all(spammingPromises).then(() => {
+          this.checkedEmails = [];
+          eventBus.$emit("REFRESH");
+        });
+      }
+    },
+    trashCheckedThreads() {
+      if (this.checkedEmails.length > 0){
+        const trashingPromises = this.checkedEmails.map(email => trashMessage(email));
+        Promise.all(trashingPromises).then(() => {
+          this.checkedEmails = [];
+          eventBus.$emit("REFRESH");
+        });
+      }
+    },
+    readAll() {
+      let labelId = this.labelId;
+      let labelThreads = this.$store.getters.getLabelMessages;
+      let labelIdThreads = labelThreads[labelId];
+      var unread;
+      if (labelIdThreads !== undefined) {
+        let messages = this.$store.getters.getThreadMessages;
+
+        let fullThreadData = labelIdThreads.map((threadId) => {
+          let threadMessages = messages[threadId];
+          let numberOfMessages = threadMessages.length;
+
+          if (numberOfMessages > 0) {
+            unread = threadMessages[0];
+            return {threadId, unread};
+          }
+        });
+
+        if (labelId === this.$store.state.currentFolder) {  //It's working so far
+          for (var i = 0; i < fullThreadData.length; i++) {
+            if (fullThreadData[i].unread.unread == false) {
+              markAsRead(fullThreadData[i].threadId);
+            }
+          }
+        }
+      }
+
+    },
+  },
+  computed: {
+    threads() {
+      const labelId = this.labelId;
+      const labelThreads = this.$store.getters.getLabelMessages;
+      
+      const labelIdThreads = labelThreads[labelId];
+      if (labelIdThreads !== undefined) {
+        // one way to try and fix the duplicates in the threads
+          //haven't done like anything yet  
+        // var messageDuplicatesCheck = this.$store.getteres.getThreadMessages;
+        //end duplicate fix
+
+        const messages = this.$store.getters.getThreadMessages;
+      
+        const fullThreadData = labelIdThreads.map((threadId) => {
+          const threadMessages = messages[threadId];
+          const numberOfMessages = threadMessages.length;
+
+
+          if (numberOfMessages > 0) {
+            const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
+
+            const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
+            const time = getTimeFormat(unixTime * 1000).time;
+          
+            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
+          }
+        });
+        return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
+      }
+    },
+  },
+  created() {
+    eventBus.$emit('MESSAGE_LIST');
+    eventBus.$on('CHECK_ALL', source => {
+      //need to modify this.checkedEmails here to fill the array
+      this.checkedEmails = [];
+      for(var i = 0; i < document.getElementsByName('checks').length; i++) {
+        if (source === true) {
+          document.getElementsByName('checks')[i].checked = true;
+          this.checkedEmails.push(document.getElementsByName('checks')[i].value);
+          // console.log("just checking", document.getElementsByName('checks')[i]);
+          eventBus.$emit("CHECKED_MESSAGES");
+        }
+        else {
+          document.getElementsByName('checks')[i].checked = false;
+          console.log("just UNCECKING?");
+          eventBus.$emit("UNCHECKED");
+        }
+      }
+    });
+    eventBus.$on('MARK_ALL_AS_READ', this.readAll);
+    eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
+    eventBus.$on("READ_SET", this.readSet);
+    eventBus.$on("UNREAD_SET", this.unreadSet);
+    eventBus.$on("SPAMMING_THREAD", this.spamThread);
+    eventBus.$on("SPAMMING_CHECKED_THREADS", this.spamCheckedThreads);
+    this.userEmail = this.$store.state.currentUserProfile.U3;
+  },
+}
+</script>
+
 <style scoped>
 .background {
   background: rgba(255, 255, 255, 0.6);
@@ -621,235 +852,3 @@ svg:not(:root).svg-inline--fa {
 }
 
 </style>
-
-
-<script>
-import eventBus from '../event_bus';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
-         getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
-import { getTimeFormat } from './../store-utility-files/email';
-import { setTimeout } from 'timers';
-import { sortBy } from 'lodash';
-import Vue from 'vue';
-
-export default {
-  name: 'EmailList',
-  props: ['labelId'],
-  components: {
-    FontAwesomeIcon,
-  },
-  data() {
-    return {
-      checked: false,
-      starCheck: false,
-      checkedEmails: [],
-      userEmail: '',
-      hadValues: false,
-    }
-  },
-  methods: {
-    checking() {
-      setTimeout(() => {      
-        if (this.checkedEmails.length > 0) {
-          eventBus.$emit("CHECKED_MESSAGES");
-        }
-        else {
-          eventBus.$emit("UNCHECKED");
-          
-        }
-      }, 150);
-    },
-    starredLabelToggle(thread) {
-      thread.starred = !thread.starred;
-      if(thread.starred === true) {
-        markAsStarred(thread.threadId);
-      }
-      else {
-        unMarkAsStarred(thread.threadId);
-      }
-    this.$store.state.labelMessages.STARRED = [];
-    this.$store.dispatch("getFolderListOfMessages", "STARRED");
-    },
-    toggleUnread(thread) {
-      if (thread.unread === true) {
-        markAsUnread(thread.threadId);
-        //I'm working on it
-        console.log("before vue.set");
-        console.log((this.$store.state.threadMessages));
-        // Vue.set(thread.unread, thread.id, false);
-        //console.log("after vue.set");
-      }
-      else if (thread.unread === false) {
-        markAsRead(thread.threadId);
-      }
-    },
-    archiveThread(thread) {
-      console.log("archiving");
-      archiveMessage(thread.threadId);
-    },
-    readClassChanger(message){
-      var theClass = 'readClass';
-      //console.log(message.unread);
-      if(message.unread == true){
-          theClass = 'unreadClass';
-      }
-      return theClass;
-    },
-    enterMessage(thread) {
-      // Trying to have an email show as read after you've clicked on it
-      //  without having to reload all of the emails
-      // thread.unread = false;
-      // this.readClassChanger(thread);
-      console.log("Hi i'm a thread");
-      console.log(thread);
-      if (thread.labelId !== "DRAFT") {
-        eventBus.$emit('ENTER_MESSAGE');
-        this.$router.push({ name: 'EmailBody', params: { id: thread.threadId} });
-        markAsRead(thread.threadId);
-      }
-      else {
-        console.log("In the draft else");
-        //need an if to check length of thread if length is zero, Compose_open, else open thread
-        eventBus.$emit('COMPOSE_OPEN');
-      }
-      //Refreshing the whole list to show updates in read...
-      eventBus.$emit("REFRESH");
-    },
-    check() {
-      this.checked = !this.checked;
-    },
-    checkStar() {
-      this.starCheck = !this.starCheck;
-    },
-    openCompose() {
-      eventBus.$emit('COMPOSE_OPEN');
-    },
-    readSet() {
-      for(let i = 0; i < this.checkedEmails.length; i++) {
-        markAsRead(this.checkedEmails[i]);
-        console.log("marking one of them as read");
-      }
-      //probably do some refreshing here too...
-    },
-    unreadSet() {
-      for(let i = 0; i < this.checkedEmails.length; i++) {
-        markAsUnread(this.checkedEmails[i]);
-        console.log("marking one of them as unread");
-      }
-      //probably do some refreshing here too...
-    },
-    spamThread() {
-      if (this.checkedEmails.length > 0) {
-        console.log("SpamThread function ---- not implemented yet");
-      }
-    },
-    spamCheckedThreads() {
-      if (this.checkedEmails.length > 0) {
-        console.log("SpamCheckedThreads function");
-        const spammingPromises = this.checkedEmails.map(email => markSpam(email));
-        Promise.all(spammingPromises).then(() => {
-          this.checkedEmails = [];
-          eventBus.$emit("REFRESH");
-        });
-      }
-    },
-    trashCheckedThreads() {
-      if (this.checkedEmails.length > 0){
-        const trashingPromises = this.checkedEmails.map(email => trashMessage(email));
-        Promise.all(trashingPromises).then(() => {
-          this.checkedEmails = [];
-          eventBus.$emit("REFRESH");
-        });
-      }
-    },
-    readAll() {
-      let labelId = this.labelId;
-      let labelThreads = this.$store.getters.getLabelMessages;
-      let labelIdThreads = labelThreads[labelId];
-      var unread;
-      if (labelIdThreads !== undefined) {
-        let messages = this.$store.getters.getThreadMessages;
-
-        let fullThreadData = labelIdThreads.map((threadId) => {
-          let threadMessages = messages[threadId];
-          let numberOfMessages = threadMessages.length;
-
-          if (numberOfMessages > 0) {
-            unread = threadMessages[0];
-            return {threadId, unread};
-          }
-        });
-
-        if (labelId === this.$store.state.currentFolder) {  //It's working so far
-          for (var i = 0; i < fullThreadData.length; i++) {
-            if (fullThreadData[i].unread.unread == false) {
-              markAsRead(fullThreadData[i].threadId);
-            }
-          }
-        }
-      }
-
-    },
-  },
-  computed: {
-    threads() {
-      const labelId = this.labelId;
-      const labelThreads = this.$store.getters.getLabelMessages;
-      
-      const labelIdThreads = labelThreads[labelId];
-      if (labelIdThreads !== undefined) {
-        // one way to try and fix the duplicates in the threads
-          //haven't done like anything yet  
-        // var messageDuplicatesCheck = this.$store.getteres.getThreadMessages;
-        //end duplicate fix
-
-        const messages = this.$store.getters.getThreadMessages;
-      
-        const fullThreadData = labelIdThreads.map((threadId) => {
-          const threadMessages = messages[threadId];
-          const numberOfMessages = threadMessages.length;
-
-
-          if (numberOfMessages > 0) {
-            const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
-
-            const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
-            const time = getTimeFormat(unixTime * 1000).time;
-          
-            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
-          }
-        });
-        return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
-      }
-    },
-  },
-  created() {
-    eventBus.$emit('MESSAGE_LIST');
-    eventBus.$on('CHECK_ALL', source => {
-      //need to modify this.checkedEmails here to fill the array
-      this.checkedEmails = [];
-      for(var i = 0; i < document.getElementsByName('checks').length; i++) {
-        if (source === true) {
-          document.getElementsByName('checks')[i].checked = true;
-          this.checkedEmails.push(document.getElementsByName('checks')[i].value);
-          // console.log("just checking", document.getElementsByName('checks')[i]);
-          eventBus.$emit("CHECKED_MESSAGES");
-        }
-        else {
-          document.getElementsByName('checks')[i].checked = false;
-          console.log("just UNCECKING?");
-          eventBus.$emit("UNCHECKED");
-        }
-      }
-    });
-    eventBus.$on('MARK_ALL_AS_READ', this.readAll);
-    eventBus.$on("TRASHING_CHECKED_THREADS", this.trashCheckedThreads);
-    eventBus.$on("READ_SET", this.readSet);
-    eventBus.$on("UNREAD_SET", this.unreadSet);
-    eventBus.$on("SPAMMING_THREAD", this.spamThread);
-    eventBus.$on("SPAMMING_CHECKED_THREADS", this.spamCheckedThreads);
-    this.userEmail = this.$store.state.currentUserProfile.U3;
-  },
-}
-</script>
