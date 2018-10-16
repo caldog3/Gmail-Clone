@@ -316,51 +316,52 @@ export default {
   },
   data() {
     return {
+      // messages: [],
       timeAgo: "1 hour",
-      messageUnix: 0,
-      expanded: false,
+      expanded: true,
     }
   },
   computed: {
     messages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
-        let object = sortBy(threadMessages, m => m.unixTime);
-        console.log("This object", object[0].unixTime); // soo.....it does work..just throws up errors
-        let time = object[0].unixTime;
-        // this.messageUnix = time;
-          var ts = Math.round((new Date()).getTime() / 1000);
-          var diff = Math.floor((ts - time)), units = [
-            { d: 60, l: "seconds" },
-            { d: 60, l: "minutes" },
-            { d: 24, l: "hours" },
-            { d: 7, l: "days" }
-          ];
-          var s = '';
-          var times = [];
-          for (var i = 0; i < units.length; ++i) {
-            times[i] = (diff % units[i].d);
-            diff = Math.floor(diff / units[i].d);
-          }
-          if (times[3] === 0) {
-            if (times[2] === 0) {
-              if (times[1] != 1) { s = times[1] + " minutes"}
-              else { s = times[1] + " minute"}
-            }
-            else {
-              if (times[2] != 1) {s = times[2] + " hours"}
-              else { s = times[2] + " hour"}
-            }
+      let object = sortBy(threadMessages, m => m.unixTime);
+      console.log("This object", object[0].unixTime); 
+      let time = object[0].unixTime;
+      // this.messageUnix = time;
+        var ts = Math.round((new Date()).getTime() / 1000);
+        var diff = Math.floor((ts - time)), units = [
+          { d: 60, l: "seconds" },
+          { d: 60, l: "minutes" },
+          { d: 24, l: "hours" },
+          { d: 7, l: "days" }
+        ];
+        var s = '';
+        var times = [];
+        for (var i = 0; i < units.length; ++i) {
+          times[i] = (diff % units[i].d);
+          diff = Math.floor(diff / units[i].d);
+        }
+        if (times[3] === 0) {
+          if (times[2] === 0) {
+            if (times[1] != 1) { s = times[1] + " minutes"}
+            else { s = times[1] + " minute"}
           }
           else {
-            if (times[3] != 1) {s = times[3] + " days"}
-            else {s = times[3] + " day"}
+            if (times[2] != 1) {s = times[2] + " hours"}
+            else { s = times[2] + " hour"}
           }
-          // eslint-disable-next-line
-          this.timeAgo = s.slice();
-// This is all in this property because it overflows the stack if I call another function...
+        }
+        else {
+          if (times[3] != 1) {s = times[3] + " days"}
+          else {s = times[3] + " day"}
+        }
+        // eslint-disable-next-line
+        this.timeAgo = s.slice();
+        // This is all in this property because it overflows the stack if I call another function...
 
       return object;
+
     },
     attachments(){
      return this.$store.getters.getAttachments;
@@ -414,6 +415,7 @@ export default {
 
   },
   created() {
+    // eventBus.$on("ENTER_MESSAGE", this.messageLoad);
     console.log(this.$store.state.labelNextPageTokens);
     eventBus.$on("TRASHING_THREAD", this.trash);
   }
