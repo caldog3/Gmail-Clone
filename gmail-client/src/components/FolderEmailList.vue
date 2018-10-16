@@ -1,6 +1,6 @@
 // Name of this file is subject to chage
 <template>
-  <email-list :labelId="getFolder()"/>
+  <thread-list :labelId="getFolder()"/>
 </template>
 
 <style scoped>
@@ -11,13 +11,13 @@ ul > .nav {
 </style>
 
 <script>
-import EmailList from './EmailList';
+import ThreadList from './ThreadList';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 
 export default {
-  name: 'InboxList',
+  name: 'FolderEmailList',
   components: {
-    EmailList,
+    ThreadList,
     FontAwesomeIcon
   },
   data() {
