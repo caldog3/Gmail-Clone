@@ -12,7 +12,7 @@
     </div>
 
     <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+      <button type="button" v-on:click="reply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
         <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
@@ -38,9 +38,24 @@ export default {
   },
   data() {
     return {
+      composeMessage: "Just a message for filler until the rich text editor works",
     };
   },
   methods: {
+    reply() {
+      console.log("in the reply"); 
+      //testing this out
+      let headerSection = {
+        'Content-Type': 'text/plain; charset="\UTF-8\"',
+        'MIME-Version': '1.0',
+        'Content-Transfer-Encoding': '7bit',
+        'Subject': this.subject, //need a subject variable
+        'From': this.sender,
+        'To': this.composeTo,
+        'Subject': this.composeSubject
+      }
+      sendMessage(headerSection, this.responseBody);
+    },
     getMessages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
