@@ -77,7 +77,7 @@
       
 
       <div class="leftAlign recipients">
-        <p>to {{message.to}}</p>
+        <p>to {{message.to | getFirstNames}}</p>
       </div>
       <!-- here's the body; need to break the body into 2 pieces -->
       <div v-html="message.body" class="leftAlign"></div>
@@ -316,6 +316,21 @@ export default {
       notExpanded: false,
       index: null,
     };
+  },
+  filters: {
+    getFirstNames(users) {
+      if (!users) {
+        return '';
+      }
+      let usersArray = users.split(",");
+      return usersArray.map((person) => {
+        if(person.charAt(0) === " " || person.charAt(0) === '\"'){
+          const newPerson = person.substr(1);
+          return newPerson.substr(0, newPerson.indexOf(" "));
+        }
+        return person.substr(0, person.indexOf(" "));
+      }).toString();
+    }
   },
   methods: {
     getMessages(){
