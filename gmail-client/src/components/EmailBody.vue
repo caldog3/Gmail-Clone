@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div id="body">
+  <div id="body" v-if="messages[0] !== undefined">
     <div class="flexboxSubject">
       <h5 class="leftAlign">{{messages[0].subject}}</h5>
       <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
@@ -8,7 +8,7 @@
 
     <div v-for="message in messages" :key="message.messageId">
         <!-- This is for collapsing emails to not take up so much space -->
-      <div class="notExpanded" v-if="!expanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
+      <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
         <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
@@ -34,12 +34,15 @@
           </div>
         </div>
         <div class="overflow">
-
-          <div class="left-align" v-html="message.snippet"></div>
+          <!-- maybe doing this?... -->
+          <!-- {{message.plainBody}} -->
+          <!-- need some better styling to hide overflow...maybe just use the snippet-->
+          <!-- <div v-html="message.body" class="leftAlign overflow"></div> -->
+          <div v-html="message.snippet"></div>
         </div>    
       </div>
 
-    <div class="expandedBody" v-else-if="expanded"> <!-- checkk for final email in list -->
+      <div class="expandedBody" v-else>
       <div class="flexboxSubject cursorHover" v-on:click="unexpand()">
         <div class="leftAlign">
           <hr>
@@ -74,25 +77,20 @@
       
 
       <div class="leftAlign recipients">
-        <p>to {{message.to}}</p>
+        <p>to {{message.to | getFirstNames}}</p>
       </div>
       <!-- here's the body; need to break the body into 2 pieces -->
       <div v-html="message.body" class="leftAlign"></div>
-      
-      <div v-if="message.attachmentIds.length > 0">
-        <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
-          <div class="attachment-container">
-            <div class="attachment">
-              <a href="#openModal">
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </a>
-              <div id="openModal" class="modalDialog">
-                <a href="#close" title="Close" class="close">X</a>
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div v-if="getAttachments(message).length > 0" >
+        <gallery :images="getAttachments(message)" :index="index" @close="index = null"></gallery>
+        <div
+          class="image"
+          v-for="(image, imageIndex) in getAttachments(message)"
+          :key="imageIndex"
+          @click="index = imageIndex"
+          :style="{ backgroundImage: 'url(' + image + ')', width: '300px', height: '210px' }"
+        ></div>
       </div>
       </div>
     </div>
@@ -110,10 +108,6 @@
 </template>
 
 <style scoped>
-.leftAlign {
-  text-align: left;
-}
-
 .cursorHover {
   cursor: pointer;
 }
@@ -307,75 +301,83 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { sortBy } from 'lodash'
 import eventBus from '../event_bus';
 import { trashMessage, markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
-
+import VueGallery from 'vue-gallery';
+import Vue from 'vue';
 
 export default {
   name: 'EmailBody',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    'gallery': VueGallery
   },
   data() {
     return {
-      // messages: [],
       timeAgo: "1 hour",
-      expanded: true,
+      notExpanded: false,
+      index: null,
+    };
+  },
+  filters: {
+    getFirstNames(users) {
+      if (!users) {
+        return '';
+      }
+      let usersArray = users.split(",");
+      return usersArray.map((person) => {
+        if(person.charAt(0) === " " || person.charAt(0) === '\"'){
+          const newPerson = person.substr(1);
+          return newPerson.substr(0, newPerson.indexOf(" "));
+        }
+        return person.substr(0, person.indexOf(" "));
+      }).toString();
     }
   },
-  computed: {
-    messages(){
+  methods: {
+    getMessages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
-      let object = sortBy(threadMessages, m => m.unixTime);
-      console.log("This object", object[0].unixTime); 
-      let time = object[0].unixTime;
-      // this.messageUnix = time;
-        var ts = Math.round((new Date()).getTime() / 1000);
-        var diff = Math.floor((ts - time)), units = [
-          { d: 60, l: "seconds" },
-          { d: 60, l: "minutes" },
-          { d: 24, l: "hours" },
-          { d: 7, l: "days" }
-        ];
-        var s = '';
-        var times = [];
-        for (var i = 0; i < units.length; ++i) {
-          times[i] = (diff % units[i].d);
-          diff = Math.floor(diff / units[i].d);
-        }
-        if (times[3] === 0) {
-          if (times[2] === 0) {
-            if (times[1] != 1) { s = times[1] + " minutes"}
-            else { s = times[1] + " minute"}
+        let object = sortBy(threadMessages, m => m.unixTime);
+        let time = object[0].unixTime;
+
+          var ts = Math.round((new Date()).getTime() / 1000);
+          var diff = Math.floor((ts - time)), units = [
+            { d: 60, l: "seconds" },
+            { d: 60, l: "minutes" },
+            { d: 24, l: "hours" },
+            { d: 7, l: "days" }
+          ];
+          var s = '';
+          var times = [];
+          for (var i = 0; i < units.length; ++i) {
+            times[i] = (diff % units[i].d);
+            diff = Math.floor(diff / units[i].d);
+          }
+          if (times[3] === 0) {
+            if (times[2] === 0) {
+              if (times[1] != 1) { s = times[1] + " minutes"}
+              else { s = times[1] + " minute"}
+            }
+            else {
+              if (times[2] != 1) {s = times[2] + " hours"}
+              else { s = times[2] + " hour"}
+            }
           }
           else {
-            if (times[2] != 1) {s = times[2] + " hours"}
-            else { s = times[2] + " hour"}
+            if (times[3] != 1) {s = times[3] + " days"}
+            else {s = times[3] + " day"}
           }
-        }
-        else {
-          if (times[3] != 1) {s = times[3] + " days"}
-          else {s = times[3] + " day"}
-        }
-        // eslint-disable-next-line
-        this.timeAgo = s.slice();
-        // This is all in this property because it overflows the stack if I call another function...
-
-      return object;
-
+          // eslint-disable-next-line
+          this.timeAgo = s.slice();
+// This is all in this property because it overflows the stack if I call another function...
+      this.messages = object;
     },
-    attachments(){
-     return this.$store.getters.getAttachments;
-    },
-
-  },
-  methods: {
     expand() {
       console.log("Expanding");
-      this.expanded = true;
+      this.notExpanded = false;
     },
     unexpand() {
       console.log("Collapsing");
-      this.expanded = false;
+      this.notExpanded = true;
     },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
@@ -402,21 +404,19 @@ export default {
       }
       return theClass;
     },
-    // we'll need this at some point
-    // sendReply() {
-    //   this.close();
-    //   let headerSection = {
-    //     'To': ,
-    //     'Subject': 'Re: ' + ////,
-    //   }
-    //   sendMessage(headerSection, this.composeMessage);
-    //   this.composeTidy();
-    // },
-
+    getAttachments(message){
+      const attachmentIds = this.$store.getters.getAttachments;
+      // console.log("in the attachments folder")
+      if(message !== undefined){
+        return message.attachmentIds.map((id)=>{
+          return `data:${attachmentIds[id.attachmentId].mimeType};base64,${attachmentIds[id.attachmentId].data}`;
+        });
+      }
+      return [];
+    },
   },
   created() {
-    // eventBus.$on("ENTER_MESSAGE", this.messageLoad);
-    console.log(this.$store.state.labelNextPageTokens);
+    this.getMessages();
     eventBus.$on("TRASHING_THREAD", this.trash);
   }
 }
