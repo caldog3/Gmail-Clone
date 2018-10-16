@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div id="body">
+  <div id="body" v-if="messages[0] !== undefined">
     <div class="flexboxSubject">
       <h5 class="leftAlign">{{messages[0].subject}}</h5>
       <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
@@ -81,21 +81,16 @@
       </div>
       <!-- here's the body; need to break the body into 2 pieces -->
       <div v-html="message.body" class="leftAlign"></div>
-      
-      <div v-if="message.attachmentIds.length > 0">
-        <div v-for="attachmentId in message.attachmentIds" :key="attachmentId.attachmentId">
-          <div class="attachment-container">
-            <div class="attachment">
-              <a href="#openModal">
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </a>
-              <div id="openModal" class="modalDialog">
-                <a href="#close" title="Close" class="close">X</a>
-                <object :data="`data:${attachments[attachmentId.attachmentId].mimeType};base64,${attachments[attachmentId.attachmentId].data}`"/>
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <div v-if="getAttachments(message).length > 0" >
+        <gallery :images="getAttachments(message)" :index="index" @close="index = null"></gallery>
+        <div
+          class="image"
+          v-for="(image, imageIndex) in getAttachments(message)"
+          :key="imageIndex"
+          @click="index = imageIndex"
+          :style="{ backgroundImage: 'url(' + image + ')', width: '300px', height: '210px' }"
+        ></div>
       </div>
       </div>
     </div>
@@ -306,27 +301,29 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import { sortBy } from 'lodash'
 import eventBus from '../event_bus';
 import { trashMessage, markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
-
+import VueGallery from 'vue-gallery';
+import Vue from 'vue';
 
 export default {
   name: 'EmailBody',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    'gallery': VueGallery
   },
   data() {
     return {
       timeAgo: "1 hour",
-      messageUnix: 0,
       notExpanded: false,
-    }
+      index: null,
+    };
   },
-  computed: {
-    messages(){
+  methods: {
+    getMessages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
         let object = sortBy(threadMessages, m => m.unixTime);
         let time = object[0].unixTime;
-        // this.messageUnix = time;
+
           var ts = Math.round((new Date()).getTime() / 1000);
           var diff = Math.floor((ts - time)), units = [
             { d: 60, l: "seconds" },
@@ -357,15 +354,8 @@ export default {
           // eslint-disable-next-line
           this.timeAgo = s.slice();
 // This is all in this property because it overflows the stack if I call another function...
-
-      return object;
+      this.messages = object;
     },
-    attachments(){
-     return this.$store.getters.getAttachments;
-    },
-
-  },
-  methods: {
     expand() {
       console.log("Expanding");
       this.notExpanded = false;
@@ -399,10 +389,19 @@ export default {
       }
       return theClass;
     },
-
+    getAttachments(message){
+      const attachmentIds = this.$store.getters.getAttachments;
+      // console.log("in the attachments folder")
+      if(message !== undefined){
+        return message.attachmentIds.map((id)=>{
+          return `data:${attachmentIds[id.attachmentId].mimeType};base64,${attachmentIds[id.attachmentId].data}`;
+        });
+      }
+      return [];
+    },
   },
   created() {
-    console.log(this.$store.state.labelNextPageTokens);
+    this.getMessages();
     eventBus.$on("TRASHING_THREAD", this.trash);
   }
 }
