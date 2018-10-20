@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { trashMessage } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import eventBus from '../event_bus';
@@ -38,7 +38,10 @@ export default {
   },
   data() {
     return {
-      composeMessage: "Just a message for filler until the rich text editor works",
+      responseBody: "Just a message for filler until the rich text editor works",
+      subject: "Work Reply Test",
+      sender: "caldogwoods@gmail.com",
+      composeTo: "caldogwoods@gmail.com",
     };
   },
   methods: {
@@ -49,12 +52,14 @@ export default {
         'Content-Type': 'text/plain; charset="\UTF-8\"',
         'MIME-Version': '1.0',
         'Content-Transfer-Encoding': '7bit',
-        'Subject': this.subject, //need a subject variable
+        'Subject': 'Re: ' + this.subject, //need a subject variable
         'From': this.sender,
         'To': this.composeTo,
-        'Subject': this.composeSubject
       }
-      sendMessage(headerSection, this.responseBody);
+      // is this capability gone?
+      let id = this.messages[0].threadId;
+      console.log("right before send call");
+      sendReply(headerSection, this.responseBody, id);
     },
     getMessages(){
       let messages = this.$store.state.threadMessages;
