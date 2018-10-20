@@ -13,10 +13,32 @@ const sendMessage = (headers, message) => {
   gapi.client.gmail.users.messages.send({
     'userId': 'me',
     'resource': {
-      'raw': Base64Encode(email)
+      'raw': Base64Encode(email),
+      // 'threadId': 'threadIdVariable'   pretty sure this is how this works
     }
   }).then((response) => {
     console.log(`Email Sent. Response =>:`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+const sendReply = (headers, message, threadId) => {
+  console.log("In API response call");
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  gapi.client.gmail.users.messages.send({
+    'userId': 'me',
+    'resource': {
+      'raw': Base64Encode(email),
+      'threadId': threadId,
+    }
+  }).then((response) => {
+    console.log(`Reply Sent. Response =>:`, response);
   }).catch((err) => {
     console.log(err);
   });
@@ -34,6 +56,7 @@ const markAsRead = (messageId) => {
   });
 }
 const markAsUnread = (messageId) => {
+  // testing stuff
   gapi.client.gmail.users.messages.modify({
     'userId': 'me',
     'id': messageId,
@@ -173,6 +196,7 @@ const getAttachment = (payload) => {
 
 export {
   sendMessage,
+  sendReply,
   archiveMessage,
   markAsRead,
   markAsUnread,
