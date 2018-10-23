@@ -104,22 +104,27 @@ export default {
     return {
       timeAgo: "1 hour",
       notExpanded: false,
-    //   attachments: [],
       index: null,
     };
   },
   filters: {
     getFirstNames(users) {
-      if (!users) {
-        return '';
-      }
       const usersArray = users.split(",");
+
       return usersArray.map((person) => {
-        if(person.charAt(0) === " " || person.charAt(0) === '\"'){
-          const newPerson = person.substr(1);
-          return newPerson.substr(0, newPerson.indexOf(" "));
+        if(person.indexOf("<") >= 0){
+            if(person.charAt(0) === " " || person.charAt(0) === '\"'){
+                const newPerson = person.substr(1);
+                if (newPerson.charAt(0) === '"'){
+                    return newPerson.substr(1, newPerson.indexOf(" "));
+                }
+                return newPerson.substr(0, newPerson.indexOf(" "));
+            }
+            return person.substr(0, person.indexOf(" "));
+        } else {
+            return person.substr(0, person.indexOf("@"));
         }
-        return person.substr(0, person.indexOf(" "));
+        
       }).toString();
     }
   },
