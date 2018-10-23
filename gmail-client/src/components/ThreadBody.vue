@@ -38,10 +38,14 @@ export default {
   },
   data() {
     return {
-      responseBody: "Just a message for filler until the rich text editor works",
-      subject: "Work Reply Test",
-      sender: "caldogwoods@gmail.com",
-      composeTo: "caldogwoods@gmail.com",
+      responseBody: "Current response body filler",
+      //I think we need computed/method to set these....
+      subject: '',
+      // subject: "Test subject",
+      sender: '',
+      // sender: "caldogwoods@gmail.com",
+      recipient: '',
+      // recipient: "caldogwoods@gmail.com",
     };
   },
   methods: {
@@ -52,11 +56,15 @@ export default {
         'Content-Type': 'text/plain; charset="\UTF-8\"',
         'MIME-Version': '1.0',
         'Content-Transfer-Encoding': '7bit',
-        'Subject': 'Re: ' + this.subject, //need a subject variable
+        //We want to add the "Re: " part somehow but it breaks if it goes here
+        'Subject': this.subject,
         'From': this.sender,
-        'To': this.composeTo,
+        'To': this.recipient,
       }
       // is this capability gone?
+      console.log("Subject is:", this.subject);
+      console.log("Sender is:", this.sender);
+      console.log("Recipient is:", this.recipient);
       let id = this.messages[0].threadId;
       console.log("right before send call");
       sendReply(headerSection, this.responseBody, id);
@@ -98,6 +106,12 @@ export default {
           this.timeAgo = s.slice();
 // This is all in this property because it overflows the stack if I call another function...
       this.messages = object;
+      this.subject = this.messages[this.messages.length -1].subject;
+      this.recipient = this.messages[this.messages.length -1].detailedFrom;
+      //this to doesn't work with group messages, includes other people
+      //we need to create more parts of the object for these values ^^ vv
+      this.sender = this.messages[this.messages.length -1].to;
+      console.log("lastMessage", this.messages[this.messages.length -1]);
     },
     trash() {
       let thisThreadid = this.messages[0].threadId;
