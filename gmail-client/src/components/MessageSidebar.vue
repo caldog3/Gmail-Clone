@@ -79,7 +79,7 @@
             <font-awesome-icon style="color:white;" icon="arrow-right" />
           </div>
           <div>
-            Important (still implementing)
+            Important
           </div>
           <div class="unreadCount">
             <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>

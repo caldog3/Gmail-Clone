@@ -12,7 +12,7 @@
     </div>
 
     <div class="response-buttons"> 
-      <button type="button"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+      <button type="button" v-on:click="reply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
         <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { trashMessage } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import eventBus from '../event_bus';
@@ -38,9 +38,37 @@ export default {
   },
   data() {
     return {
+      responseBody: "Current response body filler",
+      //I think we need computed/method to set these....
+      subject: '',
+      // subject: "Test subject",
+      sender: '',
+      // sender: "caldogwoods@gmail.com",
+      recipient: '',
+      // recipient: "caldogwoods@gmail.com",
     };
   },
   methods: {
+    reply() {
+      console.log("in the reply"); 
+      //testing this out
+      let headerSection = {
+        'Content-Type': 'text/plain; charset="\UTF-8\"',
+        'MIME-Version': '1.0',
+        'Content-Transfer-Encoding': '7bit',
+        //We want to add the "Re: " part somehow but it breaks if it goes here
+        'Subject': this.subject,
+        'From': this.sender,
+        'To': this.recipient,
+      }
+      // is this capability gone?
+      console.log("Subject is:", this.subject);
+      console.log("Sender is:", this.sender);
+      console.log("Recipient is:", this.recipient);
+      let id = this.messages[0].threadId;
+      console.log("right before send call");
+      sendReply(headerSection, this.responseBody, id);
+    },
     getMessages(){
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
@@ -78,6 +106,12 @@ export default {
           this.timeAgo = s.slice();
 // This is all in this property because it overflows the stack if I call another function...
       this.messages = object;
+      this.subject = this.messages[this.messages.length -1].subject;
+      this.recipient = this.messages[this.messages.length -1].detailedFrom;
+      //this to doesn't work with group messages, includes other people
+      //we need to create more parts of the object for these values ^^ vv
+      this.sender = this.messages[this.messages.length -1].to;
+      console.log("lastMessage", this.messages[this.messages.length -1]);
     },
     trash() {
       let thisThreadid = this.messages[0].threadId;
