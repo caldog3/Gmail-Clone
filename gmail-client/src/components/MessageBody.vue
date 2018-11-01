@@ -1,6 +1,6 @@
 <template>
  <div>
-     <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
+    <div class="notExpanded" v-if="notExpanded"  v-on:click="expand()"> <!--need a way to check if it is the second to last email in list -->
         <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
@@ -34,7 +34,7 @@
         </div>    
       </div>
 
-      <div class="expandedBody" v-else>
+    <div class="expandedBody" v-else>
       <div class="flexboxSubject cursorHover" v-on:click="unexpand()">
         <div class="leftAlign">
           <hr>
@@ -67,44 +67,47 @@
         </div>
       </div>
       
+      <div class="leftAlign">
+        <div class="recipients">
+          <p>to {{message.to | getFirstNames}}</p>
+        </div>
+        <!-- here's the body; need to break the body into 2 pieces -->
+        <div v-html="message.body" class=""></div>
 
-      <div class="leftAlign recipients">
-        <p>to {{message.to | getFirstNames}}</p>
+        <div v-if="images.length > 0" >
+          <v-gallery :images="images" :dark="true"></v-gallery>
+        </div>
+        <div v-if="attachments.length > 0" >
+          <p>Other Attachments:</p>
+          <div v-for="(attachment, index) in attachments" :key="attachment.url">
+           <button @click="openModal(index)"> Open pdf</button>
+            <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
+              <object :data="attachment.url" width="80%" height="800" alt="image should be here."></object>
+            </sweet-modal>
+          </div>
+        </div>
       </div>
-      <!-- here's the body; need to break the body into 2 pieces -->
-      <div v-html="message.body" class="leftAlign"></div>
-
-      <div v-if="attachments.length > 0" >
-        <gallery :images="attachments" :index="index" @close="index = null"></gallery>
-        <div
-          class="image"
-          v-for="(image, imageIndex) in attachments"
-          :key="imageIndex"
-          @click="index = imageIndex"
-          :style="{ backgroundImage: 'url(' + image + ')', width: '300px', height: '210px' }"
-        ></div>
-      </div>
-      </div>
+      
+    </div>
  </div>
 </template>
 
 <script>
 import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import VueGallery from 'vue-gallery';
+import { SweetModal } from 'sweet-modal-vue';
 
 export default {
   name: 'ThreadBody',
   props: ['message'],
   components: {
     FontAwesomeIcon,
-    'gallery': VueGallery
+    SweetModal,
   },
   data() {
     return {
       timeAgo: "1 hour",
       notExpanded: false,
-      index: null,
     };
   },
   filters: {
@@ -113,27 +116,42 @@ export default {
 
       return usersArray.map((person) => {
         if(person.indexOf("<") >= 0){
-            if(person.charAt(0) === " " || person.charAt(0) === '\"'){
-                const newPerson = person.substr(1);
-                if (newPerson.charAt(0) === '"'){
-                    return newPerson.substr(1, newPerson.indexOf(" "));
-                }
-                return newPerson.substr(0, newPerson.indexOf(" "));
+          if(person.charAt(0) === " " || person.charAt(0) === '\"'){
+            const newPerson = person.substr(1);
+            if (newPerson.charAt(0) === '"'){
+              return newPerson.substr(1, newPerson.indexOf(" "));
             }
-            return person.substr(0, person.indexOf(" "));
-        } else {
-            return person.substr(0, person.indexOf("@"));
+            return newPerson.substr(0, newPerson.indexOf(" "));
+          }
+          return person.substr(0, person.indexOf(" "));
         }
-        
+
+        return person.substr(0, person.indexOf("@"));
       }).toString();
     }
   },
   computed: {
     attachments(){
       const attachmentIds = this.$store.getters.getAttachments;
-      return this.message.attachmentIds.map((id) => {
-        return `data:${attachmentIds[id.attachmentId].mimeType};base64,${attachmentIds[id.attachmentId].data}`;
-      });
+      return this.message.attachmentIds === undefined ? [] :
+      this.message.attachmentIds.map((id) => {
+        const attachment = attachmentIds[id.attachmentId];
+        const mimeType = attachment.mimeType;
+        if (!mimeType.includes("image")){
+          return {url: `data:${mimeType};base64,${attachment.data}`};
+        }
+      }).filter(image => image !== undefined);
+    },
+    images(){
+      const attachmentIds = this.$store.getters.getAttachments;
+      return this.message.attachmentIds === undefined ? [] :
+      this.message.attachmentIds.map((id) => {
+        const attachment = attachmentIds[id.attachmentId];
+        const mimeType = attachment.mimeType;
+        if (mimeType.includes("image")){
+          return {url: `data:${mimeType};base64,${attachment.data}`};
+        }
+      }).filter(image => image !== undefined);
     },
   },
   methods: {
@@ -153,7 +171,11 @@ export default {
       else {
         unMarkAsStarred(thread.threadId);
       }
-    },  
+    },
+    openModal(index){
+      // console.log("REFS in the openModal: ", this.$refs)
+      this.$refs.modal[index].open();
+    }
   }
 }
 </script>
@@ -255,6 +277,9 @@ h4 {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
+  background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
 }
 .star {
   visibility: hidden;
