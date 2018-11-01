@@ -406,7 +406,8 @@ export default new Vuex.Store({
                   context.commit("addAttachmentId", {
                     attachmentId: attachmentId.attachmentId,
                     mimeType: attachmentId.mimeType,
-                    messageId: payload.messageId
+                    messageId: payload.messageId,
+                    filename: attachmentId.filename
                   });
                 }
               });

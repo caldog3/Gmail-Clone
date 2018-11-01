@@ -78,12 +78,19 @@
           <v-gallery :images="images" :dark="true"></v-gallery>
         </div>
         <div v-if="attachments.length > 0" >
-          <p>Other Attachments:</p>
+          <p><b>Attachments:</b></p>
           <div v-for="(attachment, index) in attachments" :key="attachment.url">
-           <button @click="openModal(index)"> Open pdf</button>
-            <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
-              <object :data="attachment.url" width="80%" height="800" alt="image should be here."></object>
-            </sweet-modal>
+            <div v-if="attachment.url.includes('application/pdf')">
+              <template v-if="!attachment.url.includes('null')">
+                <button @click="openModal(index)">{{ attachment.filename }}</button>
+              </template>
+              <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
+                <object :data="attachment.url" :name="attachment.filename" width="80%" height="800"></object>
+              </sweet-modal>
+            </div>
+            <div v-else>
+              <button><a :href="attachment.url" :download="attachment.filename">{{ attachment.filename }}</a></button>
+            </div>
           </div>
         </div>
       </div>
@@ -138,7 +145,10 @@ export default {
         const attachment = attachmentIds[id.attachmentId];
         const mimeType = attachment.mimeType;
         if (!mimeType.includes("image")){
-          return {url: `data:${mimeType};base64,${attachment.data}`};
+          return {
+            url: `data:${mimeType};base64,${attachment.data}`,
+            filename: id.filename
+          };
         }
       }).filter(image => image !== undefined);
     },
@@ -148,8 +158,12 @@ export default {
       this.message.attachmentIds.map((id) => {
         const attachment = attachmentIds[id.attachmentId];
         const mimeType = attachment.mimeType;
+        // console.log("Filename:->", attachment.filename);
         if (mimeType.includes("image")){
-          return {url: `data:${mimeType};base64,${attachment.data}`};
+          return {
+            url: `data:${mimeType};base64,${attachment.data}`,
+            title: id.filename
+          };
         }
       }).filter(image => image !== undefined);
     },
