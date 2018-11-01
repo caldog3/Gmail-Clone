@@ -96,6 +96,7 @@ const getMultipartMixedData = (payload) => {
       attachmentIds.push({
         mimeType: part.mimeType,
         attachmentId: part.body.attachmentId,
+        filename: part.filename
       });
     }
   }
@@ -167,6 +168,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
       attachmentIds.push({
         mimeType: attachment.mimetype,
         attachmentId: attachment.id,
+        filename: attachment.filename
       });
     }
   } else {
