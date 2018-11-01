@@ -38,7 +38,9 @@ export default {
   },
   data() {
     return {
-      responseBody: "Current response body filler",
+      responsePlain: 'Test value',
+      responseHTML: '<p>Test value</p>',
+      responseBody: "",
       //I think we need computed/method to set these....
       subject: '',
       // subject: "Test subject",
@@ -46,6 +48,7 @@ export default {
       // sender: "caldogwoods@gmail.com",
       recipient: '',
       // recipient: "caldogwoods@gmail.com",
+      multipartBoundary: '',
     };
   },
   methods: {
@@ -53,21 +56,51 @@ export default {
       console.log("in the reply"); 
       //testing this out
       let headerSection = {
-        'Content-Type': 'text/plain; charset="\UTF-8\"',
+        // 'Content-Type': 'text/plain; charset="\UTF-8\"',
+        'Content-Type': 'text/plain',
         'MIME-Version': '1.0',
-        'Content-Transfer-Encoding': '7bit',
-        //We want to add the "Re: " part somehow but it breaks if it goes here
-        'Subject': this.subject,
+        // 'Content-Transfer-Encoding': '7bit',
+        'Subject': 'Re: ' + this.subject,
         'From': this.sender,
         'To': this.recipient,
       }
-      // is this capability gone?
+      this.setResponseBody();
       console.log("Subject is:", this.subject);
       console.log("Sender is:", this.sender);
       console.log("Recipient is:", this.recipient);
       let id = this.messages[0].threadId;
       console.log("right before send call");
-      sendReply(headerSection, this.responseBody, id);
+      // sendReply(headerSection, this.responseBody, id);
+    },
+    setResponseBody() {
+      //got to set up mime boundaries
+      var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
+      body += '--' + this.multipartBoundary + '\n';
+      //plain text
+      body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
+      body += this.responsePlain + '\n\n';
+
+      body += '--' + this.multipartBoundary + '\n';
+      //html text
+      body += 'Content-Type: text/html; charset="UTF-8"\n';
+      body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+      body += this.responseHTML + '\n\n';
+
+      body += '--' + this.multipartBoundary;
+
+      this.responseBody = body;
+      console.log("responseBody", this.responseBody);
+    },
+    generateBoundary() {
+      //12 0's and then 16 digit random...
+      var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      var boundLength = 16;
+      var randBoundary = "000000000000";
+      randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+
+      // console.log("gererated boundary:", randBoundary);
+      this.multipartBoundary = randBoundary;
+      return randBoundary;
     },
     getMessages(){
       let messages = this.$store.state.threadMessages;
