@@ -38,8 +38,8 @@ export default {
   },
   data() {
     return {
-      responsePlain: 'Test value 2',
-      responseHTML: '<p>Test value 2</p>',
+      responsePlain: 'Test value 3 plain',
+      responseHTML: '<div>Test value 3 html</div>',
       responseBody: "",
       //I think we need computed/method to set these....
       subject: '',
@@ -64,7 +64,7 @@ export default {
         'Subject': 'Re: ' + this.subject,
         'From': this.sender,
         'To': this.recipient,
-        'Content-Type': 'multipart/alternative; boundary="' + this.multipartBoundary + '"',
+        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
       }
       this.setResponseBody();
       console.log("Subject is:", this.subject);
@@ -82,7 +82,6 @@ export default {
       //plain text
       body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
       body += this.responsePlain + '\n';
-
       body += '--' + this.multipartBoundary + '\n';
       //html text
       body += 'Content-Type: text/html; charset="UTF-8"\n';
@@ -92,7 +91,7 @@ export default {
       body += '--' + this.multipartBoundary + '--';
 
       this.responseBody = body;
-      console.log("responseBody", this.responseBody);
+      console.log("responseBody:\n", this.responseBody);
     },
     generateBoundary() {
       //12 0's and then 16 digit random...
@@ -105,7 +104,7 @@ export default {
       this.multipartBoundary = randBoundary;
       return randBoundary;
     },
-    getMessages(){
+    getMessages() {
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
         let object = sortBy(threadMessages, m => m.unixTime);
