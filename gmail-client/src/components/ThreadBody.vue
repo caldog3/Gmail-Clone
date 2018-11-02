@@ -38,8 +38,8 @@ export default {
   },
   data() {
     return {
-      responsePlain: 'Test value',
-      responseHTML: '<p>Test value</p>',
+      responsePlain: 'Test value 2',
+      responseHTML: '<p>Test value 2</p>',
       responseBody: "",
       //I think we need computed/method to set these....
       subject: '',
@@ -55,14 +55,16 @@ export default {
     reply() {
       console.log("in the reply"); 
       //testing this out
+      this.multipartBoundary = this.generateBoundary();
       let headerSection = {
         // 'Content-Type': 'text/plain; charset="\UTF-8\"',
-        'Content-Type': 'text/plain',
+        // 'Content-Type': 'text/plain',
         'MIME-Version': '1.0',
         // 'Content-Transfer-Encoding': '7bit',
         'Subject': 'Re: ' + this.subject,
         'From': this.sender,
         'To': this.recipient,
+        'Content-Type': 'multipart/alternative; boundary="' + this.multipartBoundary + '"',
       }
       this.setResponseBody();
       console.log("Subject is:", this.subject);
@@ -70,11 +72,12 @@ export default {
       console.log("Recipient is:", this.recipient);
       let id = this.messages[0].threadId;
       console.log("right before send call");
-      // sendReply(headerSection, this.responseBody, id);
+      sendReply(headerSection, this.responseBody, id);
     },
     setResponseBody() {
       //got to set up mime boundaries
-      var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
+      // var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
+      var body = "";
       body += '--' + this.multipartBoundary + '\n';
       //plain text
       body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
@@ -86,7 +89,7 @@ export default {
       body += 'Content-Transfer-Encoding: quoted-printable\n\n';
       body += this.responseHTML + '\n\n';
 
-      body += '--' + this.multipartBoundary;
+      body += '--' + this.multipartBoundary + '--';
 
       this.responseBody = body;
       console.log("responseBody", this.responseBody);
