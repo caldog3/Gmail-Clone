@@ -15,10 +15,10 @@
       <button type="button" v-on:click="reply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
-        <button type="button"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        <button type="button" v-on:click="replyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
-      <button type="button"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+      <button type="button" v-on:click="forward"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
 </template>
@@ -49,6 +49,7 @@ export default {
       recipient: '',
       // recipient: "caldogwoods@gmail.com",
       multipartBoundary: '',
+      allReplyRecipients: '',
     };
   },
   methods: {
@@ -104,6 +105,30 @@ export default {
       this.multipartBoundary = randBoundary;
       return randBoundary;
     },
+    replyAll() {
+      console.log("in the replyAll");
+      this.multipartBoundary = this.generateBoundary();
+      let headerSection = {
+        'MIME-Version': '1.0',
+        // 'Content-Transfer-Encoding': '7bit',
+        'Subject': 'Re: ' + this.subject,
+        'From': this.sender,
+        'To': this.allReplyRecipients,
+        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
+      }
+      this.setResponseBody();
+      console.log("Subject is:", this.subject);
+      console.log("Sender is:", this.sender);
+      console.log("Recipient is:", this.recipient);
+      let id = this.messages[0].threadId;
+      console.log("right before send call");
+      sendReply(headerSection, this.responseBody, id);
+    },
+    forward() {
+      // Are these part of the same threadid? they get listed with it to the user...but how does it work?
+      console.log("Wish I knew how to forward stuff yet");
+
+    },
     getMessages() {
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
@@ -139,13 +164,28 @@ export default {
           }
           // eslint-disable-next-line
           this.timeAgo = s.slice();
-// This is all in this property because it overflows the stack if I call another function...
+// This (the time splicing) is all in this property because it overflows the stack if I call another function...
       this.messages = object;
       this.subject = this.messages[this.messages.length -1].subject;
       this.recipient = this.messages[this.messages.length -1].detailedFrom;
       //this to doesn't work with group messages, includes other people
       //we need to create more parts of the object for these values ^^ vv
       this.sender = this.messages[this.messages.length -1].to;
+      let allPeopleArray = this.messages[0].allParticipants;
+      let userInstance = false;
+      var replyAllPeople = "";
+      // console.log("allPeopleArray: ", this.messages);
+      for (let i = 0; i < allPeopleArray.length; i++) {
+        if (allPeopleArray[i].includes(this.$store.state.currentUserProfile.U3) && !userInstance) {
+          userInstance = true;
+          continue;
+        }
+        replyAllPeople += allPeopleArray[i];
+        if (allPeopleArray.length-1 == i) {
+          replyAllPeople += ", ";
+        }
+      }
+      this.allReplyRecipients = replyAllPeople;
       console.log("lastMessage", this.messages[this.messages.length -1]);
     },
     trash() {
