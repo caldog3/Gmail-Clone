@@ -4,7 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from "./store";
-
+//vGallery Import
+import vGallery from 'v-gallery';
+Vue.use(vGallery);
 //Bootstrap Import
 import BootstrapVue from "bootstrap-vue/dist/bootstrap-vue.esm"
 import "bootstrap/dist/css/bootstrap.css";
