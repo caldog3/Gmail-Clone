@@ -81,7 +81,7 @@ export default {
       body += '--' + this.multipartBoundary + '\n';
       //plain text
       body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
-      body += this.responsePlain + '\n\n';
+      body += this.responsePlain + '\n';
 
       body += '--' + this.multipartBoundary + '\n';
       //html text
