@@ -4,6 +4,7 @@
         <div class="flexboxSubject">
           <div class="leftAlign">
             <hr>
+            <!-- last person that the message was from (that wasn't the user) -->
             <b>{{message.from}}</b>
           </div>
           <div class="rightAlign shift-down">
@@ -25,11 +26,8 @@
             </div>
           </div>
         </div>
-        <div class="overflow">
-          <!-- maybe doing this?... -->
-          <!-- {{message.plainBody}} -->
-          <!-- need some better styling to hide overflow...maybe just use the snippet-->
-          <!-- <div v-html="message.body" class="leftAlign overflow"></div> -->
+        <div class="overflow center">
+          <!-- This needs to be the last message's snippet not the first... -->
           <div v-html="message.snippet"></div>
         </div>    
       </div>
@@ -203,6 +201,9 @@ export default {
   overflow:hidden;
   position: relative;
   white-space:nowrap;
+}
+.center {
+  text-align: left;
 }
 button {
   background-color: white;
