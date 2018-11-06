@@ -101,7 +101,7 @@ const getMultipartMixedData = (payload) => {
     }
   }
   
-  if(body !== undefined){
+  if(body !== undefined) {
     if (body.body !== undefined) {
       body = body.body;
     }
@@ -152,7 +152,7 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
-  const { from, to, conciseTo, cc, subject, detailedFrom } = getEmailInfo(payload.result.payload.headers);
+  const { from, to, conciseTo, cc, subject, detailedFrom, allParticipants } = getEmailInfo(payload.result.payload.headers);
   const { time, unixTime } = getTimeFormat(payload.result.internalDate);
   const { unread, starred } = resolveLabels(payload.result.labelIds);
   const snippet = payload.result.snippet;
@@ -182,6 +182,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
     messageId,
     from,
     detailedFrom,
+    allParticipants,
     to,
     conciseTo,
     cc,
@@ -199,20 +200,20 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
 }
 
 const getEmailInfo = (headers) => {
-  let from, to, conciseTo, cc = null, subject, detailedFrom;
+  let from, to, conciseTo, cc = null, subject, detailedFrom, allParticipants = null;
   for (let i = 0; i < headers.length; i++) {
 
     if (headers[i].name === "From") {
       detailedFrom = headers[i].value;
       // console.log(detailedFrom);
       // console.log("Emergency headers");
-      // console.log(headers);
+      
 
       from = detailedFrom.substr(0, detailedFrom.indexOf('<') - 1);
       if (from === "") {
         from = detailedFrom;
       }
-      // SO I"M NOT ALLOWED TO ACCESS THE STORE FROM THIS FILE? LAME!
+      // SO I'M NOT ALLOWED TO ACCESS THE STORE FROM THIS FILE? LAME!
       // if (from === this.$store.state.currentUserProfile.U3) {
       //   from = "me";
       // }
@@ -227,11 +228,12 @@ const getEmailInfo = (headers) => {
       if(from.length >= 20) {
         from = from.substring(0, 19) + ".";
       }
+      // if(from == "Daniel Zappala") {
+      //   console.log("Breaking up the headers: ", headers);
+      // }
     } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
-      // console.log(headers[i].value);
-      // console.log("SPACE");
-      // console.log(headers);
       to = headers[i].value;
+
       conciseTo = to;
       // Need to break up the to for each comma and shorten each of the senders before piecing back together
       if(conciseTo.length > 20) {
@@ -253,15 +255,20 @@ const getEmailInfo = (headers) => {
     } else if (headers[i].name === "Cc") {
       cc = headers[i].value;
     }
-
   }
+  let p = to + ", " + detailedFrom;
+  allParticipants = p.split(", ");
+  // console.log("Subject: ", subject);
+  // console.log("AllPeople: ", allParticipants);
+
   return {
     from,
     to,
     conciseTo,
     cc,
     subject,
-    detailedFrom
+    detailedFrom,
+    allParticipants,
   };
 }
 
