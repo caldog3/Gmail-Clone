@@ -72,7 +72,7 @@
           <p>to {{message.to | getFirstNames}}</p>
         </div>
         <!-- here's the body; need to break the body into 2 pieces -->
-        <div v-html="message.body" class=""></div>
+        <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
         <div v-if="images.length > 0" >
           <v-gallery :images="images" :dark="true"></v-gallery>
@@ -103,6 +103,9 @@
 import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { SweetModal } from 'sweet-modal-vue';
+import linkifyString from 'linkifyjs/string';
+import linkifyHtml from 'linkifyjs/html';
+import isHtml from 'is-html';
 
 export default {
   name: 'ThreadBody',
@@ -135,6 +138,13 @@ export default {
 
         return person.substr(0, person.indexOf("@"));
       }).toString();
+    },
+    highlightUrls(messageBody) {
+      if(isHtml(messageBody)){
+        return linkifyHtml(messageBody, {});
+      } else {
+        return linkifyString(messageBody, {});
+      }
     }
   },
   computed: {
