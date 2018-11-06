@@ -97,30 +97,24 @@ import eventBus from './../event_bus';
         this.getFolderListOfMessages(label);
       }
     },
-    getAllLabels(){
-      if(this.getLabelMessages['ALL_MAIL'] === undefined) {
-        this.getAllMessages('ALL_MAIL');
-      }
-    }
+    // getAllLabels(){
+    //   if(this.getLabelMessages['ALL_MAIL'] === undefined) {
+    //     this.getAllMessages('ALL_MAIL');
+    //   }
+    // }
    },
-   async created() {
-    //I Did not use the Array.forEach() since it hurt performance a lot. (Will revisit)
-    const inboxLabelPromises = [
-      this.getInboxLabels('PRIMARY'),
-      this.getInboxLabels('SOCIAL'),
-      this.getInboxLabels('PROMOTIONS')
-    ];
-    
-    Promise.all(inboxLabelPromises).then(() => {
+   created() {
+    this.getInboxLabels('PRIMARY').then(()=>{
       eventBus.$emit('DATA_FETCHING_COMPLETE');
+      this.getInboxLabels('SOCIAL');
+      this.getInboxLabels('PROMOTIONS');
+      // Get Folder labels
+      this.getFolderLabels('DRAFT');
+      this.getFolderLabels('SENT');
+      this.getFolderLabels('STARRED');
+      this.getFolderLabels('IMPORTANT');
+      this.getFolderLabels('TRASH');
     });
-
-    this.getFolderLabels('DRAFT');
-    this.getFolderLabels('SENT');
-    this.getFolderLabels('STARRED');
-    this.getFolderLabels('IMPORTANT');
-    this.getFolderLabels('TRASH');
-    this.getAllLabels();
    },
  }
 </script>
