@@ -33,6 +33,64 @@
   </div>
 </template>
 
+<script>
+import { sendMessage } from './../store-utility-files/gmail-api-calls';
+import eventBus from '../event_bus.js';
+import Icon from './icon';
+
+export default {
+  name: 'Compose',
+  components: {
+    Icon
+  },
+  data() {
+    return {
+      composeTo: '',
+      composeSubject: '',
+      composeMessage: '',
+        
+      currentUser: window.currentUser,
+      active: false,
+      activeSection: 'to',
+      ccActive: false,
+      bccActive: false
+    }
+  },
+  methods: {
+    open() {
+      this.active = true
+    },
+    close() {
+      this.active = false
+    },
+    sendCompose() {
+      this.close();
+      let headerSection = {
+        'To': this.composeTo,
+        'Subject': this.composeSubject
+      }
+      sendMessage(headerSection, this.composeMessage);
+      this.composeTidy();
+    },
+    composeTidy() {
+      this.composeTo = '';
+      this.composeSubject = '';
+      this.composeMessage = '';
+    },
+    focusOnSection(section) {
+      this.activeSection = section;
+      // this.ccActive = this.message.cc !== '';
+      // this.bccActive = this.message.bcc !== '';
+    }
+  },
+  created() {
+    eventBus.$on('BODY_CLICK', this.close)
+    eventBus.$on('KEYUP_ESCAPE', this.close)
+    eventBus.$on('COMPOSE_OPEN', this.open);
+  }
+}
+</script>
+
 <style scoped>
 .compose {
   background: #fff;
@@ -161,61 +219,3 @@ textarea {
 
 }
 </style>
-
-<script>
-import { sendMessage } from './../store-utility-files/gmail-api-calls';
-import eventBus from '../event_bus.js';
-import Icon from './icon';
-
-export default {
-  name: 'Compose',
-  components: {
-    Icon
-  },
-  data() {
-    return {
-      composeTo: '',
-      composeSubject: '',
-      composeMessage: '',
-        
-      currentUser: window.currentUser,
-      active: false,
-      activeSection: 'to',
-      ccActive: false,
-      bccActive: false
-    }
-  },
-  methods: {
-    open() {
-      this.active = true
-    },
-    close() {
-      this.active = false
-    },
-    sendCompose() {
-      this.close();
-      let headerSection = {
-        'To': this.composeTo,
-        'Subject': this.composeSubject
-      }
-      sendMessage(headerSection, this.composeMessage);
-      this.composeTidy();
-    },
-    composeTidy() {
-      this.composeTo = '';
-      this.composeSubject = '';
-      this.composeMessage = '';
-    },
-    focusOnSection(section) {
-      this.activeSection = section;
-      // this.ccActive = this.message.cc !== '';
-      // this.bccActive = this.message.bcc !== '';
-    }
-  },
-  created() {
-    eventBus.$on('BODY_CLICK', this.close)
-    eventBus.$on('KEYUP_ESCAPE', this.close)
-    eventBus.$on('COMPOSE_OPEN', this.open);
-  }
-}
-</script>
