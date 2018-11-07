@@ -21,8 +21,8 @@
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
 
-    <div class="sectionText">
-      <textarea v-model="composeMessage" placeholder="" id="composeMessage" @focus="focusOnSection('body')"></textarea>
+    <div class="sectionText" id="composeMessage" @focus="focusOnSection('body')">
+      <quill-editor v-model="composeMessage"></quill-editor>
     </div>
     
     <div class="footerSection">
@@ -35,13 +35,15 @@
 
 <script>
 import { sendMessage } from './../store-utility-files/gmail-api-calls';
+import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
 
 export default {
   name: 'Compose',
   components: {
-    Icon
+    Icon,
+    QuillEditor
   },
   data() {
     return {
@@ -75,7 +77,7 @@ export default {
     composeTidy() {
       this.composeTo = '';
       this.composeSubject = '';
-      this.composeMessage = '';
+      this.composeMessage = 'asdf jkl; ';
     },
     focusOnSection(section) {
       this.activeSection = section;
