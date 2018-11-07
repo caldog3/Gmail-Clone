@@ -47,8 +47,6 @@
   content: "";
   display: inline;
   position: absolute;
-  width: 0;
-  height: 100%;
   left: 50%;
   text-align: center;
 }

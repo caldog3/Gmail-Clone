@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from "./store";
+//Register QuillEditor
+import 'quill/dist/quill.snow.css';
 //vGallery Import
 import vGallery from 'v-gallery';
 Vue.use(vGallery);
