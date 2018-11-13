@@ -4,6 +4,12 @@
     </div>
 </template>
 
+<style scoped>
+    div {
+        min-height: 250px;
+    }
+</style>
+
 <script>
     import Quill from 'quill';
 

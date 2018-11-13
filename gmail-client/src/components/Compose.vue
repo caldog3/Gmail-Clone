@@ -21,15 +21,15 @@
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
 
-    <div class="sectionText" id="composeMessage" @focus="focusOnSection('body')">
-      <quill-editor v-model="composeMessage"></quill-editor>
+    <div @focus="focusOnSection('body')">
+      <quill-editor v-model="composeMessage"/>
     </div>
     
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
       </div>
-    </div>
+    </div>  
   </div>
 </template>
 
@@ -77,7 +77,7 @@ export default {
     composeTidy() {
       this.composeTo = '';
       this.composeSubject = '';
-      this.composeMessage = 'asdf jkl; ';
+      this.composeMessage = '';
     },
     focusOnSection(section) {
       this.activeSection = section;
@@ -201,11 +201,11 @@ textarea {
 .footerSection {
   overflow: hidden;
   width: 510px;
-  padding: 4px;
+  margin: 4px;
   height: 55px;
 }
 .sendButton {
-  float: left;
+  float: right;
   margin: 4px;
   color: white;
   padding: 3px;
