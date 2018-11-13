@@ -9,7 +9,6 @@ const sendMessage = (headers, message) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
-
   gapi.client.gmail.users.messages.send({
     'userId': 'me',
     'resource': {
