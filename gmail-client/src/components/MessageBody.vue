@@ -66,9 +66,11 @@
       </div>
       
       <div class="leftAlign">
-        <div class="recipients">
-          <p>to {{message.to | getFirstNames}}</p>
+        <div>
+          <div class="recipients">to {{message.to | getFirstNames}}</div>
+          <i class="down"></i>
         </div>
+        
         <!-- here's the body; need to break the body into 2 pieces -->
         <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
@@ -208,7 +210,7 @@ export default {
       this.timeAgo = timeago(this.message.unixTime * 1000);
     }
   },
-  updated(){
+  created(){
     this.setTimeAgo();
   }
 }
@@ -281,6 +283,9 @@ button:hover {
 }
 .recipients {
   font-size: .8em;
+  height: 20px;
+  overflow: hidden;
+  width: 90%;
 }
 .leftAlign {
   text-align: left;
@@ -405,6 +410,18 @@ h4 {
   .theRestoftheTime {
     display: none;
   }
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }
 </style>
 
