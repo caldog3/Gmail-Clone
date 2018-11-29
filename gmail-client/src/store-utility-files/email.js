@@ -114,6 +114,7 @@ const getMultipartMixedData = (payload) => {
 }
 
 const getBody = (payload) => {
+  // console.log("BEGINNING: ", payload);
   let bodyData;
   let attachmentIds = [];
 

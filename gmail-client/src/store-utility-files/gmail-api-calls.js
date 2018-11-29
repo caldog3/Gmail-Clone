@@ -43,6 +43,54 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
+// OUR GMAIL ACCOUNTS CANT USE '.create' b/c we don't have 'domain wide authority'
+// const forwardRequest = () => {
+//   console.log("REQUESTING FOR CREATE FORWARD");
+//   gapi.client.gmail.users.settings.forwardingAddresses.create({
+//     'userId': 'me',
+//   }).then((response) => {
+//     console.log("SUCCESS: response is - ", response);
+//   }).catch((err) => {
+//     console.log(err);
+//   })
+// }
+
+const sendForward = (headers, message,threadId) => {
+  console.log("In API forwarding call");
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  gapi.client.gmail.users.messages.send({
+    'userId': 'me',
+    'resource': {
+      'raw': Base64Encode(email),
+      'threadId': threadId, 
+    }
+  }).then((response) => {
+    console.log(`Forward Sent. Response =>:`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+const forwardMessage = (forwardEmail, messageBody) => {
+  console.log("forwarding Request starting");
+  gapi.client.gmail.users.settings.forwardingAddresses.get({
+    'userId': 'me',
+    //hard coding in values currently for testing
+    'verificationStatus': 'verificationStatusUnspecified',
+    'forwardingEmail': forwardEmail,
+    //'forwardingEmail': forwardEmail,
+  }).then((response) => {
+    console.log('ForwardEmail: ', response);
+  }).catch((err) => {
+    console.log(err);
+  })
+}
+
 const markAsRead = (messageId) => {
   gapi.client.gmail.users.messages.modify({
     'userId': 'me',
@@ -206,5 +254,7 @@ export {
   getNumberOfMessages,
   getAttachment,
   trashMessage,
-  markSpam
+  markSpam,
+  forwardMessage,
+  sendForward,
 };
