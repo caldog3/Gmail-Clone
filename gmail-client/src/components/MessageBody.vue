@@ -9,7 +9,7 @@
           </div>
           <div class="rightAlign shift-down">
             <div class="flexRight">
-              <span>{{message.time}} ({{timeAgo}} ago)</span>
+              <span>{{message.time}} ({{timeAgo}})</span>
               <!-- need to fix the styling here FIXME -->
               <div class="starBound">
                 <div class="theRestoftheTime">
@@ -41,7 +41,7 @@
         <div class="rightAlign shift-down">
           <div class="flexRight">
               <div>
-                {{message.time}} ({{ timeAgo }} ago)
+                {{message.time}} ({{ timeAgo }})
               </div>
               <div class="starBound">
                 <div class="theRestoftheTime">
@@ -103,6 +103,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { SweetModal } from 'sweet-modal-vue';
 import linkifyString from 'linkifyjs/string';
 import linkifyHtml from 'linkifyjs/html';
+import timeago from 'epoch-timeago';
 import isHtml from 'is-html';
 
 export default {
@@ -114,7 +115,7 @@ export default {
   },
   data() {
     return {
-      timeAgo: "1 hour",
+      timeAgo: "0",
       notExpanded: false,
     };
   },
@@ -139,7 +140,13 @@ export default {
     },
     highlightUrls(messageBody) {
       if(isHtml(messageBody)){
-        return linkifyHtml(messageBody, {});
+        const hyperlinkedHTML = linkifyHtml(messageBody, {});
+
+        //Case where the HTML couldn't be formatted by Linkify.js (HTML already has links enabled)
+        if(hyperlinkedHTML.length < messageBody.length){
+          return messageBody;
+        }
+        return hyperlinkedHTML;
       } else {
         return linkifyString(messageBody, {});
       }
@@ -195,9 +202,14 @@ export default {
       }
     },
     openModal(index){
-      // console.log("REFS in the openModal: ", this.$refs)
       this.$refs.modal[index].open();
+    },
+    setTimeAgo(){
+      this.timeAgo = timeago(this.message.unixTime * 1000);
     }
+  },
+  updated(){
+    this.setTimeAgo();
   }
 }
 </script>

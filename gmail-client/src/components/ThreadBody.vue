@@ -132,40 +132,7 @@ export default {
     getMessages() {
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
-        let object = sortBy(threadMessages, m => m.unixTime);
-        let time = object[0].unixTime;
-
-          var ts = Math.round((new Date()).getTime() / 1000);
-          var diff = Math.floor((ts - time)), units = [
-            { d: 60, l: "seconds" },
-            { d: 60, l: "minutes" },
-            { d: 24, l: "hours" },
-            { d: 7, l: "days" }
-          ];
-          var s = '';
-          var times = [];
-          for (var i = 0; i < units.length; ++i) {
-            times[i] = (diff % units[i].d);
-            diff = Math.floor(diff / units[i].d);
-          }
-          if (times[3] === 0) {
-            if (times[2] === 0) {
-              if (times[1] != 1) { s = times[1] + " minutes"}
-              else { s = times[1] + " minute"}
-            }
-            else {
-              if (times[2] != 1) {s = times[2] + " hours"}
-              else { s = times[2] + " hour"}
-            }
-          }
-          else {
-            if (times[3] != 1) {s = times[3] + " days"}
-            else {s = times[3] + " day"}
-          }
-          // eslint-disable-next-line
-          this.timeAgo = s.slice();
-// This (the time splicing) is all in this property because it overflows the stack if I call another function...
-      this.messages = object;
+      this.messages = sortBy(threadMessages, m => m.unixTime);
       this.subject = this.messages[this.messages.length -1].subject;
       this.recipient = this.messages[this.messages.length -1].detailedFrom;
       //this to doesn't work with group messages, includes other people
