@@ -273,9 +273,33 @@ const getEmailInfo = (headers) => {
   };
 }
 
+const setupEmailBody = (Subject, To, Message, Sender) => {
+  console.log("In the setup: ", To);
+  var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var boundLength = 16;
+  var randBoundary = "000000000000";
+  randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  const headerSection = {
+    'MIME-Version': '1.0',
+    //Modify the subject depending on replies/forwards
+    'Subject': Subject,
+    'From': Sender,
+    'To': To,
+    'Content-Type': 'multipart/alternative;' + 'boundary=' + randBoundary,
+  }
+  const body = `--${randBoundary}\nContent-Type: text/html; charset="UTF-8"\n
+          Content-Transfer-Encoding: quoted-printable\n\n${Message}\n\n
+          --${this.randBoundary}--`;
+  return {
+    headerSection,
+    body,
+  }
+}
+
 export {
   getTimeFormat,
   getBody,
   getMessage,
-  Base64Encode
+  Base64Encode,
+  setupEmailBody,
 };

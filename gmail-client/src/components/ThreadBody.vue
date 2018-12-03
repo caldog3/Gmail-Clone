@@ -56,10 +56,7 @@ export default {
       //testing this out
       this.multipartBoundary = this.generateBoundary();
       let headerSection = {
-        // 'Content-Type': 'text/plain; charset="\UTF-8\"',
-        // 'Content-Type': 'text/plain',
         'MIME-Version': '1.0',
-        // 'Content-Transfer-Encoding': '7bit',
         'Subject': 'Re: ' + this.subject,
         'From': this.sender,
         'To': this.recipient,
@@ -75,7 +72,6 @@ export default {
     },
     setResponseBody() {
       //got to set up mime boundaries
-      // var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
       var body = "";
       body += '--' + this.multipartBoundary + '\n';
       //plain text
@@ -137,6 +133,7 @@ export default {
 
     },
     setForwardingBody() {
+      // const body1 = `--${this.multipartBoundary}\n`;
       var body = "";
       body += '--' + this.multipartBoundary + '\n';
       body += 'Content-Type: text/html; charset="UTF-8"\n';
