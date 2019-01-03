@@ -42,7 +42,6 @@ const getMultipartAlternativeBody = (payload) => {
   // console.log("Payload checking parts[1].body", payload);
   let tempBodyData;
   if (payload.parts[1] == undefined) {
-    // console.log("ITS UNDEFINED!!!!!!!!!!!!!!!!!!!!!!!!!");
     tempBodyData = payload.parts[0].body.data;
   }
   else {
