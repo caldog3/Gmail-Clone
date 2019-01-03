@@ -167,7 +167,7 @@ export default {
         }
       }
       this.allReplyRecipients = replyAllPeople;
-      console.log("lastMessage", this.messages[this.messages.length -1]);
+      console.log("lastMessageInThread", this.messages[this.messages.length -1]);
       this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {
