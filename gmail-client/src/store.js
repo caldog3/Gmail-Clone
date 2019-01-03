@@ -376,7 +376,7 @@ export default new Vuex.Store({
                 }
               })
             } catch (exception) {
-              // console.log("CALLBACK ERROR", exception);
+              console.log("CALLBACK ERROR", exception);
               bodyAndAttachments = getBody(result.payload);
             }
           }

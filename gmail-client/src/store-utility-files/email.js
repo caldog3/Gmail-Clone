@@ -39,7 +39,16 @@ const getTextBody = (payload) => {
 }
 
 const getMultipartAlternativeBody = (payload) => {
-  const bodyData = payload.parts[1].body.data;
+  // console.log("Payload checking parts[1].body", payload);
+  let tempBodyData;
+  if (payload.parts[1] == undefined) {
+    // console.log("ITS UNDEFINED!!!!!!!!!!!!!!!!!!!!!!!!!");
+    tempBodyData = payload.parts[0].body.data;
+  }
+  else {
+    tempBodyData = payload.parts[1].body.data;
+  }
+  const bodyData = tempBodyData;
   let body;
 
   if (bodyData !== undefined) {
@@ -290,6 +299,7 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
   const body = `--${randBoundary}\nContent-Type: text/html; charset="UTF-8"\n
           Content-Transfer-Encoding: quoted-printable\n\n${Message}\n\n
           --${this.randBoundary}--`;
+  console.log("BODY:", body);
   return {
     headerSection,
     body,

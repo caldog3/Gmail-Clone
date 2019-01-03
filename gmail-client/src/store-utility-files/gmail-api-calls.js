@@ -3,6 +3,7 @@ import eventBus from './../event_bus.js';
 import base64url from 'base64url';
 
 const sendMessage = (headers, message) => {
+  console.log("In compose message api call");
   let email = '';
   for (let header in headers){
     email += header;
@@ -13,7 +14,6 @@ const sendMessage = (headers, message) => {
     'userId': 'me',
     'resource': {
       'raw': Base64Encode(email),
-      // 'threadId': 'threadIdVariable'   pretty sure this is how this works
     }
   }).then((response) => {
     console.log(`Email Sent. Response =>:`, response);
