@@ -39,7 +39,15 @@ const getTextBody = (payload) => {
 }
 
 const getMultipartAlternativeBody = (payload) => {
-  const bodyData = payload.parts[1].body.data;
+  // console.log("Payload checking parts[1].body", payload);
+  let tempBodyData;
+  if (payload.parts[1] == undefined) {
+    tempBodyData = payload.parts[0].body.data;
+  }
+  else {
+    tempBodyData = payload.parts[1].body.data;
+  }
+  const bodyData = tempBodyData;
   let body;
 
   if (bodyData !== undefined) {
@@ -114,6 +122,7 @@ const getMultipartMixedData = (payload) => {
 }
 
 const getBody = (payload) => {
+  // console.log("BEGINNING: ", payload);
   let bodyData;
   let attachmentIds = [];
 
@@ -272,9 +281,34 @@ const getEmailInfo = (headers) => {
   };
 }
 
+const setupEmailBody = (Subject, To, Message, Sender) => {
+  console.log("In the setup: ", To);
+  var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var boundLength = 16;
+  var randBoundary = "000000000000";
+  randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  const headerSection = {
+    'MIME-Version': '1.0',
+    //Modify the subject depending on replies/forwards
+    'Subject': Subject,
+    'From': Sender,
+    'To': To,
+    'Content-Type': 'multipart/alternative;' + 'boundary=' + randBoundary,
+  }
+  const body = `--${randBoundary}\nContent-Type: text/html; charset="UTF-8"\n
+          Content-Transfer-Encoding: quoted-printable\n\n${Message}\n\n
+          --${this.randBoundary}--`;
+  console.log("BODY:", body);
+  return {
+    headerSection,
+    body,
+  }
+}
+
 export {
   getTimeFormat,
   getBody,
   getMessage,
-  Base64Encode
+  Base64Encode,
+  setupEmailBody,
 };

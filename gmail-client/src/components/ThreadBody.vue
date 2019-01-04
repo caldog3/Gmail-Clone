@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { trashMessage, sendReply } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import eventBus from '../event_bus';
@@ -41,15 +41,13 @@ export default {
       responsePlain: 'Test value 3 plain',
       responseHTML: '<div>Test value 3 html</div>',
       responseBody: "",
-      //I think we need computed/method to set these....
+      forwardingBody: "",
       subject: '',
-      // subject: "Test subject",
       sender: '',
-      // sender: "caldogwoods@gmail.com",
       recipient: '',
-      // recipient: "caldogwoods@gmail.com",
       multipartBoundary: '',
       allReplyRecipients: '',
+      finalMessageBody: '',
     };
   },
   methods: {
@@ -58,10 +56,7 @@ export default {
       //testing this out
       this.multipartBoundary = this.generateBoundary();
       let headerSection = {
-        // 'Content-Type': 'text/plain; charset="\UTF-8\"',
-        // 'Content-Type': 'text/plain',
         'MIME-Version': '1.0',
-        // 'Content-Transfer-Encoding': '7bit',
         'Subject': 'Re: ' + this.subject,
         'From': this.sender,
         'To': this.recipient,
@@ -77,7 +72,6 @@ export default {
     },
     setResponseBody() {
       //got to set up mime boundaries
-      // var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
       var body = "";
       body += '--' + this.multipartBoundary + '\n';
       //plain text
@@ -117,17 +111,37 @@ export default {
         'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
       }
       this.setResponseBody();
-      console.log("Subject is:", this.subject);
-      console.log("Sender is:", this.sender);
-      console.log("Recipient is:", this.recipient);
       let id = this.messages[0].threadId;
-      console.log("right before send call");
       sendReply(headerSection, this.responseBody, id);
     },
     forward() {
-      // Are these part of the same threadid? they get listed with it to the user...but how does it work?
-      console.log("Wish I knew how to forward stuff yet");
+      console.log("forwarding...")
+      //we will need to use a v-model link here to set this recipient
+      let forwardRecipient = "caldogwoods@gmail.com";
+      // forwardMessage(forwardRecipient, this.finalMessageBody);
+      this.multipartBoundary = this.generateBoundary();
+      let headerSection = {
+        'MIME-Version': '1.0',
+        'Subject': 'Fwd: ' + this.subject,
+        'From': this.sender,
+        'To': this.forwardRecipient,
+        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
+      }
+      this.setForwardingBody();
+      let id = this.messages[0];
+      sendForward(headerSection, this.forwardingBody, id);
 
+    },
+    setForwardingBody() {
+      // const body1 = `--${this.multipartBoundary}\n`;
+      var body = "";
+      body += '--' + this.multipartBoundary + '\n';
+      body += 'Content-Type: text/html; charset="UTF-8"\n';
+      body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+      body += this.finalMessageBody + '\n\n';
+      body += '--' + this.multipartBoundary + '--';
+      this.forwardingBody = body;
+      console.log("forwardingBody:\n", this.forwardingBody);
     },
     getMessages() {
       let messages = this.$store.state.threadMessages;
@@ -153,7 +167,8 @@ export default {
         }
       }
       this.allReplyRecipients = replyAllPeople;
-      console.log("lastMessage", this.messages[this.messages.length -1]);
+      console.log("lastMessageInThread", this.messages[this.messages.length -1]);
+      this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {
       let thisThreadid = this.messages[0].threadId;
