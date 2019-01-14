@@ -923,7 +923,7 @@ export default {
           this.totalMessages = "many";
         }
         else if (folder == "SEARCH"){
-          console.log("searching folder total update -------------------------");
+          // console.log("searching folder total update -------------------------");
           this.$store.state.totalMessages = "unknown";
           this.totalMessages = "unknown";
         }
