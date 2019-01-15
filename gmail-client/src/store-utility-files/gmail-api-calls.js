@@ -10,6 +10,8 @@ const sendMessage = (headers, message) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
+
+  console.log("Now in Base64: ", Base64Encode(email));
   gapi.client.gmail.users.messages.send({
     'userId': 'me',
     'resource': {

@@ -10,17 +10,17 @@ const Base64Decode = (str, encoding = "utf-8") => {
 // private function base64url_encode($mime) {
 //   return rtrim(strtr(base64_encode($mime), '+/', '-_'), '=');
 // }
-const Base64Encode = (str, encoding = 'utf-8') => {
-  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str); 
-  let value = base64js.fromByteArray(bytes);
-  return value.replace('+/', '-_').trimRight('=');
-}
+// const Base64Encode = (str, encoding = 'utf-8') => {
+//   let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str); 
+//   let value = base64js.fromByteArray(bytes);
+//   return value.replace('+/', '-_').trimRight('=');
+// }
 
 //REAL ORIGINAL
-// const Base64Encode = (str, encoding = 'utf-8') => {
-//   let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);     
-//   return base64js.fromByteArray(bytes);
-// }
+const Base64Encode = (str, encoding = 'utf-8') => {
+  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);     
+  return base64js.fromByteArray(bytes);
+}
   
 const getTimeFormat = (internalDate) => {
   let unix = moment.unix(internalDate / 1000);
@@ -304,11 +304,15 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
     'Subject': Subject,
     'From': Sender,
     'To': To,
-    'Content-Type': 'multipart/alternative;' + 'boundary=' + randBoundary,
+    'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
   }
-  const body = `--${randBoundary}\nContent-Type: text/html; charset="UTF-8"\n
-          Content-Transfer-Encoding: quoted-printable\n\n${Message}\n\n
-          --${randBoundary}--`;
+  const body = `--${randBoundary}
+Content-type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+${Message}
+
+--${randBoundary}--`;
   console.log("BODY:", body);
   return {
     headers,

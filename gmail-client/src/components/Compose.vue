@@ -77,6 +77,8 @@ export default {
 
       const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
       console.log("SEND COMPOSE: hope this works ", headers);
+      console.log("BODY before Base64: ", body);
+      //function to decode it
       sendMessage(headers, body);
       this.close();
       //Tidy needs to wait for this to finish
