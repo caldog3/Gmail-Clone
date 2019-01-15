@@ -76,7 +76,9 @@ export default {
       var sender = this.$store.state.currentUser.w3.U3;
 
       const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      console.log("SEND COMPOSE: hope this works");
+      console.log("SEND COMPOSE: hope this works ", headers);
+      console.log("BODY before Base64: ", body);
+      //function to decode it
       sendMessage(headers, body);
       this.close();
       //Tidy needs to wait for this to finish
@@ -115,6 +117,7 @@ export default {
   align-content: stretch;
   align-items: center;
   margin-right: 20px;
+  z-index: 999;
 }
 .flexFrom {
   display: flex;

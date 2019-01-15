@@ -117,7 +117,7 @@ export default {
   },
   data() {
     return {
-      timeAgo: "0",
+      timeAgo: "...",
       notExpanded: false,
     };
   },

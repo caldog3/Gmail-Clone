@@ -252,7 +252,7 @@ export default {
     }
   },
   computed: {
-    photoUrl(){
+    photoUrl() {
       return this.$store.getters.getCurrentUserProfile.Paa;
     }
   },

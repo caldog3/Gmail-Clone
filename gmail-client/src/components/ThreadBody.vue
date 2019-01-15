@@ -7,7 +7,6 @@
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
-        <!-- This is for collapsing emails to not take up so much space -->
       <message-body :message="message"/>
     </div>
 

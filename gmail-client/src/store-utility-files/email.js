@@ -6,8 +6,19 @@ const Base64Decode = (str, encoding = "utf-8") => {
     return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
 }
 
+//FIXME? -  below code from stack overflow to fix base64 encoding byte string problems
+// private function base64url_encode($mime) {
+//   return rtrim(strtr(base64_encode($mime), '+/', '-_'), '=');
+// }
+// const Base64Encode = (str, encoding = 'utf-8') => {
+//   let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str); 
+//   let value = base64js.fromByteArray(bytes);
+//   return value.replace('+/', '-_').trimRight('=');
+// }
+
+//REAL ORIGINAL
 const Base64Encode = (str, encoding = 'utf-8') => {
-  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
+  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);     
   return base64js.fromByteArray(bytes);
 }
   
@@ -287,20 +298,24 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
   var boundLength = 16;
   var randBoundary = "000000000000";
   randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
-  const headerSection = {
+  const headers = {
     'MIME-Version': '1.0',
     //Modify the subject depending on replies/forwards
     'Subject': Subject,
     'From': Sender,
     'To': To,
-    'Content-Type': 'multipart/alternative;' + 'boundary=' + randBoundary,
+    'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
   }
-  const body = `--${randBoundary}\nContent-Type: text/html; charset="UTF-8"\n
-          Content-Transfer-Encoding: quoted-printable\n\n${Message}\n\n
-          --${this.randBoundary}--`;
+  const body = `--${randBoundary}
+Content-type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+${Message}
+
+--${randBoundary}--`;
   console.log("BODY:", body);
   return {
-    headerSection,
+    headers,
     body,
   }
 }
