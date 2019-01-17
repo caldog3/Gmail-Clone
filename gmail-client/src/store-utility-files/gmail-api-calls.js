@@ -34,10 +34,13 @@ const sendReply = (headers, message, threadId) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
+  console.log("Now in Base64: ", Base64Encode(email));
+  console.log("Base64URL: ", base64url(email));
   gapi.client.gmail.users.messages.send({
     'userId': 'me',
     'resource': {
-      'raw': Base64Encode(email),
+      // 'raw': Base64Encode(email),
+      'raw': base64url(email),
       'threadId': threadId,
     }
   }).then((response) => {

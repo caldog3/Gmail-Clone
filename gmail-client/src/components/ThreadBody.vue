@@ -9,9 +9,20 @@
     <div v-for="message in messages" :key="message.messageId">
       <message-body :message="message"/>
     </div>
+    <!-- This is the quill response body -->
+    <div class="quill" @focus="focusOnSection('body')" v-if="replying">
+      <quill-editor v-model="responseHTML"/>
+      <div class="quill-spacing">
+        <button class="sendBar" type="button" v-on:click="replySend">
+          <font-awesome-icon class="Icon" icon="reply" /> Send
+        </button>
+      </div>
+    </div>
+    <!-- we need a send button that triggers "reply()" -->
+    <!-- End of the quill -->
 
-    <div class="response-buttons"> 
-      <button type="button" v-on:click="reply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+    <div class="response-buttons" v-if="!replying"> 
+      <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
         <button type="button" v-on:click="replyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
@@ -26,6 +37,7 @@
 import { trashMessage, sendReply, forwardMessage, sendForward } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
+import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
 
@@ -33,7 +45,8 @@ export default {
   name: 'ThreadBody',
   components: {
     FontAwesomeIcon,
-    MessageBody
+    MessageBody,
+    QuillEditor,
   },
   data() {
     return {
@@ -47,9 +60,17 @@ export default {
       multipartBoundary: '',
       allReplyRecipients: '',
       finalMessageBody: '',
+      replying: false,
     };
   },
   methods: {
+    toggleReply() {
+      this.replying = true;
+    },
+    replySend() {
+      //we'll link these two up soon
+      console.log("You clicked the send button");
+    },
     reply() {
       console.log("in the reply"); 
       //testing this out
@@ -194,6 +215,13 @@ export default {
 </script>
 
 <style scoped>
+.quill {
+  align-content: center;
+  padding-left: -10px;
+}
+.quill-spacing {
+  padding-bottom: 20px;
+}
 button {
   background-color: white;
   border: 1px solid lightgrey;
@@ -234,5 +262,10 @@ button:hover {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
+}
+.sendBar {
+  text-align: left;
+  align-content: left;
+  cursor: pointer;
 }
 </style>

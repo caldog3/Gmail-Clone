@@ -142,7 +142,7 @@ body {
   overflow: hidden;
 }
 .loggedIn {
-  background-image: url(assets/Background10.jpg);
+  background-image: url(assets/Background9.jpg);
   box-shadow: inset 0 0 0 1000px rgba(0,0,0,.25);
   background-repeat: no-repeat;
   background-size: cover;

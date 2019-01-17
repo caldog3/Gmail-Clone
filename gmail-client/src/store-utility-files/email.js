@@ -307,7 +307,7 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
     'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
   }
   const body = `--${randBoundary}
-Content-type: text/plain; charset="UTF-8"
+Content-type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 ${Message}
