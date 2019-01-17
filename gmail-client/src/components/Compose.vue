@@ -29,9 +29,6 @@
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
       </div>
-      <div>
-        {{composeTo}}
-      </div>
     </div>  
   </div>
 </template>
