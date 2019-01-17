@@ -40,6 +40,8 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
+import { setupEmailBody } from '../store-utility-files/email';
+
 
 export default {
   name: 'ThreadBody',
@@ -51,7 +53,7 @@ export default {
   data() {
     return {
       responsePlain: 'Test value 3 plain',
-      responseHTML: '<div>Test value 3 html</div>',
+      responseHTML: '',
       responseBody: "",
       forwardingBody: "",
       subject: '',
@@ -70,6 +72,12 @@ export default {
     replySend() {
       //we'll link these two up soon
       console.log("You clicked the send button");
+
+      const {headers, body} = setupEmailBody("Re: " + this.subject, this.recipient, this.responseHTML, this.sender);
+      console.log("HEaders: ", headers);
+      console.log("Body: ", body);
+      let threadID = this.messages[0].threadId;
+      sendReply(headers, body, threadID);
     },
     reply() {
       console.log("in the reply"); 
