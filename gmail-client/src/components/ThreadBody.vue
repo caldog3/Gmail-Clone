@@ -11,21 +11,40 @@
     </div>
     <!-- This is the quill response body -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replying">
+      <div>&emsp;</div>
+      <textarea rows="1" v-model="recipient" class="recipients"></textarea>
       <quill-editor v-model="responseHTML"/>
       <div class="quill-spacing">
         <button class="sendBar" type="button" v-on:click="replySend">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
+        <button class="sendBar" type="button" v-on:click="toggleReply">
+          <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
       </div>
     </div>
     <!-- we need a send button that triggers "reply()" -->
+    <!-- Reply all -->
+    <div class="quill" @focus="focusOnSection('body')" v-if="replyingAll">
+      <div>&emsp;</div>
+      <textarea rows="1" v-model="allReplyRecipients" class="recipients"></textarea>
+      <quill-editor v-model="responseHTML"/>
+      <div class="quill-spacing">
+        <button class="sendBar" type="button" v-on:click="replyAllSend">
+          <font-awesome-icon class="Icon" icon="reply" /> Send
+        </button>
+        <button class="sendBar" type="button" v-on:click="toggleReplyAll">
+          <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+      </div>
+    </div>
     <!-- End of the quill -->
 
     <div class="response-buttons" v-if="!replying"> 
       <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
-        <button type="button" v-on:click="replyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        <button type="button" v-on:click="toggleReplyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
       <button type="button" v-on:click="forward"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
@@ -52,7 +71,6 @@ export default {
   },
   data() {
     return {
-      responsePlain: 'Test value 3 plain',
       responseHTML: '',
       responseBody: "",
       forwardingBody: "",
@@ -63,11 +81,15 @@ export default {
       allReplyRecipients: '',
       finalMessageBody: '',
       replying: false,
+      replyingAll: false,
     };
   },
   methods: {
     toggleReply() {
-      this.replying = true;
+      this.replying = !this.replying;
+    },
+    toggleReplyAll() {
+      this.replyingAll = !this.replyingAll;
     },
     replySend() {
       //we'll link these two up soon
@@ -79,53 +101,12 @@ export default {
       let threadID = this.messages[0].threadId;
       sendReply(headers, body, threadID);
     },
-    reply() {
-      console.log("in the reply"); 
-      //testing this out
-      this.multipartBoundary = this.generateBoundary();
-      let headerSection = {
-        'MIME-Version': '1.0',
-        'Subject': 'Re: ' + this.subject,
-        'From': this.sender,
-        'To': this.recipient,
-        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
-      }
-      this.setResponseBody();
-      console.log("Subject is:", this.subject);
-      console.log("Sender is:", this.sender);
-      console.log("Recipient is:", this.recipient);
-      let id = this.messages[0].threadId;
-      console.log("right before send call");
-      sendReply(headerSection, this.responseBody, id);
-    },
-    setResponseBody() {
-      //got to set up mime boundaries
-      var body = "";
-      body += '--' + this.multipartBoundary + '\n';
-      //plain text
-      body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
-      body += this.responsePlain + '\n';
-      body += '--' + this.multipartBoundary + '\n';
-      //html text
-      body += 'Content-Type: text/html; charset="UTF-8"\n';
-      body += 'Content-Transfer-Encoding: quoted-printable\n\n';
-      body += this.responseHTML + '\n\n';
-
-      body += '--' + this.multipartBoundary + '--';
-
-      this.responseBody = body;
-      console.log("responseBody:\n", this.responseBody);
-    },
-    generateBoundary() {
-      //12 0's and then 16 digit random...
-      var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      var boundLength = 16;
-      var randBoundary = "000000000000";
-      randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
-
-      // console.log("gererated boundary:", randBoundary);
-      this.multipartBoundary = randBoundary;
-      return randBoundary;
+    replyAllSend() {
+      console.log("You clicked the replyAll send button");
+      const {headers, body} = setupEmailBody("Re: " + this.subject, this.allReplyRecipients, this.responseHTML, this.sender);
+      console.log("HEaders: ", headers);
+      let threadID = this.messages[0].threadId;
+      sendReply(headers, body, threadID);
     },
     replyAll() {
       console.log("in the replyAll");
@@ -141,6 +122,17 @@ export default {
       this.setResponseBody();
       let id = this.messages[0].threadId;
       sendReply(headerSection, this.responseBody, id);
+    },
+    generateBoundary() {
+      //12 0's and then 16 digit random...
+      var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      var boundLength = 16;
+      var randBoundary = "000000000000";
+      randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+
+      // console.log("gererated boundary:", randBoundary);
+      this.multipartBoundary = randBoundary;
+      return randBoundary;
     },
     forward() {
       console.log("forwarding...")
@@ -190,10 +182,12 @@ export default {
           continue;
         }
         replyAllPeople += allPeopleArray[i];
-        if (allPeopleArray.length-1 == i) {
+        
+        if (allPeopleArray.length-1 != i) {
           replyAllPeople += ", ";
         }
       }
+      console.log("AllPeople: ", replyAllPeople);
       this.allReplyRecipients = replyAllPeople;
       console.log("lastMessageInThread", this.messages[this.messages.length -1]);
       this.finalMessageBody = this.messages[this.messages.length -1].body;
@@ -275,5 +269,11 @@ button:hover {
   text-align: left;
   align-content: left;
   cursor: pointer;
+}
+.recipients {
+  font-size: .75em;
+  text-align: left;
+  align-content: left;
+  width: 100%;
 }
 </style>
