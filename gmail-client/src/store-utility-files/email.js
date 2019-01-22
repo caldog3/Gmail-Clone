@@ -306,13 +306,12 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
     'To': To,
     'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
   }
-  const body = `--${randBoundary}
-Content-type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  let body = "--" + randBoundary + "\n";
+  body += 'Content-type: text/html; charset="UTF-8"\n';
+  body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+  body += Message + "\n\n";
+  body += "--" + randBoundary + "--";
 
-${Message}
-
---${randBoundary}--`;
   console.log("BODY:", body);
   return {
     headers,
