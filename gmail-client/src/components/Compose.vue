@@ -38,6 +38,7 @@ import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
+import { setupEmailBody } from '../store-utility-files/email';
 
 export default {
   name: 'Compose',
@@ -64,15 +65,21 @@ export default {
     },
     close() {
       this.active = false
+      // this.composeTidy();
     },
     sendCompose() {
+
+      console.log("TO access test:", this.composeTo);
+      var sender = this.$store.state.currentUser.w3.U3;
+
+      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      console.log("SEND COMPOSE: hope this works ", headers);
+      console.log("BODY before Base64: ", body);
+      //function to decode it
+      sendMessage(headers, body);
       this.close();
-      let headerSection = {
-        'To': this.composeTo,
-        'Subject': this.composeSubject
-      }
-      sendMessage(headerSection, this.composeMessage);
-      this.composeTidy();
+      //Tidy needs to wait for this to finish
+      // this.composeTidy();
     },
     composeTidy() {
       this.composeTo = '';
@@ -107,6 +114,7 @@ export default {
   align-content: stretch;
   align-items: center;
   margin-right: 20px;
+  z-index: 999;
 }
 .flexFrom {
   display: flex;

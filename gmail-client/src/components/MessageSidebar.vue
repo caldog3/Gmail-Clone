@@ -87,7 +87,8 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
+      <!-- Removed 'All Mail' due to trouble with the api -->
+      <!-- <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="envelope"/>
@@ -96,7 +97,7 @@
             All Mail (still implementing)
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">

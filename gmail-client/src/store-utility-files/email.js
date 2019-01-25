@@ -6,8 +6,19 @@ const Base64Decode = (str, encoding = "utf-8") => {
     return new (TextDecoder || TextDecoderLite)(encoding).decode(bytes);
 }
 
+//FIXME? -  below code from stack overflow to fix base64 encoding byte string problems
+// private function base64url_encode($mime) {
+//   return rtrim(strtr(base64_encode($mime), '+/', '-_'), '=');
+// }
+// const Base64Encode = (str, encoding = 'utf-8') => {
+//   let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str); 
+//   let value = base64js.fromByteArray(bytes);
+//   return value.replace('+/', '-_').trimRight('=');
+// }
+
+//REAL ORIGINAL
 const Base64Encode = (str, encoding = 'utf-8') => {
-  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);        
+  let bytes = new (TextEncoder || TextEncoderLite)(encoding).encode(str);     
   return base64js.fromByteArray(bytes);
 }
   
@@ -39,7 +50,15 @@ const getTextBody = (payload) => {
 }
 
 const getMultipartAlternativeBody = (payload) => {
-  const bodyData = payload.parts[1].body.data;
+  // console.log("Payload checking parts[1].body", payload);
+  let tempBodyData;
+  if (payload.parts[1] == undefined) {
+    tempBodyData = payload.parts[0].body.data;
+  }
+  else {
+    tempBodyData = payload.parts[1].body.data;
+  }
+  const bodyData = tempBodyData;
   let body;
 
   if (bodyData !== undefined) {
@@ -114,6 +133,7 @@ const getMultipartMixedData = (payload) => {
 }
 
 const getBody = (payload) => {
+  // console.log("BEGINNING: ", payload);
   let bodyData;
   let attachmentIds = [];
 
@@ -272,9 +292,37 @@ const getEmailInfo = (headers) => {
   };
 }
 
+const setupEmailBody = (Subject, To, Message, Sender) => {
+  console.log("In the setup: ", To);
+  var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var boundLength = 16;
+  var randBoundary = "000000000000";
+  randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  const headers = {
+    'MIME-Version': '1.0',
+    //Modify the subject depending on replies/forwards
+    'Subject': Subject,
+    'From': Sender,
+    'To': To,
+    'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
+  }
+  let body = "--" + randBoundary + "\n";
+  body += 'Content-type: text/html; charset="UTF-8"\n';
+  body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+  body += Message + "\n\n";
+  body += "--" + randBoundary + "--";
+
+  console.log("BODY:", body);
+  return {
+    headers,
+    body,
+  }
+}
+
 export {
   getTimeFormat,
   getBody,
   getMessage,
-  Base64Encode
+  Base64Encode,
+  setupEmailBody,
 };

@@ -47,7 +47,7 @@
                       <span class="tooltiptext">Archive</span>
                     </div>
                   </div>
-
+                  <!-- <div class="item" v-on:click="areYouSure()"> -->
                   <div class="item" v-on:click="spammingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
@@ -923,7 +923,7 @@ export default {
           this.totalMessages = "many";
         }
         else if (folder == "SEARCH"){
-          console.log("searching folder total update -------------------------");
+          // console.log("searching folder total update -------------------------");
           this.$store.state.totalMessages = "unknown";
           this.totalMessages = "unknown";
         }

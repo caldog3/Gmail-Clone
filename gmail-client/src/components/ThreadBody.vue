@@ -7,15 +7,44 @@
     </div>
 
     <div v-for="message in messages" :key="message.messageId">
-        <!-- This is for collapsing emails to not take up so much space -->
       <message-body :message="message"/>
     </div>
+    <!-- This is the quill response body -->
+    <div class="quill" @focus="focusOnSection('body')" v-if="replying">
+      <div>&emsp;</div>
+      <textarea rows="1" v-model="recipient" class="recipients"></textarea>
+      <quill-editor v-model="responseHTML"/>
+      <div class="quill-spacing">
+        <button class="sendBar" type="button" v-on:click="replySend">
+          <font-awesome-icon class="Icon" icon="reply" /> Send
+        </button>
+        <button class="sendBar" type="button" v-on:click="toggleReply">
+          <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+      </div>
+    </div>
+    <!-- we need a send button that triggers "reply()" -->
+    <!-- Reply all -->
+    <div class="quill" @focus="focusOnSection('body')" v-if="replyingAll">
+      <div>&emsp;</div>
+      <textarea rows="1" v-model="allReplyRecipients" class="recipients"></textarea>
+      <quill-editor v-model="responseHTML"/>
+      <div class="quill-spacing">
+        <button class="sendBar" type="button" v-on:click="replyAllSend">
+          <font-awesome-icon class="Icon" icon="reply" /> Send
+        </button>
+        <button class="sendBar" type="button" v-on:click="toggleReplyAll">
+          <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+      </div>
+    </div>
+    <!-- End of the quill -->
 
-    <div class="response-buttons"> 
-      <button type="button" v-on:click="reply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
+    <div class="response-buttons" v-if="!replying"> 
+      <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
-        <button type="button" v-on:click="replyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        <button type="button" v-on:click="toggleReplyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
       <button type="button" v-on:click="forward"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
@@ -24,86 +53,60 @@
 </template>
 
 <script>
-import { trashMessage, sendReply } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward } from './../store-utility-files/gmail-api-calls';
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
+import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
+import { setupEmailBody } from '../store-utility-files/email';
+
 
 export default {
   name: 'ThreadBody',
   components: {
     FontAwesomeIcon,
-    MessageBody
+    MessageBody,
+    QuillEditor,
   },
   data() {
     return {
-      responsePlain: 'Test value 3 plain',
-      responseHTML: '<div>Test value 3 html</div>',
+      responseHTML: '',
       responseBody: "",
-      //I think we need computed/method to set these....
+      forwardingBody: "",
       subject: '',
-      // subject: "Test subject",
       sender: '',
-      // sender: "caldogwoods@gmail.com",
       recipient: '',
-      // recipient: "caldogwoods@gmail.com",
       multipartBoundary: '',
       allReplyRecipients: '',
+      finalMessageBody: '',
+      replying: false,
+      replyingAll: false,
     };
   },
   methods: {
-    reply() {
-      console.log("in the reply"); 
-      //testing this out
-      this.multipartBoundary = this.generateBoundary();
-      let headerSection = {
-        // 'Content-Type': 'text/plain; charset="\UTF-8\"',
-        // 'Content-Type': 'text/plain',
-        'MIME-Version': '1.0',
-        // 'Content-Transfer-Encoding': '7bit',
-        'Subject': 'Re: ' + this.subject,
-        'From': this.sender,
-        'To': this.recipient,
-        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
-      }
-      this.setResponseBody();
-      console.log("Subject is:", this.subject);
-      console.log("Sender is:", this.sender);
-      console.log("Recipient is:", this.recipient);
-      let id = this.messages[0].threadId;
-      console.log("right before send call");
-      sendReply(headerSection, this.responseBody, id);
+    toggleReply() {
+      this.replying = !this.replying;
     },
-    setResponseBody() {
-      //got to set up mime boundaries
-      // var body = 'Content-Type: multipart/alternative; boundary="' + this.generateBoundary() + '"\n\n';
-      var body = "";
-      body += '--' + this.multipartBoundary + '\n';
-      //plain text
-      body += 'Content-Type: text/plain; charset="UTF-8"\n\n';
-      body += this.responsePlain + '\n';
-      body += '--' + this.multipartBoundary + '\n';
-      //html text
-      body += 'Content-Type: text/html; charset="UTF-8"\n';
-      body += 'Content-Transfer-Encoding: quoted-printable\n\n';
-      body += this.responseHTML + '\n\n';
-
-      body += '--' + this.multipartBoundary + '--';
-
-      this.responseBody = body;
-      console.log("responseBody:\n", this.responseBody);
+    toggleReplyAll() {
+      this.replyingAll = !this.replyingAll;
     },
-    generateBoundary() {
-      //12 0's and then 16 digit random...
-      var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      var boundLength = 16;
-      var randBoundary = "000000000000";
-      randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+    replySend() {
+      //we'll link these two up soon
+      console.log("You clicked the send button");
 
-      // console.log("gererated boundary:", randBoundary);
-      this.multipartBoundary = randBoundary;
-      return randBoundary;
+      const {headers, body} = setupEmailBody("Re: " + this.subject, this.recipient, this.responseHTML, this.sender);
+      console.log("HEaders: ", headers);
+      console.log("Body: ", body);
+      let threadID = this.messages[0].threadId;
+      sendReply(headers, body, threadID);
+    },
+    replyAllSend() {
+      console.log("You clicked the replyAll send button");
+      const {headers, body} = setupEmailBody("Re: " + this.subject, this.allReplyRecipients, this.responseHTML, this.sender);
+      console.log("HEaders: ", headers);
+      let threadID = this.messages[0].threadId;
+      sendReply(headers, body, threadID);
     },
     replyAll() {
       console.log("in the replyAll");
@@ -117,17 +120,48 @@ export default {
         'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
       }
       this.setResponseBody();
-      console.log("Subject is:", this.subject);
-      console.log("Sender is:", this.sender);
-      console.log("Recipient is:", this.recipient);
       let id = this.messages[0].threadId;
-      console.log("right before send call");
       sendReply(headerSection, this.responseBody, id);
     },
-    forward() {
-      // Are these part of the same threadid? they get listed with it to the user...but how does it work?
-      console.log("Wish I knew how to forward stuff yet");
+    generateBoundary() {
+      //12 0's and then 16 digit random...
+      var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      var boundLength = 16;
+      var randBoundary = "000000000000";
+      randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
 
+      // console.log("gererated boundary:", randBoundary);
+      this.multipartBoundary = randBoundary;
+      return randBoundary;
+    },
+    forward() {
+      console.log("forwarding...")
+      //we will need to use a v-model link here to set this recipient
+      let forwardRecipient = "caldogwoods@gmail.com";
+      // forwardMessage(forwardRecipient, this.finalMessageBody);
+      this.multipartBoundary = this.generateBoundary();
+      let headerSection = {
+        'MIME-Version': '1.0',
+        'Subject': 'Fwd: ' + this.subject,
+        'From': this.sender,
+        'To': this.forwardRecipient,
+        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
+      }
+      this.setForwardingBody();
+      let id = this.messages[0];
+      sendForward(headerSection, this.forwardingBody, id);
+
+    },
+    setForwardingBody() {
+      // const body1 = `--${this.multipartBoundary}\n`;
+      var body = "";
+      body += '--' + this.multipartBoundary + '\n';
+      body += 'Content-Type: text/html; charset="UTF-8"\n';
+      body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+      body += this.finalMessageBody + '\n\n';
+      body += '--' + this.multipartBoundary + '--';
+      this.forwardingBody = body;
+      console.log("forwardingBody:\n", this.forwardingBody);
     },
     getMessages() {
       let messages = this.$store.state.threadMessages;
@@ -148,12 +182,15 @@ export default {
           continue;
         }
         replyAllPeople += allPeopleArray[i];
-        if (allPeopleArray.length-1 == i) {
+        
+        if (allPeopleArray.length-1 != i) {
           replyAllPeople += ", ";
         }
       }
+      console.log("AllPeople: ", replyAllPeople);
       this.allReplyRecipients = replyAllPeople;
-      console.log("lastMessage", this.messages[this.messages.length -1]);
+      console.log("lastMessageInThread", this.messages[this.messages.length -1]);
+      this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {
       let thisThreadid = this.messages[0].threadId;
@@ -180,6 +217,13 @@ export default {
 </script>
 
 <style scoped>
+.quill {
+  align-content: center;
+  padding-left: -10px;
+}
+.quill-spacing {
+  padding-bottom: 20px;
+}
 button {
   background-color: white;
   border: 1px solid lightgrey;
@@ -220,5 +264,16 @@ button:hover {
   padding-top: 2%;
   padding-left: 5%;
   padding-right: 1%;
+}
+.sendBar {
+  text-align: left;
+  align-content: left;
+  cursor: pointer;
+}
+.recipients {
+  font-size: .75em;
+  text-align: left;
+  align-content: left;
+  width: 100%;
 }
 </style>
