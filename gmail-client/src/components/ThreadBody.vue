@@ -47,7 +47,7 @@
         <button type="button" v-on:click="toggleReplyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
-      <button type="button" v-on:click="forward"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
+      <button type="button" v-on:click="forwardToggle"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
     </div>
   </div>
 </template>
@@ -82,6 +82,7 @@ export default {
       finalMessageBody: '',
       replying: false,
       replyingAll: false,
+      forwardRecipient: '',
     };
   },
   methods: {
@@ -90,6 +91,10 @@ export default {
     },
     toggleReplyAll() {
       this.replyingAll = !this.replyingAll;
+    },
+    toggleForward() {
+      this.recipient = '';
+      
     },
     replySend() {
       //we'll link these two up soon
@@ -108,21 +113,21 @@ export default {
       let threadID = this.messages[0].threadId;
       sendReply(headers, body, threadID);
     },
-    replyAll() {
-      console.log("in the replyAll");
-      this.multipartBoundary = this.generateBoundary();
-      let headerSection = {
-        'MIME-Version': '1.0',
-        // 'Content-Transfer-Encoding': '7bit',
-        'Subject': 'Re: ' + this.subject,
-        'From': this.sender,
-        'To': this.allReplyRecipients,
-        'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
-      }
-      this.setResponseBody();
-      let id = this.messages[0].threadId;
-      sendReply(headerSection, this.responseBody, id);
-    },
+    // replyAll() {
+    //   console.log("in the replyAll");
+    //   this.multipartBoundary = this.generateBoundary();
+    //   let headerSection = {
+    //     'MIME-Version': '1.0',
+    //     // 'Content-Transfer-Encoding': '7bit',
+    //     'Subject': 'Re: ' + this.subject,
+    //     'From': this.sender,
+    //     'To': this.allReplyRecipients,
+    //     'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
+    //   }
+    //   this.setResponseBody();
+    //   let id = this.messages[0].threadId;
+    //   sendReply(headerSection, this.responseBody, id);
+    // },
     generateBoundary() {
       //12 0's and then 16 digit random...
       var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

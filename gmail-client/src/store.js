@@ -24,6 +24,7 @@ export default new Vuex.Store({
     attachments: {},
     viewFolder: "Inbox",
     totalMessages: "0",
+    refreshArray: [],
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
@@ -82,7 +83,13 @@ export default new Vuex.Store({
       const threadId = payload.threadId;
 
       Vue.set(state.threadMessages, threadId, []);
-      const labelIdArray = state.labelMessages[labelId];
+      //SETHERE: need to catch a temp array here
+      if (labelId === "RefreshArray") {
+        const labelIdArray = state.refreshArray;
+      }
+      else {
+        const labelIdArray = state.labelMessages[labelId];
+      }
 
       if (labelIdArray !== undefined){
         if (labelIdArray.threadId === undefined){
@@ -216,6 +223,7 @@ export default new Vuex.Store({
       });
     },
     async getListOfMessages(context, labelId) {
+      //creates the folder if it hasn't been created
       context.commit("addLabelId", labelId);
 
       const response = await gapi.client.load('gmail', 'v1')

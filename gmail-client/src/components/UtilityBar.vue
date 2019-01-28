@@ -760,6 +760,7 @@ export default {
       let folder = this.$store.state.currentFolder;
       console.log("refreshing", folder);
       console.log(this.$store.state.labelMessages);
+      //working on the logic for rendering emails continually
       this.$store.state.currentPage = 1;
       this.$store.state.labelMessages[folder] = [];
       console.log(folder);
