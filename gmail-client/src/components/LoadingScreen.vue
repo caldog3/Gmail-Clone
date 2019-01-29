@@ -87,7 +87,8 @@ import eventBus from './../event_bus';
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
-        await this.getListOfMessages(label);
+        var refresh = false;
+        await this.getListOfMessages({ label, refresh }); //FIXME...Maybe?? bool value?
       }
     },
     getFolderLabels(label){
