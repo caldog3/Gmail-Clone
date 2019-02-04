@@ -740,6 +740,7 @@ import eventBus from '../event_bus'
 import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import Vue from 'vue'
 
 export default {
   name: 'UtilityBar',
@@ -753,22 +754,53 @@ export default {
       checked: false,
       totalMessages: "50",
       check: false,
+      refreshingFolder: "",
     }
   },
   methods: {
     refreshing() {
       let folder = this.$store.state.currentFolder;
+      this.refreshingFolder = folder;
       console.log("refreshing", folder);
       console.log(this.$store.state.labelMessages);
+      //working on the logic for rendering emails continually
+      //need to pass a parameter that shows refreshing or not
       this.$store.state.currentPage = 1;
-      this.$store.state.labelMessages[folder] = [];
+      // this.$store.state.labelMessages[folder] = []; //shouldn't need this anymore
       console.log(folder);
+      var refresh = false;
       if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-        this.$store.dispatch("getListOfMessages", folder);
+        console.log("REfresh checkpoing 1");
+        let refresh = true;
+        let label = folder;
+        this.$store.dispatch("getListOfMessages", { label, refresh });// bool value is for refresh
       }
       else {
-        this.$store.dispatch("getFolderListOfMessages", folder);
+        this.$store.dispatch("getFolderListOfMessages", { folder, refresh });
       }
+    },
+
+    refreshResolve() {
+      //if this is after the dispatch is done....this should work
+      //temp fix is to add an await
+      var folder = this.refreshingFolder;
+      var baseArray = this.$store.state.labelMessages[folder];
+      var refreshArray = this.$store.state.refreshArray;
+      // console.log("The refresh array: ", refreshArray);
+      // console.log("The base array: ", baseArray);
+
+      if (JSON.stringify(baseArray) !== JSON.stringify(refreshArray)) {
+        console.log("THE CONCAT: ", [].concat(this.$store.state.refreshArray));
+        // this.$store.state.labelMessages[folder] = [].concat(this.$store.state.refreshArray);
+        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
+        console.log("The refresh array wasn't equal and swapped: ", this.$store.state.labelMessages[folder]);
+      }
+      else {
+        console.log("The refresh array was equal");
+      }
+
+      console.log("Here is the array", this.$store.state.refreshArray);
+      this.$store.state.refreshArray = [];
       this.checkedEmails = false;
     },
     pageNum() {
@@ -953,6 +985,7 @@ export default {
       this.getNumberTotal(folder);
     });
     this.getNumberTotal(this.$store.state.viewFolder);
+    eventBus.$on("REFRESH_RESOLVE", this.refreshResolve);
   },
 }
 

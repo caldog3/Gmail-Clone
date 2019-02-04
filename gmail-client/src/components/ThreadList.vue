@@ -341,11 +341,12 @@ export default {
       
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = messages[threadId];
+          // console.log("ThreadMessages:", threadMessages);
           const numberOfMessages = threadMessages.length;
 
 
           if (numberOfMessages > 0) {
-            console.log("LOOKING HERE: ", threadMessages);
+            // console.log("LOOKING HERE: ", threadMessages);
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
