@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import eventBus from './event_bus'
 import { initializeGoogleClient } from './main';
 import { getAttachment } from './store-utility-files/gmail-api-calls';
 import { getBody, getMessage } from './store-utility-files/email';
@@ -83,13 +84,12 @@ export default new Vuex.Store({
       const threadId = payload.threadId;
       // console.log("In addThreadId/ Payload: ", payload);
       //SETHERE: need to catch a temp array here
+      Vue.set(state.threadMessages, threadId, []);
       if (labelId === "refreshArray") {
-        Vue.set(state.refreshArray, threadId, []);
+        // Vue.set(state.refreshArray, threadId, []);
         var labelIdArray = state.refreshArray;
       }
       else {
-        Vue.set(state.threadMessages, threadId, []);
-
         var labelIdArray = state.labelMessages[labelId];
       }
 
@@ -98,6 +98,7 @@ export default new Vuex.Store({
           labelIdArray.push(threadId);
         }
       }
+
     },
     initializeThreadTime(state, payload) {
       const threadId = payload.threadId;
@@ -266,8 +267,12 @@ export default new Vuex.Store({
           return await Promise.all(dataPromise);
         }
       };
+      const threadPromises = await getThreads(response);
+      if (refresh === true) {
+        eventBus.$emit("REFRESH_RESOLVE");
+      }
 
-      return await getThreads(response);
+      return threadPromises;
     },
     //not sure if we even use this function anymore
     getAllMessages(context, labelId) {

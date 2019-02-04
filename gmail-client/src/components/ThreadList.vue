@@ -341,6 +341,7 @@ export default {
       
         const fullThreadData = labelIdThreads.map((threadId) => {
           const threadMessages = messages[threadId];
+          // console.log("ThreadMessages:", threadMessages);
           const numberOfMessages = threadMessages.length;
 
 
