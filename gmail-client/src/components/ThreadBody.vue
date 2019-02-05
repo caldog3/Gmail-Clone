@@ -121,9 +121,11 @@ export default {
         console.log("this message: ", latestMessage);
         let someUnix = latestMessage.unixTime * 1000;
         this.forwardHTML = "\n\n---------- Forwarded message ---------\n";
-        this.forwardHTML += "From: " + latestMessage.detailedFrom + "\n"; //after this line things aren't concatonating...
+        this.forwardHTML += "From: " + latestMessage.detailedFrom + "\n";
+        //after this line things aren't concatonating...
         this.forwardHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
         this.forwardHTML += "Subject: " + latestMessage.subject + "\n";
+        console.log("To: ", latestMessage.to);
         this.forwardHTML += "To: " + latestMessage.to + "\n\n\n";
         this.forwardHTML += latestMessage.body; // needs to be shifted down... display in quill as html
       }
