@@ -281,6 +281,265 @@
   </div>
 </template>
 
+
+
+<script>
+import eventBus from '../event_bus'
+import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
+
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import Vue from 'vue'
+
+export default {
+  name: 'UtilityBar',
+  components: {
+    FontAwesomeIcon
+  },
+  data() {
+    return {
+      messageBody: false,
+      checkedEmails: false,
+      checked: false,
+      totalMessages: "50",
+      check: false,
+      refreshingFolder: "",
+    }
+  },
+  methods: {
+    refreshing() {
+      let folder = this.$store.state.currentFolder;
+      this.refreshingFolder = folder;
+      console.log("refreshing", folder);
+      console.log(this.$store.state.labelMessages);
+      //working on the logic for rendering emails continually
+      //need to pass a parameter that shows refreshing or not
+      this.$store.state.currentPage = 1;
+      // this.$store.state.labelMessages[folder] = []; //shouldn't need this anymore
+      console.log(folder);
+      var refresh = false;
+      if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
+        console.log("REfresh checkpoing 1");
+        let refresh = true;
+        let label = folder;
+        this.$store.dispatch("getListOfMessages", { label, refresh });// bool value is for refresh
+      }
+      else {
+        this.$store.dispatch("getFolderListOfMessages", { folder, refresh });
+      }
+    },
+
+    refreshResolve() {
+      //if this is after the dispatch is done....this should work
+      //temp fix is to add an await
+      var folder = this.refreshingFolder;
+      var baseArray = this.$store.state.labelMessages[folder];
+      var refreshArray = this.$store.state.refreshArray;
+      // console.log("The refresh array: ", refreshArray);
+      // console.log("The base array: ", baseArray);
+
+      if (JSON.stringify(baseArray) !== JSON.stringify(refreshArray)) {
+        console.log("THE CONCAT: ", [].concat(this.$store.state.refreshArray));
+        // this.$store.state.labelMessages[folder] = [].concat(this.$store.state.refreshArray);
+        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
+        console.log("The refresh array didn't have equal ids and was swapped: ", this.$store.state.labelMessages[folder]);
+      }
+      else {
+        // console.log("The refresh array had equal ids");
+      }
+
+      // console.log("Here is the array", this.$store.state.refreshArray);
+      this.$store.state.refreshArray = [];
+      this.checkedEmails = false;
+    },
+    pageNum() {
+      return this.$store.state.currentPage;
+    },
+    checkAllToggle() {
+      this.check = !this.check;
+      this.checkAll(this.check);
+    },
+    nextPageLoad() {
+      eventBus.$emit("NEXT_PAGE_LOAD");
+      console.log(this.$store.state.labelMessages);
+      //We'll have to switch it to be more universal 
+      // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
+      console.log("ViewFolder:");
+      console.log(this.$store.state.currentFolder);
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getPageListOfMessages", folder);
+      // not sure what the best strategy is here*
+    },
+    lastPageLoad() {
+      eventBus.$emit("LAST_PAGE_LOAD");
+      // *...or here
+      let folder = this.$store.state.currentFolder;
+      this.$store.state.labelMessages[folder] = [];
+      this.$store.dispatch("getLastPageListOfMessages", folder);
+    },
+    spamming() {
+      eventBus.$emit("SPAMMING_THREAD");
+
+    },
+    spammingSet() {
+      eventBus.$emit("SPAMMING_CHECKED_THREADS");
+    },
+    trashing() {
+      eventBus.$emit("TRASHING_THREAD");
+      console.log("Clicked the trash button");
+    },
+    trashingSet() {
+      eventBus.$emit("TRASHING_CHECKED_THREADS");
+      console.log("----------trashingSet--------------");
+    },
+    unreadSet() {
+      console.log("Marking set as unread");
+      eventBus.$emit("UNREAD_SET");
+    },
+    readSet() {
+      console.log("Marking set as read");
+      eventBus.$emit("READ_SET");
+
+    },
+    checking() {
+      this.checkedEmails = true;
+    },
+    notChecked() {
+      this.checkedEmails = false;
+    },
+    true() {
+      this.messageBody = true;
+    },
+    false() {
+      this.messageBody = false;
+    },
+    checkAll(source) {
+      this.checked = !this.checked;
+      eventBus.$emit('CHECK_ALL', source);
+    },
+    back() {
+      //Need to route it back to EmailList
+      eventBus.$emit('MESSAGE_LIST');
+      this.$router.go(-1);
+    },
+    ellipsisList() {
+      console.log("routing?");
+    },
+    markAllAsRead() {
+      //route to EmailList probably and loop through all and if they are marked as unread, send to 
+        // the markeAsRead method.  //That's my best guess anywayg
+      eventBus.$emit("MARK_ALL_AS_READ");
+    },
+    /* When the user clicks on the button, 
+    toggle between hiding and showing the dropdown content */
+    ellipsesDropdownFunction() {
+      console.log("ellipses");
+      document.getElementById("ellipsesDropdown").classList.toggle("show");
+    },
+    caretDropdownFunction() {
+      console.log("caret");
+      document.getElementById("caretDropdown").classList.toggle("show");
+    },
+    cogDropdownFunction() { 
+      console.log("cog");
+      document.getElementById("cogDropdown").classList.toggle("show");
+    },
+    // Close the dropdown if the user clicks outside of it
+    window:onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+            console.log("It closed this dropdown?");
+          }
+        }
+      }
+    },
+    getNumberTotal(folder) {
+      gapi.client.load('gmail', 'v1').then(() => {
+        if (!folder.includes("Label_")) {
+          folder = folder.toUpperCase();
+        }
+        var totalInboxEmailCount = 0;
+        if (folder == "INBOX") {
+          gapi.client.gmail.users.labels.get({
+            userId: 'me',
+            'id': "INBOX"
+          }).then((response) => {
+            totalInboxEmailCount = response.result.threadsTotal;
+
+            gapi.client.gmail.users.labels.get({
+              userId: 'me',
+              'id': "CATEGORY_SOCIAL"
+            }).then((response) => {
+              totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+
+              gapi.client.gmail.users.labels.get({
+                userId: 'me',
+                'id': "CATEGORY_PROMOTIONS"
+              }).then((response) => {
+                totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
+                totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+                this.$store.state.totalMessages = totalInboxEmailCount;
+                this.totalMessages = totalInboxEmailCount;
+              });    
+            });  
+          });          
+        }
+        else if (folder == "ALL_MAIL") {
+          // gapi.client.gmail.users.labels.get({
+          //   'userId': 'me',
+          //   'q': '',
+          // }).then((response) => {
+          //   totalInboxEmailCount = response.result.threadsTotal;
+          //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+          //   this.$store.state.totalMessages = totalInboxEmailCount;
+          //   this.totalMessages = totalInboxEmailCount;
+          // })
+          this.$store.state.totalMessages = "many";
+          this.totalMessages = "many";
+        }
+        else if (folder == "SEARCH"){
+          // console.log("searching folder total update -------------------------");
+          this.$store.state.totalMessages = "unknown";
+          this.totalMessages = "unknown";
+        }
+        else {
+          gapi.client.gmail.users.labels.get({
+            'userId': 'me',
+            'id': folder,
+          }).then((response) => {
+            totalInboxEmailCount = response.result.threadsTotal;
+            totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
+            this.$store.state.totalMessages = totalInboxEmailCount;
+            this.totalMessages = totalInboxEmailCount;
+          });
+        }
+
+      });
+    }
+  },
+  created() {
+    eventBus.$on("REFRESH", this.refreshing);
+    eventBus.$on('CHECKED_MESSAGES', this.checking);
+    eventBus.$on('UNCHECKED', this.notChecked);
+
+    eventBus.$on('ENTER_MESSAGE', this.true);
+    eventBus.$on('MESSAGE_LIST', this.false);
+    eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
+      this.getNumberTotal(folder);
+    });
+    this.getNumberTotal(this.$store.state.viewFolder);
+    eventBus.$on("REFRESH_RESOLVE", this.refreshResolve);
+  },
+}
+
+
+</script>
+
 <style scoped>
 /* ----------------------BASIC STYLES---------------------- */
 .body {
@@ -734,260 +993,3 @@ hr {
   }
 }
 </style>
-
-<script>
-import eventBus from '../event_bus'
-import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
-
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import Vue from 'vue'
-
-export default {
-  name: 'UtilityBar',
-  components: {
-    FontAwesomeIcon
-  },
-  data() {
-    return {
-      messageBody: false,
-      checkedEmails: false,
-      checked: false,
-      totalMessages: "50",
-      check: false,
-      refreshingFolder: "",
-    }
-  },
-  methods: {
-    refreshing() {
-      let folder = this.$store.state.currentFolder;
-      this.refreshingFolder = folder;
-      console.log("refreshing", folder);
-      console.log(this.$store.state.labelMessages);
-      //working on the logic for rendering emails continually
-      //need to pass a parameter that shows refreshing or not
-      this.$store.state.currentPage = 1;
-      // this.$store.state.labelMessages[folder] = []; //shouldn't need this anymore
-      console.log(folder);
-      var refresh = false;
-      if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-        console.log("REfresh checkpoing 1");
-        let refresh = true;
-        let label = folder;
-        this.$store.dispatch("getListOfMessages", { label, refresh });// bool value is for refresh
-      }
-      else {
-        this.$store.dispatch("getFolderListOfMessages", { folder, refresh });
-      }
-    },
-
-    refreshResolve() {
-      //if this is after the dispatch is done....this should work
-      //temp fix is to add an await
-      var folder = this.refreshingFolder;
-      var baseArray = this.$store.state.labelMessages[folder];
-      var refreshArray = this.$store.state.refreshArray;
-      // console.log("The refresh array: ", refreshArray);
-      // console.log("The base array: ", baseArray);
-
-      if (JSON.stringify(baseArray) !== JSON.stringify(refreshArray)) {
-        console.log("THE CONCAT: ", [].concat(this.$store.state.refreshArray));
-        // this.$store.state.labelMessages[folder] = [].concat(this.$store.state.refreshArray);
-        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
-        console.log("The refresh array wasn't equal and swapped: ", this.$store.state.labelMessages[folder]);
-      }
-      else {
-        console.log("The refresh array was equal");
-      }
-
-      console.log("Here is the array", this.$store.state.refreshArray);
-      this.$store.state.refreshArray = [];
-      this.checkedEmails = false;
-    },
-    pageNum() {
-      return this.$store.state.currentPage;
-    },
-    checkAllToggle() {
-      this.check = !this.check;
-      this.checkAll(this.check);
-    },
-    nextPageLoad() {
-      eventBus.$emit("NEXT_PAGE_LOAD");
-      console.log(this.$store.state.labelMessages);
-      //We'll have to switch it to be more universal 
-      // and store which page of 50 we're currently on (it resets if you switch tabs though in real gmail)
-      console.log("ViewFolder:");
-      console.log(this.$store.state.currentFolder);
-      let folder = this.$store.state.currentFolder;
-      this.$store.state.labelMessages[folder] = [];
-      this.$store.dispatch("getPageListOfMessages", folder);
-      // not sure what the best strategy is here*
-    },
-    lastPageLoad() {
-      eventBus.$emit("LAST_PAGE_LOAD");
-      // *...or here
-      let folder = this.$store.state.currentFolder;
-      this.$store.state.labelMessages[folder] = [];
-      this.$store.dispatch("getLastPageListOfMessages", folder);
-    },
-    spamming() {
-      eventBus.$emit("SPAMMING_THREAD");
-
-    },
-    spammingSet() {
-      eventBus.$emit("SPAMMING_CHECKED_THREADS");
-    },
-    trashing() {
-      eventBus.$emit("TRASHING_THREAD");
-      console.log("Clicked the trash button");
-    },
-    trashingSet() {
-      eventBus.$emit("TRASHING_CHECKED_THREADS");
-      console.log("----------trashingSet--------------");
-    },
-    unreadSet() {
-      console.log("Marking set as unread");
-      eventBus.$emit("UNREAD_SET");
-    },
-    readSet() {
-      console.log("Marking set as read");
-      eventBus.$emit("READ_SET");
-
-    },
-    checking() {
-      this.checkedEmails = true;
-    },
-    notChecked() {
-      this.checkedEmails = false;
-    },
-    true() {
-      this.messageBody = true;
-    },
-    false() {
-      this.messageBody = false;
-    },
-    checkAll(source) {
-      this.checked = !this.checked;
-      eventBus.$emit('CHECK_ALL', source);
-    },
-    back() {
-      //Need to route it back to EmailList
-      eventBus.$emit('MESSAGE_LIST');
-      this.$router.go(-1);
-    },
-    ellipsisList() {
-      console.log("routing?");
-    },
-    markAllAsRead() {
-      //route to EmailList probably and loop through all and if they are marked as unread, send to 
-        // the markeAsRead method.  //That's my best guess anywayg
-      eventBus.$emit("MARK_ALL_AS_READ");
-    },
-    /* When the user clicks on the button, 
-    toggle between hiding and showing the dropdown content */
-    ellipsesDropdownFunction() {
-      console.log("ellipses");
-      document.getElementById("ellipsesDropdown").classList.toggle("show");
-    },
-    caretDropdownFunction() {
-      console.log("caret");
-      document.getElementById("caretDropdown").classList.toggle("show");
-    },
-    cogDropdownFunction() { 
-      console.log("cog");
-      document.getElementById("cogDropdown").classList.toggle("show");
-    },
-    // Close the dropdown if the user clicks outside of it
-    window:onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-            console.log("It closed this dropdown?");
-          }
-        }
-      }
-    },
-    getNumberTotal(folder) {
-      gapi.client.load('gmail', 'v1').then(() => {
-        if (!folder.includes("Label_")) {
-          folder = folder.toUpperCase();
-        }
-        var totalInboxEmailCount = 0;
-        if (folder == "INBOX") {
-          gapi.client.gmail.users.labels.get({
-            userId: 'me',
-            'id': "INBOX"
-          }).then((response) => {
-            totalInboxEmailCount = response.result.threadsTotal;
-
-            gapi.client.gmail.users.labels.get({
-              userId: 'me',
-              'id': "CATEGORY_SOCIAL"
-            }).then((response) => {
-              totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
-
-              gapi.client.gmail.users.labels.get({
-                userId: 'me',
-                'id': "CATEGORY_PROMOTIONS"
-              }).then((response) => {
-                totalInboxEmailCount = totalInboxEmailCount - response.result.threadsTotal;
-                totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
-                this.$store.state.totalMessages = totalInboxEmailCount;
-                this.totalMessages = totalInboxEmailCount;
-              });    
-            });  
-          });          
-        }
-        else if (folder == "ALL_MAIL") {
-          // gapi.client.gmail.users.labels.get({
-          //   'userId': 'me',
-          //   'q': '',
-          // }).then((response) => {
-          //   totalInboxEmailCount = response.result.threadsTotal;
-          //   totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
-          //   this.$store.state.totalMessages = totalInboxEmailCount;
-          //   this.totalMessages = totalInboxEmailCount;
-          // })
-          this.$store.state.totalMessages = "many";
-          this.totalMessages = "many";
-        }
-        else if (folder == "SEARCH"){
-          // console.log("searching folder total update -------------------------");
-          this.$store.state.totalMessages = "unknown";
-          this.totalMessages = "unknown";
-        }
-        else {
-          gapi.client.gmail.users.labels.get({
-            'userId': 'me',
-            'id': folder,
-          }).then((response) => {
-            totalInboxEmailCount = response.result.threadsTotal;
-            totalInboxEmailCount = totalInboxEmailCount.toLocaleString('en', {useGrouping:true});
-            this.$store.state.totalMessages = totalInboxEmailCount;
-            this.totalMessages = totalInboxEmailCount;
-          });
-        }
-
-      });
-    }
-  },
-  created() {
-    eventBus.$on("REFRESH", this.refreshing);
-    eventBus.$on('CHECKED_MESSAGES', this.checking);
-    eventBus.$on('UNCHECKED', this.notChecked);
-
-    eventBus.$on('ENTER_MESSAGE', this.true);
-    eventBus.$on('MESSAGE_LIST', this.false);
-    eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
-      this.getNumberTotal(folder);
-    });
-    this.getNumberTotal(this.$store.state.viewFolder);
-    eventBus.$on("REFRESH_RESOLVE", this.refreshResolve);
-  },
-}
-
-
-</script>

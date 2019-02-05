@@ -39,8 +39,25 @@
       </div>
     </div>
     <!-- End of the quill -->
+    <!-- FORWARING might not need 3 separate slots for all options, but we'll try it anyway for now-->
+    <div class="quill" @focus="focusOnSection('body')" v-if="forwarding">
+      <div>&emsp;</div>
+      <textarea rows="1" v-model="forwardingRecipient" class="recipients"></textarea>
+      <quill-editor v-model="forwardHTML"/>
+      <div class="quill-spacing">
+        <button class="sendBar" type="button" v-on:click="forwardSend">
+          <font-awesome-icon class="Icon" icon="reply" /> Send
+        </button>
+        <button class="sendBar" type="button" v-on:click="forwardToggle">
+          <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+      </div>
+    </div>
+    <!-- End of the quill FORWARDING-->
 
-    <div class="response-buttons" v-if="!replying"> 
+
+
+    <div class="response-buttons" v-if="!replying && !forwarding && !replyingAll"> 
       <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
@@ -60,6 +77,7 @@ import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
 import { setupEmailBody } from '../store-utility-files/email';
+import moment from 'moment';
 
 
 export default {
@@ -71,17 +89,20 @@ export default {
   },
   data() {
     return {
+      forwardHTML: "",
       responseHTML: '',
       responseBody: "",
       forwardingBody: "",
       subject: '',
       sender: '',
       recipient: '',
+      forwardingRecipient: '',
       multipartBoundary: '',
       allReplyRecipients: '',
       finalMessageBody: '',
       replying: false,
       replyingAll: false,
+      forwarding: false,
       forwardRecipient: '',
     };
   },
@@ -92,9 +113,24 @@ export default {
     toggleReplyAll() {
       this.replyingAll = !this.replyingAll;
     },
-    toggleForward() {
-      this.recipient = '';
-      
+    forwardToggle() {
+      this.forwarding = !this.forwarding;
+      console.log("This set of messages:", this.messages);
+      if (this.forwarding) {
+        let latestMessage = this.messages[this.messages.length-1];
+        console.log("this message: ", latestMessage);
+        let someUnix = latestMessage.unixTime * 1000;
+        this.forwardHTML = "\n\n---------- Forwarded message ---------\n";
+        this.forwardHTML += "From: " + latestMessage.detailedFrom + "\n"; //after this line things aren't concatonating...
+        this.forwardHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
+        this.forwardHTML += "Subject: " + latestMessage.subject + "\n";
+        this.forwardHTML += "To: " + latestMessage.to + "\n\n\n";
+        this.forwardHTML += latestMessage.body; // needs to be shifted down... display in quill as html
+      }
+      else {
+        this.forwardHTML = "";
+      }
+
     },
     replySend() {
       //we'll link these two up soon
@@ -112,6 +148,9 @@ export default {
       console.log("HEaders: ", headers);
       let threadID = this.messages[0].threadId;
       sendReply(headers, body, threadID);
+    },
+    forwardSend() {
+// code will probably look very similar to replySend
     },
     // replyAll() {
     //   console.log("in the replyAll");
