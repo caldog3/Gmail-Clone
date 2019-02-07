@@ -53,6 +53,8 @@
         </button>
       </div>
     </div>
+    <!-- <div v-html="forwardHTML"></div>
+    <div> {{forwardHTML}} </div> -->
     <!-- End of the quill FORWARDING-->
 
 
@@ -117,17 +119,22 @@ export default {
       this.forwarding = !this.forwarding;
       console.log("This set of messages:", this.messages);
       if (this.forwarding) {
+        
         let latestMessage = this.messages[this.messages.length-1];
         console.log("this message: ", latestMessage);
         let someUnix = latestMessage.unixTime * 1000;
-        this.forwardHTML = "\n\n---------- Forwarded message ---------\n";
-        this.forwardHTML += "From: " + latestMessage.detailedFrom + "\n";
-        //after this line things aren't concatonating...
-        this.forwardHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
-        this.forwardHTML += "Subject: " + latestMessage.subject + "\n";
-        console.log("To: ", latestMessage.to);
-        this.forwardHTML += "To: " + latestMessage.to + "\n\n\n";
-        this.forwardHTML += latestMessage.body; // needs to be shifted down... display in quill as html
+        let tempHTML = "\n\n---------- Forwarded message ---------\n";
+        //we want detailed From...
+       // tempHTML += "From: " + latestMessage.detailedFrom + "\n"; //the <> in detailedFrom create quill errors, need to fix html rendering in quill
+       tempHTML += "From: " + latestMessage.from + "\n";
+        tempHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
+        tempHTML += "Subject: " + latestMessage.subject + "\n";
+        // console.log("To: ", latestMessage.to);
+        tempHTML += "To: " + latestMessage.to + "\n\n\n";
+        tempHTML += latestMessage.body; // needs to be shifted down... display in quill as html
+        // console.log("tempHTML:", tempHTML);
+        this.forwardHTML = tempHTML;
+        console.log("forwardHTML:", this.forwardHTML);
       }
       else {
         this.forwardHTML = "";
