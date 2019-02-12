@@ -345,6 +345,7 @@ export default {
       }
       else {
         // console.log("The refresh array had equal ids");
+        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
       }
 
       // console.log("Here is the array", this.$store.state.refreshArray);

@@ -265,6 +265,9 @@ const getEmailInfo = (headers) => {
       if(conciseTo.includes(" ")) {
         conciseTo = conciseTo.substring(0, conciseTo.search(" "));
       }
+      if(conciseTo.startsWith("<")) {
+        conciseTo = conciseTo.substring(1);
+      }
       if(conciseTo.length >= 16) {
         conciseTo = conciseTo.substring(0, 15) + ".";
       }

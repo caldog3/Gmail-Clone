@@ -23,6 +23,7 @@
         </button>
       </div>
     </div>
+    <div> {{responseHTML}} </div>
     <!-- we need a send button that triggers "reply()" -->
     <!-- Reply all -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replyingAll">
@@ -53,8 +54,8 @@
         </button>
       </div>
     </div>
-    <!-- <div v-html="forwardHTML"></div>
-    <div> {{forwardHTML}} </div> -->
+     <!-- <div v-html="forwardHTML"></div>  this doesn't work either?? so it's not quills problem....it's the body of the original email somehow.... -->
+    <!-- <div> {{forwardHTML}} </div> -->
     <!-- End of the quill FORWARDING-->
 
 
@@ -122,6 +123,7 @@ export default {
         
         let latestMessage = this.messages[this.messages.length-1];
         console.log("this message: ", latestMessage);
+        console.log("BODY HTML:", latestMessage.body);
         let someUnix = latestMessage.unixTime * 1000;
         let tempHTML = "\n\n---------- Forwarded message ---------\n";
         //we want detailed From...
@@ -134,7 +136,7 @@ export default {
         tempHTML += latestMessage.body; // needs to be shifted down... display in quill as html
         // console.log("tempHTML:", tempHTML);
         this.forwardHTML = tempHTML;
-        console.log("forwardHTML:", this.forwardHTML);
+        // console.log("forwardHTML:", this.forwardHTML);
       }
       else {
         this.forwardHTML = "";
@@ -144,8 +146,11 @@ export default {
     replySend() {
       //we'll link these two up soon
       console.log("You clicked the send button");
-
-      const {headers, body} = setupEmailBody("Re: " + this.subject, this.recipient, this.responseHTML, this.sender);
+      let reSubj = this.subject;
+      if (!this.subject.startsWith("Re:")) {
+        reSubj = "Re: " + this.subject;
+      }
+      const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
       console.log("HEaders: ", headers);
       console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
@@ -153,13 +158,26 @@ export default {
     },
     replyAllSend() {
       console.log("You clicked the replyAll send button");
-      const {headers, body} = setupEmailBody("Re: " + this.subject, this.allReplyRecipients, this.responseHTML, this.sender);
+      let reSubj = this.subject;
+      if (!this.subject.startsWith("Re:")) {
+        reSubj = "Re: " + this.subject;
+      }
+      const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
       console.log("HEaders: ", headers);
       let threadID = this.messages[0].threadId;
       sendReply(headers, body, threadID);
     },
     forwardSend() {
 // code will probably look very similar to replySend
+      console.log("You clicked the forward send button");
+      let forSubj = this.subject;
+      if (!this.subject.startsWith("Fwd:")) {
+        forSubj = "Fwd: " + this.subject;
+      }
+      const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
+      console.log("headers: ", headers);
+      let threadID = this.messages[0].threadId;
+      sendReply(headers, body, threadID);
     },
     // replyAll() {
     //   console.log("in the replyAll");
@@ -221,10 +239,22 @@ export default {
       const threadMessages = messages[this.$route.params.id];
       this.messages = sortBy(threadMessages, m => m.unixTime);
       this.subject = this.messages[this.messages.length -1].subject;
-      this.recipient = this.messages[this.messages.length -1].detailedFrom;
+      this.sender = this.messages[this.messages.length -1].to;
+
+      let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
+      console.log("Sender:", this.sender, " lastRec:", lastRecipient);
+      // this allows repeated replies
+      while (lastRecipient.includes(this.sender)) {
+        console.log("While: ", lastRecipient);
+        let i = 2;
+        lastRecipient = this.messages[this.messages.length - i].detailedFrom;
+        console.log("NEXT RECIP:", lastRecipient);
+        i++;
+      }
+      
       //this to doesn't work with group messages, includes other people
       //we need to create more parts of the object for these values ^^ vv
-      this.sender = this.messages[this.messages.length -1].to;
+      this.recipient = lastRecipient;
       let allPeopleArray = this.messages[0].allParticipants;
       let userInstance = false;
       var replyAllPeople = "";
