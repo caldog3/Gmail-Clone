@@ -68,9 +68,11 @@
       </div>
       
       <div class="leftAlign">
-        <div class="recipients">
-          <p>to {{message.to | getFirstNames}}</p>
+        <div>
+          <div class="recipients">to {{message.to | getFirstNames}}</div>
+          <i class="down"></i>
         </div>
+        
         <!-- here's the body; need to break the body into 2 pieces -->
         <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
@@ -149,8 +151,10 @@ export default {
           return messageBody;
         }
         return hyperlinkedHTML;
-      } else {
+      } else if(messageBody !== undefined){
         return linkifyString(messageBody, {});
+      } else {
+        return messageBody;
       }
     }
   },
@@ -159,13 +163,15 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        const attachment = attachmentIds[id.attachmentId];
-        const mimeType = attachment.mimeType;
-        if (!mimeType.includes("image")){
-          return {
-            url: `data:${mimeType};base64,${attachment.data}`,
-            filename: id.filename
-          };
+        if (id !== undefined){
+          const attachment = attachmentIds[id.attachmentId];
+          const mimeType = attachment.mimeType;
+          if (!mimeType.includes("image") && !mimeType.includes("text")){
+            return {
+              url: `data:${mimeType};base64,${attachment.data}`,
+              title: id.filename
+            };
+          }
         }
       }).filter(image => image !== undefined);
     },
@@ -173,14 +179,20 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        const attachment = attachmentIds[id.attachmentId];
-        const mimeType = attachment.mimeType;
-        // console.log("Filename:->", attachment.filename);
-        if (mimeType.includes("image")){
-          return {
-            url: `data:${mimeType};base64,${attachment.data}`,
-            title: id.filename
-          };
+        if (id !== undefined){
+          const attachment = attachmentIds[id.attachmentId];
+          let mimeType = attachment.mimeType;
+          if (mimeType.includes("image") || mimeType.includes("text")){
+            // An attempt to display edge-case email. Check getMessageContent().
+            
+            // if (mimeType.includes("text")){
+            //   mimeType = "image/png"
+            // }
+            return {
+              url: `data:${mimeType};base64,${attachment.data}`,
+              title: id.filename
+            };
+          }
         }
       }).filter(image => image !== undefined);
     },
@@ -210,7 +222,7 @@ export default {
       this.timeAgo = timeago(this.message.unixTime * 1000);
     }
   },
-  updated(){
+  created(){
     this.setTimeAgo();
   }
 }
@@ -283,6 +295,9 @@ button:hover {
 }
 .recipients {
   font-size: .8em;
+  height: 20px;
+  overflow: hidden;
+  width: 90%;
 }
 .leftAlign {
   text-align: left;
@@ -407,6 +422,18 @@ h4 {
   .theRestoftheTime {
     display: none;
   }
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
 }
 </style>
 
