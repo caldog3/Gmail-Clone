@@ -42,7 +42,7 @@
                 theme: 'snow',
             });
 
-            this.editor.root.innerHTML = this.value;
+            this.editor.root.innerHTML = this.value; // thought this would allow html to be seen within the editor
 
             this.editor.on('text-change', () => this.update());
         },

@@ -87,12 +87,13 @@ import eventBus from './../event_bus';
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
-        await this.getListOfMessages(label);
+        var refresh = false;
+        await this.getListOfMessages({ label, refresh }); //FIXME...Maybe?? bool value?
       }
     },
     getFolderLabels(label){
       if(this.getLabelMessages[label] === undefined){
-        this.getFolderListOfMessages(label);
+        this.getFolderListOfMessages(label);  
       }
     },
     // getAllLabels(){
@@ -102,7 +103,8 @@ import eventBus from './../event_bus';
     // }
    },
    created() {
-    this.getInboxLabels('PRIMARY').then(()=>{
+    // this.getInboxLabels('PRIMARY').then(()=>{
+      this.getInboxLabels('PRIMARY');
       eventBus.$emit('DATA_FETCHING_COMPLETE');
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
@@ -112,7 +114,7 @@ import eventBus from './../event_bus';
       this.getFolderLabels('STARRED');
       this.getFolderLabels('IMPORTANT');
       this.getFolderLabels('TRASH');
-    });
+    // });
    },
  }
 </script>
