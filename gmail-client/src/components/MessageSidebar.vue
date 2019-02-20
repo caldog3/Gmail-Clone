@@ -408,7 +408,7 @@ export default {
       if(this.$store.state.currentPage != 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
-          this.$store.dispatch("getListOfMessages", previousFolder);
+          this.$store.dispatch("getListOfMessages", previousFolder, false); //bool value is for refresh or not
         }
         else {
           this.$store.dispatch("getFolderListOfMessages", previousFolder);

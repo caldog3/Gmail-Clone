@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import eventBus from './event_bus'
 import { initializeGoogleClient } from './main';
 import { getAttachment } from './store-utility-files/gmail-api-calls';
 import { getBody, getMessage } from './store-utility-files/email';
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     attachments: {},
     viewFolder: "Inbox",
     totalMessages: "0",
+    refreshArray: [],
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
@@ -80,15 +82,23 @@ export default new Vuex.Store({
     addThreadId(state, payload) {
       const labelId = payload.labelId;
       const threadId = payload.threadId;
-
+      // console.log("In addThreadId/ Payload: ", payload);
+      //SETHERE: need to catch a temp array here
       Vue.set(state.threadMessages, threadId, []);
-      const labelIdArray = state.labelMessages[labelId];
+      if (labelId === "refreshArray") {
+        // Vue.set(state.refreshArray, threadId, []);
+        var labelIdArray = state.refreshArray;
+      }
+      else {
+        var labelIdArray = state.labelMessages[labelId];
+      }
 
       if (labelIdArray !== undefined){
         if (labelIdArray.threadId === undefined){
           labelIdArray.push(threadId);
         }
       }
+
     },
     initializeThreadTime(state, payload) {
       const threadId = payload.threadId;
@@ -185,6 +195,7 @@ export default new Vuex.Store({
             response.result.threads.forEach(thread => {
               // console.log("query checkpoint 3");
               let threadId = thread.id;
+              //addThreadId labelId will be "refreshArray" if refreshing
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
               context.dispatch("getThreadData", { threadId, labelId });
@@ -204,6 +215,7 @@ export default new Vuex.Store({
           if (response.result.threads !== undefined) {
             response.result.threads.forEach(thread => {
               let threadId = thread.id;
+              //addThreadId labelId will be "refreshArray" if refreshing
               context.commit("addThreadId", { threadId, labelId });
               context.commit("initializeThreadTime", { threadId });
 
@@ -215,9 +227,13 @@ export default new Vuex.Store({
         console.log(err);
       });
     },
-    async getListOfMessages(context, labelId) {
+    async getListOfMessages(context, payload) { //payload.labelId / payload.refresh
+      //creates the folder if it hasn't been created
+      console.log("Payload: ", payload);
+      var labelId = payload.label;
+      var refresh = payload.refresh;
+      console.log("refresh Checkpoint 2:", refresh);
       context.commit("addLabelId", labelId);
-
       const response = await gapi.client.load('gmail', 'v1')
         .then(async () => {
           return await gapi.client.gmail.users.threads.list({
@@ -228,25 +244,37 @@ export default new Vuex.Store({
         });
 
       const getThreads = async (response) => {
-          const nextPageToken = response.result.nextPageToken;
-          context.commit("addLabelNextPageToken", { labelId, nextPageToken });
-          
-          if (response.result.threads !== undefined) {
-            const dataPromise = response.result.threads
-              .map(async thread => {
-                const threadId = thread.id;
-
+        const nextPageToken = response.result.nextPageToken;
+        context.commit("addLabelNextPageToken", { labelId, nextPageToken });
+        if (response.result.threads !== undefined) {
+          const dataPromise = response.result.threads
+            .map(async thread => {
+              const threadId = thread.id;
+              //addThreadId labelId will be "RefreshArray" if refreshing
+              if (refresh === true) {
+                console.log("refresh load");
+                labelId = "refreshArray";
                 context.commit("addThreadId", { threadId, labelId });
-                context.commit("initializeThreadTime", { threadId });
+              }
+              else {
+                context.commit("addThreadId", { threadId, labelId });
+              }
+              // context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
 
-              return await context.dispatch("getThreadData", { threadId, labelId });
-            });
-            return await Promise.all(dataPromise);
-          }
-        };
+            return await context.dispatch("getThreadData", { threadId, labelId });
+          });
+          return await Promise.all(dataPromise);
+        }
+      };
+      const threadPromises = await getThreads(response);
+      if (refresh === true) {
+        eventBus.$emit("REFRESH_RESOLVE");
+      }
 
-      return await getThreads(response);
+      return threadPromises;
     },
+    //not sure if we even use this function anymore
     getAllMessages(context, labelId) {
       gapi.client.load('gmail', 'v1').then(() => {
         gapi.client.gmail.users.threads.list({
@@ -286,7 +314,8 @@ export default new Vuex.Store({
         if (response.result.threads !== undefined) {
           response.result.threads.forEach(thread => {
             const threadId = thread.id;
-
+            //addThreadId labelId will be "refreshArray" if refreshing
+            //......But might reevaluate method for next page gathering
             context.commit("addThreadId", { threadId, labelId });
             context.commit("initializeThreadTime", { threadId });
 
@@ -318,7 +347,8 @@ export default new Vuex.Store({
         if (response.result.threads !== undefined) {
           response.result.threads.forEach(thread => {
             let threadId = thread.id;
-
+            //addThreadId labelId will be "refreshArray" if refreshing
+            //......But might reevaluate method for last page gathering
             context.commit("addThreadId", { threadId, labelId });
             context.commit("initializeThreadTime", { threadId });
 
