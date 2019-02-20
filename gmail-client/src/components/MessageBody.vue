@@ -151,8 +151,10 @@ export default {
           return messageBody;
         }
         return hyperlinkedHTML;
-      } else {
+      } else if(messageBody !== undefined){
         return linkifyString(messageBody, {});
+      } else {
+        return messageBody;
       }
     }
   },
@@ -161,13 +163,15 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        const attachment = attachmentIds[id.attachmentId];
-        const mimeType = attachment.mimeType;
-        if (!mimeType.includes("image")){
-          return {
-            url: `data:${mimeType};base64,${attachment.data}`,
-            filename: id.filename
-          };
+        if (id !== undefined){
+          const attachment = attachmentIds[id.attachmentId];
+          const mimeType = attachment.mimeType;
+          if (!mimeType.includes("image") && !mimeType.includes("text")){
+            return {
+              url: `data:${mimeType};base64,${attachment.data}`,
+              title: id.filename
+            };
+          }
         }
       }).filter(image => image !== undefined);
     },
@@ -175,14 +179,20 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        const attachment = attachmentIds[id.attachmentId];
-        const mimeType = attachment.mimeType;
-        // console.log("Filename:->", attachment.filename);
-        if (mimeType.includes("image")){
-          return {
-            url: `data:${mimeType};base64,${attachment.data}`,
-            title: id.filename
-          };
+        if (id !== undefined){
+          const attachment = attachmentIds[id.attachmentId];
+          let mimeType = attachment.mimeType;
+          if (mimeType.includes("image") || mimeType.includes("text")){
+            // An attempt to display edge-case email. Check getMessageContent().
+            
+            // if (mimeType.includes("text")){
+            //   mimeType = "image/png"
+            // }
+            return {
+              url: `data:${mimeType};base64,${attachment.data}`,
+              title: id.filename
+            };
+          }
         }
       }).filter(image => image !== undefined);
     },
