@@ -353,7 +353,6 @@ export default {
 
 
           if (numberOfMessages > 0) {
-            // console.log("LOOKING HERE: ", threadMessages);
             const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];

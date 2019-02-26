@@ -389,9 +389,17 @@ export default new Vuex.Store({
         .then((response) => {
           const result = response.result;
           let parsedMessage, bodyAndAttachments;
-
+          if (result.payload.body.attachmentId !== undefined && result.payload.body.data === undefined) {
+            console.log("In getMessageContent().\nUnfixable email edge-case:----", result);
+          }
           if (result.payload.mimeType.includes('text')){
-            bodyAndAttachments = getBody(result.payload);
+            try {
+              bodyAndAttachments = getBody(result.payload);
+            } catch (exception) {
+              console.log("Result:- ", result)
+              console.log("getMessageContent Exception:- ")
+              console.log(exception)
+            }
           }
           else{
             try {
@@ -432,7 +440,7 @@ export default new Vuex.Store({
           if (payload.attachmentIds !== undefined) {
             if (payload.attachmentIds.length >= 1) {
               payload.attachmentIds.forEach((attachmentId) => {
-                if (attachmentId !== undefined) {
+                if (attachmentId !== undefined && attachmentId.attachmentId !== undefined) {
                   context.commit("addAttachmentId", {
                     attachmentId: attachmentId.attachmentId,
                     mimeType: attachmentId.mimeType,

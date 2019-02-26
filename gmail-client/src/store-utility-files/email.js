@@ -44,9 +44,23 @@ const getTimeFormat = (internalDate) => {
 
 const getTextBody = (payload) => {
   const bodyData = payload.body.data;
-  const body = Base64Decode(bodyData);
+  const attachmentId = payload.body.attachmentId;
+  let body;
 
-  return body;
+  if (bodyData !== undefined) {
+    body = Base64Decode(bodyData);
+  }
+  // Capturing attachment data of mimeType text/plain and text/html.
+  // The array, attachmenIds, stores the data, but its data isn't used 
+  // anywhere. 
+  return {
+    body,
+    attachmentIds: [{
+      mimeType: payload.mimeType,
+      filename: payload.filename,
+      attachmentId: attachmentId
+    }]
+  };
 }
 
 const getMultipartAlternativeBody = (payload) => {
@@ -133,9 +147,7 @@ const getMultipartMixedData = (payload) => {
 }
 
 const getBody = (payload) => {
-  // console.log("BEGINNING: ", payload);
   let bodyData;
-  let attachmentIds = [];
 
   if (payload.mimeType === 'multipart/alternative'){
     bodyData = getMultipartAlternativeBody(payload);
@@ -144,10 +156,7 @@ const getBody = (payload) => {
   } else if (payload.mimeType === 'multipart/related') {
     bodyData = getMultipartRelatedBody(payload);
   } else if (payload.mimeType.includes('text')) {
-    bodyData = {
-      body: getTextBody(payload),
-      attachmentIds
-    }
+    bodyData =  getTextBody(payload);
   }
 
   return bodyData;
@@ -192,8 +201,12 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
       });
     }
   } else {
-    body = bodyAndAttachments.body;
-    attachmentIds = bodyAndAttachments.attachmentIds;
+    if(bodyAndAttachments !== undefined){
+      body = bodyAndAttachments.body;
+      attachmentIds = bodyAndAttachments.attachmentIds;
+    } else {
+      attachmentIds = undefined;
+    }
   }
   
   const message = {
