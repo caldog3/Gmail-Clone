@@ -414,6 +414,9 @@ export default {
     false() {
       this.messageBody = false;
     },
+    draft() {
+      this.messageBody = true;
+    },
     checkAll(source) {
       this.checked = !this.checked;
       eventBus.$emit('CHECK_ALL', source);
@@ -527,7 +530,7 @@ export default {
     eventBus.$on("REFRESH", this.refreshing);
     eventBus.$on('CHECKED_MESSAGES', this.checking);
     eventBus.$on('UNCHECKED', this.notChecked);
-
+    eventBus.$on('ENTER_DRAFT', this.draft);
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false);
     eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
