@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       forwardHTML: "",
-      responseHTML: '',
+      responseHTML: "", //  having no data prevents emptying the data assigned, but throws a LOT of errors
       responseBody: "",
       forwardingBody: "",
       subject: '',
@@ -133,10 +133,9 @@ export default {
         tempHTML += "Subject: " + latestMessage.subject + "\n";
         // console.log("To: ", latestMessage.to);
         tempHTML += "To: " + latestMessage.to + "\n\n\n";
-        tempHTML += latestMessage.body; // needs to be shifted down... display in quill as html
-        // console.log("tempHTML:", tempHTML);
+        //FIXME? thinking we need to 'freeze' the body and not include it in quill and force the user to have it appended AS IS at the end
+        //tempHTML += latestMessage.body;
         this.forwardHTML = tempHTML;
-        // console.log("forwardHTML:", this.forwardHTML);
       }
       else {
         this.forwardHTML = "";
@@ -238,19 +237,33 @@ export default {
       let messages = this.$store.state.threadMessages;
       const threadMessages = messages[this.$route.params.id];
       this.messages = sortBy(threadMessages, m => m.unixTime);
+      //remove
+      if (this.messages[0].labelId === "DRAFT") {
+        // console.log("WE GOT A DRAFT", this.messages);
+        const draftMessage = this.messages.pop();
+        console.log("DraftMessage", draftMessage);
+        console.log("THIS>>>>>", this.responseHTML);
+        this.toggleReply();
+        this.responseHTML = draftMessage.body;
+        console.log("THAT>>>>>", this.responseHTML);
+
+        // this.recipient = draftMessage.
+      }
+
       this.subject = this.messages[this.messages.length -1].subject;
       this.sender = this.messages[this.messages.length -1].to;
-
+      console.log("this final message of set:", this.messages[this.messages.length -1]);
       let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
-      console.log("Sender:", this.sender, " lastRec:", lastRecipient);
       // this allows repeated replies
-      while (lastRecipient.includes(this.sender)) {
-        console.log("While: ", lastRecipient);
-        let i = 2;
+      while (lastRecipient.includes(this.sender)) { //is this called before the "DRAFT" if resolves itself?
+        let i = 1;
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
-        console.log("NEXT RECIP:", lastRecipient);
         i++;
       }
+      if (this.messages[0].labelId === "DRAFT") {
+        lastRecipient = this.sender;
+      }
+      console.log("Last recipient", lastRecipient);
       
       //this to doesn't work with group messages, includes other people
       //we need to create more parts of the object for these values ^^ vv
