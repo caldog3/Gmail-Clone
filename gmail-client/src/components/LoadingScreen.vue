@@ -104,8 +104,10 @@ import eventBus from './../event_bus';
    },
    created() {
     // this.getInboxLabels('PRIMARY').then(()=>{
-      this.getInboxLabels('PRIMARY');
-      eventBus.$emit('DATA_FETCHING_COMPLETE');
+      this.getInboxLabels('PRIMARY').then(()=>{
+        eventBus.$emit('DATA_FETCHING_COMPLETE');
+      })
+     
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
       // Get Folder labels
