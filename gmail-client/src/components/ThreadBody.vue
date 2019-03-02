@@ -74,7 +74,7 @@
 
 <script>
 import { trashMessage, sendReply, forwardMessage, sendForward } from './../store-utility-files/gmail-api-calls';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';

@@ -65,7 +65,7 @@
 
 <script>
 import ThreadList from './ThreadList';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { setTimeout } from 'timers';
 import eventBus from '../event_bus';
 

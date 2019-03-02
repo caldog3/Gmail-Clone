@@ -103,7 +103,7 @@
 
 <script>
 import { markAsStarred, unMarkAsStarred } from './../store-utility-files/gmail-api-calls';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { SweetModal } from 'sweet-modal-vue';
 import linkifyString from 'linkifyjs/string';
 import linkifyHtml from 'linkifyjs/html';
