@@ -276,7 +276,7 @@ button {
 
 <script>
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
-import FontAwesomeIcon from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import eventBus from "../event_bus";
 import index from "../router/index.js"
 

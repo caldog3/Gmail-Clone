@@ -287,7 +287,7 @@
 import eventBus from '../event_bus'
 import { getNumberOfMessages } from "./../store-utility-files/gmail-api-calls";
 
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Vue from 'vue'
 
 export default {
