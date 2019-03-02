@@ -90,12 +90,16 @@ export default {
       this.activeSection = section;
       // this.ccActive = this.message.cc !== '';
       // this.bccActive = this.message.bcc !== '';
-    }
+    },
+    draftSetup() {  // do we need to pass in the recipient and message data or set it in the store or what?
+      this.composeMessage = "THIS IS A TEST";
+    },
   },
   created() {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
 }
 </script>

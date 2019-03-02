@@ -239,7 +239,7 @@ input:focus {
 
 <script>
 import eventBus from '../event_bus'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
   name: 'AppHeader',

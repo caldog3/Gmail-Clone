@@ -12,7 +12,7 @@ ul > .nav {
 
 <script>
 import ThreadList from './ThreadList';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'FolderEmailList',

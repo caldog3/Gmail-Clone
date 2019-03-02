@@ -58,7 +58,7 @@
                     <span class="leftAlign">
                       <span v-if="thread.from === userEmail"> me </span>
                       <!-- The on-click needs to match the conditional for just displaying draft -->
-                      <span class='red' v-else-if="labelId === 'DRAFT'"> {{thread.conciseTo}} Draft </span>
+                      <span class='red' v-else-if="labelId === 'DRAFT'"> Draft </span>
                       <!-- <span v-else-if="labelId === 'TRASH'"> <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> {{thread.from}}</span> -->
                       <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                       <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
@@ -158,7 +158,7 @@
 
 <script>
 import eventBus from '../event_bus';
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
          getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
@@ -242,9 +242,16 @@ export default {
         markAsRead(thread.threadId);
       }
       else {
-        console.log("In the draft else");
-        //need an if to check length of thread if length is zero, Compose_open, else open thread
-        eventBus.$emit('COMPOSE_OPEN');
+        if (thread.numberOfMessages > 1) {
+          eventBus.$emit('ENTER_DRAFT');
+          this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
+
+        }
+        else {
+          //need an if to check length of thread if length is zero, Compose_open, else open thread
+          eventBus.$emit('COMPOSE_OPEN', );
+        }
+
       }
       //Refreshing the whole list to show updates in read...
       eventBus.$emit("REFRESH");
@@ -372,7 +379,6 @@ export default {
         }
         else {
           document.getElementsByName('checks')[i].checked = false;
-          console.log("just UNCECKING?");
           eventBus.$emit("UNCHECKED");
         }
       }
