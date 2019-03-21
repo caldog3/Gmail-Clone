@@ -81,6 +81,7 @@ import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
 import { setupEmailBody } from '../store-utility-files/email';
 import moment from 'moment';
+import juice from 'juice'; //allows for css-inlining
 
 
 export default {
@@ -124,17 +125,18 @@ export default {
         let latestMessage = this.messages[this.messages.length-1];
         console.log("this message: ", latestMessage);
         console.log("BODY HTML:", latestMessage.body);
+        console.log("JUICED BODY:", juice(latestMessage.body));
         let someUnix = latestMessage.unixTime * 1000;
         let tempHTML = "\n\n---------- Forwarded message ---------\n";
         //we want detailed From...
        // tempHTML += "From: " + latestMessage.detailedFrom + "\n"; //the <> in detailedFrom create quill errors, need to fix html rendering in quill
-       tempHTML += "From: " + latestMessage.from + "\n";
+        tempHTML += "From: " + latestMessage.from + "\n";
         tempHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
         tempHTML += "Subject: " + latestMessage.subject + "\n";
         // console.log("To: ", latestMessage.to);
         tempHTML += "To: " + latestMessage.to + "\n\n\n";
         //FIXME? thinking we need to 'freeze' the body and not include it in quill and force the user to have it appended AS IS at the end
-        //tempHTML += latestMessage.body;
+        tempHTML += juice(latestMessage.body);
         this.forwardHTML = tempHTML;
       }
       else {
@@ -173,10 +175,12 @@ export default {
       if (!this.subject.startsWith("Fwd:")) {
         forSubj = "Fwd: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
-      console.log("headers: ", headers);
-      let threadID = this.messages[0].threadId;
-      sendReply(headers, body, threadID);
+      let juiceTest = juice(this.forwardHTML);
+      console.log("JUICE TEST:", juiceTest);
+      // const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
+      // console.log("headers: ", headers);
+      // let threadID = this.messages[0].threadId;
+      // sendReply(headers, body, threadID);
     },
     // replyAll() {
     //   console.log("in the replyAll");
