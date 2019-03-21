@@ -99,6 +99,15 @@ export default {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on('COMPOSE_OPEN_DRAFT', payload => { //$once ensures it is called one time only but it doesn't reset so no good
+      console.log("IAM IN HERE RIGHT");
+      // this.composeTo = "TEST FILLING IT IN";
+      console.log("Still here with no errors",payload);
+      this.composeTo = payload.conciseTo; //need another value with full email
+      this.composeSubject = payload.subject;
+      this.composeMessage = payload.snippet; // need to pass in the full body as well
+      //this seems to have a common problem with quill overwriting the values we actually want to instantiate with
+    });
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
 }

@@ -158,7 +158,7 @@
 
 <script>
 import eventBus from '../event_bus';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
          getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
 import { getTimeFormat } from './../store-utility-files/email';
@@ -242,14 +242,18 @@ export default {
         markAsRead(thread.threadId);
       }
       else {
+        console.log("tracker 2");
         if (thread.numberOfMessages > 1) {
+          console.log("tracker 3");
           eventBus.$emit('ENTER_DRAFT');
           this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
 
         }
         else {
           //need an if to check length of thread if length is zero, Compose_open, else open thread
-          eventBus.$emit('COMPOSE_OPEN', );
+          console.log("TRACKER 1");
+          eventBus.$emit('COMPOSE_OPEN_DRAFT', thread); //need a payload
+          eventBus.$emit('COMPOSE_OPEN'); //emit both?
         }
 
       }
