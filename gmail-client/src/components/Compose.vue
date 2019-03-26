@@ -99,6 +99,18 @@ export default {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
+      if (payload.to != null) { 
+        this.composeTo = payload.to;
+      } else {this.composeTo = ""}
+      if (payload.subject != null) {
+        this.composeSubject = payload.subject;
+      } else {this.composeSubject = ""}
+      if (payload.body != null) { 
+        this.composeMessage = payload.body;
+        //common quill problem where quill resets the value we want to instantiate here
+      } else {this.composeMessage = ""}
+    });
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
 }

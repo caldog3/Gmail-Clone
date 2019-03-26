@@ -69,7 +69,9 @@
               
               <div class="snippit" v-on:click="enterMessage(thread)">
                 <div class="leftAlign1">
-                    <b>{{ thread.subject }} </b>- 
+                    <b v-if="thread.subject != ''">{{ thread.subject }} </b>
+                    <b v-else>{{ "(no subject)" }} </b>
+                    - 
                     <br class="rwd-break">
                     <i><span v-html="thread.snippet">...</span></i>
                 </div>
@@ -249,7 +251,8 @@ export default {
         }
         else {
           //need an if to check length of thread if length is zero, Compose_open, else open thread
-          eventBus.$emit('COMPOSE_OPEN', );
+          eventBus.$emit('COMPOSE_OPEN');
+          eventBus.$emit('COMPOSE_OPEN_DRAFT', thread);
         }
 
       }
@@ -353,12 +356,12 @@ export default {
 
 
           if (numberOfMessages > 0) {
-            const { from, starred, conciseTo, subject, snippet, unread } = threadMessages[0];
+            const { from, starred, conciseTo, to, body, subject, snippet, unread } = threadMessages[0];
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
           
-            return {threadId, from, starred, conciseTo, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
+            return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
           }
         });
         return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
