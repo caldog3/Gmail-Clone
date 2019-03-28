@@ -163,14 +163,19 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        if (id !== undefined){
+        if (id !== undefined || attachmentIds[id.attachmentId] !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          const mimeType = attachment.mimeType;
-          if (!mimeType.includes("image") && !mimeType.includes("text")){
-            return {
-              url: `data:${mimeType};base64,${attachment.data}`,
-              title: id.filename
-            };
+          if (attachment === undefined) {
+
+          }
+          else {
+            const mimeType = attachment.mimeType;
+            if (!mimeType.includes("image") && !mimeType.includes("text")){
+              return {
+                url: `data:${mimeType};base64,${attachment.data}`,
+                title: id.filename
+              };
+            }
           }
         }
       }).filter(image => image !== undefined);
@@ -179,19 +184,26 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
+        console.log("BIG ID: ", id);
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          let mimeType = attachment.mimeType;
-          if (mimeType.includes("image") || mimeType.includes("text")){
-            // An attempt to display edge-case email. Check getMessageContent().
-            
-            // if (mimeType.includes("text")){
-            //   mimeType = "image/png"
-            // }
-            return {
-              url: `data:${mimeType};base64,${attachment.data}`,
-              title: id.filename
-            };
+          console.log("ATTACHMENT:", attachment);
+          if (attachment == undefined) { //edge case where id is defined but attachment is not
+            // return;
+          }
+          else {
+            let mimeType = attachment.mimeType;
+            if (mimeType.includes("image") || mimeType.includes("text")){
+              // An attempt to display edge-case email. Check getMessageContent().
+              
+              // if (mimeType.includes("text")){
+              //   mimeType = "image/png"
+              // }
+              return {
+                url: `data:${mimeType};base64,${attachment.data}`,
+                title: id.filename
+              };
+            }
           }
         }
       }).filter(image => image !== undefined);

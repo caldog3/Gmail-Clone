@@ -108,7 +108,7 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
-        //common quill problem where quill resets the value we want to instantiate here
+        //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
     });
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
