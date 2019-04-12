@@ -62,6 +62,7 @@ export default {
   methods: {
     open() {
       this.active = true
+      //need to clear values if this is a basic compose...
     },
     close() {
       this.active = false
@@ -108,10 +109,12 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
+        console.log("payloadval:", payload.body);
+        console.log("this.composse", this.composeMessage);
         //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
     });
-    eventBus.$on('ENTER_DRAFT', this.draftSetup);
+    // eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
 }
 </script>

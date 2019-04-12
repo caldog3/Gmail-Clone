@@ -245,9 +245,8 @@ export default {
       }
       else {
         if (thread.numberOfMessages > 1) {
-          eventBus.$emit('ENTER_DRAFT');
           this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
-
+          eventBus.$emit('ENTER_DRAFT');
         }
         else {
           //need an if to check length of thread if length is zero, Compose_open, else open thread

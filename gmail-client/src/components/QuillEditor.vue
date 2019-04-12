@@ -17,7 +17,8 @@
         props: {
             value: {
                 type: String,
-                default: ''
+                default: '',
+                //custom props
             }
         }, 
 
@@ -49,6 +50,9 @@
 
         methods: {
             update() {
+                var text = this.editor.getText();
+                this.editor.root.innerHTML = "THIS IS ANOTHER TEST";
+                //this needs to be selective
                 this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : '');
             }
         }

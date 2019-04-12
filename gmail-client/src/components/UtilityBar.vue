@@ -396,11 +396,12 @@ export default {
     unreadSet() {
       console.log("Marking set as unread");
       eventBus.$emit("UNREAD_SET");
+      this.refreshing();
     },
     readSet() {
       console.log("Marking set as read");
       eventBus.$emit("READ_SET");
-
+      this.refreshing();
     },
     checking() {
       this.checkedEmails = true;

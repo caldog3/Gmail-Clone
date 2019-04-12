@@ -163,7 +163,7 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        if (id !== undefined || attachmentIds[id.attachmentId] !== undefined){
+        if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
           if (attachment === undefined) {
 
