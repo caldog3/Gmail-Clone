@@ -250,8 +250,11 @@ export default {
         }
         else {
           //need an if to check length of thread if length is zero, Compose_open, else open thread
+          console.log("Thread.body", thread);
+          this.$store.state.draftMessage = thread.body;
           eventBus.$emit('COMPOSE_OPEN');
           eventBus.$emit('COMPOSE_OPEN_DRAFT', thread);
+          //FIXME set thread.body in the store
         }
 
       }

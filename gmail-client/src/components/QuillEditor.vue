@@ -12,6 +12,8 @@
 
 <script>
     import Quill from 'quill';
+    import eventBus from '../event_bus';
+
 
     export default {
         props: {
@@ -19,16 +21,16 @@
                 type: String,
                 default: '',
                 //custom props
-            }
+            },
         }, 
 
         data() {
             return {
-                editor: null
+                editor: null,
+                draftValue: "",
             };
         },
         mounted() {
-            
             this.editor = new Quill(this.$refs.editor, {
                 modules: {
                     toolbar: [
@@ -42,19 +44,28 @@
                 },
                 theme: 'snow',
             });
+            console.log("IN MOUNTED", this.value);
+            //this.editor.root.innerHTML = this.value;
+            this.editor.root.innerHTML = this.$store.state.draftMessage;
 
-            this.editor.root.innerHTML = this.value; // thought this would allow html to be seen within the editor, but it's been here in code and hasn't made that happen
-
-            this.editor.on('text-change', () => this.update());
+            this.editor.on('text-change', () => this.update()); //something resets the value in here somewhere
         },
 
         methods: {
-            update() {
+            update() { //don't set values in here...they get called every keystroke by the user
                 var text = this.editor.getText();
-                this.editor.root.innerHTML = "THIS IS ANOTHER TEST";
-                //this needs to be selective
-                this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : '');
-            }
-        }
+                //this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : '');
+                this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : this.$store.state.draftMessage);
+            },
+        },
+        created() { //for the eventBus to emit here
+            // eventBus.$on('COMPOSE_OPEN_DRAFT', payload => { // this $on is created AFTER the $emit happens so it isn't read until the second time /// NEED PROPS
+            //     //do some stuff here
+            //     console.log("created payload: ", payload);
+            //     //this.draftValue = payload.body;
+            //     this.draftValue = "SOMETHING";
+            //     this.otherVal = "LINGERING?";
+            // });
+        },
     }
 </script>

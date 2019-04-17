@@ -26,6 +26,7 @@ export default new Vuex.Store({
     viewFolder: "Inbox",
     totalMessages: "0",
     refreshArray: [],
+    draftMessage: "",
   },
   getters: {
     getLabelMessages: state => state.labelMessages,
