@@ -39,6 +39,9 @@ import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
 import { setupEmailBody } from '../store-utility-files/email';
+//Devon Firebase testing:
+import { fireRetrieveMessages, testTwoFirebase } from '../firebase/firebase';
+//end of test
 
 export default {
   name: 'Compose',
@@ -64,6 +67,10 @@ export default {
       this.active = true
     },
     close() {
+      //Devon Firebase testing:
+      //fireRetrieveMessages('how.d.65@gmail.com')
+      testTwoFirebase();
+      //end of test
       this.active = false
       // this.composeTidy();
     },
