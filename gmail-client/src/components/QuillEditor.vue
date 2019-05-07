@@ -28,9 +28,82 @@
             return {
                 editor: null,
                 draftValue: "",
+                initialized: false,
             };
         },
         mounted() {
+            /*testing this*/
+            var Block = Quill.import('blots/block');
+            var Inline = Quill.import('blots/inline');
+
+            class LinkBlot extends Inline {
+                static create(value) {  
+                    let node = super.create();
+                    if (value.href) { 
+                    if (value.href !== '') { node.setAttribute('href', value.href) }
+                    if (value.class !== '') { node.setAttribute('class', value.class) }
+                    if (value.style !== '') { node.setAttribute('style', value.style) }
+                    node.setAttribute('target', '_blank')
+                    } else {
+                    node.setAttribute('href', value)
+                    node.setAttribute('target', '_blank')
+                    }
+                    return node;
+                }
+                static formats(node) {
+                    return {
+                    href: node.getAttribute('href') ? node.getAttribute('href') : '',
+                    class: node.getAttribute('class') ? node.getAttribute('class') : '',
+                    style: node.getAttribute('style') ? node.getAttribute('style') : ''
+                    }
+                }
+            }
+            LinkBlot.blotName = 'link';
+            LinkBlot.tagName = 'a';
+            Quill.register(LinkBlot);
+
+            class ParagraphBlot extends Block {
+                static create(value) {
+                    let node = super.create();
+                    if (value.class !== '') { node.setAttribute('class', value.class) }
+                    if (value.style !== '') { node.setAttribute('style', value.style) }
+                    return node
+                }
+                static formats(node) {
+                    if (node) {
+                        return {
+                            class: node.getAttribute('class') ? node.getAttribute('class') : '',
+                            style: node.getAttribute('style') ? node.getAttribute('style') : ''
+                        }
+                    }
+                }
+            }
+            ParagraphBlot.blotName = 'p';
+            ParagraphBlot.tagName = 'p';
+            Quill.register(ParagraphBlot);
+
+            class DivBlot extends Block {
+                static create(value) {
+                    let node = super.create();
+                    if (value.class !== '') { node.setAttribute('class', value.class) }
+                    if (value.style !== '') { node.setAttribute('style', value.style) }
+                    return node
+                }
+                static formats(node) {
+                    if (node) {
+                        return {
+                            class: node.getAttribute('class') ? node.getAttribute('class') : '',
+                            style: node.getAttribute('style') ? node.getAttribute('style') : ''
+                        }
+                    }
+                }
+            }
+            DivBlot.blotName = 'div';
+            DivBlot.tagName = 'div';
+            Quill.register(DivBlot);
+            // Block.tagName = 'div';
+            // Quill.register(Block);
+            /*end testing this*/
             this.editor = new Quill(this.$refs.editor, {
                 modules: {
                     toolbar: [
@@ -48,24 +121,28 @@
             //this.editor.root.innerHTML = this.value;
             this.editor.root.innerHTML = this.$store.state.draftMessage;
 
+
             this.editor.on('text-change', () => this.update()); //something resets the value in here somewhere
         },
 
         methods: {
             update() { //don't set values in here...they get called every keystroke by the user
                 var text = this.editor.getText();
+                console.log("Initialization status: ", this.initialized);
+                if (!this.initialized) {
+                    this.editor.root.innerHTML = this.value;
+                    console.log("IN THE IF: ", this.value);
+                    console.log("IF innerHTML: ", this.editor.root.innerHTML);
+                    this.initialized = true;
+                    // this.editor.root.innerHTML = "TETSING";
+                }
+                // this.editor.root.innerHTML = this.value;
                 //this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : '');
                 this.$emit('input', this.editor.getText() ? this.editor.root.innerHTML : this.$store.state.draftMessage);
             },
         },
-        created() { //for the eventBus to emit here
-            // eventBus.$on('COMPOSE_OPEN_DRAFT', payload => { // this $on is created AFTER the $emit happens so it isn't read until the second time /// NEED PROPS
-            //     //do some stuff here
-            //     console.log("created payload: ", payload);
-            //     //this.draftValue = payload.body;
-            //     this.draftValue = "SOMETHING";
-            //     this.otherVal = "LINGERING?";
-            // });
-        },
+        destroyed() {
+            this.initialized = false;
+        }
     }
 </script>
