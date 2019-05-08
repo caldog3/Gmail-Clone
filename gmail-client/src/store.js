@@ -205,27 +205,29 @@ export default new Vuex.Store({
       })
     },
     getFolderListOfMessages(context, labelId) {
-      // context.commit("addLabelId", labelId);
-      // gapi.client.load('gmail', 'v1').then(() => {
-      //   gapi.client.gmail.users.threads.list({
-      //     'userId': 'me',
-      //     'labelIds': labelId,
-      //     'maxResults': 50,
-      //   }).then((response) => {
-      //     if (response.result.threads !== undefined) {
-      //       response.result.threads.forEach(thread => {
-      //         let threadId = thread.id;
-      //         //addThreadId labelId will be "refreshArray" if refreshing
-      //         context.commit("addThreadId", { threadId, labelId });
-      //         context.commit("initializeThreadTime", { threadId });
+      context.commit("addLabelId", labelId);
+      gapi.client.load('gmail', 'v1').then(() => {
+        gapi.client.gmail.users.threads.list({
+          'userId': 'me',
+          'labelIds': labelId,
+          //Devon testing hack: changing max results
+          // 'maxResults': 50,
+          'maxResults': 1,
+        }).then((response) => {
+          if (response.result.threads !== undefined) {
+            response.result.threads.forEach(thread => {
+              let threadId = thread.id;
+              //addThreadId labelId will be "refreshArray" if refreshing
+              context.commit("addThreadId", { threadId, labelId });
+              context.commit("initializeThreadTime", { threadId });
 
-      //         context.dispatch("getThreadData", { threadId, labelId });
-      //       });
-      //     }
-      //   });  
-      // }).catch((err) => {
-      //   console.log(err);
-      // });
+              context.dispatch("getThreadData", { threadId, labelId });
+            });
+          }
+        });  
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     async getListOfMessages(context, payload) { //payload.labelId / payload.refresh
       //creates the folder if it hasn't been created
