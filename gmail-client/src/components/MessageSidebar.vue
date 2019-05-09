@@ -367,9 +367,8 @@ export default {
     },
     composeShow() {
       //Devon testing Firebase:
-      var message = 'dummyInfo';
       //fireSendMessage(message);
-      testFirebase();
+      //testFirebase();
       //Devon end of test
       eventBus.$emit("COMPOSE_OPEN");
     },

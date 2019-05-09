@@ -73,6 +73,7 @@
 // WE NEED TO MAKE ALMOST ALL OF THE CALLS START BEING EXECUTED HERE
 import { mapGetters, mapActions } from 'vuex';
 import eventBus from './../event_bus';
+import { fireRetrieveMessages } from '../firebase/firebase';
 
  export default {
    name: 'LoginPage',
@@ -107,6 +108,8 @@ import eventBus from './../event_bus';
       this.getInboxLabels('PRIMARY').then(()=>{
         eventBus.$emit('DATA_FETCHING_COMPLETE');
       })
+
+      fireRetrieveMessages(this.$store.state.currentUser.w3.U3);
      
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');

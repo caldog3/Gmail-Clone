@@ -169,10 +169,10 @@ const fireRetrieveMessages = (currentUserEmail) => {
         fireRef.child(users).child(currentUser).on("child_added", function(threadShot){
             let labelIds = threadShot.val();
             var threadId = threadShot.key;
+            store.commit('initializeThreadTime', {threadId});
             fireRef.child(users).child(currentUser).child(threadId).on("child_added", function(labelShot){
                 let labelId = labelShot.key;
                 store.commit('addThreadId', {threadId, labelId});
-                store.commit('initializeThreadTime', {threadId});
             })
             fireRef.child(messages).child(threadId).on("child_added", function(messageShot){
                 let messageId = messageShot.key;
@@ -198,15 +198,15 @@ const getSenderAddress = (detailedFrom) =>{
 
 const testFirebase = () =>{
     fireRetrieveMessages('how.d.65@gmail.com');
-    fireSendMessage(responseMessage1);
-    fireSendMessage(responseMessage2);
+    //fireSendMessage(responseMessage1);
+    //fireSendMessage(responseMessage2);
 }
 
 const testTwoFirebase = () =>{
-    fireSendMessage(message1);
-    fireSendMessage(message2);
-    fireSendMessage(message3);
-    fireSendMessage(responseMessage3);
+    // fireSendMessage(message1);
+    // fireSendMessage(message2);
+    // fireSendMessage(message3);
+    // fireSendMessage(responseMessage3);
 }
 
 export{
