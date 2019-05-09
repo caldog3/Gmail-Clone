@@ -50,6 +50,32 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
+const sendDraft = (headers, message, threadId) => {
+  console.log("In the sendDraft API call");
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  gapi.client.gmail.users.drafts.send({ //just need to get all of these resource elements to work 
+    'userId': 'me',
+    'resource': {
+      // 'raw': base64url(email),
+      'id': threadId,  //I think we NEEED a draft id and not a message type id
+      'message': {
+        'raw': base64url(email),
+      }
+      // instead of threadId need a draftId just called 'id': ______
+      //'id': 
+    }
+  }).then((response) => {
+    console.log(`Reply Sent. Response =>:`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
 // OUR GMAIL ACCOUNTS CANT USE '.create' b/c we don't have 'domain wide authority'
 // const forwardRequest = () => {
 //   console.log("REQUESTING FOR CREATE FORWARD");
@@ -264,4 +290,5 @@ export {
   markSpam,
   forwardMessage,
   sendForward,
+  sendDraft,
 };
