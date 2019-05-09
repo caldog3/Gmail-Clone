@@ -118,8 +118,11 @@ export default {
     });
   },
   mounted() {
-    this.setEmailListHeight();   
-  },
+    this.setEmailListHeight();
+    eventBus.$on("RESET_APP_STATE", ()=>{
+      this.loading = false
+    })
+  }
 };
 </script>
 

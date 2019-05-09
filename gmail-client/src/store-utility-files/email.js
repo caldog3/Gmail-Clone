@@ -232,6 +232,46 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
   return message;
 }
 
+const getParsedMessageAndBody = (result) => {
+  const { payload } = result;
+  let parsedMessage, bodyAndAttachments;
+  
+  if (payload.body.attachmentId !== undefined && payload.body.data === undefined) {
+    console.log("In getMessageContent().\nUnfixable email edge-case:----", result);
+  }
+  if (payload.mimeType.includes('text')){
+    try {
+      bodyAndAttachments = getBody(payload);
+    } catch (exception) {
+      console.log("Result:- ", result)
+      console.log("getMessageContent Exception:- ")
+      console.log(exception)
+    }
+  }
+  else{
+    try {
+      parse(result, (err, data) => {
+        if (err) {
+          throw (err);
+        } else {
+          parsedMessage = data;
+          if (parsedMessage.message === undefined) {
+            bodyAndAttachments = getBody(payload);
+          }
+        }
+      })
+    } catch (exception) {
+      // console.log("CALLBACK ERROR", exception);
+      bodyAndAttachments = getBody(payload);
+    }
+  }
+
+  return {
+    parsedMessage,
+    bodyAndAttachments
+  }
+}
+
 const getEmailInfo = (headers) => {
   let from, to, conciseTo, cc = null, subject, detailedFrom, allParticipants = null;
   for (let i = 0; i < headers.length; i++) {
@@ -337,8 +377,8 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
 
 export {
   getTimeFormat,
-  getBody,
   getMessage,
   Base64Encode,
   setupEmailBody,
+  getParsedMessageAndBody
 };

@@ -186,18 +186,17 @@ const getLabels = () => {
   gapi.client.gmail.users.labels.list({
     'userId': 'me'
   }).then(response => {
-      let allLabels = response.result.labels;
-      var customLabels = [];
-      for (var i = 0; i < allLabels.length; i+=1) {
-        if (allLabels[i].id.startsWith("Label_")) {
-          let customLabel = {name: allLabels[i].name, id: allLabels[i].id};
-          // console.log(customLabel);
-          customLabels.push(customLabel);
+      const initialLabels = response.result.labels;
+      
+      const customLabels = initialLabels.reduce((labels, label)=>{
+        const { name, id } = label;
+        if(id.startsWith("Label_")){
+          labels.push({ name, id });
         }
-      }
-      // console.log(customLabels);
-      eventBus.$emit("CUSTOM_FOLDERS", customLabels);
+        return labels;
+      }, []);
 
+      eventBus.$emit("CUSTOM_FOLDERS", customLabels);
     })
   });
 }
@@ -248,6 +247,96 @@ const getAttachment = (payload) => {
   });
 }
 
+const getUnreadMessageCount = (folder) => {
+  gapi.client.load('gmail', 'v1').then(() => {
+    gapi.client.gmail.users.labels.get({
+    'userId': 'me',
+    'id': folder,
+    }).then((response) => {
+      let unreadCount = response.result.threadsUnread;
+      return unreadCount;
+    });
+  });
+}
+
+const searchThreads = async (query) => {
+  const response = await gapi.client.load('gmail', 'v1')
+    .then(async () => {
+    return await gapi.client.gmail.users.threads.list({
+      'userId': 'me',
+      'maxResults': 50,
+      'q': query,
+    });
+  });
+
+  return response.result.threads;
+}
+
+const getThreads = async (labelId) => {
+  const response = await gapi.client.load('gmail', 'v1')
+    .then(async () => {
+      return await gapi.client.gmail.users.threads.list({
+        'userId': 'me',
+        'maxResults': 50,
+        'q': `category: ${labelId}`
+      });
+    });
+  const threads = response.result.threads;
+  const nextPageToken = response.result.nextPageToken;
+
+  return {
+    threads,
+    nextPageToken
+  }
+}
+
+const getLabelMessages = async (labelId) => {
+  const response = await gapi.client.load('gmail', 'v1')
+    .then(async () => {
+      return await gapi.client.gmail.users.threads.list({
+        'userId': 'me',
+        'labelIds': labelId,
+        'maxResults': 50,
+      });  
+    });
+    
+  return response.result.threads;
+}
+
+const getNextPageThreads = async ({ labelId, token }) => {
+  const response = await gapi.client.gmail.users.threads.list({
+    'userId': 'me',
+    'maxResults': 50,
+    'q': `category: ${labelId}`,
+    'pageToken': token
+  });
+  const threads = response.result.threads;
+  const nextPageToken = response.result.nextPageToken;
+
+  return {
+    threads,
+    nextPageToken
+  }
+}
+
+const getMessages = async (threadId) => {
+  const response = await gapi.client.gmail.users.threads.get({
+    'userId': 'me',
+    'id': threadId,
+  });
+
+  return response.result.messages;
+}
+
+const getMessageContent = async (messageId) => {
+  const response = await gapi.client.gmail.users.messages.get({
+    'userId': 'me',
+    'id': messageId,
+  });
+
+  return response.result;
+}
+
 export {
   sendMessage,
   sendReply,
@@ -264,4 +353,10 @@ export {
   markSpam,
   forwardMessage,
   sendForward,
+  searchThreads,
+  getLabelMessages,
+  getNextPageThreads,
+  getMessages,
+  getMessageContent,
+  getThreads
 };

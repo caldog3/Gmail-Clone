@@ -111,7 +111,7 @@ import timeago from 'epoch-timeago';
 import isHtml from 'is-html';
 
 export default {
-  name: 'ThreadBody',
+  name: 'MessageBody',
   props: ['message'],
   components: {
     FontAwesomeIcon,
@@ -165,12 +165,14 @@ export default {
       this.message.attachmentIds.map((id) => {
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          const mimeType = attachment.mimeType;
-          if (!mimeType.includes("image") && !mimeType.includes("text")){
-            return {
-              url: `data:${mimeType};base64,${attachment.data}`,
-              title: id.filename
-            };
+          if (attachment !== undefined){
+            const mimeType = attachment.mimeType;
+            if (!mimeType.includes("image") && !mimeType.includes("text")){
+              return {
+                url: `data:${mimeType};base64,${attachment.data}`,
+                filename: id.filename
+              };
+            }
           }
         }
       }).filter(image => image !== undefined);
@@ -181,18 +183,20 @@ export default {
       this.message.attachmentIds.map((id) => {
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          let mimeType = attachment.mimeType;
-          if (mimeType.includes("image") || mimeType.includes("text")){
+          if (attachment !== undefined){
+            let mimeType = attachment.mimeType;
+            if (mimeType.includes("image") || mimeType.includes("text")){
             // An attempt to display edge-case email. Check getMessageContent().
             
             // if (mimeType.includes("text")){
             //   mimeType = "image/png"
             // }
-            return {
-              url: `data:${mimeType};base64,${attachment.data}`,
-              title: id.filename
-            };
-          }
+              return {
+                url: `data:${mimeType};base64,${attachment.data}`,
+                title: id.filename
+              };
+            }
+          }  
         }
       }).filter(image => image !== undefined);
     },
@@ -224,6 +228,9 @@ export default {
   },
   created(){
     this.setTimeAgo();
+  },
+  mounted(){
+    this.$store.dispatch("getAttachments", this.message.attachmentIds);
   }
 }
 </script>
