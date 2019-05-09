@@ -99,7 +99,7 @@ import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
     },
     getDraftIds() {
       console.log("Start of getting draft Ids");
-      getDraftListOfIds();
+      getDraftListOfIds(); //this function calls the api to list all draft messages with their ids
     }
 
    },
