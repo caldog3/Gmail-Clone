@@ -251,7 +251,6 @@ const getEmailInfo = (headers) => {
       //   from = "me";
       // }
       if (from.charAt(0) == "\"" || from.charAt(0) == "<") {
-
         from = from.substring(1, from.length - 1);
       }
       if(from.includes("@")) {
@@ -261,9 +260,6 @@ const getEmailInfo = (headers) => {
       if(from.length >= 20) {
         from = from.substring(0, 19) + ".";
       }
-      // if(from == "Daniel Zappala") {
-      //   console.log("Breaking up the headers: ", headers);
-      // }
     } else if (headers[i].name === "Delivered-To" || headers[i].name === "To") {
       to = headers[i].value;
 
