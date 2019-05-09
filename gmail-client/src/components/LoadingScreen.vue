@@ -84,12 +84,10 @@ import { fireRetrieveMessages } from '../firebase/firebase';
      ...mapActions([
        'getListOfMessages',
        'getFolderListOfMessages',
-       'getAllMessages'
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
-        var refresh = false;
-        await this.getListOfMessages({ label, refresh }); //FIXME...Maybe?? bool value?
+        await this.getListOfMessages(label);
       }
     },
     getFolderLabels(label){
@@ -97,14 +95,8 @@ import { fireRetrieveMessages } from '../firebase/firebase';
         this.getFolderListOfMessages(label);  
       }
     },
-    // getAllLabels(){
-    //   if(this.getLabelMessages['ALL_MAIL'] === undefined) {
-    //     this.getAllMessages('ALL_MAIL');
-    //   }
-    // }
    },
    created() {
-    // this.getInboxLabels('PRIMARY').then(()=>{
       this.getInboxLabels('PRIMARY').then(()=>{
         eventBus.$emit('DATA_FETCHING_COMPLETE');
       })
@@ -113,13 +105,13 @@ import { fireRetrieveMessages } from '../firebase/firebase';
      
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
+      
       // Get Folder labels
       this.getFolderLabels('DRAFT');
       this.getFolderLabels('SENT');
       this.getFolderLabels('STARRED');
       this.getFolderLabels('IMPORTANT');
       this.getFolderLabels('TRASH');
-    // });
    },
  }
 </script>

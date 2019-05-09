@@ -87,19 +87,6 @@
         </div>
       </div>
 
-      <!-- Removed 'All Mail' due to trouble with the api -->
-      <!-- <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
-        <div id="sidebarFlex">
-          <div class="Icon">
-            <font-awesome-icon style="color:white;" icon="envelope"/>
-          </div>
-          <div>
-            All Mail (still implementing)
-          </div>
-        </div>
-      </div> -->
-
-
       <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
@@ -345,16 +332,6 @@ export default {
         }
       });
     },
-    // getLabels() {
-    //   gapi.client.load('gmail', 'v1').then(() => {
-    //     gapi.client.gmail.users.labels.list({
-    //       'userId': 'me',
-    //     }).then((response) => {
-    //       console.log("Listing the labels");
-    //       console.log(response);
-    //     });
-    //   });
-    // },
     activateFolder(folder) {
       this.$store.state.viewFolder = folder;
       this.$store.state.currentPage = 1;
@@ -414,7 +391,7 @@ export default {
       if(this.$store.state.currentPage != 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
-          this.$store.dispatch("getListOfMessages", previousFolder, false); //bool value is for refresh or not
+          this.$store.dispatch("getListOfMessages", previousFolder);
         }
         else {
           this.$store.dispatch("getFolderListOfMessages", previousFolder);

@@ -321,36 +321,11 @@ export default {
         console.log("REfresh checkpoing 1");
         let refresh = true;
         let label = folder;
-        this.$store.dispatch("getListOfMessages", { label, refresh });// bool value is for refresh
+        this.$store.dispatch("getListOfMessages", label);// bool value is for refresh
       }
       else {
-        this.$store.dispatch("getFolderListOfMessages", { folder, refresh });
+        this.$store.dispatch("getFolderListOfMessages", folder);
       }
-    },
-
-    refreshResolve() {
-      //if this is after the dispatch is done....this should work
-      //temp fix is to add an await
-      var folder = this.refreshingFolder;
-      var baseArray = this.$store.state.labelMessages[folder];
-      var refreshArray = this.$store.state.refreshArray;
-      // console.log("The refresh array: ", refreshArray);
-      // console.log("The base array: ", baseArray);
-
-      if (JSON.stringify(baseArray) !== JSON.stringify(refreshArray)) {
-        console.log("THE CONCAT: ", [].concat(this.$store.state.refreshArray));
-        // this.$store.state.labelMessages[folder] = [].concat(this.$store.state.refreshArray);
-        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
-        console.log("The refresh array didn't have equal ids and was swapped: ", this.$store.state.labelMessages[folder]);
-      }
-      else {
-        // console.log("The refresh array had equal ids");
-        Vue.set(this.$store.state.labelMessages, folder, [].concat(this.$store.state.refreshArray))
-      }
-
-      // console.log("Here is the array", this.$store.state.refreshArray);
-      this.$store.state.refreshArray = [];
-      this.checkedEmails = false;
     },
     pageNum() {
       return this.$store.state.currentPage;
@@ -538,7 +513,6 @@ export default {
       this.getNumberTotal(folder);
     });
     this.getNumberTotal(this.$store.state.viewFolder);
-    eventBus.$on("REFRESH_RESOLVE", this.refreshResolve);
   },
 }
 
