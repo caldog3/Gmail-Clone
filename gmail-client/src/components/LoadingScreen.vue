@@ -82,16 +82,10 @@ import eventBus from './../event_bus';
     ]),
      ...mapActions([
        'getListOfMessages',
-       'getFolderListOfMessages',
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
         await this.getListOfMessages(label);
-      }
-    },
-    getFolderLabels(label){
-      if(this.getLabelMessages[label] === undefined){
-        this.getFolderListOfMessages(label);  
       }
     },
    },
@@ -101,13 +95,6 @@ import eventBus from './../event_bus';
       })
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
-      
-      // Get Folder labels
-      this.getFolderLabels('DRAFT');
-      this.getFolderLabels('SENT');
-      this.getFolderLabels('STARRED');
-      this.getFolderLabels('IMPORTANT');
-      this.getFolderLabels('TRASH');
    },
  }
 </script>
