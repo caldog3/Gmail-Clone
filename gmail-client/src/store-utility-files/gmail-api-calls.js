@@ -76,6 +76,35 @@ const sendDraft = (headers, message, threadId) => {
   });
 }
 
+const getDraftListOfIds = () => {
+  // context.commit("addLabelId", labelId);
+  gapi.client.load('gmail', 'v1').then(() => {
+    gapi.client.gmail.users.drafts.list({
+      'userId': 'me',
+      // 'maxResults': 50,
+    }).then((response) => {
+      console.log("DRAFT API", response.result);
+      if (response.result.threads !== undefined) {
+        // response.result.threads.forEach(thread => {
+        //   let threadId = thread.id;
+        //   //addThreadId labelId will be "refreshArray" if refreshing
+        //   context.commit("addThreadId", { threadId, labelId });
+        //   context.commit("initializeThreadTime", { threadId });
+
+        //   context.dispatch("getThreadData", { threadId, labelId });
+        // });
+        
+      }
+    });  
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+
+
+
+
 // OUR GMAIL ACCOUNTS CANT USE '.create' b/c we don't have 'domain wide authority'
 // const forwardRequest = () => {
 //   console.log("REQUESTING FOR CREATE FORWARD");
@@ -291,4 +320,5 @@ export {
   forwardMessage,
   sendForward,
   sendDraft,
+  getDraftListOfIds,
 };

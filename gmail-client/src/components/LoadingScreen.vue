@@ -73,6 +73,7 @@
 // WE NEED TO MAKE ALMOST ALL OF THE CALLS START BEING EXECUTED HERE
 import { mapGetters, mapActions } from 'vuex';
 import eventBus from './../event_bus';
+import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
 
  export default {
    name: 'LoginPage',
@@ -96,11 +97,11 @@ import eventBus from './../event_bus';
         this.getFolderListOfMessages(label);  
       }
     },
-    // getAllLabels(){
-    //   if(this.getLabelMessages['ALL_MAIL'] === undefined) {
-    //     this.getAllMessages('ALL_MAIL');
-    //   }
-    // }
+    getDraftIds() {
+      console.log("Start of getting draft Ids");
+      getDraftListOfIds();
+    }
+
    },
    created() {
     // this.getInboxLabels('PRIMARY').then(()=>{
@@ -111,7 +112,9 @@ import eventBus from './../event_bus';
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
       // Get Folder labels
-      this.getFolderLabels('DRAFT');
+      this.getFolderLabels('DRAFT'); 
+      //FIXME need to get draft ids from the api that are unique from message ids
+      this.getDraftIds();
       this.getFolderLabels('SENT');
       this.getFolderLabels('STARRED');
       this.getFolderLabels('IMPORTANT');
