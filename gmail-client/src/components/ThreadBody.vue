@@ -23,7 +23,7 @@
         </button>
       </div>
     </div>
-    <div> {{responseHTML}} </div>
+    <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
     <!-- we need a send button that triggers "reply()" -->
     <!-- Reply all -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replyingAll">
@@ -64,7 +64,7 @@
       <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
-        <button type="button" v-on:click="toggleReplyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        <button type="button" v-on:click="toggleReplyAll"><font-awesesponsome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
       <button type="button" v-on:click="forwardToggle"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { trashMessage, sendReply, forwardMessage, sendForward } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft } from './../store-utility-files/gmail-api-calls';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       forwardHTML: "",
-      responseHTML: "", //  having no data prevents emptying the data assigned, but throws a LOT of errors
+      responseHTML: "", 
       responseBody: "",
       forwardingBody: "",
       subject: '',
@@ -107,6 +107,7 @@ export default {
       replyingAll: false,
       forwarding: false,
       forwardRecipient: '',
+      isDraft: false, //for determining api route for sending emails
     };
   },
   methods: {
@@ -140,7 +141,6 @@ export default {
       else {
         this.forwardHTML = "";
       }
-
     },
     replySend() {
       //we'll link these two up soon
@@ -153,7 +153,13 @@ export default {
       console.log("HEaders: ", headers);
       console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
-      sendReply(headers, body, threadID);
+      //FIXME: add condition for drafts
+      if (!this.isDraft) {
+        sendReply(headers, body, threadID);
+      }
+      else {
+        sendDraft(headers, body, threadID);
+      }
     },
     replyAllSend() {
       console.log("You clicked the replyAll send button");
@@ -164,7 +170,13 @@ export default {
       const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
       console.log("HEaders: ", headers);
       let threadID = this.messages[0].threadId;
-      sendReply(headers, body, threadID);
+      //FIXME: add condition for drafts
+      if (!this.isDraft) {
+        sendReply(headers, body, threadID);
+      }
+      else {
+        sendDraft(headers, body, threadID);
+      }
     },
     forwardSend() {
 // code will probably look very similar to replySend
@@ -176,23 +188,14 @@ export default {
       const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
       console.log("headers: ", headers);
       let threadID = this.messages[0].threadId;
-      sendReply(headers, body, threadID);
+      //FIXME: add condition for drafts
+      if (!this.isDraft) {
+        sendReply(headers, body, threadID);
+      }
+      else {
+        sendDraft(headers, body, threadID);
+      }
     },
-    // replyAll() {
-    //   console.log("in the replyAll");
-    //   this.multipartBoundary = this.generateBoundary();
-    //   let headerSection = {
-    //     'MIME-Version': '1.0',
-    //     // 'Content-Transfer-Encoding': '7bit',
-    //     'Subject': 'Re: ' + this.subject,
-    //     'From': this.sender,
-    //     'To': this.allReplyRecipients,
-    //     'Content-Type': 'multipart/alternative;' + 'boundary=' + this.multipartBoundary,
-    //   }
-    //   this.setResponseBody();
-    //   let id = this.messages[0].threadId;
-    //   sendReply(headerSection, this.responseBody, id);
-    // },
     generateBoundary() {
       //12 0's and then 16 digit random...
       var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -204,11 +207,9 @@ export default {
       this.multipartBoundary = randBoundary;
       return randBoundary;
     },
-    forward() {
-      console.log("forwarding...")
-      //we will need to use a v-model link here to set this recipient
+    forward() { //sets up formatting for a forward and then calls the actual sending method
+      console.log("forwarding...");
       let forwardRecipient = "caldogwoods@gmail.com";
-      // forwardMessage(forwardRecipient, this.finalMessageBody);
       this.multipartBoundary = this.generateBoundary();
       let headerSection = {
         'MIME-Version': '1.0',
@@ -222,8 +223,7 @@ export default {
       sendForward(headerSection, this.forwardingBody, id);
 
     },
-    setForwardingBody() {
-      // const body1 = `--${this.multipartBoundary}\n`;
+    setForwardingBody() { //sets up body formatting for forward
       var body = "";
       body += '--' + this.multipartBoundary + '\n';
       body += 'Content-Type: text/html; charset="UTF-8"\n';
@@ -238,16 +238,17 @@ export default {
       const threadMessages = messages[this.$route.params.id];
       this.messages = sortBy(threadMessages, m => m.unixTime);
       //remove
-      if (this.messages[0].labelId === "DRAFT") {
-        // console.log("WE GOT A DRAFT", this.messages);
+      if (this.messages[0].labelId === "DRAFT") { //sets up drafts to have default draft features (pop the draft and get data to plug into Quill)
+
+        // FIXME: need to account for drafts not being the last message of a thread.  Probably a complicated handler
         const draftMessage = this.messages.pop();
         console.log("DraftMessage", draftMessage);
         console.log("THIS>>>>>", this.responseHTML);
         this.toggleReply();
         this.responseHTML = draftMessage.body;
         console.log("THAT>>>>>", this.responseHTML);
-
-        // this.recipient = draftMessage.
+        
+        this.isDraft = true; //temporary handler //might need  
       }
 
       this.subject = this.messages[this.messages.length -1].subject;
@@ -260,9 +261,11 @@ export default {
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
         i++;
       }
-      if (this.messages[0].labelId === "DRAFT") {
-        lastRecipient = this.sender;
-      }
+      //might not need this code......
+      // if (this.messages[0].labelId === "DRAFT") {
+
+      //   lastRecipient = this.sender;
+      // }
       console.log("Last recipient", lastRecipient);
       
       //this to doesn't work with group messages, includes other people
@@ -271,8 +274,8 @@ export default {
       let allPeopleArray = this.messages[0].allParticipants;
       let userInstance = false;
       var replyAllPeople = "";
-      // console.log("allPeopleArray: ", this.messages);
-      for (let i = 0; i < allPeopleArray.length; i++) {
+      console.log("allPeopleArray: ", allPeopleArray);
+      for (let i = 0; i < allPeopleArray.length; i++) { // loops through all involved email aliases and excludes the current user
         if (allPeopleArray[i].includes(this.$store.state.currentUserProfile.U3) && !userInstance) {
           userInstance = true;
           continue;
@@ -283,8 +286,9 @@ export default {
           replyAllPeople += ", ";
         }
       }
-      console.log("AllPeople: ", replyAllPeople);
+      console.log("BEFORE CHANGE: ", this.allReplyRecipients);
       this.allReplyRecipients = replyAllPeople;
+      console.log("AllPeopleBesidesUser: ", this.allReplyRecipients);
       console.log("lastMessageInThread", this.messages[this.messages.length -1]);
       this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
@@ -303,11 +307,16 @@ export default {
           theClass = 'group-message';
       }
       return theClass;
+    }, 
+    draftSetup() {
+      this.responseHTML = "THIS IS A TEST";
+      this.responseBody = "THIS IS A TEST";
     },
   },
   created() {
     this.getMessages();
     eventBus.$on("TRASHING_THREAD", this.trash);
+    eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
 }
 </script>
