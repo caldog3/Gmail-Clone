@@ -90,7 +90,7 @@ export default {
       if(this.$store.state.currentPage !== 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
-          this.$store.dispatch("getListOfMessages", previousFolder, false); //bool val is for refresh or not
+          this.$store.dispatch("getListOfMessages", previousFolder);
         }
         else {
           this.$store.dispatch("getFolderListOfMessages", previousFolder);
@@ -111,9 +111,6 @@ export default {
       eventBus.$emit("TOTAL_EMAIL_COUNT", tabFolder);
       // maybe trigger an update here for total emails in the utilityBar
     },
-  },
-  created(){
-    setTimeout(() => this.$store.dispatch("getAttachments"), 10);
-  },
+  }
 }
 </script>
