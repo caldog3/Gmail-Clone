@@ -439,6 +439,7 @@ export default {
     getLabels();
     // Probably a much better way to do this
     eventBus.$on("CUSTOM_FOLDERS", customs => {
+
       for (let i = 0; i < customs.length; i+=1) {
         let shortName = customs[i].name;
         if (shortName.includes("/")) {
