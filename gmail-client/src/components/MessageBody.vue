@@ -181,7 +181,6 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        console.log("BIG ID: ", id);
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
           if (attachment !== undefined){

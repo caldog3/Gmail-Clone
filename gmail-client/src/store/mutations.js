@@ -25,9 +25,7 @@ export default {
         }
       },
       addLabelId(state, labelId) {
-        // if (state.labelMessages[labelId] === undefined){
-          Vue.set(state.labelMessages, labelId, []);
-        // }
+        Vue.set(state.labelMessages, labelId, []);
       },
       addLabelNextPageToken(state, { labelId, nextPageToken }) {
         Vue.set(state.labelNextPageTokens, labelId, nextPageToken);

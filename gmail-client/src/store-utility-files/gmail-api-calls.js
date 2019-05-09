@@ -384,6 +384,6 @@ export {
   getNextPageThreads,
   getMessages,
   getMessageContent,
-  getThreads
+  getThreads,
   sendDraft,
 };

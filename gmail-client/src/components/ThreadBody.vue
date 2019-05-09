@@ -64,7 +64,7 @@
       <button type="button" v-on:click="toggleReply"><font-awesome-icon class="Icon" icon="reply" /> Reply</button>
       &emsp;
       <span v-bind:class="ifGroupMessage()">
-        <button type="button" v-on:click="toggleReplyAll"><font-awesesponsome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
+        <button type="button" v-on:click="toggleReplyAll"><font-awesome-icon class="Icon" icon="reply-all" /> ReplyAll</button>
       &emsp;
       </span>
       <button type="button" v-on:click="forwardToggle"><font-awesome-icon class="Icon" icon="long-arrow-alt-right" /> Forward</button>

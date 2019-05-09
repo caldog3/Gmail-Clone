@@ -99,15 +99,15 @@ import eventBus from './../event_bus';
       this.getInboxLabels('PRIMARY').then(()=>{
         eventBus.$emit('DATA_FETCHING_COMPLETE');
       })
-      // this.getInboxLabels('SOCIAL');
-      // this.getInboxLabels('PROMOTIONS');
+      this.getInboxLabels('SOCIAL');
+      this.getInboxLabels('PROMOTIONS');
       
       // Get Folder labels
-      // this.getFolderLabels('DRAFT');
+      this.getFolderLabels('DRAFT');
       this.getFolderLabels('SENT');
-      // this.getFolderLabels('STARRED');
-      // this.getFolderLabels('IMPORTANT');
-      // this.getFolderLabels('TRASH');
+      this.getFolderLabels('STARRED');
+      this.getFolderLabels('IMPORTANT');
+      this.getFolderLabels('TRASH');
    },
  }
 </script>
