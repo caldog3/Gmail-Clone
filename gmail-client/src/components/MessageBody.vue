@@ -143,6 +143,8 @@ export default {
       }).toString();
     },
     highlightUrls(messageBody) {
+      messageBody = this.deletePreviousMessageBodies(messageBody);
+      
       if(isHtml(messageBody)){
         const hyperlinkedHTML = linkifyHtml(messageBody, {});
 
@@ -156,6 +158,15 @@ export default {
       } else {
         return messageBody;
       }
+    },
+    deletePreviousMessageBodies(messageBody){
+      const replyRegex = /On[\s\S]+<[\s\S]+> wrote:/g
+      const index = messageBody.search(replyRegex);
+      if (index !== -1){
+        messageBody = messageBody.substring(0, index);
+      }
+      
+      return messageBody;
     }
   },
   computed: {
@@ -203,11 +214,9 @@ export default {
   },
   methods: {
     expand() {
-      console.log("Expanding");
       this.notExpanded = false;
     },
     unexpand() {
-      console.log("Collapsing");
       this.notExpanded = true;
     },
     starredLabelToggle(thread) {
