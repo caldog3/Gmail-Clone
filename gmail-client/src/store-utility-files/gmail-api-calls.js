@@ -322,7 +322,9 @@ const getLabelMessages = async (labelId) => {
       return await gapi.client.gmail.users.threads.list({
         'userId': 'me',
         'labelIds': labelId,
-        'maxResults': 50,
+        //Devon Testing Mod
+        //'maxResults': 50,
+        'maxResults': 1
       });  
     });
     

@@ -31,7 +31,9 @@ export default {
         Vue.set(state.labelNextPageTokens, labelId, nextPageToken);
       },
       addThreadId(state, { labelId, threadId }) {
-        Vue.set(state.threadMessages, threadId, []);
+        if (!(threadId in state.threadMessages)){
+          Vue.set(state.threadMessages, threadId, []);
+        }
         const labelIdArray = state.labelMessages[labelId];
   
         if (labelIdArray !== undefined && !labelIdArray.includes(threadId)){

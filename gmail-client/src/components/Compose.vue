@@ -38,10 +38,8 @@ import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
-import { setupEmailBody } from '../store-utility-files/email';
-//Devon Firebase testing:
+import { setupEmailBody, fireSetupEmailMessage } from '../store-utility-files/email';
 import { fireRetrieveMessages, fireSendMessage, testTwoFirebase } from '../firebase/firebase';
-//end of test
 
 export default {
   name: 'Compose',
@@ -75,60 +73,9 @@ export default {
       this.active = false
       // this.composeTidy();
     },
-    extractSnippet(){
-      let snippet = '';
-      let tags = this.composeMessage.split('<');
-      tags.forEach(tag => {
-        let tagExtract = tag.split('>');
-        if(tagExtract.length > 1){
-          snippet += tagExtract[1];
-        }
-        else{
-          snippet += tagExtract[0];
-        }
-      });
-      return snippet;
-    },
-    extractConciseTo(firstParticipant){
-      firstParticipant = firstParticipant.split('@');
-      firstParticipant = firstParticipant[0].split(' ');
-      return firstParticipant[0];
-    },
     fireSendCompose(){
-      //conciseTo for group emails only requires one name
-      const uuidv1 = require('uuid/v1');
-      let allParticipants = [];
-      let sender = this.$store.state.currentUser.w3.U3;
-      let senderName = this.$store.state.currentUser.w3.ig;
-      let detailedFrom = senderName + ' <' + sender + '>';
-      let recipients = this.composeTo.split(', ');
-
-      allParticipants.push(detailedFrom);
-      recipients.forEach(recipient => {
-        allParticipants.push(recipient);
-      });
-      if(allParticipants.length < 2){return;}
-
-      const message = {
-        threadId: uuidv1(),
-        labelId: 'PRIMARY',
-        messageId: uuidv1(),
-        from: senderName,
-        detailedFrom: senderName + ' <' + sender + '>',
-        allParticipants: allParticipants,
-        to: this.composeTo,
-        conciseTo: this.extractConciseTo(allParticipants[1]),
-        cc: null,
-        subject: this.composeSubject,
-        snippet: this.extractSnippet(),
-        body: this.composeMessage,
-        unixTime: Math.floor(Date.now() / 1000),
-        time: '',
-        unread: false,
-        starred: false,
-        attachmentIds: []
-      };
-
+      let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage);
+      if(message === undefined){return;}
       fireSendMessage(message);
       this.close();
     },

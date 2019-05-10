@@ -31,7 +31,7 @@
       <textarea rows="1" v-model="allReplyRecipients" class="recipients"></textarea>
       <quill-editor v-model="responseHTML"/>
       <div class="quill-spacing">
-        <button class="sendBar" type="button" v-on:click="replyAllSend">
+        <button class="sendBar" type="button" v-on:click="replySend">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
         <button class="sendBar" type="button" v-on:click="toggleReplyAll">
@@ -79,7 +79,8 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
-import { setupEmailBody } from '../store-utility-files/email';
+import { setupEmailBody, fireSetupEmailMessage } from '../store-utility-files/email';
+import { fireSendMessage } from '../firebase/firebase';
 import moment from 'moment';
 
 
@@ -111,6 +112,10 @@ export default {
     };
   },
   methods: {
+    finalizeSendMessage(){
+      eventBus.$emit('MESSAGE_LIST');
+      this.$router.go(-1);
+    },
     toggleReply() {
       this.replying = !this.replying;
     },
@@ -142,14 +147,38 @@ export default {
         this.forwardHTML = "";
       }
     },
+    firebaseReplySend(){
+      let reSubj = this.subject;
+      if (!this.subject.startsWith("Re:")) {
+        reSubj = "Re: " + this.subject;
+      }
+      let composeTo = this.recipient;
+      if (this.replyingAll){
+        composeTo = this.allReplyRecipients
+      }
+
+      let message = fireSetupEmailMessage(reSubj, composeTo, this.responseHTML, this.messages[0].threadId);
+      if (message === undefined){return;}
+      fireSendMessage(message);
+    },
     replySend() {
-      //we'll link these two up soon
+      let isfireMessage = this.messages[0].isfireMessage;
+      if(this.messages[0].isfireMessage){
+        firebaseReplySend;
+        this.finalizeSendMessage();    
+        return;
+      }
+
       console.log("You clicked the send button");
       let reSubj = this.subject;
       if (!this.subject.startsWith("Re:")) {
         reSubj = "Re: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
+      let composeTo = this.recipient;
+      if (this.replyingAll){
+        composeTo = this.allReplyRecipients
+      }
+      const {headers, body} = setupEmailBody(reSubj, composeTo, this.responseHTML, this.sender);
       console.log("HEaders: ", headers);
       console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
@@ -160,24 +189,26 @@ export default {
       else {
         sendDraft(headers, body, threadID);
       }
+      this.finalizeSendMessage();
     },
-    replyAllSend() {
-      console.log("You clicked the replyAll send button");
-      let reSubj = this.subject;
-      if (!this.subject.startsWith("Re:")) {
-        reSubj = "Re: " + this.subject;
-      }
-      const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
-      console.log("HEaders: ", headers);
-      let threadID = this.messages[0].threadId;
-      //FIXME: add condition for drafts
-      if (!this.isDraft) {
-        sendReply(headers, body, threadID);
-      }
-      else {
-        sendDraft(headers, body, threadID);
-      }
-    },
+    // replyAllSend() {
+    //   console.log("You clicked the replyAll send button");
+    //   let reSubj = this.subject;
+    //   if (!this.subject.startsWith("Re:")) {
+    //     reSubj = "Re: " + this.subject;
+    //   }
+    //   const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
+    //   console.log("HEaders: ", headers);
+    //   let threadID = this.messages[0].threadId;
+    //   //FIXME: add condition for drafts
+    //   if (!this.isDraft) {
+    //     sendReply(headers, body, threadID);
+    //   }
+    //   else {
+    //     sendDraft(headers, body, threadID);
+    //   }
+    //   this.finalizeSendMessage();
+    // },
     forwardSend() {
 // code will probably look very similar to replySend
       console.log("You clicked the forward send button");
@@ -195,6 +226,7 @@ export default {
       else {
         sendDraft(headers, body, threadID);
       }
+      this.finalizeSendMessage();
     },
     generateBoundary() {
       //12 0's and then 16 digit random...

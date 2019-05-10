@@ -56,23 +56,6 @@ import {
   faUsers
 } from '@fortawesome/free-solid-svg-icons'
 
-//Devon code starts: Initialize Firebase
-// import * as firebase from "firebase/app";
-
-// // Add the Firebase services that you want to use
-// import "firebase/auth";
-// import "firebase/database";
-// var config = {
-//   apiKey: "AIzaSyDrpz2BFRzaIWpqYXn5eUviFi6NZRkqv50",
-//   authDomain: "byu--clone.firebaseapp.com",
-//   databaseURL: "https://byu--clone.firebaseio.com",
-//   projectId: "byu-gmail-clone",
-//   storageBucket: "byu-gmail-clone.appspot.com",
-//   messagingSenderId: "68568085108"
-// };
-// firebase.initializeApp(config);
-//Devon code ends
-
 library.add(faBars, faSearch, faInbox, faStar, faClock, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,
   faRetweet, faSquare, faCheckSquare, faArrowLeft, faEllipsisV, faReply, faLongArrowAltRight, faReplyAll,
