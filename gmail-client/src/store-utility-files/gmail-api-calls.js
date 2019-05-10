@@ -82,18 +82,13 @@ const getDraftListOfIds = () => {
     gapi.client.gmail.users.drafts.list({
       'userId': 'me',
       // 'maxResults': 50,
-    }).then((response) => {
+    }).then((response) => { //response gives an array of objects for each draft with all 3 associated ids
       console.log("DRAFT API", response.result);
-      if (response.result.threads !== undefined) {
-        // response.result.threads.forEach(thread => {
-        //   let threadId = thread.id;
-        //   //addThreadId labelId will be "refreshArray" if refreshing
-        //   context.commit("addThreadId", { threadId, labelId });
-        //   context.commit("initializeThreadTime", { threadId });
-
-        //   context.dispatch("getThreadData", { threadId, labelId });
-        // });
-        
+      if (response.result.drafts !== undefined) {
+        //probably want to commit these values into the store or something
+        //FIXME: need Devon for including the store's state in this file
+        // this.$store.state.threadIdsArray = response.result.drafts;
+        // console.log("THE STORE DRAFTIDS: ", this.$store.state.threadIdsArray);
       }
     });  
   }).catch((err) => {
