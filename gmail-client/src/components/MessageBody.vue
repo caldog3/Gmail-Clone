@@ -121,6 +121,7 @@ export default {
     return {
       timeAgo: "...",
       notExpanded: false,
+      attachmentsFetched: false
     };
   },
   filters: {
@@ -215,6 +216,11 @@ export default {
   methods: {
     expand() {
       this.notExpanded = false;
+
+      if (!this.attachmentsFetched){
+        this.$store.dispatch("getAttachments", this.message.attachmentIds);
+        this.attachmentsFetched = true;
+      }
     },
     unexpand() {
       this.notExpanded = true;
@@ -242,7 +248,6 @@ export default {
   mounted(){
     if (this.isLastMessage){
       this.expand();
-      this.$store.dispatch("getAttachments", this.message.attachmentIds);
     }
   }
 }
