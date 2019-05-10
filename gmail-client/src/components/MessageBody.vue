@@ -112,7 +112,7 @@ import isHtml from 'is-html';
 
 export default {
   name: 'MessageBody',
-  props: ['message'],
+  props: ['message', 'isLastMessage'],
   components: {
     FontAwesomeIcon,
     SweetModal,
@@ -228,9 +228,13 @@ export default {
   },
   created(){
     this.setTimeAgo();
+    this.unexpand();
   },
   mounted(){
-    this.$store.dispatch("getAttachments", this.message.attachmentIds);
+    if (this.isLastMessage){
+      this.expand();
+      this.$store.dispatch("getAttachments", this.message.attachmentIds);
+    }
   }
 }
 </script>
