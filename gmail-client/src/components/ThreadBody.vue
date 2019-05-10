@@ -162,9 +162,8 @@ export default {
       fireSendMessage(message);
     },
     replySend() {
-      let isfireMessage = this.messages[0].isfireMessage;
-      if(this.messages[0].isfireMessage){
-        firebaseReplySend;
+      if(this.messages[0].isFireMessage){
+        this.firebaseReplySend();
         this.finalizeSendMessage();    
         return;
       }
