@@ -6,8 +6,13 @@
       <h5 class="rightAlign"><font-awesome-icon style="text-align=right;" class="Icon" icon="print" /></h5>
     </div>
 
-    <div v-for="message in messages" :key="message.messageId">
-      <message-body :message="message"/>
+    <div v-for="(message, index) in messages" :key="message.messageId">
+      <template v-if="index === messages.length - 1">
+        <message-body :message="message" :isLastMessage="true"/>
+      </template>
+      <template v-else>
+        <message-body :message="message" :isLastMessage="false"/>
+      </template>
     </div>
     <!-- This is the quill response body -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replying">

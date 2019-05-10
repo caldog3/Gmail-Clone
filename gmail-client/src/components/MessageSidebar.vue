@@ -264,6 +264,7 @@ button {
 <script>
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { mapGetters, mapActions } from 'vuex';
 import eventBus from "../event_bus";
 import index from "../router/index.js"
 //Devon Firebase testing:
@@ -296,6 +297,17 @@ export default {
     };
   },
   methods: {
+    ...mapGetters([
+      'getLabelMessages'
+    ]),
+     ...mapActions([
+      'getFolderListOfMessages',
+    ]),
+    getFolderLabels(label){
+      if(this.getLabelMessages[label] === undefined){
+        this.getFolderListOfMessages(label);  
+      }
+    },
     unreadCount() {
       gapi.client.load('gmail', 'v1').then(() => {
         for (let j = 0; j < this.labels.length; j++) {
@@ -364,13 +376,16 @@ export default {
     },
 
     generalHandle(folder) {
-      if (folder == "Spam") {
-        let spamMessages = this.$store.getters.getLabelMessages["SPAM"];
-        if(spamMessages === undefined) {
-          this.$store.dispatch("getFolderListOfMessages", "SPAM");
-        }
-      }
+      const labelsToBeUpperCased = ["Starred", "Important", "Sent", "Spam", "Trash"];
 
+      if(labelsToBeUpperCased.includes(folder)){
+        this.getFolderLabels(folder.toUpperCase());
+      } else if (folder === "Drafts"){
+        this.getFolderLabels("DRAFT");
+      } else if (folder !== "Inbox"){
+        this.getFolderLabels(folder);
+      }
+      
       this.loadFolder(folder);
       this.activateFolder(folder);
     },

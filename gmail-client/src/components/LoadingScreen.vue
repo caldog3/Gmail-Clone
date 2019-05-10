@@ -83,16 +83,10 @@ import { fireRetrieveMessages } from '../firebase/firebase';
     ]),
      ...mapActions([
        'getListOfMessages',
-       'getFolderListOfMessages',
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
         await this.getListOfMessages(label);
-      }
-    },
-    getFolderLabels(label){
-      if(this.getLabelMessages[label] === undefined){
-        this.getFolderListOfMessages(label);  
       }
     },
    },
@@ -105,13 +99,6 @@ import { fireRetrieveMessages } from '../firebase/firebase';
      
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
-      
-      // Get Folder labels
-      this.getFolderLabels('DRAFT');
-      this.getFolderLabels('SENT');
-      this.getFolderLabels('STARRED');
-      this.getFolderLabels('IMPORTANT');
-      this.getFolderLabels('TRASH');
    },
  }
 </script>

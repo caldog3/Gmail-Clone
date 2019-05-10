@@ -112,7 +112,7 @@ import isHtml from 'is-html';
 
 export default {
   name: 'MessageBody',
-  props: ['message'],
+  props: ['message', 'isLastMessage'],
   components: {
     FontAwesomeIcon,
     SweetModal,
@@ -121,6 +121,7 @@ export default {
     return {
       timeAgo: "...",
       notExpanded: false,
+      attachmentsFetched: false
     };
   },
   filters: {
@@ -143,6 +144,8 @@ export default {
       }).toString();
     },
     highlightUrls(messageBody) {
+      messageBody = this.deletePreviousMessageBodies(messageBody);
+      
       if(isHtml(messageBody)){
         const hyperlinkedHTML = linkifyHtml(messageBody, {});
 
@@ -156,6 +159,15 @@ export default {
       } else {
         return messageBody;
       }
+    },
+    deletePreviousMessageBodies(messageBody){
+      const replyRegex = /On[\s\S]+<[\s\S]+> wrote:/g
+      const index = messageBody.search(replyRegex);
+      if (index !== -1){
+        messageBody = messageBody.substring(0, index);
+      }
+      
+      return messageBody;
     }
   },
   computed: {
@@ -203,11 +215,14 @@ export default {
   },
   methods: {
     expand() {
-      console.log("Expanding");
       this.notExpanded = false;
+
+      if (!this.attachmentsFetched){
+        this.$store.dispatch("getAttachments", this.message.attachmentIds);
+        this.attachmentsFetched = true;
+      }
     },
     unexpand() {
-      console.log("Collapsing");
       this.notExpanded = true;
     },
     starredLabelToggle(thread) {
@@ -228,9 +243,12 @@ export default {
   },
   created(){
     this.setTimeAgo();
+    this.unexpand();
   },
   mounted(){
-    this.$store.dispatch("getAttachments", this.message.attachmentIds);
+    if (this.isLastMessage){
+      this.expand();
+    }
   }
 }
 </script>
