@@ -133,8 +133,7 @@ export default {
         tempHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
         tempHTML += "Subject: " + latestMessage.subject + "\n";
         // console.log("To: ", latestMessage.to);
-        tempHTML += "To: " + latestMessage.to + "\n\n\n";
-        //FIXME? thinking we need to 'freeze' the body and not include it in quill and force the user to have it appended AS IS at the end
+        tempHTML += "To: " + latestMessage.to + "\n\n\n"; //FIXME might want latestMessage.conciseTo here the <> tags throw off quill
         //tempHTML += latestMessage.body;
         this.forwardHTML = tempHTML;
       }
@@ -150,15 +149,30 @@ export default {
         reSubj = "Re: " + this.subject;
       }
       const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
-      console.log("HEaders: ", headers);
-      console.log("Body: ", body);
+      // console.log("Headers: ", headers);
+      // console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
       //FIXME: add condition for drafts
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
       else {
-        sendDraft(headers, body, threadID);
+        // console.log("Last message in draft thread", this.messages[this.messages.length - 1]);
+        let draftId;
+        console.log("The value in the store for draftIds Array", this.$store.state.draftIdsArray);
+        // let lastMessageId = this.messages[this.messages.length - 1];
+        var draftsList = this.$store.state.draftIdsArray;
+        console.log("Drafts List", draftsList); // this isn't getting the data.....
+        for (let draft in draftsList) {
+          console.log("Draft in the for loop", draft);
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
+        //commented out for testing purposes
+        // sendDraft(headers, body, draftId);
       }
     },
     replyAllSend() {
@@ -175,7 +189,8 @@ export default {
         sendReply(headers, body, threadID);
       }
       else {
-        sendDraft(headers, body, threadID);
+        let draftId;
+        sendDraft(headers, body, draftId);
       }
     },
     forwardSend() {
@@ -193,7 +208,8 @@ export default {
         sendReply(headers, body, threadID);
       }
       else {
-        sendDraft(headers, body, threadID);
+        let draftId;
+        sendDraft(headers, body, draftId);
       }
     },
     generateBoundary() {

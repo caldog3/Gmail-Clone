@@ -1,7 +1,7 @@
 import { Base64Encode } from './email';
 import eventBus from './../event_bus.js';
 import base64url from 'base64url';
-import store from '../store';
+import state from '../store';
 
 const sendMessage = (headers, message) => {
   console.log("In compose message api call");
@@ -51,7 +51,7 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
-const sendDraft = (headers, message, threadId) => {
+const sendDraft = (headers, message, draftId) => {
   console.log("In the sendDraft API call");
   let email = '';
   for (let header in headers) {
@@ -63,7 +63,7 @@ const sendDraft = (headers, message, threadId) => {
     'userId': 'me',
     'resource': {
       // 'raw': base64url(email),
-      'id': threadId,  //I think we NEEED a draft id and not a message type id
+      'id': draftId,  //I think we NEEED a draft id and not a message type id
       'message': {
         'raw': base64url(email),
       }
@@ -88,8 +88,8 @@ const getDraftListOfIds = () => {
       if (response.result.drafts !== undefined) {
         //probably want to commit these values into the store or something
         //FIXME: need Devon for including the store's state in this file
-        store.state.threadIdsArray = response.result.drafts;
-        console.log("THE STORE DRAFTIDS: ", this.$store.state.threadIdsArray);
+        state.threadIdsArray = response.result.drafts;
+        console.log("THE STORE DRAFTIDS: ", state.threadIdsArray);
       }
     });  
   }).catch((err) => {
