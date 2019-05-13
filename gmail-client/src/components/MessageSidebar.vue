@@ -300,6 +300,7 @@ export default {
     ]),
      ...mapActions([
       'getFolderListOfMessages',
+      'getListOfDraftIds',
     ]),
     getFolderLabels(label){
       if(this.getLabelMessages[label] === undefined){
@@ -376,6 +377,7 @@ export default {
         this.getFolderLabels(folder.toUpperCase());
       } else if (folder === "Drafts"){
         this.getFolderLabels("DRAFT");
+        this.getListOfDraftIds();
       } else if (folder !== "Inbox"){
         this.getFolderLabels(folder);
       }

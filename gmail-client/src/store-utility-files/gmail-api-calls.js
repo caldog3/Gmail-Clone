@@ -59,16 +59,14 @@ const sendDraft = (headers, message, draftId) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
-  gapi.client.gmail.users.drafts.send({ //just need to get all of these resource elements to work 
+  gapi.client.gmail.users.drafts.send({ 
     'userId': 'me',
     'resource': {
-      // 'raw': base64url(email),
-      'id': draftId,  //I think we NEEED a draft id and not a message type id
+      'id': draftId,
+      // 'threadId': 
       'message': {
         'raw': base64url(email),
       }
-      // instead of threadId need a draftId just called 'id': ______
-      //'id': 
     }
   }).then((response) => {
     console.log(`Reply Sent. Response =>:`, response);
@@ -77,24 +75,14 @@ const sendDraft = (headers, message, draftId) => {
   });
 }
 
-const getDraftListOfIds = () => {
-  // context.commit("addLabelId", labelId);
-  gapi.client.load('gmail', 'v1').then(() => {
-    gapi.client.gmail.users.drafts.list({
-      'userId': 'me',
-      // 'maxResults': 50,
-    }).then((response) => { //response gives an array of objects for each draft with all 3 associated ids
-      console.log("DRAFT API", response.result);
-      if (response.result.drafts !== undefined) {
-        //probably want to commit these values into the store or something
-        //FIXME: need Devon for including the store's state in this file
-        store.state.threadIdsArray = response.result.drafts;
-        console.log("THE STORE DRAFTIDS: ", store.state.threadIdsArray);
-      }
-    });  
-  }).catch((err) => {
-    console.log(err);
-  });
+const getDraftListOfIds = async () => {
+  const response = await gapi.client.load('gmail', 'v1')
+    .then(async () => {
+      return await gapi.client.gmail.users.drafts.list({
+        'userId': 'me',
+      });
+    });
+  return response.result.drafts;
 }
 
 

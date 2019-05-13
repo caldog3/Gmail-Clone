@@ -13,5 +13,6 @@ export default {
     currentFolder: "INBOX",
     attachments: {},
     viewFolder: "Inbox",
-    totalMessages: "0"
+    totalMessages: "0",
+    draftIdsArray: [],
 }

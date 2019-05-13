@@ -59,6 +59,10 @@ export default {
       setAttachmentData(state, { attachmentId, data }) {
         state.attachments[attachmentId].data = data;
       },
+      setDraftIdsArray(state, data) {
+        console.log("REACHED THE SET DRAFT IDS ARRAY MUTATION");
+        state.draftIdsArray = data;
+      },
       currentUser(state, payload) {
         state.currentUser = payload;
       },
@@ -92,7 +96,8 @@ export default {
           currentFolder: "INBOX",
           attachments: {},
           viewFolder: "Inbox",
-          totalMessages: "0"
+          totalMessages: "0",
+          draftIdsArray: [],
         }
         
         for (let property in state){

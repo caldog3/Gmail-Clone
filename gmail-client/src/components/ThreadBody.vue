@@ -167,10 +167,11 @@ export default {
         console.log("The value in the store for draftIds Array", this.$store.state.draftIdsArray);
         // let lastMessageId = this.messages[this.messages.length - 1];
         var draftsList = this.$store.state.draftIdsArray;
-        
-        console.log("Drafts List", draftsList); // this isn't getting the data.....
-        for (let draft in draftsList) {
+
+        console.log("Drafts List", draftsList); 
+        for (var draft of draftsList) {
           console.log("Draft in the for loop", draft);
+          console.log(draft);
           if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
             console.log("WE FOUND SOME THAT ARE EQUAL");
             draftId = draft.id;
@@ -178,7 +179,7 @@ export default {
           }
         }
         //commented out for testing purposes
-        // sendDraft(headers, body, draftId);
+        sendDraft(headers, body, draftId);
       }
     },
     replyAllSend() {
