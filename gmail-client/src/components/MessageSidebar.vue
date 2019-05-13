@@ -87,19 +87,6 @@
         </div>
       </div>
 
-      <!-- Removed 'All Mail' due to trouble with the api -->
-      <!-- <div class="normalRow" v-bind:class="activeFolderClass('All_mail')" v-on:click="generalHandle('All_mail')">
-        <div id="sidebarFlex">
-          <div class="Icon">
-            <font-awesome-icon style="color:white;" icon="envelope"/>
-          </div>
-          <div>
-            All Mail (still implementing)
-          </div>
-        </div>
-      </div> -->
-
-
       <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
@@ -277,6 +264,7 @@ button {
 <script>
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { mapGetters, mapActions } from 'vuex';
 import eventBus from "../event_bus";
 import index from "../router/index.js"
 
@@ -307,6 +295,17 @@ export default {
     };
   },
   methods: {
+    ...mapGetters([
+      'getLabelMessages'
+    ]),
+     ...mapActions([
+      'getFolderListOfMessages',
+    ]),
+    getFolderLabels(label){
+      if(this.getLabelMessages[label] === undefined){
+        this.getFolderListOfMessages(label);  
+      }
+    },
     unreadCount() {
       gapi.client.load('gmail', 'v1').then(() => {
         for (let j = 0; j < this.labels.length; j++) {
@@ -343,16 +342,6 @@ export default {
         }
       });
     },
-    // getLabels() {
-    //   gapi.client.load('gmail', 'v1').then(() => {
-    //     gapi.client.gmail.users.labels.list({
-    //       'userId': 'me',
-    //     }).then((response) => {
-    //       console.log("Listing the labels");
-    //       console.log(response);
-    //     });
-    //   });
-    // },
     activateFolder(folder) {
       this.$store.state.viewFolder = folder;
       this.$store.state.currentPage = 1;
@@ -381,13 +370,16 @@ export default {
     },
 
     generalHandle(folder) {
-      if (folder == "Spam") {
-        let spamMessages = this.$store.getters.getLabelMessages["SPAM"];
-        if(spamMessages === undefined) {
-          this.$store.dispatch("getFolderListOfMessages", "SPAM");
-        }
-      }
+      const labelsToBeUpperCased = ["Starred", "Important", "Sent", "Spam", "Trash"];
 
+      if(labelsToBeUpperCased.includes(folder)){
+        this.getFolderLabels(folder.toUpperCase());
+      } else if (folder === "Drafts"){
+        this.getFolderLabels("DRAFT");
+      } else if (folder !== "Inbox"){
+        this.getFolderLabels(folder);
+      }
+      
       this.loadFolder(folder);
       this.activateFolder(folder);
     },
@@ -408,7 +400,7 @@ export default {
       if(this.$store.state.currentPage != 1) {
         this.$store.state.labelMessages[previousFolder] = [];
         if (previousFolder === "PRIMARY" || (previousFolder === "SOCIAL" || previousFolder === "PROMOTIONS")) {
-          this.$store.dispatch("getListOfMessages", previousFolder, false); //bool value is for refresh or not
+          this.$store.dispatch("getListOfMessages", previousFolder);
         }
         else {
           this.$store.dispatch("getFolderListOfMessages", previousFolder);

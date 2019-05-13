@@ -83,43 +83,19 @@ import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
     ]),
      ...mapActions([
        'getListOfMessages',
-       'getFolderListOfMessages',
-       'getAllMessages'
     ]),
     async getInboxLabels(label){
       if(this.getLabelMessages[label] === undefined){
-        var refresh = false;
-        await this.getListOfMessages({ label, refresh }); //FIXME...Maybe?? bool value?
+        await this.getListOfMessages(label);
       }
     },
-    getFolderLabels(label){
-      if(this.getLabelMessages[label] === undefined){
-        this.getFolderListOfMessages(label);  
-      }
-    },
-    getDraftIds() {
-      console.log("Start of getting draft Ids");
-      getDraftListOfIds(); //this function calls the api to list all draft messages with their ids
-    }
-
    },
    created() {
-    // this.getInboxLabels('PRIMARY').then(()=>{
       this.getInboxLabels('PRIMARY').then(()=>{
         eventBus.$emit('DATA_FETCHING_COMPLETE');
       })
-     
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');
-      // Get Folder labels
-      this.getFolderLabels('DRAFT'); 
-      //FIXME need to get draft ids from the api that are unique from message ids
-      this.getDraftIds();
-      this.getFolderLabels('SENT');
-      this.getFolderLabels('STARRED');
-      this.getFolderLabels('IMPORTANT');
-      this.getFolderLabels('TRASH');
-    // });
    },
  }
 </script>

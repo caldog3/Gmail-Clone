@@ -111,8 +111,8 @@ import timeago from 'epoch-timeago';
 import isHtml from 'is-html';
 
 export default {
-  name: 'ThreadBody',
-  props: ['message'],
+  name: 'MessageBody',
+  props: ['message', 'isLastMessage'],
   components: {
     FontAwesomeIcon,
     SweetModal,
@@ -121,6 +121,7 @@ export default {
     return {
       timeAgo: "...",
       notExpanded: false,
+      attachmentsFetched: false
     };
   },
   filters: {
@@ -143,6 +144,8 @@ export default {
       }).toString();
     },
     highlightUrls(messageBody) {
+      messageBody = this.deletePreviousMessageBodies(messageBody);
+      
       if(isHtml(messageBody)){
         const hyperlinkedHTML = linkifyHtml(messageBody, {});
 
@@ -156,6 +159,15 @@ export default {
       } else {
         return messageBody;
       }
+    },
+    deletePreviousMessageBodies(messageBody){
+      const replyRegex = /On[\s\S]+<[\s\S]+> wrote:/g
+      const index = messageBody.search(replyRegex);
+      if (index !== -1){
+        messageBody = messageBody.substring(0, index);
+      }
+      
+      return messageBody;
     }
   },
   computed: {
@@ -165,15 +177,12 @@ export default {
       this.message.attachmentIds.map((id) => {
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          if (attachment === undefined) {
-
-          }
-          else {
+          if (attachment !== undefined){
             const mimeType = attachment.mimeType;
             if (!mimeType.includes("image") && !mimeType.includes("text")){
               return {
                 url: `data:${mimeType};base64,${attachment.data}`,
-                title: id.filename
+                filename: id.filename
               };
             }
           }
@@ -184,38 +193,36 @@ export default {
       const attachmentIds = this.$store.getters.getAttachments;
       return this.message.attachmentIds === undefined ? [] :
       this.message.attachmentIds.map((id) => {
-        console.log("BIG ID: ", id);
         if (id !== undefined){
           const attachment = attachmentIds[id.attachmentId];
-          console.log("ATTACHMENT:", attachment);
-          if (attachment == undefined) { //edge case where id is defined but attachment is not
-            // return;
-          }
-          else {
+          if (attachment !== undefined){
             let mimeType = attachment.mimeType;
             if (mimeType.includes("image") || mimeType.includes("text")){
-              // An attempt to display edge-case email. Check getMessageContent().
-              
-              // if (mimeType.includes("text")){
-              //   mimeType = "image/png"
-              // }
+            // An attempt to display edge-case email. Check getMessageContent().
+            
+            // if (mimeType.includes("text")){
+            //   mimeType = "image/png"
+            // }
               return {
                 url: `data:${mimeType};base64,${attachment.data}`,
                 title: id.filename
               };
             }
-          }
+          }  
         }
       }).filter(image => image !== undefined);
     },
   },
   methods: {
     expand() {
-      console.log("Expanding");
       this.notExpanded = false;
+
+      if (!this.attachmentsFetched){
+        this.$store.dispatch("getAttachments", this.message.attachmentIds);
+        this.attachmentsFetched = true;
+      }
     },
     unexpand() {
-      console.log("Collapsing");
       this.notExpanded = true;
     },
     starredLabelToggle(thread) {
@@ -236,6 +243,12 @@ export default {
   },
   created(){
     this.setTimeAgo();
+    this.unexpand();
+  },
+  mounted(){
+    if (this.isLastMessage){
+      this.expand();
+    }
   }
 }
 </script>
