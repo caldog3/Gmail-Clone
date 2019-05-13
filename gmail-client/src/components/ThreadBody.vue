@@ -156,12 +156,13 @@ export default {
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
-      else {
+      else { // this handles cases where we are sending a draft
         // console.log("Last message in draft thread", this.messages[this.messages.length - 1]);
         let draftId;
         console.log("The value in the store for draftIds Array", this.$store.state.draftIdsArray);
         // let lastMessageId = this.messages[this.messages.length - 1];
         var draftsList = this.$store.state.draftIdsArray;
+        
         console.log("Drafts List", draftsList); // this isn't getting the data.....
         for (let draft in draftsList) {
           console.log("Draft in the for loop", draft);

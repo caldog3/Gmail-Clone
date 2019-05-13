@@ -1,7 +1,7 @@
 import { Base64Encode } from './email';
 import eventBus from './../event_bus.js';
 import base64url from 'base64url';
-import state from '../store';
+import store from '../store';
 
 const sendMessage = (headers, message) => {
   console.log("In compose message api call");
@@ -88,8 +88,8 @@ const getDraftListOfIds = () => {
       if (response.result.drafts !== undefined) {
         //probably want to commit these values into the store or something
         //FIXME: need Devon for including the store's state in this file
-        state.threadIdsArray = response.result.drafts;
-        console.log("THE STORE DRAFTIDS: ", state.threadIdsArray);
+        store.state.threadIdsArray = response.result.drafts;
+        console.log("THE STORE DRAFTIDS: ", store.state.threadIdsArray);
       }
     });  
   }).catch((err) => {
