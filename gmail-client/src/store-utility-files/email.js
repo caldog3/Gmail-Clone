@@ -1,5 +1,7 @@
 import moment from 'moment';
 import base64js from 'base64-js';
+import store from '../store';
+import { markAsRead, markAsUnread } from './../store-utility-files/gmail-api-calls';
 
 const Base64Decode = (str, encoding = "utf-8") => {
     let bytes = base64js.toByteArray(str);
@@ -371,10 +373,22 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
   }
 }
 
+const markEmailAsUnread = (threadId) => {
+  store.commit('markThreadUnread', threadId);
+  markAsUnread(threadId);
+}
+
+const markEmailAsRead = (threadId) => {
+  store.commit('markThreadRead', threadId);
+  markAsRead(threadId);
+}
+
 export {
   getTimeFormat,
   getMessage,
   Base64Encode,
   setupEmailBody,
-  getParsedMessageAndBody
+  getParsedMessageAndBody,
+  markEmailAsRead,
+  markEmailAsUnread
 };

@@ -438,13 +438,6 @@ export default {
         //maybe something can be added to include a parent folder
       }
       this.unreadCount();
-      for (let j = 9; j < this.labels.length; j++) {
-        let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
-        // console.log(messages);
-        if(messages === undefined){
-          this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
-        }
-      }
     })
   },
 

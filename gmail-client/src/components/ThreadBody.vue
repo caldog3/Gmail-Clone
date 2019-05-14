@@ -84,7 +84,7 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
-import { setupEmailBody } from '../store-utility-files/email';
+import { setupEmailBody, markEmailAsRead, markEmailAsUnread } from '../store-utility-files/email';
 import moment from 'moment';
 
 
@@ -116,6 +116,12 @@ export default {
     };
   },
   methods: {
+    returnToInbox(){
+      this.$router.push({ path: "/" });
+      this.$store.state.viewFolder = "Inbox";
+      eventBus.$emit('MESSAGE_LIST');
+      //eventBus.$emit("TOTAL_EMAIL_COUNT", "Inbox");
+    },
     toggleReply() {
       this.replying = !this.replying;
     },
@@ -300,8 +306,12 @@ export default {
     trash() {
       let thisThreadid = this.messages[0].threadId;
       trashMessage(thisThreadid);
-      eventBus.$emit('MESSAGE_LIST');
-      this.$router.go(-1);
+      this.returnToInbox();
+    },
+    markThreadAsUnread() {
+      console.log("ThreadId to be marked" + this.messages[0].threadId);
+      markEmailAsUnread(this.messages[0].threadId);
+      //this.returnToInbox();
     },
     ifGroupMessage() {
       let to = this.messages[0].to;
@@ -322,6 +332,7 @@ export default {
     this.getMessages();
     eventBus.$on("TRASHING_THREAD", this.trash);
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
+    eventBus.$on('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread);
   }
 }
 </script>
