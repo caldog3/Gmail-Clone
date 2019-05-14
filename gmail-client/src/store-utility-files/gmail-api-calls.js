@@ -51,7 +51,7 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
-const sendDraft = (headers, message, draftId) => {
+const sendDraft = (headers, message, draftId, threadId) => {
   console.log("In the sendDraft API call");
   let email = '';
   for (let header in headers) {
@@ -63,9 +63,9 @@ const sendDraft = (headers, message, draftId) => {
     'userId': 'me',
     'resource': {
       'id': draftId,
-      // 'threadId': 
       'message': {
         'raw': base64url(email),
+        'threadId': threadId,
       }
     }
   }).then((response) => {

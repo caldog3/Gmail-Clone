@@ -44,7 +44,6 @@ export default {
     },
     async getListOfDraftIds({ commit }) {
       const data = await getDraftListOfIds();
-      console.log("GETTING DATA OF DRAFT LISTS");
       commit("setDraftIdsArray", data);
       
       const threads = await getLabelMessages(labelId);

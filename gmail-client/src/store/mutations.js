@@ -60,7 +60,6 @@ export default {
         state.attachments[attachmentId].data = data;
       },
       setDraftIdsArray(state, data) {
-        console.log("REACHED THE SET DRAFT IDS ARRAY MUTATION");
         state.draftIdsArray = data;
       },
       currentUser(state, payload) {
