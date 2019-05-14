@@ -364,7 +364,6 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
   body += Message + "\n\n";
   body += "--" + randBoundary + "--";
 
-  console.log("BODY:", body);
   return {
     headers,
     body,

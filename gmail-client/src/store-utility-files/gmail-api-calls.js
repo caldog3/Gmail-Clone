@@ -50,7 +50,7 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
-const sendDraft = (headers, message, threadId) => {
+const sendDraft = (headers, message, draftId, threadId) => { // could condense this to be a payload
   console.log("In the sendDraft API call");
   let email = '';
   for (let header in headers) {
@@ -58,23 +58,79 @@ const sendDraft = (headers, message, threadId) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
-  gapi.client.gmail.users.drafts.send({ //just need to get all of these resource elements to work 
+  //update
+  gapi.client.gmail.users.drafts.update({
     'userId': 'me',
+    'id': draftId,
     'resource': {
-      // 'raw': base64url(email),
-      'id': threadId,  //I think we NEEED a draft id and not a message type id
+      'id': draftId,
       'message': {
         'raw': base64url(email),
+        'threadId': threadId,
       }
-      // instead of threadId need a draftId just called 'id': ______
-      //'id': 
     }
   }).then((response) => {
-    console.log(`Reply Sent. Response =>:`, response);
+    //send
+    console.log(`Draft updated. Response =>:`, response);
+    gapi.client.gmail.users.drafts.send({ 
+      'userId': 'me',
+      'resource': {
+        'id': draftId,
+        'message': {
+          // 'raw': base64url(email),
+          'threadId': threadId,
+        }
+      }
+    }).then((response) => {
+      console.log(`Reply Sent. Response =>:`, response);
+    }).catch((err) => {
+      console.log(err);
+    });
   }).catch((err) => {
     console.log(err);
   });
 }
+
+const updateDraft = (headers, message, draftId, threadId) => { // could condense this to be a payload
+  console.log("In the update Draft API call");
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  //update
+  gapi.client.gmail.users.drafts.update({
+    'userId': 'me',
+    'id': draftId,
+    'resource': {
+      'id': draftId,
+      'message': {
+        'raw': base64url(email),
+        'threadId': threadId,
+      }
+    }
+  }).then((response) => {
+    console.log("Draft updated. Response =>:", response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+
+const getDraftListOfIds = async () => {
+  const response = await gapi.client.load('gmail', 'v1')
+    .then(async () => {
+      return await gapi.client.gmail.users.drafts.list({
+        'userId': 'me',
+      });
+    });
+  return response.result.drafts;
+}
+
+
+
+
 
 // OUR GMAIL ACCOUNTS CANT USE '.create' b/c we don't have 'domain wide authority'
 // const forwardRequest = () => {
@@ -386,4 +442,6 @@ export {
   getMessageContent,
   getThreads,
   sendDraft,
+  getDraftListOfIds,
+  updateDraft,
 };
