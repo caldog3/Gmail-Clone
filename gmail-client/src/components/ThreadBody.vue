@@ -162,7 +162,6 @@ export default {
         sendReply(headers, body, threadID);
       }
       else { // this handles cases where we are sending a draft
-        // console.log("Last message in draft thread", this.messages[this.messages.length - 1]);
         let draftId;
         console.log("The value in the store for draftIds Array", this.$store.state.draftIdsArray);
         var draftsList = this.$store.state.draftIdsArray;
@@ -261,32 +260,26 @@ export default {
 
         // FIXME: need to account for drafts not being the last message of a thread.  Probably a complicated handler
         const draftMessage = this.messages.pop();
-        console.log("DraftMessage", draftMessage);
-        console.log("THIS>>>>>", this.responseHTML);
+        // console.log("DraftMessage", draftMessage);
         this.toggleReply();
         this.responseHTML = draftMessage.body;
-        console.log("THAT>>>>>", this.responseHTML);
         
         this.isDraft = true; //temporary handler //might need  
       }
 
       this.subject = this.messages[this.messages.length -1].subject;
       this.sender = this.messages[this.messages.length -1].to;
-      console.log("this final message of set:", this.messages[this.messages.length -1]);
+      // console.log("this final message of set:", this.messages[this.messages.length -1]);
       let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
       // this allows repeated replies
       while (lastRecipient.includes(this.sender)) { //is this called before the "DRAFT" if resolves itself?
         let i = 1;
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
         i++;
-        if (i >= this.messages.length) {break}
+        if (i >= this.messages.length) {break;}
       }
-      //might not need this code......
-      // if (this.messages[0].labelId === "DRAFT") {
 
-      //   lastRecipient = this.sender;
-      // }
-      console.log("Last recipient", lastRecipient);
+      // console.log("Last recipient", lastRecipient);
       
       //this to doesn't work with group messages, includes other people
       //we need to create more parts of the object for these values ^^ vv
@@ -306,10 +299,8 @@ export default {
           replyAllPeople += ", ";
         }
       }
-      console.log("BEFORE CHANGE: ", this.allReplyRecipients);
       this.allReplyRecipients = replyAllPeople;
-      console.log("AllPeopleBesidesUser: ", this.allReplyRecipients);
-      console.log("lastMessageInThread", this.messages[this.messages.length -1]);
+      // console.log("lastMessageInThread", this.messages[this.messages.length -1]);
       this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {

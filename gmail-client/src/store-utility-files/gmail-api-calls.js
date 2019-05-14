@@ -51,7 +51,7 @@ const sendReply = (headers, message, threadId) => {
   });
 }
 
-const sendDraft = (headers, message, draftId, threadId) => {
+const sendDraft = (headers, message, draftId, threadId) => { // could condense this to be a payload
   console.log("In the sendDraft API call");
   let email = '';
   for (let header in headers) {
@@ -59,8 +59,10 @@ const sendDraft = (headers, message, draftId, threadId) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
-  gapi.client.gmail.users.drafts.send({ 
+  //update
+  gapi.client.gmail.users.drafts.update({
     'userId': 'me',
+    'id': draftId,
     'resource': {
       'id': draftId,
       'message': {
@@ -70,9 +72,41 @@ const sendDraft = (headers, message, draftId, threadId) => {
     }
   }).then((response) => {
     console.log(`Reply Sent. Response =>:`, response);
+    gapi.client.gmail.users.drafts.send({ 
+      'userId': 'me',
+      'resource': {
+        'id': draftId,
+        'message': {
+          // 'raw': base64url(email),
+          'threadId': threadId,
+        }
+      }
+    }).then((response) => {
+      console.log(`Reply Sent. Response =>:`, response);
+    }).catch((err) => {
+      console.log(err);
+    });
   }).catch((err) => {
     console.log(err);
   });
+  //send
+  // do we need a forces delay here....?
+  /*
+  gapi.client.gmail.users.drafts.send({ 
+    'userId': 'me',
+    'resource': {
+      'id': draftId,
+      'message': {
+        // 'raw': base64url(email),
+        'threadId': threadId,
+      }
+    }
+  }).then((response) => {
+    console.log(`Reply Sent. Response =>:`, response);
+  }).catch((err) => {
+    console.log(err);
+  });
+  */
 }
 
 const getDraftListOfIds = async () => {
