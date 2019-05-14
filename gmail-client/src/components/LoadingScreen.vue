@@ -74,6 +74,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import eventBus from './../event_bus';
 import { fireRetrieveMessages } from '../firebase/firebase';
+import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
 
  export default {
    name: 'LoginPage',

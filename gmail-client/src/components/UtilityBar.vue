@@ -381,8 +381,11 @@ export default {
       //this.refreshing(); //if wanted
     },
     threadUnreadSet(){
-      console.log("Marking email as read");
-      eventBus.$emit("MARK_THREAD_AS_UNREAD");
+      // console.log("Marking email as read");
+      // this emit almost works. for some reason it marks as unread 
+      // every thread that has been opened in the current session.
+      // eventBus.$emit("MARK_THREAD_AS_UNREAD");
+      this.back();
     },
     checking() {
       this.checkedEmails = true;

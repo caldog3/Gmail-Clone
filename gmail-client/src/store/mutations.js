@@ -13,7 +13,7 @@ export default {
       addMessage(state, message) {
         const threadMessages = state.threadMessages;
         const thread = threadMessages[message.threadId];
-  
+    
         if (thread !== undefined) {
           const duplcateMessages = thread.filter((threadMessage)=>{
             return message.messageId === threadMessage.messageId;
@@ -64,15 +64,18 @@ export default {
       setAttachmentData(state, { attachmentId, data }) {
         state.attachments[attachmentId].data = data;
       },
-      markThreadAsUnread(state, threadId){
+      markThreadUnread(state, threadId){
         const thread = state.threadMessages[threadId];
         thread[thread.length - 1].unread = false;
         Vue.set(state.threadMessages, threadId, thread);
       },
-      markThreadAsRead(state, threadId){
+      markThreadRead(state, threadId){
         const thread = state.threadMessages[threadId];
         thread[thread.length - 1].unread = true;
         Vue.set(state.threadMessages, threadId, thread);
+      },
+      setDraftIdsArray(state, data) {
+        state.draftIdsArray = data;
       },
       currentUser(state, payload) {
         state.currentUser = payload;
@@ -107,7 +110,8 @@ export default {
           currentFolder: "INBOX",
           attachments: {},
           viewFolder: "Inbox",
-          totalMessages: "0"
+          totalMessages: "0",
+          draftIdsArray: [],
         }
         
         for (let property in state){
