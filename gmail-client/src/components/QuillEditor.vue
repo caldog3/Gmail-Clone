@@ -117,7 +117,7 @@
                 },
                 theme: 'snow',
             });
-            console.log("IN MOUNTED", this.value);
+            // console.log("IN MOUNTED", this.value);
             //this.editor.root.innerHTML = this.value;
             this.editor.root.innerHTML = this.$store.state.draftMessage;
 
@@ -128,11 +128,11 @@
         methods: {
             update() { //don't set values in here...they get called every keystroke by the user
                 var text = this.editor.getText();
-                console.log("Initialization status: ", this.initialized);
+                // console.log("Initialization status: ", this.initialized);
                 if (!this.initialized) {
                     this.editor.root.innerHTML = this.value;
-                    console.log("IN THE IF: ", this.value);
-                    console.log("IF innerHTML: ", this.editor.root.innerHTML);
+                    // console.log("IN THE IF: ", this.value);
+                    // console.log("IF innerHTML: ", this.editor.root.innerHTML);
                     this.initialized = true;
                     // this.editor.root.innerHTML = "TETSING";
                 }

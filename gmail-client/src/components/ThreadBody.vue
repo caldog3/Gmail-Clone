@@ -26,6 +26,9 @@
         <button class="sendBar" type="button" v-on:click="toggleReply">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
+        </button>
       </div>
     </div>
     <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
@@ -42,6 +45,9 @@
         <button class="sendBar" type="button" v-on:click="toggleReplyAll">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
+        </button>
       </div>
     </div>
     <!-- End of the quill -->
@@ -56,6 +62,9 @@
         </button>
         <button class="sendBar" type="button" v-on:click="forwardToggle">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
         </button>
       </div>
     </div>
@@ -78,7 +87,7 @@
 </template>
 
 <script>
-import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft, updateDraft } from './../store-utility-files/gmail-api-calls';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
@@ -144,14 +153,25 @@ export default {
         tempHTML += "Date: " + moment(someUnix).format("ddd, MMM D, YYYY  h:mm a") + "\n";
         tempHTML += "Subject: " + latestMessage.subject + "\n";
         // console.log("To: ", latestMessage.to);
-        tempHTML += "To: " + latestMessage.to + "\n\n\n";
-        //FIXME? thinking we need to 'freeze' the body and not include it in quill and force the user to have it appended AS IS at the end
+        tempHTML += "To: " + latestMessage.to + "\n\n\n"; //FIXME might want latestMessage.conciseTo here the <> tags throw off quill
         //tempHTML += latestMessage.body;
         this.forwardHTML = tempHTML;
       }
       else {
         this.forwardHTML = "";
       }
+    },
+    draftUpdate() { // HOpe this works
+      let draftId;
+      var draftsList = this.$store.state.draftIdsArray;
+      for (var draft of draftsList) {
+        if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+          console.log("WE FOUND SOME THAT ARE EQUAL");
+          draftId = draft.id;
+          break;
+        }
+      }
+      updateDraft(headers, body, draftId, threadId);
     },
     replySend() {
       //we'll link these two up soon
@@ -161,15 +181,24 @@ export default {
         reSubj = "Re: " + this.subject;
       }
       const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
-      console.log("HEaders: ", headers);
-      console.log("Body: ", body);
+      // console.log("Headers: ", headers);
+      // console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
       //FIXME: add condition for drafts
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
-      else {
-        sendDraft(headers, body, threadID);
+      else { // this handles cases where we are sending a draft
+        let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
+        sendDraft(headers, body, draftId, threadID);
       }
     },
     replyAllSend() {
@@ -186,7 +215,16 @@ export default {
         sendReply(headers, body, threadID);
       }
       else {
-        sendDraft(headers, body, threadID);
+        let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
+        sendDraft(headers, body, draftId);
       }
     },
     forwardSend() {
@@ -204,7 +242,16 @@ export default {
         sendReply(headers, body, threadID);
       }
       else {
-        sendDraft(headers, body, threadID);
+        let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
+        sendDraft(headers, body, draftId);
       }
     },
     generateBoundary() {
@@ -253,31 +300,26 @@ export default {
 
         // FIXME: need to account for drafts not being the last message of a thread.  Probably a complicated handler
         const draftMessage = this.messages.pop();
-        console.log("DraftMessage", draftMessage);
-        console.log("THIS>>>>>", this.responseHTML);
+        // console.log("DraftMessage", draftMessage);
         this.toggleReply();
         this.responseHTML = draftMessage.body;
-        console.log("THAT>>>>>", this.responseHTML);
         
         this.isDraft = true; //temporary handler //might need  
       }
 
       this.subject = this.messages[this.messages.length -1].subject;
       this.sender = this.messages[this.messages.length -1].to;
-      console.log("this final message of set:", this.messages[this.messages.length -1]);
+      // console.log("this final message of set:", this.messages[this.messages.length -1]);
       let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
       // this allows repeated replies
       while (lastRecipient.includes(this.sender)) { //is this called before the "DRAFT" if resolves itself?
         let i = 1;
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
         i++;
+        if (i >= this.messages.length) {break;}
       }
-      //might not need this code......
-      // if (this.messages[0].labelId === "DRAFT") {
 
-      //   lastRecipient = this.sender;
-      // }
-      console.log("Last recipient", lastRecipient);
+      // console.log("Last recipient", lastRecipient);
       
       //this to doesn't work with group messages, includes other people
       //we need to create more parts of the object for these values ^^ vv
@@ -297,10 +339,8 @@ export default {
           replyAllPeople += ", ";
         }
       }
-      console.log("BEFORE CHANGE: ", this.allReplyRecipients);
       this.allReplyRecipients = replyAllPeople;
-      console.log("AllPeopleBesidesUser: ", this.allReplyRecipients);
-      console.log("lastMessageInThread", this.messages[this.messages.length -1]);
+      // console.log("lastMessageInThread", this.messages[this.messages.length -1]);
       this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {

@@ -2,7 +2,8 @@ import { getParsedMessageAndBody, getMessage } from './../store-utility-files/em
 import { 
   getAttachment, 
   searchThreads, 
-  getLabelMessages, 
+  getLabelMessages,
+  getDraftListOfIds, 
   getNextPageThreads,
   getMessages,
   getMessageContent,
@@ -37,6 +38,13 @@ export default {
     },
     async getFolderListOfMessages({ commit, dispatch }, labelId) {
       commit("addLabelId", labelId);
+      
+      const threads = await getLabelMessages(labelId);
+      dispatch("getThreads", { threads, labelId });
+    },
+    async getListOfDraftIds({ commit }) {
+      const data = await getDraftListOfIds();
+      commit("setDraftIdsArray", data);
       
       const threads = await getLabelMessages(labelId);
       dispatch("getThreads", { threads, labelId });

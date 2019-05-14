@@ -73,6 +73,7 @@
 // WE NEED TO MAKE ALMOST ALL OF THE CALLS START BEING EXECUTED HERE
 import { mapGetters, mapActions } from 'vuex';
 import eventBus from './../event_bus';
+import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
 
  export default {
    name: 'LoginPage',

@@ -74,6 +74,9 @@ export default {
         thread[thread.length - 1].unread = true;
         Vue.set(state.threadMessages, threadId, thread);
       },
+      setDraftIdsArray(state, data) {
+        state.draftIdsArray = data;
+      },
       currentUser(state, payload) {
         state.currentUser = payload;
       },
@@ -107,7 +110,8 @@ export default {
           currentFolder: "INBOX",
           attachments: {},
           viewFolder: "Inbox",
-          totalMessages: "0"
+          totalMessages: "0",
+          draftIdsArray: [],
         }
         
         for (let property in state){
