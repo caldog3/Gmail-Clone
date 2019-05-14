@@ -26,6 +26,9 @@
         <button class="sendBar" type="button" v-on:click="toggleReply">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
+        </button>
       </div>
     </div>
     <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
@@ -42,6 +45,9 @@
         <button class="sendBar" type="button" v-on:click="toggleReplyAll">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
+        </button>
       </div>
     </div>
     <!-- End of the quill -->
@@ -56,6 +62,9 @@
         </button>
         <button class="sendBar" type="button" v-on:click="forwardToggle">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
+        </button>
+        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
+          Save Draft
         </button>
       </div>
     </div>
@@ -78,7 +87,7 @@
 </template>
 
 <script>
-import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft, updateDraft } from './../store-utility-files/gmail-api-calls';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
@@ -146,6 +155,18 @@ export default {
         this.forwardHTML = "";
       }
     },
+    draftUpdate() { // HOpe this works
+      let draftId;
+      var draftsList = this.$store.state.draftIdsArray;
+      for (var draft of draftsList) {
+        if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+          console.log("WE FOUND SOME THAT ARE EQUAL");
+          draftId = draft.id;
+          break;
+        }
+      }
+      updateDraft(headers, body, draftId, threadId);
+    },
     replySend() {
       //we'll link these two up soon
       console.log("You clicked the send button");
@@ -163,9 +184,7 @@ export default {
       }
       else { // this handles cases where we are sending a draft
         let draftId;
-        console.log("The value in the store for draftIds Array", this.$store.state.draftIdsArray);
         var draftsList = this.$store.state.draftIdsArray;
-
         for (var draft of draftsList) {
           if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
             console.log("WE FOUND SOME THAT ARE EQUAL");
@@ -173,7 +192,6 @@ export default {
             break;
           }
         }
-        //commented out for testing purposes
         sendDraft(headers, body, draftId, threadID);
       }
     },
@@ -192,6 +210,14 @@ export default {
       }
       else {
         let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
         sendDraft(headers, body, draftId);
       }
     },
@@ -211,6 +237,14 @@ export default {
       }
       else {
         let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
         sendDraft(headers, body, draftId);
       }
     },

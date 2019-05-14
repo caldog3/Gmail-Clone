@@ -1,7 +1,6 @@
 import { Base64Encode } from './email';
 import eventBus from './../event_bus.js';
 import base64url from 'base64url';
-import store from '../store';
 
 const sendMessage = (headers, message) => {
   console.log("In compose message api call");
@@ -71,7 +70,8 @@ const sendDraft = (headers, message, draftId, threadId) => { // could condense t
       }
     }
   }).then((response) => {
-    console.log(`Reply Sent. Response =>:`, response);
+    //send
+    console.log(`Draft updated. Response =>:`, response);
     gapi.client.gmail.users.drafts.send({ 
       'userId': 'me',
       'resource': {
@@ -89,25 +89,34 @@ const sendDraft = (headers, message, draftId, threadId) => { // could condense t
   }).catch((err) => {
     console.log(err);
   });
-  //send
-  // do we need a forces delay here....?
-  /*
-  gapi.client.gmail.users.drafts.send({ 
+}
+
+const updateDraft = (headers, message, draftId, threadId) => { // could condense this to be a payload
+  console.log("In the update Draft API call");
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+  //update
+  gapi.client.gmail.users.drafts.update({
     'userId': 'me',
+    'id': draftId,
     'resource': {
       'id': draftId,
       'message': {
-        // 'raw': base64url(email),
+        'raw': base64url(email),
         'threadId': threadId,
       }
     }
   }).then((response) => {
-    console.log(`Reply Sent. Response =>:`, response);
+    console.log("Draft updated. Response =>:", response);
   }).catch((err) => {
     console.log(err);
   });
-  */
 }
+
 
 const getDraftListOfIds = async () => {
   const response = await gapi.client.load('gmail', 'v1')
@@ -434,4 +443,5 @@ export {
   getThreads,
   sendDraft,
   getDraftListOfIds,
+  updateDraft,
 };
