@@ -20,7 +20,10 @@ export default {
           });
           
           if (duplcateMessages.length === 0) {
-            thread.push(message);
+            for(var i = 0; i < thread.length; i++){
+              if(thread[i].unixTime > message.unixTime){break;}
+            }
+            thread.splice(i, 0, message);
           }
         }
       },
@@ -60,6 +63,16 @@ export default {
       },
       setAttachmentData(state, { attachmentId, data }) {
         state.attachments[attachmentId].data = data;
+      },
+      markThreadAsUnread(state, threadId){
+        const thread = state.threadMessages[threadId];
+        thread[thread.length - 1].unread = false;
+        Vue.set(state.threadMessages, threadId, thread);
+      },
+      markThreadAsRead(state, threadId){
+        const thread = state.threadMessages[threadId];
+        thread[thread.length - 1].unread = true;
+        Vue.set(state.threadMessages, threadId, thread);
       },
       currentUser(state, payload) {
         state.currentUser = payload;

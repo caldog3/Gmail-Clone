@@ -267,8 +267,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { mapGetters, mapActions } from 'vuex';
 import eventBus from "../event_bus";
 import index from "../router/index.js"
-//Devon Firebase testing:
-import { fireSendMessage, testFirebase } from "../firebase/firebase.js"
 
 export default {
   name: "MessageSidebar",
@@ -355,10 +353,6 @@ export default {
       else {return "inactiveFolder"}
     },
     composeShow() {
-      //Devon testing Firebase:
-      //fireSendMessage(message);
-      //testFirebase();
-      //Devon end of test
       eventBus.$emit("COMPOSE_OPEN");
     },
     loadInbox() {

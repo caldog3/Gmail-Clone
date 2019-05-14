@@ -1,6 +1,9 @@
 import moment from 'moment';
 import base64js from 'base64-js';
 import store from '../store';
+import { markAsRead, markAsUnread } from './gmail-api-calls';
+import { fireMarkAsRead, fireMarkAsUnread } from '../firebase/firebase';
+
 
 const Base64Decode = (str, encoding = "utf-8") => {
     let bytes = base64js.toByteArray(str);
@@ -372,69 +375,28 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
   }
 }
 
-const extractSnippet = (composeMessage) => {
-  let snippet = '';
-  let tags = composeMessage.split('<');
-  tags.forEach(tag => {
-    let tagExtract = tag.split('>');
-    if(tagExtract.length > 1){
-      snippet += tagExtract[1];
-    }
-    else{
-      snippet += tagExtract[0];
-    }
-  });
-  return snippet;
-}
-
-const extractConciseTo = (firstParticipant) => {
-  firstParticipant = firstParticipant.split('@');
-  firstParticipant = firstParticipant[0].split(' ');
-  return firstParticipant[0];
-}
-
-const fireSetupEmailMessage = (composeSubject, composeTo, composeMessage, threadId) => {
-  //conciseTo for group emails only requires one name
-  composeTo = composeTo.toLowerCase();
-  const uuidv1 = require('uuid/v1');
-  let allParticipants = [];
-  let sender = store.state.currentUser.w3.U3;
-  let senderName = store.state.currentUser.w3.ig;
-  let detailedFrom = senderName + ' <' + sender + '>';
-  let recipients = composeTo.split(', ');
-
-  recipients.forEach(recipient => {
-    allParticipants.push(recipient);
-  });
-  allParticipants.push(detailedFrom);
-  if(allParticipants.length < 2){return null;}
-
-  if (threadId === undefined){
-    threadId = uuidv1();
+const markEmailAsUnread = (threadId) => {
+  store.commit('markThreadAsUnread', threadId);
+  let thread = store.state.threadMessages[threadId];
+  let message = thread[thread.length - 1];
+  if(message.isFireMessage){
+    fireMarkAsUnread(message);
   }
+  else{
+    markAsUnread(threadId);
+  }
+}
 
-  const message = {
-    threadId,
-    labelId: 'PRIMARY',
-    messageId: uuidv1(),
-    from: senderName,
-    detailedFrom,
-    allParticipants,
-    to: composeTo,
-    conciseTo: extractConciseTo(allParticipants[0]),
-    cc: null,
-    subject: composeSubject,
-    snippet: extractSnippet(composeMessage),
-    body: composeMessage,
-    unixTime: Math.floor(Date.now() / 1000),
-    time: '',
-    unread: false,
-    starred: false,
-    attachmentIds: [],
-    isFireMessage: true
-  };
-
-  return message;
+const markEmailAsRead = (threadId) => {
+  store.commit('markThreadAsRead', threadId);
+  let thread = store.state.threadMessages[threadId];
+  let message = thread[thread.length - 1];
+  if(message.isFireMessage){
+    fireMarkAsRead(message);
+  }
+  else{
+    markAsRead(threadId);
+  }
 }
 
 export {
@@ -442,6 +404,7 @@ export {
   getMessage,
   Base64Encode,
   setupEmailBody,
-  fireSetupEmailMessage,
-  getParsedMessageAndBody
+  getParsedMessageAndBody,
+  markEmailAsRead,
+  markEmailAsUnread
 };

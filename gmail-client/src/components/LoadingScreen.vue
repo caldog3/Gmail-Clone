@@ -95,7 +95,7 @@ import { fireRetrieveMessages } from '../firebase/firebase';
         eventBus.$emit('DATA_FETCHING_COMPLETE');
       })
 
-      fireRetrieveMessages(this.$store.state.currentUser.w3.U3);
+      fireRetrieveMessages();
      
       this.getInboxLabels('SOCIAL');
       this.getInboxLabels('PROMOTIONS');

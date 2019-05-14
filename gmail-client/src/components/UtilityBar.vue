@@ -68,14 +68,14 @@
 
                   <div class="item" v-on:click="unreadSet()">
                     <div class="highlightArea">
-                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope" /> 
                       <span class="tooltiptext">Mark as Unread</span>
                     </div>
                   </div>
                   
                   <div class="item" v-on:click="readSet()">
                     <div class="highlightArea">
-                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope" />
+                      <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" />
                       <span class="tooltiptext">Mark as Read</span>
                     </div>
                   </div>
@@ -178,9 +178,9 @@
                 |
               </div>
 
-              <div class="item">
+              <div class="item" v-on:click="threadUnreadSet()">
                 <div class="highlightArea">
-                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope-open" /> 
+                  <font-awesome-icon style="color:white;" class="Icon" icon="envelope" /> 
                   <span class="tooltiptext">Mark as Unread</span>
                 </div>
               </div>              
@@ -371,12 +371,18 @@ export default {
     unreadSet() {
       console.log("Marking set as unread");
       eventBus.$emit("UNREAD_SET");
-      this.refreshing(); //if wanted
+      this.notChecked();
+      //this.refreshing(); //if wanted
     },
     readSet() {
       console.log("Marking set as read");
       eventBus.$emit("READ_SET");
-      this.refreshing(); //if wanted
+      this.notChecked();
+      //this.refreshing(); //if wanted
+    },
+    threadUnreadSet(){
+      console.log("Marking email as read");
+      eventBus.$emit("MARK_THREAD_AS_UNREAD");
     },
     checking() {
       this.checkedEmails = true;

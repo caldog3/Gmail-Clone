@@ -323,8 +323,7 @@ const getLabelMessages = async (labelId) => {
         'userId': 'me',
         'labelIds': labelId,
         //Devon Testing Mod
-        //'maxResults': 50,
-        'maxResults': 1
+        'maxResults': 50,
       });  
     });
     

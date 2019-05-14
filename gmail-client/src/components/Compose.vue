@@ -38,8 +38,10 @@ import { sendMessage } from './../store-utility-files/gmail-api-calls';
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
-import { setupEmailBody, fireSetupEmailMessage } from '../store-utility-files/email';
-import { fireRetrieveMessages, fireSendMessage, testTwoFirebase } from '../firebase/firebase';
+import { setupEmailBody } from '../store-utility-files/email';
+import { fireSendMessage } from '../firebase/firebase';
+import { fireSetupEmailMessage } from '../firebase/fireEmail';
+
 
 export default {
   name: 'Compose',
@@ -66,10 +68,6 @@ export default {
       //need to clear values if this is a basic compose...
     },
     close() {
-      //Devon Firebase testing:
-      //fireRetrieveMessages('how.d.65@gmail.com')
-      //testTwoFirebase();
-      //end of test
       this.active = false
       // this.composeTidy();
     },

@@ -84,7 +84,8 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
-import { setupEmailBody, fireSetupEmailMessage } from '../store-utility-files/email';
+import { setupEmailBody, markEmailAsRead, markEmailAsUnread } from '../store-utility-files/email';
+import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import { fireSendMessage } from '../firebase/firebase';
 import moment from 'moment';
 
@@ -117,7 +118,7 @@ export default {
     };
   },
   methods: {
-    finalizeSendMessage(){
+    returnToInbox(){
       eventBus.$emit('MESSAGE_LIST');
       this.$router.go(-1);
     },
@@ -169,7 +170,7 @@ export default {
     replySend() {
       if(this.messages[0].isFireMessage){
         this.firebaseReplySend();
-        this.finalizeSendMessage();    
+        this.returnToInbox();    
         return;
       }
 
@@ -193,7 +194,7 @@ export default {
       else {
         sendDraft(headers, body, threadID);
       }
-      this.finalizeSendMessage();
+      this.returnToInbox()();
     },
     // replyAllSend() {
     //   console.log("You clicked the replyAll send button");
@@ -211,7 +212,7 @@ export default {
     //   else {
     //     sendDraft(headers, body, threadID);
     //   }
-    //   this.finalizeSendMessage();
+    //   this.returnToInbox();
     // },
     forwardSend() {
 // code will probably look very similar to replySend
@@ -230,7 +231,7 @@ export default {
       else {
         sendDraft(headers, body, threadID);
       }
-      this.finalizeSendMessage();
+      this.returnToInbox();
     },
     generateBoundary() {
       //12 0's and then 16 digit random...
@@ -331,8 +332,11 @@ export default {
     trash() {
       let thisThreadid = this.messages[0].threadId;
       trashMessage(thisThreadid);
-      eventBus.$emit('MESSAGE_LIST');
-      this.$router.go(-1);
+      this.returnToInbox();
+    },
+    markThreadAsUnread() {
+      markEmailAsUnread(this.messages[0].threadId);
+      this.returnToInbox();
     },
     ifGroupMessage() {
       let to = this.messages[0].to;
@@ -351,8 +355,9 @@ export default {
   },
   created() {
     this.getMessages();
-    eventBus.$on("TRASHING_THREAD", this.trash);
+    eventBus.$on('TRASHING_THREAD', this.trash);
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
+    eventBus.$on('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread);
   }
 }
 </script>
