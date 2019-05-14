@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <div class="fullLength" v-for="label in labels.slice(9)" :key="label.folder">
+      <div class="fullLength" v-for="label in customLabels" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
             <div class="Icon">
@@ -265,6 +265,7 @@ button {
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { mapGetters, mapActions } from 'vuex';
+import { sortBy } from 'lodash';
 import eventBus from "../event_bus";
 import index from "../router/index.js"
 
@@ -290,8 +291,8 @@ export default {
         {folder: "All Mail", unreadCount: -1},
         {folder: "Spam", unreadCount: 0},
         {folder: "Trash", unreadCount: 0},
-        //all custom folders will push to the end of here
       ],
+      customLabels: []
     };
   },
   methods: {
@@ -436,17 +437,11 @@ export default {
           shortName = shortName.substring(0, shortLength-1);
           shortName += "..";
         }
-        this.labels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id, shortName: shortName});
+        this.customLabels.push({folder: customs[i].name, unreadCount: 0, id: customs[i].id, shortName: shortName});
         //maybe something can be added to include a parent folder
       }
       this.unreadCount();
-      for (let j = 9; j < this.labels.length; j++) {
-        let messages = this.$store.getters.getLabelMessages[this.labels[j].id];
-        // console.log(messages);
-        if(messages === undefined){
-          this.$store.dispatch("getFolderListOfMessages", this.labels[j].id);
-        }
-      }
+      this.customLabels = sortBy(this.customLabels, m => m.shortName);
     })
   },
 
