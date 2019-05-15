@@ -122,6 +122,7 @@ export default {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on('COMPOSE_TIDY', this.composeTidy);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
       this.existingDraft = true;
       if (payload.to != null) { 
