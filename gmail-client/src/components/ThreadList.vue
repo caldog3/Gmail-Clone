@@ -95,11 +95,11 @@
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  
                 </div>
 
                 <div class="highlightAreaRead" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
-                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  
+                  <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />  
                 </div>
 
               </div>
@@ -121,11 +121,11 @@
                   </div>
 
                   <div class="highlightArea" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
                   </div>
                     <!-- it isn't making it to my function -->
                   <div class="highlightArea" tooltip="Mark Read" tooltip-persistent v-on:click="toggleUnread(thread)" v-else>
-                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />
+                    <font-awesome-icon style="color:grey;" class="Icon" icon="envelope-open" />
                   </div>
 
                 </div>
@@ -161,9 +161,9 @@
 <script>
 import eventBus from '../event_bus';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { archiveMessage, markAsRead, markAsUnread, markAsStarred, unMarkAsStarred,
+import { archiveMessage, markAsStarred, unMarkAsStarred,
          getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
-import { getTimeFormat } from './../store-utility-files/email';
+import { getTimeFormat, markEmailAsRead, markEmailAsUnread } from './../store-utility-files/email';
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
 import Vue from 'vue';
@@ -208,15 +208,15 @@ export default {
     },
     toggleUnread(thread) {
       if (thread.unread === true) {
-        markAsUnread(thread.threadId);
+        markEmailAsUnread(thread.threadId);
         //I'm working on it
         console.log("before vue.set");
         console.log((this.$store.state.threadMessages));
         // Vue.set(thread.unread, thread.id, false);
         //console.log("after vue.set");
       }
-      else if (thread.unread === false) {
-        markAsRead(thread.threadId);
+      else {
+        markEmailAsRead(thread.threadId);
       }
     },
     archiveThread(thread) {
@@ -241,7 +241,7 @@ export default {
       if (thread.labelId !== "DRAFT") {
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
-        markAsRead(thread.threadId);
+        markEmailAsRead(thread.threadId);
       }
       else {
         if (thread.numberOfMessages > 1) {
@@ -272,16 +272,18 @@ export default {
     },
     readSet() {
       for(let i = 0; i < this.checkedEmails.length; i++) {
-        markAsRead(this.checkedEmails[i]);
+        markEmailAsRead(this.checkedEmails[i]);
         console.log("marking one of them as read");
       }
+      this.checkedEmails = [];      
       //probably do some refreshing here too...
     },
     unreadSet() {
       for(let i = 0; i < this.checkedEmails.length; i++) {
-        markAsUnread(this.checkedEmails[i]);
+        markEmailAsUnread(this.checkedEmails[i]);
         console.log("marking one of them as unread");
       }
+      this.checkedEmails = [];
       //probably do some refreshing here too...
     },
     spamThread() {
@@ -329,7 +331,7 @@ export default {
         if (labelId === this.$store.state.currentFolder) {  //It's working so far
           for (var i = 0; i < fullThreadData.length; i++) {
             if (fullThreadData[i].unread.unread == false) {
-              markAsRead(fullThreadData[i].threadId);
+              markEmailAsRead(fullThreadData[i].threadId);
             }
           }
         }
@@ -358,7 +360,7 @@ export default {
 
 
           if (numberOfMessages > 0) {
-            const { from, starred, conciseTo, to, body, subject, snippet, unread } = threadMessages[0];
+            const { from, starred, conciseTo, to, body, subject, snippet, unread } = threadMessages[numberOfMessages - 1];
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;

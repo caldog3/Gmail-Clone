@@ -13,14 +13,17 @@ export default {
       addMessage(state, message) {
         const threadMessages = state.threadMessages;
         const thread = threadMessages[message.threadId];
-  
+    
         if (thread !== undefined) {
           const duplcateMessages = thread.filter((threadMessage)=>{
             return message.messageId === threadMessage.messageId;
           });
           
           if (duplcateMessages.length === 0) {
-            thread.push(message);
+            for(var i = 0; i < thread.length; i++){
+              if(thread[i].unixTime > message.unixTime){break;}
+            }
+            thread.splice(i, 0, message);
           }
         }
       },
@@ -31,7 +34,9 @@ export default {
         Vue.set(state.labelNextPageTokens, labelId, nextPageToken);
       },
       addThreadId(state, { labelId, threadId }) {
-        Vue.set(state.threadMessages, threadId, []);
+        if (!(threadId in state.threadMessages)){
+          Vue.set(state.threadMessages, threadId, []);
+        }
         const labelIdArray = state.labelMessages[labelId];
   
         if (labelIdArray !== undefined && !labelIdArray.includes(threadId)){
@@ -58,6 +63,16 @@ export default {
       },
       setAttachmentData(state, { attachmentId, data }) {
         state.attachments[attachmentId].data = data;
+      },
+      markThreadUnread(state, threadId){
+        const thread = state.threadMessages[threadId];
+        thread[thread.length - 1].unread = false;
+        Vue.set(state.threadMessages, threadId, thread);
+      },
+      markThreadRead(state, threadId){
+        const thread = state.threadMessages[threadId];
+        thread[thread.length - 1].unread = true;
+        Vue.set(state.threadMessages, threadId, thread);
       },
       setDraftIdsArray(state, data) {
         state.draftIdsArray = data;
