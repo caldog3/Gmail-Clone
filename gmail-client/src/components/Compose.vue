@@ -29,12 +29,19 @@
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
       </div>
+      
+      <div v-if="!existingDraft">
+        <input type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
+      </div>
+      <div v-else>
+        <input style="font:left-align" type="button" value="Save Changes" @click="draftUpdate">
+      </div>
     </div>  
   </div>
 </template>
 
 <script>
-import { sendMessage } from './../store-utility-files/gmail-api-calls';
+import { sendMessage, createDraft, updateDraft } from './../store-utility-files/gmail-api-calls';
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
@@ -56,7 +63,11 @@ export default {
       active: false,
       activeSection: 'to',
       ccActive: false,
-      bccActive: false
+      bccActive: false,
+
+      existingDraft: false,
+      draftId: "",
+      threadId: "",
     }
   },
   methods: {
@@ -93,14 +104,27 @@ export default {
       // this.bccActive = this.message.bcc !== '';
     },
     draftSetup() {  // do we need to pass in the recipient and message data or set it in the store or what?
-      this.composeMessage = "THIS IS A TEST";
+      // this.composeMessage = "THIS IS A TEST";
+    },
+    createDraft() {
+      var sender = this.$store.state.currentUser.w3.U3;
+      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      createDraft(headers, body);
+      //this.close();
+    },
+    draftUpdate() {
+      var sender = this.$store.state.currentUser.w3.U3;
+      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      updateDraft(headers, body, this.draftId, this.threadId);
     },
   },
   created() {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on('COMPOSE_TIDY', this.composeTidy);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
+      this.existingDraft = true;
       if (payload.to != null) { 
         this.composeTo = payload.to;
       } else {this.composeTo = ""}
@@ -109,10 +133,21 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
-        console.log("payloadval:", payload.body);
-        console.log("this.composse", this.composeMessage);
+        console.log("payloadval:", payload);
         //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
+
+      this.threadId = payload.threadId;
+      var draftsList = this.$store.state.draftIdsArray;
+      for (var draft of draftsList) {
+        // console.log("This: ", draft.message.threadId);
+        // console.log("vs This: ", this.threadId);
+        if (draft.message.threadId === this.threadId) { // might also need to compare the messageId but our data shows them as the same id...;
+          // console.log("WE FOUND SOME THAT ARE EQUAL");
+          this.draftId = draft.id;
+          break;
+        }
+      }
     });
     // eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
