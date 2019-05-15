@@ -31,9 +31,11 @@
       </div>
       
       <div v-if="!existingDraft">
-        <input type="button" class="SendButton2" value="Save" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
+        <input type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
       </div>
-      
+      <div v-else>
+        <input style="font:left-align" type="button" value="Save Changes" @click="draftUpdate">
+      </div>
     </div>  
   </div>
 </template>
@@ -64,6 +66,8 @@ export default {
       bccActive: false,
 
       existingDraft: false,
+      draftId: "",
+      threadId: "",
     }
   },
   methods: {
@@ -108,13 +112,18 @@ export default {
       createDraft(headers, body);
       //this.close();
     },
+    draftUpdate() {
+      var sender = this.$store.state.currentUser.w3.U3;
+      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      updateDraft(headers, body, this.draftId, this.threadId);
+    },
   },
   created() {
     eventBus.$on('BODY_CLICK', this.close)
     eventBus.$on('KEYUP_ESCAPE', this.close)
     eventBus.$on('COMPOSE_OPEN', this.open);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
-      existingDraft = true;
+      this.existingDraft = true;
       if (payload.to != null) { 
         this.composeTo = payload.to;
       } else {this.composeTo = ""}
@@ -123,10 +132,21 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
-        console.log("payloadval:", payload.body);
-        console.log("this.composse", this.composeMessage);
+        console.log("payloadval:", payload);
         //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
+
+      this.threadId = payload.threadId;
+      var draftsList = this.$store.state.draftIdsArray;
+      for (var draft of draftsList) {
+        // console.log("This: ", draft.message.threadId);
+        // console.log("vs This: ", this.threadId);
+        if (draft.message.threadId === this.threadId) { // might also need to compare the messageId but our data shows them as the same id...;
+          // console.log("WE FOUND SOME THAT ARE EQUAL");
+          this.draftId = draft.id;
+          break;
+        }
+      }
     });
     // eventBus.$on('ENTER_DRAFT', this.draftSetup);
   }
