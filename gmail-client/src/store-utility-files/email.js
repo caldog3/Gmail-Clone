@@ -375,7 +375,7 @@ const setupEmailBody = (Subject, To, Message, Sender) => {
 }
 
 const markEmailAsUnread = (threadId) => {
-  store.commit('markThreadAsUnread', threadId);
+  store.commit('markThreadUnread', threadId);
   let thread = store.state.threadMessages[threadId];
   let message = thread[thread.length - 1];
   if(message.isFireMessage){
@@ -387,7 +387,7 @@ const markEmailAsUnread = (threadId) => {
 }
 
 const markEmailAsRead = (threadId) => {
-  store.commit('markThreadAsRead', threadId);
+  store.commit('markThreadRead', threadId);
   let thread = store.state.threadMessages[threadId];
   let message = thread[thread.length - 1];
   if(message.isFireMessage){

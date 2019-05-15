@@ -39,7 +39,7 @@
       <textarea rows="1" v-model="allReplyRecipients" class="recipients"></textarea>
       <quill-editor v-model="responseHTML"/>
       <div class="quill-spacing">
-        <button class="sendBar" type="button" v-on:click="replyAllSend">
+        <button class="sendBar" type="button" v-on:click="replySend">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
         <button class="sendBar" type="button" v-on:click="toggleReplyAll">
@@ -175,19 +175,11 @@ export default {
       }
       updateDraft(headers, body, draftId, threadId);
     },
-    firebaseReplySend(){
-      let reSubj = this.subject;
-      if (!this.subject.startsWith("Re:")) {
-        reSubj = "Re: " + this.subject;
-      }
-      let composeTo = this.recipient;
-      if (this.replyingAll){
-        composeTo = this.allReplyRecipients
-      }
-
-      let message = fireSetupEmailMessage(reSubj, composeTo, this.responseHTML, this.messages[0].threadId);
+    firebaseReplySend(subject, composeTo){
+      let message = fireSetupEmailMessage(subject, composeTo, this.responseHTML, this.messages[0].threadId);
       if (message === undefined){return;}
       fireSendMessage(message);
+      this.returnToInbox();
     },
     replySend() {
       //we'll link these two up soon
@@ -196,7 +188,15 @@ export default {
       if (!this.subject.startsWith("Re:")) {
         reSubj = "Re: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
+      let composeTo = this.recipient;
+      if (this.replyingAll){
+        composeTo = this.allReplyRecipients
+      }
+      if(this.messages[0].isFireMessage){
+        this.firebaseReplySend(reSubj, composeTo);
+        return;
+      }
+      const {headers, body} = setupEmailBody(reSubj, composeTo, this.responseHTML, this.sender);
       // console.log("Headers: ", headers);
       // console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
@@ -216,33 +216,39 @@ export default {
         }
         sendDraft(headers, body, draftId, threadID);
       }
+      this.returnToInbox();
     },
-    replyAllSend() {
-      console.log("You clicked the replyAll send button");
-      let reSubj = this.subject;
-      if (!this.subject.startsWith("Re:")) {
-        reSubj = "Re: " + this.subject;
-      }
-      const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
-      console.log("HEaders: ", headers);
-      let threadID = this.messages[0].threadId;
-      //FIXME: add condition for drafts
-      if (!this.isDraft) {
-        sendReply(headers, body, threadID);
-      }
-      else {
-        let draftId;
-        var draftsList = this.$store.state.draftIdsArray;
-        for (var draft of draftsList) {
-          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
-            console.log("WE FOUND SOME THAT ARE EQUAL");
-            draftId = draft.id;
-            break;
-          }
-        }
-        sendDraft(headers, body, draftId);
-      }
-    },
+    // replyAllSend() {
+    //   console.log("You clicked the replyAll send button");
+    //   let reSubj = this.subject;
+    //   if (!this.subject.startsWith("Re:")) {
+    //     reSubj = "Re: " + this.subject;
+    //   }
+    //   let repAll = this.replyingAll;
+    //   let repOne = this.replying;
+    //   let recips = this.recipient;
+    //   let recipsAll = this.allReplyRecipients;
+    //   let me = 0;
+    //   const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
+    //   console.log("HEaders: ", headers);
+    //   let threadID = this.messages[0].threadId;
+    //   //FIXME: add condition for drafts
+    //   if (!this.isDraft) {
+    //     sendReply(headers, body, threadID);
+    //   }
+    //   else {
+    //     let draftId;
+    //     var draftsList = this.$store.state.draftIdsArray;
+    //     for (var draft of draftsList) {
+    //       if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+    //         console.log("WE FOUND SOME THAT ARE EQUAL");
+    //         draftId = draft.id;
+    //         break;
+    //       }
+    //     }
+    //     sendDraft(headers, body, draftId);
+    //   }
+    // },
     forwardSend() {
 // code will probably look very similar to replySend
       console.log("You clicked the forward send button");

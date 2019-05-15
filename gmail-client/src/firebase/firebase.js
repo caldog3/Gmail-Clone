@@ -18,7 +18,9 @@ firebase.initializeApp(config);
 
 let fireRef = firebase.database().ref()
 const users = 'USERS';
+const threads = 'THREADS';
 const messages = 'MESSAGES';
+const participants = 'PARTICIPANTS';
 const drafts = 'DRAFTS';
 const sent = 'SENT';
 const primary = 'PRIMARY';
@@ -146,76 +148,67 @@ const responseMessage3 = {
 
 //within "message" object, format the "to" field as follows: "email@gmail.com, otheremail@gmail.com, anotheremail@gmail.com"
 const fireSendMessage = (message) => {
-    let sender = base64url(getSenderAddress(message.detailedFrom));
+    let sender = base64url(extractEmailFromDetail(message.detailedFrom));
     //fireRef.child(users).child(sender).child(drafts).child(message.threadId).remove();
-    fireRef.child(users).child(sender).child(message.threadId).child(sent).set(true);
-    fireRef.child(users).child(sender).child(message.threadId).child(isRead).set(true);
+    fireRef.child(users).child(sender).child(sent).child(message.threadId).child(isRead).set(true);
+    fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(isRead).set(true);
 
     let recipients = message.to.split(', ');
     recipients.forEach(recipient => {
-        fireRef.child(users).child(base64url(recipient)).child(message.threadId).child(primary).set(true);
-        fireRef.child(users).child(base64url(recipient)).child(message.threadId).child(isRead).set(false);
+        recipient = base64url(extractEmailFromDetail(recipient));
+        fireRef.child(users).child(recipient).child(primary).child(message.threadId).set(true);
+        fireRef.child(threads).child(message.threadId).child(participants).child(recipient).child(isRead).set(false);
     });
     //possible race condition here. might need to put into a ".then" statement
-    fireRef.child(messages).child(message.threadId).child(message.messageId).set(message);
+    fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).set(message);
 }
 
 //One-time call. This function will notify you when you receive a new email.
 const fireRetrieveMessages = () => {
     let currentUser = base64url(store.state.currentUser.w3.U3);
-    fireRef.child(users).child(currentUser).once('value').then((userShot) => {
+    fireRef.child(users).child(currentUser).child(primary).once('value').then((userShot) => {
         if(!userShot.exists()){
-            return fireRef.child(users).child(currentUser).child('Welcome!').set(true);
+            return fireRef.child(users).child(currentUser).set(primary);//.child('Welcome!').set(true);
         }
     }).then(() => {
-        fireRef.child(users).child(currentUser).on("child_added", function(threadShot){
+        fireRef.child(users).child(currentUser).child(primary).on("child_added", function(threadShot){
             var threadId = threadShot.key;
-            var isEmailRead = false;
             store.commit('initializeThreadTime', {threadId});
-            fireRef.child(users).child(currentUser).child(threadId).on("child_added", function(labelShot){
-                let labelId = labelShot.key;
-                if(labelId === isRead){
-                    isEmailRead = labelShot.val();
-                    fireRef.child(users).child(currentUser).child(threadId).on("child_changed", function(isReadShot){
-                        isEmailRead = isReadShot.val();
-                    })
-                }
-                else{
-                    store.commit('addThreadId', {threadId, labelId});
-                }
-            })
-            fireRef.child(messages).child(threadId).on("child_added", function(messageShot){
-                let messageId = messageShot.key;
-                let newMessage = messageShot.val();
-                threadId = newMessage.threadId;
-                let unixTime = newMessage.unixTime;
-                newMessage.unread = isEmailRead;
-                store.commit('setThreadTime', {threadId, unixTime});
-                store.commit('addMessage', newMessage);
-            })
+            store.commit('addThreadId', {threadId, labelId:primary});
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).child(isRead).once("value").then((initIsReadShot => {
+                var isEmailRead = initIsReadShot.val();
+                fireRef.child(threads).child(threadId).child(participants).child(currentUser).on("child_changed", function(isReadShot){
+                    isEmailRead = isReadShot.val();
+                })
+                fireRef.child(threads).child(threadId).child(messages).on("child_added", function(messageShot){
+                    // let messageId = messageShot.key;
+                    let newMessage = messageShot.val();
+                    threadId = newMessage.threadId;
+                    let unixTime = newMessage.unixTime;
+                    newMessage.unread = isEmailRead;
+                    store.commit('setThreadTime', {threadId, unixTime});
+                    store.commit('addMessage', newMessage);
+                })
+            }))
         })
     })
-}
+} 
 
 const fireUpdateMessage = (message) => {
-    fireRef.child(messages).child(message.threadId).child(message.messageId).set(message);
+    fireRef.child(threads).child(message.threadId).child(message.messageId).set(message);
 }
 
 const fireMarkAsRead = (message) => {
     let currentUser = base64url(store.state.currentUser.w3.U3);
-    fireRef.child(users).child(currentUser).child(message.threadId).child(isRead).set(true);
-    message.unread = true;
-    fireUpdateMessage(message);
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(isRead).set(true);
 }
 
 const fireMarkAsUnread = (message) => {
     let currentUser = base64url(store.state.currentUser.w3.U3);
-    fireRef.child(users).child(currentUser).child(message.threadId).child(isRead).set(false);
-    message.unread = false;
-    fireUpdateMessage(message);
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(isRead).set(false);
 }
 
-const getSenderAddress = (detailedFrom) =>{
+const extractEmailFromDetail = (detailedFrom) =>{
     let email = detailedFrom.split('<');
     if (email.length > 1){
         email = email[1].split('>');
