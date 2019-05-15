@@ -50,6 +50,70 @@
   </div>
 </template>
 
+<script>
+import eventBus from '../event_bus'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+export default {
+  name: 'AppHeader',
+  components: {
+    FontAwesomeIcon
+  },
+  data() {
+    return {
+      searchQuery: '',
+    }
+  },
+  computed: {
+    photoUrl() {
+      return this.$store.getters.getCurrentUserProfile.Paa;
+    }
+  },
+  methods: {
+    searching() {
+
+      if (this.$store.state.labelMessages.SEARCH !== undefined) {
+        this.$store.state.labelMessages.SEARCH = [];
+      }
+      console.log("CURRENT ROUTE: ", this.$router.currentRoute);
+      let theRoute = this.$router.currentRoute.path;
+      if (!theRoute.includes('Folder/SEARCH/')) {
+        console.log("HERE WE ARE");
+        this.$router.push({ path: 'Folder/SEARCH/'});
+      }
+
+      // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
+      this.$store.state.currentFolder  = "SEARCH";
+      console.log("IT has been set to: " + this.$store.state.currentFolder);
+      this.$store.state.viewFolder = "Search";
+      eventBus.$emit("TOTAL_EMAIL_COUNT", "SEARCH");
+      this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
+    },
+    signOut(){
+      this.$store.dispatch('signOut');
+      this.$router.push({ path: '/' });
+    },
+    DropdownFunction() {
+      document.getElementById("Dropdown").classList.toggle("show");
+    },
+    // Close the dropdown if the user clicks outside of it
+    window:onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  }
+}
+</script>
+
 <style scoped>
 .searchButton {
   width: 73px;
@@ -235,62 +299,3 @@ input:focus {
   }
 } 
 </style>
-
-
-<script>
-import eventBus from '../event_bus'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-export default {
-  name: 'AppHeader',
-  components: {
-    FontAwesomeIcon
-  },
-  data() {
-    return {
-      searchQuery: '',
-    }
-  },
-  computed: {
-    photoUrl() {
-      return this.$store.getters.getCurrentUserProfile.Paa;
-    }
-  },
-  methods: {
-    searching() {
-
-      if (this.$store.state.labelMessages.SEARCH !== undefined) {
-        this.$store.state.labelMessages.SEARCH = [];
-      }
-      this.$router.push({ path: 'Folder/SEARCH/'});
-      // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
-      this.$store.state.currentFolder  = "SEARCH";
-      console.log("IT has been set to: " + this.$store.state.currentFolder);
-      this.$store.state.viewFolder = "Search";
-      eventBus.$emit("TOTAL_EMAIL_COUNT", "SEARCH");
-      this.$store.dispatch("getQueryListOfMessages", this.searchQuery);
-    },
-    signOut(){
-      this.$store.dispatch('signOut');
-      this.$router.push({ path: '/' });
-    },
-    DropdownFunction() {
-      document.getElementById("Dropdown").classList.toggle("show");
-    },
-    // Close the dropdown if the user clicks outside of it
-    window:onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-  }
-}
-</script>
