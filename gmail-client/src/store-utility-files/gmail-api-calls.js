@@ -139,6 +139,30 @@ const createDraft = (headers, message) => {
   });
 }
 
+const addDraftToThread = (headers, message, threadId) => {
+  let email = '';
+  for (let header in headers) {
+    email += header;
+    email += ": " + headers[header] + "\r\n";
+  }
+  email += "\r\n" + message;
+
+  gapi.client.gmail.users.drafts.create({
+    'userId': 'me',
+    'resource': {
+      'message': {
+        'raw': base64url(email),
+        'threadId': threadId,
+      }
+    }
+  }).then((response) => {
+    console.log("Draft added to thread. Response =>:", response);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+
 
 const getDraftListOfIds = async () => {
   const response = await gapi.client.load('gmail', 'v1')
@@ -437,7 +461,6 @@ const getMessageContent = async (messageId) => {
     'userId': 'me',
     'id': messageId,
   });
-
   return response.result;
 }
 
@@ -467,4 +490,5 @@ export {
   getDraftListOfIds,
   updateDraft,
   createDraft,
+  addDraftToThread,
 };

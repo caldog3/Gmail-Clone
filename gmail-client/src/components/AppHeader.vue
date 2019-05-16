@@ -75,14 +75,8 @@ export default {
       if (this.$store.state.labelMessages.SEARCH !== undefined) {
         this.$store.state.labelMessages.SEARCH = [];
       }
-      console.log("CURRENT ROUTE: ", this.$router.currentRoute);
-      let theRoute = this.$router.currentRoute.path;
-      if (!theRoute.includes('Folder/SEARCH/')) {
-        console.log("HERE WE ARE");
-        this.$router.push({ path: 'Folder/SEARCH/'});
-      }
-
-      // this.$router.push({ path: '/SEARCH="' + this.searchQuery + '"/'});
+      this.$router.replace({ path: '/Folder/SEARCH="' + this.searchQuery + '"/'});
+      
       this.$store.state.currentFolder  = "SEARCH";
       console.log("IT has been set to: " + this.$store.state.currentFolder);
       this.$store.state.viewFolder = "Search";
