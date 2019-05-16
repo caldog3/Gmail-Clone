@@ -335,8 +335,8 @@ export default {
       // console.log("this final message of set:", this.messages[this.messages.length -1]);
       let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
       // this allows repeated replies
+      let i = 1;
       while (lastRecipient.includes(this.sender)) { //is this called before the "DRAFT" if resolves itself?
-        let i = 1;
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
         i++;
         if (i >= this.messages.length) {break;}

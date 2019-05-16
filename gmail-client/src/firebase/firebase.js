@@ -6,7 +6,7 @@ import config from './firebase.config';
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/database";
-
+import { networkInterfaces } from 'os';
 firebase.initializeApp(config);
 
 let fireRef = firebase.database().ref()
@@ -18,6 +18,7 @@ const drafts = 'DRAFTS';
 const sent = 'SENT';
 const primary = 'PRIMARY';
 const isRead = 'IS_READ';
+const folders = 'FOLDERS';
 
 const message1 = {
     threadId: 'A Thread IDs are cool',
@@ -141,19 +142,26 @@ const responseMessage3 = {
 
 //within "message" object, format the "to" field as follows: "email@gmail.com, otheremail@gmail.com, anotheremail@gmail.com"
 const fireSendMessage = (message) => {
-    let sender = base64url(extractEmailFromDetail(message.detailedFrom));
+    let sender = base64url(store.state.currentUser.w3.U3);
     //fireRef.child(users).child(sender).child(drafts).child(message.threadId).remove();
-    fireRef.child(users).child(sender).child(sent).child(message.threadId).child(isRead).set(true);
+    fireRef.child(users).child(sender).child(sent).child(message.threadId).set(true);
     fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(isRead).set(true);
+    fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(folders).child(sent).set(true);
 
     let recipients = message.to.split(', ');
     recipients.forEach(recipient => {
         recipient = base64url(extractEmailFromDetail(recipient));
         fireRef.child(users).child(recipient).child(primary).child(message.threadId).set(true);
         fireRef.child(threads).child(message.threadId).child(participants).child(recipient).child(isRead).set(false);
+        fireRef.child(threads).child(message.threadId).child(participants).child(recipient).child(folders).child(primary).set(false);
     });
     //possible race condition here. might need to put into a ".then" statement
     fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).set(message);
+}
+
+const fireSaveDraft = (message) => {
+    let sender = base64url(store.state.currentUser.w3.U3);
+
 }
 
 //One-time call. This function will notify you when you receive a new email.
@@ -168,7 +176,7 @@ const fireRetrieveMessages = () => {
             var threadId = threadShot.key;
             store.commit('initializeThreadTime', {threadId});
             store.commit('addThreadId', {threadId, labelId:primary});
-            fireRef.child(threads).child(threadId).child(participants).child(currentUser).child(isRead).once("value").then((initIsReadShot => {
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).child(isRead).once("value").then((initIsReadShot) => {
                 var isEmailRead = initIsReadShot.val();
                 fireRef.child(threads).child(threadId).child(participants).child(currentUser).on("child_changed", function(isReadShot){
                     isEmailRead = isReadShot.val();
@@ -176,16 +184,46 @@ const fireRetrieveMessages = () => {
                 fireRef.child(threads).child(threadId).child(messages).on("child_added", function(messageShot){
                     // let messageId = messageShot.key;
                     let newMessage = messageShot.val();
-                    threadId = newMessage.threadId;
+                    // threadId = newMessage.threadId;
                     let unixTime = newMessage.unixTime;
                     newMessage.unread = isEmailRead;
                     store.commit('setThreadTime', {threadId, unixTime});
                     store.commit('addMessage', newMessage);
-                })
-            }))
-        })
-    })
+                });
+            });
+        });
+    });
 } 
+
+const fireGetMessagesByLabel = (labelId) => {
+    let currentUser = base64url(store.state.currentUser.w3.U3);
+    fireRef.child(users).child(currentUser).child(labelId).once('value').then((labelShot) => {
+        labelShot.forEach((threadId) => {
+            threadId = threadId.key;
+            store.commit('initializeThreadTime', {threadId});
+            store.commit('addThreadId', {threadId, labelId});
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).once("value").then((userInfoShot) => {
+                return userInfoShot;
+            }).then((userInfo) => {
+                fireRef.child(threads).child(threadId).child(messages).once("value", function(messagesShot){
+                    messagesShot.forEach((newMessage) => {
+                        newMessage = newMessage.val();
+                        // let thisThreadId = newMessage.threadId;
+                        let unixTime = newMessage.unixTime;
+                        newMessage.unread = userInfo.child(isRead).val();
+                        let newFolderLabels = [];
+                        userInfo.child(folders).forEach((folder) => {
+                            newFolderLabels.push(folder.key);
+                        });
+                        newMessage.labelId = newFolderLabels;
+                        store.commit('setThreadTime', {threadId, unixTime});
+                        store.commit('addMessage', newMessage);
+                    });
+                });
+            })
+        });
+    });
+}
 
 const fireUpdateMessage = (message) => {
     fireRef.child(threads).child(message.threadId).child(message.messageId).set(message);
@@ -225,6 +263,7 @@ const testTwoFirebase = () =>{
 export{
     fireSendMessage,
     fireRetrieveMessages,
+    fireGetMessagesByLabel,
     fireUpdateMessage,
     fireMarkAsRead,
     fireMarkAsUnread,

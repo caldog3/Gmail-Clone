@@ -11,6 +11,7 @@ import {
  } from './../store-utility-files/gmail-api-calls';
 import eventBus from '../event_bus';
 import { initializeGoogleClient } from '../main';
+import { fireGetMessagesByLabel } from '../firebase/firebase';
 
 export default {
     setToken({ commit }, token) {
@@ -39,6 +40,7 @@ export default {
     async getFolderListOfMessages({ commit, dispatch }, labelId) {
       commit("addLabelId", labelId);
       
+      fireGetMessagesByLabel(labelId);
       const threads = await getLabelMessages(labelId);
       dispatch("getThreads", { threads, labelId });
     },
