@@ -437,7 +437,6 @@ const getMessageContent = async (messageId) => {
     'userId': 'me',
     'id': messageId,
   });
-
   return response.result;
 }
 

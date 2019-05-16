@@ -238,12 +238,14 @@ export default {
       // this.readClassChanger(thread);
       console.log("Hi i'm a thread");
       console.log(thread);
-      if (thread.labelId !== "DRAFT") {
+      if (!thread.labelId.includes("DRAFT")) {
+        console.log("NOT A DRAFT");
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
         markEmailAsRead(thread.threadId);
       }
       else {
+        console.log("IS A DRAFT");
         if (thread.numberOfMessages > 1) {
           this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
           eventBus.$emit('ENTER_DRAFT');
@@ -360,11 +362,11 @@ export default {
 
 
           if (numberOfMessages > 0) {
-            const { from, starred, conciseTo, to, body, subject, snippet, unread } = threadMessages[numberOfMessages - 1];
+            const { from, starred, conciseTo, to, body, subject, snippet, labelId, unread } = threadMessages[numberOfMessages - 1];
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
-          
+            // console.log("HERE IT IS>>>>>>>", labelId, from, subject);
             return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
           }
         });

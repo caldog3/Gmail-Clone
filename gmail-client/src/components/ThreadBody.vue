@@ -296,8 +296,10 @@ export default {
       const threadMessages = messages[this.$route.params.id];
       this.messages = sortBy(threadMessages, m => m.unixTime);
       //remove
-      if (this.messages[0].labelId === "DRAFT") { //sets up drafts to have default draft features (pop the draft and get data to plug into Quill)
-
+      //FIXME includes vs ===
+      console.log("The label ids we see", this.messages[this.messages.length -1].labelId);
+      if (this.messages[this.messages.length -1].labelId.includes("DRAFT")) { //sets up drafts to have default draft features (pop the draft and get data to plug into Quill)
+        console.log("Handling it as a draft");
         // FIXME: need to account for drafts not being the last message of a thread.  Probably a complicated handler
         const draftMessage = this.messages.pop();
         // console.log("DraftMessage", draftMessage);
@@ -312,8 +314,8 @@ export default {
       // console.log("this final message of set:", this.messages[this.messages.length -1]);
       let lastRecipient = this.messages[this.messages.length -1].detailedFrom;
       // this allows repeated replies
+      let i = 1;
       while (lastRecipient.includes(this.sender)) { //is this called before the "DRAFT" if resolves itself?
-        let i = 1;
         lastRecipient = this.messages[this.messages.length - i].detailedFrom;
         i++;
         if (i >= this.messages.length) {break;}
