@@ -31,10 +31,10 @@
       </div>
       
       <div v-if="!existingDraft">
-        <input type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
+        <input class="SaveButton" type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
       </div>
       <div v-else>
-        <input style="font:left-align" type="button" value="Save Changes" @click="draftUpdate">
+        <input class="SaveButton" type="button" value="Save Changes" @click="draftUpdate">
       </div>
     </div>  
   </div>
@@ -280,6 +280,17 @@ textarea {
   outline: none;
   width: 4.5em;
   height: 2.2em;
-
 }
+.SaveButton {
+  text-align: left;
+  background-color: coral;
+  color: white;
+  border: none;
+  outline: none;
+  height: 2.2em;
+  float: left;
+  padding: 3px;
+  margin: 4px;
+}
+
 </style>
