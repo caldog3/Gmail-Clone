@@ -58,7 +58,7 @@
                     <span class="leftAlign">
                       <span v-if="thread.from === userEmail"> me </span>
                       <!-- The on-click needs to match the conditional for just displaying draft -->
-                      <span class='red' v-else-if="labelId === 'DRAFT'"> Draft </span>
+                      <span class='red' v-else-if="labelId.includes('DRAFT')"> Draft </span>
                       <!-- <span v-else-if="labelId === 'TRASH'"> <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> {{thread.from}}</span> -->
                       <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                       <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
@@ -366,7 +366,7 @@ export default {
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
-            // console.log("HERE IT IS>>>>>>>", labelId, from, subject);
+            // console.log("HERE  IS>>>>>>>", labelId, from, subject);
             return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime};
           }
         });

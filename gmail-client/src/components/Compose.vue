@@ -140,8 +140,6 @@ export default {
       this.threadId = payload.threadId;
       var draftsList = this.$store.state.draftIdsArray;
       for (var draft of draftsList) {
-        // console.log("This: ", draft.message.threadId);
-        // console.log("vs This: ", this.threadId);
         if (draft.message.threadId === this.threadId) { // might also need to compare the messageId but our data shows them as the same id...;
           // console.log("WE FOUND SOME THAT ARE EQUAL");
           this.draftId = draft.id;

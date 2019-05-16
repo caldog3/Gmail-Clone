@@ -29,6 +29,9 @@
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
           Save Draft
         </button>
+        <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
+          Create New Draft
+        </button>
       </div>
     </div>
     <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
@@ -48,6 +51,9 @@
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
           Save Draft
         </button>
+        <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
+          Create New Draft
+        </button>
       </div>
     </div>
     <!-- End of the quill -->
@@ -65,6 +71,9 @@
         </button>
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
           Save Draft
+        </button>
+        <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
+          Create New Draft
         </button>
       </div>
     </div>
@@ -87,7 +96,7 @@
 </template>
 
 <script>
-import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft, updateDraft } from './../store-utility-files/gmail-api-calls';
+import { trashMessage, sendReply, forwardMessage, sendForward, sendDraft, updateDraft, addDraftToThread } from './../store-utility-files/gmail-api-calls';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
@@ -106,9 +115,10 @@ export default {
   },
   data() {
     return {
+      threadId: "",
+
       forwardHTML: "",
-      responseHTML: "", 
-      responseBody: "",
+      responseHTML: "",
       forwardingBody: "",
       subject: '',
       sender: '',
@@ -173,6 +183,23 @@ export default {
       }
       updateDraft(headers, body, draftId, threadId);
     },
+    draftCreate() {
+      var sender = this.$store.state.currentUser.w3.U3; //do I handle reply all and reply one?
+      if (this.replying && !this.replyingAll) {
+        const {headers, body} = setupEmailBody(this.subject, this.recipient, this.responseHTML, sender);
+        addDraftToThread(headers, body, this.threadId);
+      }
+      else if (!this.replying && this.replyingAll) {
+        const {headers, body} = setupEmailBody(this.subject, this.allReplyRecipients, this.responseHTML, sender);
+        addDraftToThread(headers, body, this.threadId);
+      }
+      else if (this.forwarding) {
+        const {headers, body} = setupEmailBody(this.subject, this.recipient, this.forwardHTML, sender);
+        addDraftToThread(headers, body, this.threadId);
+      }
+      //values aren't defined in scope outside of the ifs and else-ifs.....
+      // createDraft(headers, body);
+    },
     replySend() {
       //we'll link these two up soon
       console.log("You clicked the send button");
@@ -184,6 +211,7 @@ export default {
       // console.log("Headers: ", headers);
       // console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
+      this.threadId = threadID;
       //FIXME: add condition for drafts
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
@@ -297,16 +325,15 @@ export default {
       this.messages = sortBy(threadMessages, m => m.unixTime);
       //remove
       //FIXME includes vs ===
-      console.log("The label ids we see", this.messages[this.messages.length -1].labelId);
       if (this.messages[this.messages.length -1].labelId.includes("DRAFT")) { //sets up drafts to have default draft features (pop the draft and get data to plug into Quill)
         console.log("Handling it as a draft");
         // FIXME: need to account for drafts not being the last message of a thread.  Probably a complicated handler
         const draftMessage = this.messages.pop();
-        // console.log("DraftMessage", draftMessage);
+
         this.toggleReply();
         this.responseHTML = draftMessage.body;
         
-        this.isDraft = true; //temporary handler //might need  
+        this.isDraft = true;
       }
 
       this.subject = this.messages[this.messages.length -1].subject;
@@ -365,9 +392,8 @@ export default {
       }
       return theClass;
     }, 
-    draftSetup() {
-      this.responseHTML = "THIS IS A TEST";
-      this.responseBody = "THIS IS A TEST";
+    draftSetup() { //This is not reached anymore
+      console.log("Is this still reached?");
     },
   },
   created() {
