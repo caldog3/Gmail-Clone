@@ -185,9 +185,10 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
+  // console.log("IS THIS THE PAYLOAD: ", payload);
   const { from, to, conciseTo, cc, subject, detailedFrom, allParticipants } = getEmailInfo(payload.result.payload.headers);
   const { time, unixTime } = getTimeFormat(payload.result.internalDate);
-  const { unread, starred } = resolveLabels(payload.result.labelIds);
+  const { unread, starred, labelIds } = resolveLabels(payload.result.labelIds);
   const snippet = payload.result.snippet;
   const messageId = payload.result.id;
   let attachmentIds = [];
@@ -215,7 +216,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
   
   const message = {
     threadId: payload.threadId,
-    labelId: payload.labelId,
+    labelId: payload.result.labelIds,
     messageId,
     from,
     detailedFrom,
@@ -232,7 +233,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
     starred,
     attachmentIds
   };
-
+  // console.log("THE MAIN MESSAGE: ", message);
   return message;
 }
 

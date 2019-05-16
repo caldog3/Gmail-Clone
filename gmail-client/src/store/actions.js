@@ -45,9 +45,6 @@ export default {
     async getListOfDraftIds({ commit }) {
       const data = await getDraftListOfIds();
       commit("setDraftIdsArray", data);
-      
-      const threads = await getLabelMessages(labelId);
-      dispatch("getThreads", { threads, labelId });
     },
     async getThreads({ commit, dispatch }, { threads, labelId }) {
       if (threads !== undefined) {
