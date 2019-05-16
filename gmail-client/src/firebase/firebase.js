@@ -2,18 +2,11 @@ import base64url from 'base64url';
 import * as firebase from "firebase/app";
 import store from '../store';
 import eventBus from './../event_bus.js';
-
+import config from './firebase.config';
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/database";
-var config = {
-  apiKey: "AIzaSyDrpz2BFRzaIWpqYXn5eUviFi6NZRkqv50",
-  authDomain: "byu--clone.firebaseapp.com",
-  databaseURL: "https://byu--clone.firebaseio.com",
-  projectId: "byu-gmail-clone",
-  storageBucket: "byu-gmail-clone.appspot.com",
-  messagingSenderId: "68568085108"
-};
+
 firebase.initializeApp(config);
 
 let fireRef = firebase.database().ref()
