@@ -1,8 +1,9 @@
 import moment from 'moment';
 import base64js from 'base64-js';
 import store from '../store';
-import { markAsRead, markAsUnread } from './gmail-api-calls';
-import { fireMarkAsRead, fireMarkAsUnread } from '../firebase/firebase';
+import { markAsRead, markAsUnread, trashMessage } from './gmail-api-calls';
+import { fireMarkAsRead, fireMarkAsUnread, fireTrashThread } from '../firebase/firebase';
+import { Store } from 'vuex';
 
 
 const Base64Decode = (str, encoding = "utf-8") => {
@@ -185,9 +186,10 @@ const resolveLabels = (tempLabelIds) => {
 }
 
 const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
+  // console.log("IS THIS THE PAYLOAD: ", payload);
   const { from, to, conciseTo, cc, subject, detailedFrom, allParticipants } = getEmailInfo(payload.result.payload.headers);
   const { time, unixTime } = getTimeFormat(payload.result.internalDate);
-  const { unread, starred } = resolveLabels(payload.result.labelIds);
+  const { unread, starred, labelIds } = resolveLabels(payload.result.labelIds);
   const snippet = payload.result.snippet;
   const messageId = payload.result.id;
   let attachmentIds = [];
@@ -215,7 +217,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
   
   const message = {
     threadId: payload.threadId,
-    labelId: payload.labelId,
+    labelId: payload.result.labelIds,
     messageId,
     from,
     detailedFrom,
@@ -232,7 +234,7 @@ const getMessage = (parsedMessage, bodyAndAttachments, payload) => {
     starred,
     attachmentIds
   };
-
+  // console.log("THE MAIN MESSAGE: ", message);
   return message;
 }
 
@@ -398,6 +400,18 @@ const markEmailAsRead = (threadId) => {
   }
 }
 
+const trashEmailThread = (threadId) => {
+  store.commit('removeThreadId', threadId);
+  let thread = store.state.threadMessages[threadId];
+  let message = thread[thread.length - 1];
+  if(message.isFireMessage){
+    fireTrashThread(threadId);
+  }
+  else{
+    trashMessage(threadId);
+  }
+}
+
 export {
   getTimeFormat,
   getMessage,
@@ -405,5 +419,6 @@ export {
   setupEmailBody,
   getParsedMessageAndBody,
   markEmailAsRead,
-  markEmailAsUnread
+  markEmailAsUnread,
+  trashEmailThread
 };

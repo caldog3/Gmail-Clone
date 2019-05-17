@@ -58,7 +58,7 @@
                     <span class="leftAlign">
                       <span v-if="thread.from === userEmail"> me </span>
                       <!-- The on-click needs to match the conditional for just displaying draft -->
-                      <span class='red' v-else-if="labelId === 'DRAFT'"> Draft </span>
+                      <span class='red' v-else-if="labelId.includes('DRAFT')"> Draft </span>
                       <!-- <span v-else-if="labelId === 'TRASH'"> <font-awesome-icon style="color:black;" class="Icon" icon="trash" /> {{thread.from}}</span> -->
                       <span v-else-if="labelId === 'SENT'"> To: {{thread.conciseTo}}</span>
                       <span v-else-if="thread.from !== undefined"> {{ thread.from }} </span>
@@ -163,7 +163,7 @@ import eventBus from '../event_bus';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsStarred, unMarkAsStarred,
          getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
-import { getTimeFormat, markEmailAsRead, markEmailAsUnread } from './../store-utility-files/email';
+import { getTimeFormat, markEmailAsRead, markEmailAsUnread, trashEmailThread } from './../store-utility-files/email';
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
 import Vue from 'vue';
@@ -240,12 +240,14 @@ export default {
       // this.readClassChanger(thread);
       console.log("Hi i'm a thread");
       console.log(thread);
-      if (thread.labelId !== "DRAFT") {
+      if (!thread.labelId.includes("DRAFT")) {
+        console.log("NOT A DRAFT");
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
         markEmailAsRead(thread.threadId);
       }
       else {
+        console.log("IS A DRAFT");
         if (thread.numberOfMessages > 1) {
           this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
           eventBus.$emit('ENTER_DRAFT');
@@ -305,10 +307,10 @@ export default {
     },
     trashCheckedThreads() {
       if (this.checkedEmails.length > 0){
-        const trashingPromises = this.checkedEmails.map(email => trashMessage(email.threadId));
+        const trashingPromises = this.checkedEmails.map(email => trashEmailThread(email.threadId));
         Promise.all(trashingPromises).then(() => {
           this.checkedEmails = [];
-          eventBus.$emit("REFRESH");
+          //eventBus.$emit("REFRESH");
         });
       }
     },
