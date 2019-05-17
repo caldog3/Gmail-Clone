@@ -401,7 +401,10 @@ export default {
     eventBus.$on("TRASHING_THREAD", this.trash);
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
     eventBus.$on('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread);
-  }
+  },
+  beforeDestroy() {
+    eventBus.$off('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread)
+  },
 }
 </script>
 
