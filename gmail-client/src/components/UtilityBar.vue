@@ -363,6 +363,7 @@ export default {
     trashing() {
       eventBus.$emit("TRASHING_THREAD");
       console.log("Clicked the trash button");
+      this.back();
     },
     trashingSet() {
       eventBus.$emit("TRASHING_CHECKED_THREADS");

@@ -102,7 +102,7 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
-import { setupEmailBody, markEmailAsRead, markEmailAsUnread } from '../store-utility-files/email';
+import { setupEmailBody, markEmailAsRead, markEmailAsUnread, trashEmailThread } from '../store-utility-files/email';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import { fireSendMessage } from '../firebase/firebase';
 import moment from 'moment';
@@ -396,14 +396,10 @@ export default {
       this.finalMessageBody = this.messages[this.messages.length -1].body;
     },
     trash() {
-      let thisThreadid = this.messages[0].threadId;
-      trashMessage(thisThreadid);
-      this.returnToInbox();
+      trashEmailThread(this.messages[0].threadId);
     },
     markThreadAsUnread() {
-      console.log("ThreadId to be marked" + this.messages[0].threadId);
       markEmailAsUnread(this.messages[0].threadId);
-      //this.returnToInbox();
     },
     ifGroupMessage() {
       let to = this.messages[0].to;
@@ -426,6 +422,7 @@ export default {
     eventBus.$on('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread);
   },
   beforeDestroy() {
+    eventBus.$off('TRASHING_THREAD', this.trash);
     eventBus.$off('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread)
   },
 }

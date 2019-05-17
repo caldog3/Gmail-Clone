@@ -163,7 +163,7 @@ import eventBus from '../event_bus';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { archiveMessage, markAsStarred, unMarkAsStarred,
          getNumberOfMessages, trashMessage, markSpam } from './../store-utility-files/gmail-api-calls';
-import { getTimeFormat, markEmailAsRead, markEmailAsUnread } from './../store-utility-files/email';
+import { getTimeFormat, markEmailAsRead, markEmailAsUnread, trashEmailThread } from './../store-utility-files/email';
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
 import Vue from 'vue';
@@ -307,10 +307,10 @@ export default {
     },
     trashCheckedThreads() {
       if (this.checkedEmails.length > 0){
-        const trashingPromises = this.checkedEmails.map(email => trashMessage(email.threadId));
+        const trashingPromises = this.checkedEmails.map(email => trashEmailThread(email.threadId));
         Promise.all(trashingPromises).then(() => {
           this.checkedEmails = [];
-          eventBus.$emit("REFRESH");
+          //eventBus.$emit("REFRESH");
         });
       }
     },

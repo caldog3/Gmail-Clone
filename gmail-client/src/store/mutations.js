@@ -43,6 +43,18 @@ export default {
           labelIdArray.push(threadId);
         }
       },
+      removeThreadId(state, threadId){
+        if (threadId in state.threadMessages){
+          let labelIds = state.threadMessages[threadId][0].labelId
+          labelIds.forEach(labelId => {
+            let labelIdArray = state.labelMessages[labelId];
+            if (labelIdArray !== undefined){
+              labelIdArray = labelIdArray.filter(thread => thread !== threadId);
+              Vue.set(state.labelMessages, labelId, labelIdArray);
+            }
+          });
+        }
+      },
       initializeThreadTime(state, { threadId }) {
         Vue.set(state.latestThreadMessageTime, threadId, 0);
       },
