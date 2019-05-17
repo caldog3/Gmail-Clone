@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <custom-drop-down/>
     <!-- LOG-IN SCREEN -->
     <div class="notLoggedIn" v-if="!loggedIn">
       <login-page/>
     </div>
 
-      <!-- OUR ACTUAL EMAIL -->
+    <!-- OUR ACTUAL EMAIL -->
     <div class="loggedIn" v-else-if="loggedIn && this.loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
@@ -17,7 +18,7 @@
         <div class="emailList" :style="emailListHeight">
           <router-view/>
           <div class="termsUnderneath">
-            <br><br>
+             <br><br>
             <p>
               <a href="https://policies.google.com/terms" rel="noopener noreferrer" target="_blank">Terms</a> 
               - 
@@ -30,7 +31,7 @@
       </div>
 
       <Compose/>
-      
+
     </div>
 
     <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
@@ -51,6 +52,7 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
+import CustomDropDown from "./components/CustomDropDown";
 
 export default {
   name: "App",
@@ -58,7 +60,7 @@ export default {
     return {
       emailListHeight: {},
       initialHeightCalculated: false,
-      loading: false,
+      loading: false
     };
   },
   components: {
@@ -68,6 +70,7 @@ export default {
     LoginPage,
     Compose,
     LoadingScreen,
+    CustomDropDown
   },
   computed: {
     loggedIn: function() {
@@ -112,7 +115,7 @@ export default {
     if (!this.initialHeightCalculated){
       this.setEmailListHeight();
     }
-    
+
     this.$nextTick(function() {
       window.addEventListener("resize", this.setEmailListHeight);
     });
@@ -193,11 +196,11 @@ body {
 }
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 /* Scroll Bar for SideBar */
@@ -211,11 +214,11 @@ body {
 }
 /* Handle */
 .optionsA::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 
