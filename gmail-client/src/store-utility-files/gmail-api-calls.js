@@ -10,6 +10,7 @@ const sendMessage = (headers, message) => {
     email += ": " + headers[header] + "\r\n";
   }
   email += "\r\n" + message;
+  //need to add another section after the actual message for any attachments with the proper Content-Type
 
   console.log("Now in Base64: ", Base64Encode(email));
   console.log("Base64URL: ", base64url(email));
