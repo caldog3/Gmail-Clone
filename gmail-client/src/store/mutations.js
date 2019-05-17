@@ -1,5 +1,6 @@
 
 import Vue from 'vue';
+import { stat } from 'fs';
 
 export default {
     setToken(state, token) {
@@ -46,6 +47,7 @@ export default {
       removeThreadId(state, threadId){
         if (threadId in state.threadMessages){
           let labelIds = state.threadMessages[threadId][0].labelId
+          labelIds.push('PRIMARY');
           labelIds.forEach(labelId => {
             let labelIdArray = state.labelMessages[labelId];
             if (labelIdArray !== undefined){
