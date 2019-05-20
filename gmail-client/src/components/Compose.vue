@@ -39,7 +39,26 @@
           </p>
       </div>
     </form>
-    
+    <!--SUCCESS-->
+      <div v-if="isSuccess">
+        <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
+        </p>
+        <ul class="list-unstyled">
+          <li v-for="item in uploadedFiles" :key="item.originalName">
+            <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
+          </li>
+        </ul>
+      </div>
+      <!--FAILED-->
+      <div v-if="isFailed">
+        <h2>Uploaded failed.</h2>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Try again</a>
+        </p>
+        <pre>{{ uploadError }}</pre>
+      </div>
     <!-- end upload button -->
     <div class="footerSection">
       <div class="sendButton">
@@ -62,6 +81,7 @@ import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
 import { setupEmailBody } from '../store-utility-files/email';
+import { upload } from '../file-upload.service';
 
 export default {
   name: 'Compose',
@@ -85,6 +105,7 @@ export default {
       draftId: "",
       threadId: "",
 
+      hasAttachments: false,
       uploadedFiles: [],
       uploadError: null,
       currentStatus: null,
@@ -112,6 +133,7 @@ export default {
       this.currentStatus = 'STATUS_INITIAL';
       this.uploadedFiles = [];
       this.uploadError = null;
+      this.hasAttachments = false;
     },
     save(formData) { //might be out of the scope of our client
       //upload data
@@ -120,10 +142,14 @@ export default {
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = 'STATUS_SUCCESS';
+          // console.log("COMPARE: ", this.uploadedFiles[0].id === this.uploadedFiles[1].id);
+          console.log("UPLOADED FILES: ", this.uploadedFiles);
+          this.hasAttachments = true;
         })
         .catch(err => {
           this.uploadError = err.response;
           this.currentStatus = 'STATUS_FAILED';
+          console.log("UPLOAD FAILED");
         });
     },
     filesChange(fieldName, fileList) {
@@ -167,6 +193,7 @@ export default {
       this.composeTo = '';
       this.composeSubject = '';
       this.composeMessage = '';
+      this.reset();
     },
     focusOnSection(section) {
       this.activeSection = section;
