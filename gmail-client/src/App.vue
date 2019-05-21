@@ -51,6 +51,7 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
+import { setInterval, clearInterval } from 'timers';
 
 export default {
   name: "App",
@@ -118,7 +119,13 @@ export default {
     });
   },
   mounted() {
-    this.setEmailListHeight();
+    const appHeaderTimer = setInterval(()=>{
+      if (this.$refs.appHeader !== undefined){
+        this.setEmailListHeight();
+        clearInterval(appHeaderTimer);
+      }
+    }, 1000);
+    
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })
