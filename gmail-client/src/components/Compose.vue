@@ -26,6 +26,12 @@
     </div>
     
     <!-- we'll just stick our upload button here for now -->
+    <div v-if="!uploading">
+      <p>
+        <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
+      </p>
+    </div>
+    <div v-else>
       <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
         <h1>Upload images</h1>
         <div class="dropbox">
@@ -59,6 +65,7 @@
         </p>
         <pre>{{ uploadError }}</pre>
       </div>
+    </div>
     <!-- end upload button -->
     <div class="footerSection">
       <div class="sendButton">
@@ -82,6 +89,7 @@ import eventBus from '../event_bus.js';
 import Icon from './icon';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
+import { setTimeout } from 'timers';
 
 export default {
   name: 'Compose',
@@ -105,6 +113,7 @@ export default {
       draftId: "",
       threadId: "",
 
+      uploading: false,
       hasAttachments: false,
       uploadedFiles: [],
       uploadError: null,
@@ -173,6 +182,9 @@ export default {
     },
     close() {
       this.active = false
+      setTimeout(() => {      
+        this.composeTidy();
+      }, 250);
       // this.composeTidy();
     },
     sendCompose() {
@@ -188,15 +200,11 @@ export default {
         const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
         sendMessage(headers, body);
       }
-      // console.log("SEND COMPOSE: hope this works ", headers);
-      // console.log("BODY before Base64: ", body);
-      //function to decode it
-      // sendMessage(headers, body);
       this.close();
       //Tidy needs to wait for this to finish
-      // this.composeTidy();
     },
     composeTidy() {
+      console.log("COMPOSE TIDY");
       this.composeTo = '';
       this.composeSubject = '';
       this.composeMessage = '';
@@ -221,6 +229,9 @@ export default {
       const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
       updateDraft(headers, body, this.draftId, this.threadId);
     },
+    toggleUploading() {
+      this.uploading = !this.uploading;
+    }
   },
   mounted() {
     this.reset();
