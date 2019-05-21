@@ -384,7 +384,7 @@ const setupEmailBodyAttach = (Subject, To, Message, Sender, attachObj) => { // n
     'Subject': Subject,
     'From': Sender,
     'To': To,
-    'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
+    'Content-type': 'multipart/mixed; ' + 'boundary="' + randBoundary + '"', //multipart/mixed for attachment emails
   }
   let body = "--" + randBoundary + "\n";
   body += 'Content-type: text/html; charset="UTF-8"\n';
