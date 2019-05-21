@@ -80,7 +80,7 @@ import { sendMessage, createDraft, updateDraft } from './../store-utility-files/
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
-import { setupEmailBody } from '../store-utility-files/email';
+import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
 
 export default {
@@ -176,15 +176,22 @@ export default {
       // this.composeTidy();
     },
     sendCompose() {
-
-      console.log("TO access test:", this.composeTo);
       var sender = this.$store.state.currentUser.w3.U3;
-
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      console.log("SEND COMPOSE: hope this works ", headers);
-      console.log("BODY before Base64: ", body);
+      if (this.hasAttachments) { //if there are attachments
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+        // console.log("SEND COMPOSE: hope this works ", headers);
+        // console.log("BODY before Base64: ", body); //long string if attachments are included
+        sendMessage(headers, body);
+      }
+      else {
+        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+        sendMessage(headers, body);
+      }
+      // console.log("SEND COMPOSE: hope this works ", headers);
+      // console.log("BODY before Base64: ", body);
       //function to decode it
-      sendMessage(headers, body);
+      // sendMessage(headers, body);
       this.close();
       //Tidy needs to wait for this to finish
       // this.composeTidy();

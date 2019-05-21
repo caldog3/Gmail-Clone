@@ -347,8 +347,7 @@ const getEmailInfo = (headers) => {
   };
 }
 
-const setupEmailBody = (Subject, To, Message, Sender) => { // need hasAttachments, pngName, base64png
-  console.log("In the setup: ", To);
+const setupEmailBody = (Subject, To, Message, Sender) => {
   var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   var boundLength = 16;
   var randBoundary = "000000000000";
@@ -366,14 +365,36 @@ const setupEmailBody = (Subject, To, Message, Sender) => { // need hasAttachment
   body += 'Content-Transfer-Encoding: quoted-printable\n\n';
   body += Message + "\n\n";
   // the double -- at the end only happens if there is no attachment
-  if (hasAttachments) { //hardcoded test values
-    body += setupAttachmentBody(pngName, randBoundary, base64png);
-  }
-  else {
-    body += "--" + randBoundary + "--";
-  }
+  body += "--" + randBoundary + "--";
 
+  return {
+    headers,
+    body,
+  }
+}
 
+const setupEmailBodyAttach = (Subject, To, Message, Sender, attachObj) => { // need hasAttachments, pngName, base64png
+  var boundChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var boundLength = 16;
+  var randBoundary = "000000000000";
+  randBoundary += Array(boundLength).fill(boundChars).map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  const headers = {
+    'MIME-Version': '1.0',
+    //Modify the subject depending on replies/forwards
+    'Subject': Subject,
+    'From': Sender,
+    'To': To,
+    'Content-type': 'multipart/alternative; ' + 'boundary="' + randBoundary + '"',
+  }
+  let body = "--" + randBoundary + "\n";
+  body += 'Content-type: text/html; charset="UTF-8"\n';
+  body += 'Content-Transfer-Encoding: quoted-printable\n\n';
+  body += Message + "\n\n";
+  //for loop
+  for (var i = 0; i < attachObj.uploadData.length; i++) {
+    body += setupAttachmentBody(attachObj.uploadData[i].originalName, randBoundary, attachObj.uploadData[i].id);
+  }
+  body += "--" + randBoundary + "--"; // shows that the email is done
   return {
     headers,
     body,
@@ -382,8 +403,8 @@ const setupEmailBody = (Subject, To, Message, Sender) => { // need hasAttachment
 
 // If we need a separate function for setting up an attachment's format
 const setupAttachmentBody = (fileName, randBoundary, pngData) => { //not entirely sure what we're gonna need here
-
   // Have to format the png Data in base64;
+  pngData = pngData.substring(pngData.search(",") + 1); //gets relevant data for sending
 
   let attachBody = "--" + randBoundary + "\n";
   attachBody += "Content-type: image/png\r\n";
@@ -392,8 +413,6 @@ const setupAttachmentBody = (fileName, randBoundary, pngData) => { //not entirel
   attachBody += 'Content-Disposition: attachment; filename = "' + fileName + '"\r\n\r\n';
 
   attachBody += pngData + "\r\n\r\n";
-
-  attachBody += "--" + randBoundary + "--";
 
   return attachBody;
 
@@ -415,6 +434,7 @@ export {
   getMessage,
   Base64Encode,
   setupEmailBody,
+  setupEmailBodyAttach,
   getParsedMessageAndBody,
   markEmailAsRead,
   markEmailAsUnread
