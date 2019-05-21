@@ -1,38 +1,43 @@
 /*This is here for the meantime */
 <template>
-  <dropdown ref="dropdown">
-    <template slot="btn">{{text}}</template>
+  <dropdown ref="dropdown" :class-name="'dropdown'">
+    <template slot="btn">
+      <small class="lightText">{{text}}</small>
+    </template>
     <template slot="body">
-      <dropdown :trigger="'click'" :role="'sublist'" :align="'right'">
-        <template slot="btn">Minutes</template>
+      <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+        <template slot="btn"><small>Minutes</small></template>
         <template slot="body">
           <div
             v-for="minute in minutes"
             :key="minute"
             @click="setExpiryTime(minute, 'minute')"
-          >{{minute | formatTimeUnit('Minute')}}</div>
+            class="smallHover"
+          ><small>{{minute | formatTimeUnit('Minute')}}</small></div>
         </template>
       </dropdown>
 
-      <dropdown :trigger="'click'" :role="'sublist'" :align="'right'">
-        <template slot="btn">Hours</template>
+      <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+        <template slot="btn"><small>Hours</small></template>
         <template slot="body">
           <div
             v-for="hour in hours"
             :key="hour"
             @click="setExpiryTime(hour, 'hour')"
-          >{{hour | formatTimeUnit('Hour')}}</div>
+            class="smallHover"
+          ><small>{{hour | formatTimeUnit('Hour')}}</small></div>
         </template>
       </dropdown>
 
-      <dropdown :trigger="'click'" :role="'sublist'" :align="'right'">
-        <template slot="btn">Days</template>
+      <dropdown :trigger="'hover'" :role="'sublist'" :align="'right'">
+        <template slot="btn"><small>Days</small></template>
         <template slot="body">
           <div
             v-for="day in days"
             :key="day"
             @click="setExpiryTime(day, 'day')"
-          >{{day | formatTimeUnit('Day')}}</div>
+            class="smallHover"
+          ><small>{{day | formatTimeUnit('Day')}}</small></div>
         </template>
       </dropdown>
     </template>
@@ -94,3 +99,27 @@ export default {
   }
 };
 </script>
+
+<style>
+.lightText {
+  color: white;
+}
+.bp-dropdown__btn--active {
+  background-color: #404040 !important;
+}
+.bp-dropdown__btn {
+  border: 1px solid #404040 !important;
+  padding: 0px 0px !important;
+  color: white;
+}
+.bp-dropdown--sub:hover {
+  background-color: rgb(168, 168, 168);
+}
+.bp-dropdown__body {
+  min-width: 120px !important;
+}
+.smallHover:hover {
+  background-color: rgb(168, 168, 168);
+  color: white;
+}
+</style>

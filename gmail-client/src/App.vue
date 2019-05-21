@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <custom-drop-down/>
     <!-- LOG-IN SCREEN -->
     <div class="notLoggedIn" v-if="!loggedIn">
       <login-page/>
@@ -52,7 +51,6 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
-import CustomDropDown from "./components/CustomDropDown";
 
 export default {
   name: "App",
@@ -70,7 +68,6 @@ export default {
     LoginPage,
     Compose,
     LoadingScreen,
-    CustomDropDown
   },
   computed: {
     loggedIn: function() {

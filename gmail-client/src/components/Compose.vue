@@ -6,6 +6,11 @@
       <div class="head">
         <h2>New Message</h2>
       </div>
+      
+      <span class="dropDownArea">
+        <custom-drop-down/>
+      </span>
+      
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
@@ -48,13 +53,15 @@ import Icon from './icon';
 import { setupEmailBody } from '../store-utility-files/email';
 import { fireSendMessage } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
+import CustomDropDown from './CustomDropDown';
 
 
 export default {
   name: 'Compose',
   components: {
     Icon,
-    QuillEditor
+    QuillEditor,
+    CustomDropDown
   },
   data() {
     return {
@@ -174,7 +181,7 @@ export default {
   flex-direction: column;
   align-content: stretch;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 60px;
   z-index: 999;
 }
 .flexFrom {
@@ -185,7 +192,13 @@ export default {
   align-items: center;
 }
 .head {
-  width: 470px;
+  width: 250px;
+}
+.dropDownArea{
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 .headerSection {
   background: #404040;

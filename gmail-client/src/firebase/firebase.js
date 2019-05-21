@@ -6,7 +6,7 @@ import config from './firebase.config';
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/database";
-import { networkInterfaces } from 'os';
+
 firebase.initializeApp(config);
 
 let fireRef = firebase.database().ref()
