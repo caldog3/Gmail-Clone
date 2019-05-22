@@ -356,7 +356,7 @@ export default {
       let allPeopleArray = this.messages[0].allParticipants;
       let userInstance = false;
       var replyAllPeople = "";
-      console.log("allPeopleArray: ", allPeopleArray);
+      // console.log("allPeopleArray: ", allPeopleArray);
       for (let i = 0; i < allPeopleArray.length; i++) { // loops through all involved email aliases and excludes the current user
         if (allPeopleArray[i].includes(this.$store.state.currentUserProfile.U3) && !userInstance) {
           userInstance = true;

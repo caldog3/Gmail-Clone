@@ -90,6 +90,7 @@ import Icon from './icon';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
 import { setTimeout } from 'timers';
+import { resolve } from 'url';
 
 export default {
   name: 'Compose',
@@ -148,6 +149,7 @@ export default {
       //upload data
       this.currentStatus = 'STATUS_SAVING';
       upload(formData)
+        .then(this.waitForUpload(1500)) //wait for uploads to reslove
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = 'STATUS_SUCCESS';
@@ -232,6 +234,11 @@ export default {
     },
     toggleUploading() {
       this.uploading = !this.uploading;
+    },
+    waitForUpload(miliseconds) {
+      return (x) => {
+        return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
+      };
     }
   },
   mounted() {

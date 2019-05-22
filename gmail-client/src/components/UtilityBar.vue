@@ -310,15 +310,12 @@ export default {
       let folder = this.$store.state.currentFolder;
       this.refreshingFolder = folder;
       console.log("refreshing", folder);
-      console.log(this.$store.state.labelMessages);
-      //working on the logic for rendering emails continually
-      //need to pass a parameter that shows refreshing or not
+      
       this.$store.state.currentPage = 1;
       // this.$store.state.labelMessages[folder] = []; //shouldn't need this anymore
       console.log(folder);
       var refresh = false;
       if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-        console.log("REfresh checkpoing 1");
         let refresh = true;
         let label = folder;
         this.$store.dispatch("getListOfMessages", label);// bool value is for refresh
