@@ -25,7 +25,7 @@
       <quill-editor v-model="composeMessage"/>
     </div>
     
-    <!-- we'll just stick our upload button here for now -->
+    <!-- Start of Upload -->
     <div v-if="!uploading">
       <p>
         <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
@@ -66,7 +66,7 @@
         <pre>{{ uploadError }}</pre>
       </div>
     </div>
-    <!-- end upload button -->
+    <!--End Upload -->
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
