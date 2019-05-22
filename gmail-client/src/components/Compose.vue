@@ -277,7 +277,7 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
-        console.log("payloadval:", payload);
+        // console.log("payloadval:", payload);
         //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
 
