@@ -149,7 +149,7 @@ export default {
       //upload data
       this.currentStatus = 'STATUS_SAVING';
       upload(formData)
-        .then(this.waitForUpload(1500)) //wait for uploads to reslove
+        .then(this.waitForUpload(2500)) //wait for uploads to reslove
         .then(x => {
           this.uploadedFiles = [].concat(x);
           this.currentStatus = 'STATUS_SUCCESS';
@@ -223,14 +223,32 @@ export default {
     },
     createDraft() {
       var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      createDraft(headers, body);
-      //this.close();
+      if (this.hasAttachments) { //if there are attachments
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+        // console.log("SEND COMPOSE: hope this works ", headers);
+        // console.log("BODY before Base64: ", body); //long string if attachments are included
+        createDraft(headers, body);
+      }
+      else {
+        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+        createDraft(headers, body);      }
+      this.close();
     },
     draftUpdate() {
       var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      updateDraft(headers, body, this.draftId, this.threadId);
+      if (this.hasAttachments) { //if there are attachments
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+        // console.log("SEND COMPOSE: hope this works ", headers);
+        // console.log("BODY before Base64: ", body); //long string if attachments are included
+        updateDraft(headers, body, this.draftId, this.threadId);
+      }
+      else {
+        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+        updateDraft(headers, body, this.draftId, this.threadId);
+      }
+      this.close();
     },
     toggleUploading() {
       this.uploading = !this.uploading;
