@@ -34,9 +34,9 @@
           <div class="dropbox">
             <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
               accept="image/*" class="input-file">
-              <p v-if="isInitial">
+              <!-- <p v-if="isInitial">
                 Drag your file(s) here to begin<br> or click to browse
-              </p>
+              </p> -->
               <p v-if="isSaving">
                 Uploading {{ fileCount }} files...
               </p>
@@ -587,7 +587,7 @@ button:hover {
   background: lightcyan;
   color: dimgray;
   padding: 10px 10px;
-  min-height: 200px; /* minimum height */
+  min-height: 200px; 
   position: relative;
   cursor: pointer;
 }
@@ -596,9 +596,10 @@ button:hover {
   opacity: 40; /* invisible but it's there! */
   width: 100%;
   min-height: 200px;
-  margin-left: -495px; /* adjust the input location to match the visual box */
-  margin-top: -10px;
-  position: absolute;
+  /* margin-left: -495px; 
+  margin-top: -10px; */
+  /* position: absolute; */
+  text-align: left;
   cursor: pointer;
 }
 
