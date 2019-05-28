@@ -321,16 +321,18 @@ export default {
 }
 .head {
   width: 470px;
+  /* height: 100px; */
 }
 .headerSection {
   background: #404040;
-  height: 35px;
+  min-height: 35px;
   display: flex;
   flex-direction: row;
   align-content: stretch;
   align-items: center;
   padding: 4px;
   width: 100%;
+  
 }
 h2 {
   color: white;
@@ -403,7 +405,7 @@ textarea {
   resize: none;
 }
 .footerSection {
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 510px;
   margin: 4px;
   height: 55px;
@@ -439,9 +441,14 @@ textarea {
   overflow: hidden;
   border-bottom: solid;
   border-color: rgba(255, 255, 255, 0.4);
+  overflow-y: scroll;
+  /* min-height: 500px; */
+  max-height: 80vh;
+  /* height: 100%; */
+
 }
 .composeWindow:hover {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* margin-right: 10px; */
 }
 
