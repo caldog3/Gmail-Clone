@@ -119,6 +119,7 @@ export default {
     });
   },
   mounted() {
+    this.updateLoading();
     const appHeaderTimer = setInterval(()=>{
       if (this.$refs.appHeader !== undefined){
         this.setEmailListHeight();
