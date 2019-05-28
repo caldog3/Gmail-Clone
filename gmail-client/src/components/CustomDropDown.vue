@@ -46,6 +46,7 @@
 
 <script>
 import Dropdown from "bp-vuejs-dropdown";
+import eventBus from './../event_bus';
 import moment from "moment";
 
 export default {
@@ -95,6 +96,7 @@ export default {
       }
 
       const unixTime = moment(date).unix();
+      eventBus.$emit("SET_EXPIRY_TIME", unixTime);
     }
   }
 };
