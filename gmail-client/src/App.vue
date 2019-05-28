@@ -51,6 +51,7 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
+import { setInterval, clearInterval } from 'timers';
 
 export default {
   name: "App",
@@ -118,7 +119,13 @@ export default {
     });
   },
   mounted() {
-    this.setEmailListHeight();
+    const appHeaderTimer = setInterval(()=>{
+      if (this.$refs.appHeader !== undefined){
+        this.setEmailListHeight();
+        clearInterval(appHeaderTimer);
+      }
+    }, 1000);
+    
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })
@@ -215,6 +222,24 @@ body {
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
+}
+
+/* Scroll Bar for Compose Window */
+/* width */
+.composeWindow::-webkit-scrollbar {
+  /* width: 6px; */
+}
+/* Track */
+.composeWindow::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* Handle */
+.composeWindow::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+}
+/* Handle on hover */
+.composeWindow::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
 }
 

@@ -310,15 +310,12 @@ export default {
       let folder = this.$store.state.currentFolder;
       this.refreshingFolder = folder;
       console.log("refreshing", folder);
-      console.log(this.$store.state.labelMessages);
-      //working on the logic for rendering emails continually
-      //need to pass a parameter that shows refreshing or not
+      
       this.$store.state.currentPage = 1;
       // this.$store.state.labelMessages[folder] = []; //shouldn't need this anymore
       console.log(folder);
       var refresh = false;
       if (folder === "PRIMARY" || folder === "SOCIAL" || folder === "PROMOTIONS") {
-        console.log("REfresh checkpoing 1");
         let refresh = true;
         let label = folder;
         this.$store.dispatch("getListOfMessages", label);// bool value is for refresh
@@ -354,20 +351,27 @@ export default {
       this.$store.dispatch("getLastPageListOfMessages", folder);
     },
     spamming() {
-      eventBus.$emit("SPAMMING_THREAD");
-
+      if (confirm("Are you sure you want to mark this as spam?")) {
+        eventBus.$emit("SPAMMING_THREAD");
+      }
     },
     spammingSet() {
-      eventBus.$emit("SPAMMING_CHECKED_THREADS");
+      if (confirm("Are you sure you want to mark all these as spam?")) {
+        eventBus.$emit("SPAMMING_CHECKED_THREADS");
+      }
     },
     trashing() {
-      eventBus.$emit("TRASHING_THREAD");
-      console.log("Clicked the trash button");
-      this.back();
+      if (confirm("Are you sure you want to trash this message?")) {
+        eventBus.$emit("TRASHING_THREAD");
+        console.log("Clicked the trash button");
+        this.back();
+      }
     },
     trashingSet() {
+      if (confirm("Are you sure you want to trash this set of messages?")) {
       eventBus.$emit("TRASHING_CHECKED_THREADS");
       console.log("----------trashingSet--------------");
+      }
     },
     unreadSet() {
       console.log("Marking set as unread");
