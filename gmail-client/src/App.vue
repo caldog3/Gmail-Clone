@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <!-- LOG-IN SCREEN -->
-    <div class="notLoggedIn" v-if="!loggedIn">
+    <div class="notLoggedIn" v-if="!loading">
       <login-page/>
     </div>
 
     <!-- OUR ACTUAL EMAIL -->
-    <div class="loggedIn" v-else-if="loggedIn && this.loading">
+    <div class="loggedIn" v-else-if="loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
@@ -51,6 +51,8 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
+import { setInterval, clearInterval } from 'timers';
+
 
 export default {
   name: "App",
@@ -118,7 +120,14 @@ export default {
     });
   },
   mounted() {
-    this.setEmailListHeight();
+   this.updateLoading()
+    const appHeaderTimer = setInterval(()=>{
+      if (this.$refs.appHeader !== undefined){
+        this.setEmailListHeight();
+        clearInterval(appHeaderTimer);
+      }
+    }, 1000);
+
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })

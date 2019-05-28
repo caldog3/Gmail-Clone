@@ -5,7 +5,11 @@
       <img src="./../assets/gmailLogo.png" alt="" class="responsive">
     </div>
     <br>
-    <button @click="authenticate()">Sign In</button>
+    <input v-model="name" placeholder="First and Last Name">
+    <input v-model="email" placeholder="email address">
+    <button @click="login">Log In</button>
+
+    <!-- <button @click="authenticate()">Sign In</button> -->
     <div class="whiteSpace"></div>
   </div>
 </template>
@@ -30,20 +34,38 @@
 </style>
 
 <script>
+import { fireRetrieveMessages } from '../firebase/firebase';
+import eventBus from './../event_bus';
+
  export default {
    name: 'LoginPage',
+   data(){
+     return {
+       name: "",
+       email: ""
+     };
+   },
    methods: {
     authenticate(){
-       const googleAuth = this.$store.getters.googleAuth;
-      googleAuth.signIn().then(() => {
-        const currentUser = googleAuth.currentUser.get();
-		    const currentUserProfile = currentUser.getBasicProfile();
+      //  const googleAuth = this.$store.getters.googleAuth;
+      // googleAuth.signIn().then(() => {
+      //   const currentUser = googleAuth.currentUser.get();
+		  //   const currentUserProfile = currentUser.getBasicProfile();
 
-        this.$store.commit('currentUser', currentUser);
-        this.$store.commit('currentUserProfile', currentUserProfile);
-        this.$store.commit('setToken', currentUser.Zi.access_token);
-        this.$store.commit('sessionExpiration', currentUser.Zi.expires_at);
-      });
+      //   this.$store.commit('currentUser', currentUser);
+      //   this.$store.commit('currentUserProfile', currentUserProfile);
+      //   this.$store.commit('setToken', currentUser.Zi.access_token);
+      //   this.$store.commit('sessionExpiration', currentUser.Zi.expires_at);
+      // });
+     },
+     login(){
+       
+      this.$store.state.userEmail = this.email;
+      this.$store.state.userName = this.name;
+      this.email = "";
+      this.name = "";
+      eventBus.$emit('DATA_FETCHING_COMPLETE');
+      fireRetrieveMessages();
      }
    }
  }

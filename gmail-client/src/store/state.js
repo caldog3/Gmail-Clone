@@ -15,4 +15,6 @@ export default {
     viewFolder: "Inbox",
     totalMessages: "0",
     draftIdsArray: [],
+    userEmail: "",
+    userName: ""
 }

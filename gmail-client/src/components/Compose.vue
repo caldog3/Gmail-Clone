@@ -97,17 +97,17 @@ export default {
     },
     sendCompose() {
 
-      console.log("TO access test:", this.composeTo);
-      var sender = this.$store.state.currentUser.w3.U3;
+      // console.log("TO access test:", this.composeTo);
+      // var sender = this.$store.state.currentUser.w3.U3;
 
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      console.log("SEND COMPOSE: hope this works ", headers);
-      console.log("BODY before Base64: ", body);
-      //function to decode it
-      sendMessage(headers, body);
-      this.close();
-      //Tidy needs to wait for this to finish
-      // this.composeTidy();
+      // const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      // console.log("SEND COMPOSE: hope this works ", headers);
+      // console.log("BODY before Base64: ", body);
+      // //function to decode it
+      // sendMessage(headers, body);
+      // this.close();
+      // //Tidy needs to wait for this to finish
+      // // this.composeTidy();
     },
     composeTidy() {
       this.composeTo = '';
@@ -123,15 +123,15 @@ export default {
       // this.composeMessage = "THIS IS A TEST";
     },
     createDraft() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      createDraft(headers, body);
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      // createDraft(headers, body);
       //this.close();
     },
     draftUpdate() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      updateDraft(headers, body, this.draftId, this.threadId);
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      // updateDraft(headers, body, this.draftId, this.threadId);
     },
   },
   created() {

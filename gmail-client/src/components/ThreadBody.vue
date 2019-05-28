@@ -186,7 +186,7 @@ export default {
       updateDraft(headers, body, draftId, threadId);
     },
     draftCreate() {
-      var sender = this.$store.state.currentUser.w3.U3; //do I handle reply all and reply one?
+      var sender = this.$store.state.userEmail; //do I handle reply all and reply one?
       if (this.replying && !this.replyingAll) {
         const {headers, body} = setupEmailBody(this.subject, this.recipient, this.responseHTML, sender);
         addDraftToThread(headers, body, this.threadId);
@@ -381,7 +381,7 @@ export default {
       var replyAllPeople = "";
       console.log("allPeopleArray: ", allPeopleArray);
       for (let i = 0; i < allPeopleArray.length; i++) { // loops through all involved email aliases and excludes the current user
-        if (allPeopleArray[i].includes(this.$store.state.currentUserProfile.U3) && !userInstance) {
+        if (allPeopleArray[i].includes(this.$store.state.userEmail) && !userInstance) {
           userInstance = true;
           continue;
         }

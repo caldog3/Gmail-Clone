@@ -244,7 +244,7 @@ export default {
         console.log("NOT A DRAFT");
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
-        markEmailAsRead(thread.threadId);
+        // markEmailAsRead(thread.threadId);
       }
       else {
         console.log("IS A DRAFT");
@@ -403,7 +403,7 @@ export default {
     eventBus.$on("UNREAD_SET", this.unreadSet);
     eventBus.$on("SPAMMING_THREAD", this.spamThread);
     eventBus.$on("SPAMMING_CHECKED_THREADS", this.spamCheckedThreads);
-    this.userEmail = this.$store.state.currentUserProfile.U3;
+    this.userEmail = this.$store.state.userEmail;
   },
 }
 </script>

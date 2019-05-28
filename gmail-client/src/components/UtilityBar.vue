@@ -321,10 +321,10 @@ export default {
         console.log("REfresh checkpoing 1");
         let refresh = true;
         let label = folder;
-        this.$store.dispatch("getListOfMessages", label);// bool value is for refresh
+        // this.$store.dispatch("getListOfMessages", label);// bool value is for refresh
       }
       else {
-        this.$store.dispatch("getFolderListOfMessages", folder);
+        // this.$store.dispatch("getFolderListOfMessages", folder);
       }
     },
     pageNum() {
@@ -520,9 +520,9 @@ export default {
     eventBus.$on('ENTER_MESSAGE', this.true);
     eventBus.$on('MESSAGE_LIST', this.false);
     eventBus.$on('TOTAL_EMAIL_COUNT', folder => {
-      this.getNumberTotal(folder);
+      // this.getNumberTotal(folder);
     });
-    this.getNumberTotal(this.$store.state.viewFolder);
+    // this.getNumberTotal(this.$store.state.viewFolder);
   },
 }
 
