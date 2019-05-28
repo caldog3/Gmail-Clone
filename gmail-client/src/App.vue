@@ -225,6 +225,24 @@ body {
  background: rgba(255, 255, 255, 0.9);
 }
 
+/* Scroll Bar for Compose Window */
+/* width */
+.composeWindow::-webkit-scrollbar {
+  /* width: 6px; */
+}
+/* Track */
+.composeWindow::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* Handle */
+.composeWindow::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+}
+/* Handle on hover */
+.composeWindow::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
+}
+
 
 .termsUnderneath a:link {
   text-decoration: none;
