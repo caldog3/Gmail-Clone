@@ -6,6 +6,11 @@
       <div class="head">
         <h2>New Message</h2>
       </div>
+      
+      <span class="dropDownArea">
+        <custom-drop-down/>
+      </span>
+      
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
@@ -89,6 +94,7 @@ import eventBus from '../event_bus.js';
 import Icon from './icon';
 import { fireSendMessage } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
+import CustomDropDown from './CustomDropDown';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
 import { setTimeout } from 'timers';
@@ -98,7 +104,8 @@ export default {
   name: 'Compose',
   components: {
     Icon,
-    QuillEditor
+    QuillEditor,
+    CustomDropDown
   },
   data() {
     return {
@@ -198,18 +205,18 @@ export default {
       this.close();
     },
     sendCompose() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      if (this.hasAttachments) { //if there are attachments
-        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
-        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
-        // console.log("SEND COMPOSE: hope this works ", headers);
-        // console.log("BODY before Base64: ", body); //long string if attachments are included
-        sendMessage(headers, body);
-      }
-      else {
-        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-        sendMessage(headers, body);
-      }
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // if (this.hasAttachments) { //if there are attachments
+      //   var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+      //   const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+      //   // console.log("SEND COMPOSE: hope this works ", headers);
+      //   // console.log("BODY before Base64: ", body); //long string if attachments are included
+      //   sendMessage(headers, body);
+      // }
+      // else {
+      //   const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      //   sendMessage(headers, body);
+      // }
       this.close();
       //Tidy needs to wait for this to finish
     },
@@ -230,32 +237,33 @@ export default {
       // this.composeMessage = "THIS IS A TEST";
     },
     createDraft() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      if (this.hasAttachments) { //if there are attachments
-        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
-        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
-        // console.log("SEND COMPOSE: hope this works ", headers);
-        // console.log("BODY before Base64: ", body); //long string if attachments are included
-        createDraft(headers, body);
-      }
-      else {
-        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-        createDraft(headers, body);      }
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // if (this.hasAttachments) { //if there are attachments
+      //   var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+      //   const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+      //   // console.log("SEND COMPOSE: hope this works ", headers);
+      //   // console.log("BODY before Base64: ", body); //long string if attachments are included
+      //   createDraft(headers, body);
+      // }
+      // else {
+      //   const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      //   createDraft(headers, body);      
+      // }
       this.close();
     },
     draftUpdate() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      if (this.hasAttachments) { //if there are attachments
-        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
-        const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
-        // console.log("SEND COMPOSE: hope this works ", headers);
-        // console.log("BODY before Base64: ", body); //long string if attachments are included
-        updateDraft(headers, body, this.draftId, this.threadId);
-      }
-      else {
-        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-        updateDraft(headers, body, this.draftId, this.threadId);
-      }
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // if (this.hasAttachments) { //if there are attachments
+      //   var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+      //   const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+      //   // console.log("SEND COMPOSE: hope this works ", headers);
+      //   // console.log("BODY before Base64: ", body); //long string if attachments are included
+      //   updateDraft(headers, body, this.draftId, this.threadId);
+      // }
+      // else {
+      //   const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      //   updateDraft(headers, body, this.draftId, this.threadId);
+      // }
       this.close();
     },
     toggleUploading() {
@@ -317,7 +325,7 @@ export default {
   flex-direction: column;
   align-content: stretch;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 60px;
   z-index: 999;
 }
 .flexFrom {
@@ -328,8 +336,13 @@ export default {
   align-items: center;
 }
 .head {
-  width: 470px;
-  /* height: 100px; */
+  width: 250px;
+}
+.dropDownArea{
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 .headerSection {
   background: #404040;

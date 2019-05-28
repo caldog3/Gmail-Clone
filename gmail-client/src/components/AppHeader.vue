@@ -66,7 +66,8 @@ export default {
   },
   computed: {
     photoUrl() {
-      return this.$store.getters.getCurrentUserProfile.Paa;
+      // return this.$store.getters.getCurrentUserProfile.Paa;
+      return "";
     }
   },
   methods: {

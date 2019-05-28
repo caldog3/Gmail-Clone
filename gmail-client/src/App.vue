@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <!-- LOG-IN SCREEN -->
-    <div class="notLoggedIn" v-if="!loggedIn">
+    <div class="notLoggedIn" v-if="!loading">
       <login-page/>
     </div>
 
-      <!-- OUR ACTUAL EMAIL -->
-    <div class="loggedIn" v-else-if="loggedIn && this.loading">
+    <!-- OUR ACTUAL EMAIL -->
+    <div class="loggedIn" v-else-if="loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
@@ -17,7 +17,7 @@
         <div class="emailList" :style="emailListHeight">
           <router-view/>
           <div class="termsUnderneath">
-            <br><br>
+             <br><br>
             <p>
               <a href="https://policies.google.com/terms" rel="noopener noreferrer" target="_blank">Terms</a> 
               - 
@@ -30,7 +30,7 @@
       </div>
 
       <Compose/>
-      
+
     </div>
 
     <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
@@ -59,7 +59,7 @@ export default {
     return {
       emailListHeight: {},
       initialHeightCalculated: false,
-      loading: false,
+      loading: false
     };
   },
   components: {
@@ -113,7 +113,7 @@ export default {
     if (!this.initialHeightCalculated){
       this.setEmailListHeight();
     }
-    
+
     this.$nextTick(function() {
       window.addEventListener("resize", this.setEmailListHeight);
     });
@@ -125,7 +125,6 @@ export default {
         clearInterval(appHeaderTimer);
       }
     }, 1000);
-    
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })
@@ -200,11 +199,11 @@ body {
 }
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 /* Scroll Bar for SideBar */
@@ -218,11 +217,11 @@ body {
 }
 /* Handle */
 .optionsA::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 /* Scroll Bar for Compose Window */
