@@ -241,7 +241,7 @@ export default {
       console.log("Hi i'm a thread");
       console.log(thread);
       if (!thread.labelId.includes("DRAFT")) {
-        console.log("NOT A DRAFT");
+        // console.log("NOT A DRAFT");
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
         // markEmailAsRead(thread.threadId);

@@ -14,16 +14,60 @@
         <message-body :message="message" :isLastMessage="false"/>
       </template>
     </div>
-    <!-- This is the quill response body -->
-    <div class="quill" @focus="focusOnSection('body')" v-if="replying">
+    <!-- Quill for replies -->
+    <div class="quill" @focus="focusOnSection('body')" v-if="replying || replyingAll">
       <div>&emsp;</div>
-      <textarea rows="1" v-model="recipient" class="recipients"></textarea>
+      <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
+      <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
       <quill-editor v-model="responseHTML"/>
+
       <div class="quill-spacing">
-        <button class="sendBar" type="button" v-on:click="replySend">
+      <!-- Start of Upload -->
+      <div v-if="!uploading">
+        <p>
+          <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
+        </p>
+      </div>
+      <div v-else>
+        <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+          <!-- <h1>Upload Images</h1> -->
+          <div class="dropbox">
+            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
+              accept="image/*" class="input-file">
+              <!-- <p v-if="isInitial">
+                Drag your file(s) here to begin<br> or click to browse
+              </p> -->
+              <p v-if="isSaving">
+                Uploading {{ fileCount }} files...
+              </p>
+          </div>
+        </form>
+        <!--SUCCESS-->
+        <div v-if="isSuccess">
+          <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
+          <p>
+            <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
+          </p>
+          <ul class="list-unstyled">
+            <li v-for="item in uploadedFiles" :key="item.originalName">
+              <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
+            </li>
+          </ul>
+        </div>
+        <!--FAILED-->
+        <div v-if="isFailed">
+          <h2>Uploaded failed.</h2>
+          <p>
+            <a href="javascript:void(0)" @click="reset()">Try again</a>
+          </p>
+          <pre>{{ uploadError }}</pre>
+        </div>
+      </div>
+      <!--End Upload -->
+        <button class="sendBar" type="button" v-on:click="replySort">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
-        <button class="sendBar" type="button" v-on:click="toggleReply">
+        <button class="sendBar" type="button" v-on:click="resetMessage">
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
@@ -35,28 +79,7 @@
       </div>
     </div>
     <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
-    <!-- we need a send button that triggers "reply()" -->
-    <!-- Reply all -->
-    <div class="quill" @focus="focusOnSection('body')" v-if="replyingAll">
-      <div>&emsp;</div>
-      <textarea rows="1" v-model="allReplyRecipients" class="recipients"></textarea>
-      <quill-editor v-model="responseHTML"/>
-      <div class="quill-spacing">
-        <button class="sendBar" type="button" v-on:click="replySend">
-          <font-awesome-icon class="Icon" icon="reply" /> Send
-        </button>
-        <button class="sendBar" type="button" v-on:click="toggleReplyAll">
-          <font-awesome-icon class="Icon" icon="trash" /> Trash
-        </button>
-        <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
-          Save Draft
-        </button>
-        <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
-          Create New Draft
-        </button>
-      </div>
-    </div>
-    <!-- End of the quill -->
+
     <!-- FORWARING might not need 3 separate slots for all options, but we'll try it anyway for now-->
     <div class="quill" @focus="focusOnSection('body')" v-if="forwarding">
       <div>&emsp;</div>
@@ -106,6 +129,10 @@ import { setupEmailBody, markEmailAsRead, markEmailAsUnread, trashEmailThread } 
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import { fireSendMessage } from '../firebase/firebase';
 import moment from 'moment';
+import { upload } from '../file-upload.service';
+import { setTimeout } from 'timers';
+import { resolve } from 'url';
+
 
 
 export default {
@@ -134,7 +161,28 @@ export default {
       forwarding: false,
       forwardRecipient: '',
       isDraft: false, //for determining api route for sending emails
+
+      uploading: false,
+      hasAttachments: false,
+      uploadedFiles: [],
+      uploadError: null,
+      currentStatus: null,
+      uploadFieldName: "photos",
     };
+  },
+  computed: {
+    isInitial() {
+      return this.currentStatus === 'STATUS_INITIAL';
+    },
+    isSaving() {
+      return this.currentStatus === 'STATUS_SAVING';
+    },
+    isSuccess() {
+      return this.currentStatus === 'STATUS_SUCCESS';
+    },
+    isFailed() {
+      return this.currentStatus === 'STATUS_FAILED';
+    }
   },
   methods: {
     returnToInbox(){
@@ -142,6 +190,10 @@ export default {
       this.$store.state.viewFolder = "Inbox";
       eventBus.$emit('MESSAGE_LIST');
       //eventBus.$emit("TOTAL_EMAIL_COUNT", "Inbox");
+    },
+    resetMessage() {
+      this.replying = false;
+      this.replyingAll = false;
     },
     toggleReply() {
       this.replying = !this.replying;
@@ -207,6 +259,14 @@ export default {
       if (message === undefined){return;}
       fireSendMessage(message);
       this.returnToInbox();
+    },
+    replySort() {
+      if (replying && !replyingAll) {
+        this.replySend();
+      }
+      else if (!replying && replyingAll) {
+        this.replyAllSend();
+      }
     },
     replySend() {
       //we'll link these two up soon
@@ -379,7 +439,7 @@ export default {
       let allPeopleArray = this.messages[0].allParticipants;
       let userInstance = false;
       var replyAllPeople = "";
-      console.log("allPeopleArray: ", allPeopleArray);
+      // console.log("allPeopleArray: ", allPeopleArray);
       for (let i = 0; i < allPeopleArray.length; i++) { // loops through all involved email aliases and excludes the current user
         if (allPeopleArray[i].includes(this.$store.state.userEmail) && !userInstance) {
           userInstance = true;
@@ -414,6 +474,58 @@ export default {
     draftSetup() { //This is not reached anymore
       console.log("Is this still reached?");
     },
+    // uploader start
+    reset() {
+      // reset form to initial stater
+      this.currentStatus = 'STATUS_INITIAL';
+      this.uploadedFiles = [];
+      this.uploadError = null;
+      this.hasAttachments = false;
+    },
+    save(formData) { //might be out of the scope of our client
+      //upload data
+      this.currentStatus = 'STATUS_SAVING';
+      upload(formData)
+        .then(this.waitForUpload(2500)) //wait for uploads to reslove
+        .then(x => {
+          this.uploadedFiles = [].concat(x);
+          this.currentStatus = 'STATUS_SUCCESS';
+          // console.log("COMPARE: ", this.uploadedFiles[0].id === this.uploadedFiles[1].id);
+          console.log("UPLOADED FILES: ", this.uploadedFiles);
+          this.hasAttachments = true;
+        })
+        .catch(err => {
+          this.uploadError = err.response;
+          this.currentStatus = 'STATUS_FAILED';
+          console.log("UPLOAD FAILED");
+        });
+    },
+    filesChange(fieldName, fileList) {
+      // handle file changes
+      const formData = new FormData();
+      if (!fileList.length) return;
+
+      // append the files to FormData
+      Array
+        .from(Array(fileList.length).keys())
+        .map(x => {
+          formData.append(fieldName, fileList[x], fileList[x].name);
+        });
+      // save it
+      this.save(formData);
+    },
+    toggleUploading() {
+      this.uploading = !this.uploading;
+    },
+    waitForUpload(miliseconds) {
+      return (x) => {
+        return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
+      };
+    }
+    //uploader finish
+  },
+  mounted() {
+    this.reset();
   },
   created() {
     this.getMessages();
@@ -488,4 +600,37 @@ button:hover {
   align-content: left;
   width: 100%;
 }
+/* styling for the image uploader */
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  min-height: 200px; 
+  position: relative;
+  cursor: pointer;
+}
+
+.input-file {
+  opacity: 40; /* invisible but it's there! */
+  width: 100%;
+  min-height: 200px;
+  /* margin-left: -495px; 
+  margin-top: -10px; */
+  /* position: absolute; */
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
+}
+/* end image uploader styling */
 </style>
