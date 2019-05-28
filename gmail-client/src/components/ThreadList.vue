@@ -244,7 +244,7 @@ export default {
         // console.log("NOT A DRAFT");
         eventBus.$emit('ENTER_MESSAGE');
         this.$router.push({name: 'ThreadBody', params: { id: thread.threadId }});
-        // markEmailAsRead(thread.threadId);
+        markEmailAsRead(thread.threadId);
       }
       else {
         console.log("IS A DRAFT");
