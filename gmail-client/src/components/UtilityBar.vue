@@ -351,19 +351,26 @@ export default {
       this.$store.dispatch("getLastPageListOfMessages", folder);
     },
     spamming() {
-      eventBus.$emit("SPAMMING_THREAD");
-
+      if (confirm("Are you sure you want to mark this as spam?")) {
+        eventBus.$emit("SPAMMING_THREAD");
+      }
     },
     spammingSet() {
-      eventBus.$emit("SPAMMING_CHECKED_THREADS");
+      if (confirm("Are you sure you want to mark all these as spam?")) {
+        eventBus.$emit("SPAMMING_CHECKED_THREADS");
+      }
     },
     trashing() {
-      eventBus.$emit("TRASHING_THREAD");
-      console.log("Clicked the trash button");
+      if (confirm("Are you sure you want to trash this message?")) {
+        eventBus.$emit("TRASHING_THREAD");
+        console.log("Clicked the trash button");
+      }
     },
     trashingSet() {
+      if (confirm("Are you sure you want to trash this set of messages?")) {
       eventBus.$emit("TRASHING_CHECKED_THREADS");
       console.log("----------trashingSet--------------");
+      }
     },
     unreadSet() {
       console.log("Marking set as unread");
