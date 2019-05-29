@@ -261,7 +261,7 @@ export default {
       this.returnToInbox();
     },
     replySort() {
-      if (replying && !replyingAll) {
+      if (this.replying && !this.replyingAll) {
         this.replySend();
       }
       else if (!replying && replyingAll) {

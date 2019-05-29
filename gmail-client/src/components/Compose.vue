@@ -17,12 +17,16 @@
     </div>
 
     <div class="sectionTop">
-      <div class="unselected">
+      <span class="unselected">
         <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
-      </div>
+      </span>
     </div>
 
     <div class="section">
+      <span class="securityDropDown">
+        <security-level-drop-down/>
+      </span>
+      &emsp;|&emsp;
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
 
@@ -95,6 +99,7 @@ import Icon from './icon';
 import { fireSendMessage } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import CustomDropDown from './CustomDropDown';
+import SecurityLevelDropDown from './SecurityLevelDropDown';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
 import { setTimeout } from 'timers';
@@ -105,7 +110,8 @@ export default {
   components: {
     Icon,
     QuillEditor,
-    CustomDropDown
+    CustomDropDown,
+    SecurityLevelDropDown,
   },
   data() {
     return {
@@ -385,6 +391,9 @@ a:not([href]):not([tabindex]) {
   border-bottom: 1px solid #CFCFCF;
   padding: 4px;
   height: 35px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 .sectionText {
   width: 100%;
@@ -484,7 +493,6 @@ textarea {
   position: relative;
   cursor: pointer;
 }
-
 .input-file {
   opacity: 0; /* invisible but it's there! */
   width: 100%;
@@ -494,16 +502,18 @@ textarea {
   position: absolute;
   cursor: pointer;
 }
-
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
 }
-
 .dropbox p {
   font-size: 1.2em;
   text-align: center;
   padding: 50px 0;
 }
 /* end image uploader styling */
+.securityDropDown {
+  position:relative;
+  text-align: left;
+}
 
 </style>
