@@ -46,7 +46,7 @@ import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
 import { setupEmailBody } from '../store-utility-files/email';
-import { fireSendMessage } from '../firebase/firebase';
+import { fireSendMessage, fireSaveDraft, fireUpdateMessage } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 
 
@@ -69,6 +69,7 @@ export default {
       bccActive: false,
 
       existingDraft: false,
+      isFireMessage: false,
       draftId: "",
       threadId: "",
     }
@@ -79,11 +80,13 @@ export default {
       //need to clear values if this is a basic compose...
     },
     close() {
+      if(this.existingDraft){ this.draftUpdate() }
+      else { this.createDraft() }
       this.active = false
       // this.composeTidy();
     },
     fireSendCompose(){
-      let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage);
+      let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage, this.threadId);
       if(message === undefined){return;}
       fireSendMessage(message);
       this.close();
@@ -116,15 +119,27 @@ export default {
       // this.composeMessage = "THIS IS A TEST";
     },
     createDraft() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      createDraft(headers, body);
-      //this.close();
+      let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage);
+      fireSaveDraft(message);
+      this.isFireMessage = true;
+      this.existingDraft = true;
+      this.threadId = message.threadId
+      this.draftId = message.messageId
+      //var sender = this.$store.state.currentUser.w3.U3;
+      // const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      // createDraft(headers, body);
+      // this.close();
     },
     draftUpdate() {
-      var sender = this.$store.state.currentUser.w3.U3;
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      updateDraft(headers, body, this.draftId, this.threadId);
+      if(this.isFireMessage){
+        let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage, this.threadId, this.draftId);
+        fireUpdateMessage(message); 
+      }
+      else{
+        var sender = this.$store.state.currentUser.w3.U3;
+        const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+        updateDraft(headers, body, this.draftId, this.threadId);
+      }
     },
   },
   created() {
@@ -147,6 +162,12 @@ export default {
       } else {this.composeMessage = ""}
 
       this.threadId = payload.threadId;
+      let thread = store.state.threadMessages[threadId];
+      let message = thread[thread.length - 1];
+      if(message.isFireMessage){
+        this.isFireMessage = true;
+      }
+
       var draftsList = this.$store.state.draftIdsArray;
       for (var draft of draftsList) {
         if (draft.message.threadId === this.threadId) { // might also need to compare the messageId but our data shows them as the same id...;

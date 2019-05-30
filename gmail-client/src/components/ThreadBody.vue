@@ -27,10 +27,10 @@
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
-          Save Draft
+          Save Changes
         </button>
         <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
-          Create New Draft
+          Save New Draft
         </button>
       </div>
     </div>
@@ -49,10 +49,10 @@
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
-          Save Draft
+          Save Changes
         </button>
         <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
-          Create New Draft
+          Save New Draft
         </button>
       </div>
     </div>
@@ -70,10 +70,10 @@
           <font-awesome-icon class="Icon" icon="trash" /> Trash
         </button>
         <button class="sendBar" type="button" v-on:click="draftUpdate" v-if="isDraft">
-          Save Draft
+          Save Changes
         </button>
         <button class="sendBar" type="button" v-on:click="draftCreate" v-else>
-          Create New Draft
+          Save New Draft
         </button>
       </div>
     </div>
@@ -104,7 +104,7 @@ import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
 import { setupEmailBody, markEmailAsRead, markEmailAsUnread, trashEmailThread } from '../store-utility-files/email';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
-import { fireSendMessage } from '../firebase/firebase';
+import { fireSendMessage, fireSendDraft, fireUpdateMessage, fireSaveDraft } from '../firebase/firebase';
 import moment from 'moment';
 
 
@@ -174,29 +174,64 @@ export default {
       }
     },
     draftUpdate() { // HOpe this works
-      let draftId;
-      var draftsList = this.$store.state.draftIdsArray;
-      for (var draft of draftsList) {
-        if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
-          console.log("WE FOUND SOME THAT ARE EQUAL");
-          draftId = draft.id;
-          break;
-        }
+      let composeTo = '';
+      let responseBody = '';
+
+      if (this.replying && !this.replyingAll) {
+        composeTo = this.recipient;
+        responseBody = this.responseHTML;
       }
-      updateDraft(headers, body, draftId, threadId);
+      else if (!this.replying && this.replyingAll) {
+        composeTo = this.allReplyRecipients;
+        responseBody = this.responseHTML;
+      }
+      else if (this.forwarding) {
+        composeTo = this.recipient;
+        responseBody = this.forwardHTML;
+      }
+
+     if(this.messages[0].isFireMessage){
+        let message = fireSetupEmailMessage(this.subject, composeTo, responseBody, this.threadId);
+        fireUpdateMessage(message);
+      }
+      else{
+        let draftId;
+        var draftsList = this.$store.state.draftIdsArray;
+        for (var draft of draftsList) {
+          if (draft.message.threadId == threadID) { // might also need to compare the messageId but our data shows them as the same id...;
+            console.log("WE FOUND SOME THAT ARE EQUAL");
+            draftId = draft.id;
+            break;
+          }
+        }
+        const {headers, body} = setupEmailBody(this.subject, composeTo, responseBody, sender);
+        updateDraft(headers, body, draftId, this.threadId);
+      }
     },
     draftCreate() {
       var sender = this.$store.state.currentUser.w3.U3; //do I handle reply all and reply one?
+      let composeTo = '';
+      let responseBody = '';
+
       if (this.replying && !this.replyingAll) {
-        const {headers, body} = setupEmailBody(this.subject, this.recipient, this.responseHTML, sender);
-        addDraftToThread(headers, body, this.threadId);
+        composeTo = this.recipient;
+        responseBody = this.responseHTML;
       }
       else if (!this.replying && this.replyingAll) {
-        const {headers, body} = setupEmailBody(this.subject, this.allReplyRecipients, this.responseHTML, sender);
-        addDraftToThread(headers, body, this.threadId);
+        composeTo = this.allReplyRecipients;
+        responseBody = this.responseHTML;
       }
       else if (this.forwarding) {
-        const {headers, body} = setupEmailBody(this.subject, this.recipient, this.forwardHTML, sender);
+        composeTo = this.recipient;
+        responseBody = this.forwardHTML;
+      }
+
+      if(this.messages[0].isFireMessage){
+        let message = fireSetupEmailMessage(this.subject, composeTo, responseBody, this.messages[0].threadId);
+        fireSaveDraft(message);
+      }
+      else{
+        const {headers, body} = setupEmailBody(this.subject, composeTo, responseBody, sender);
         addDraftToThread(headers, body, this.threadId);
       }
       //values aren't defined in scope outside of the ifs and else-ifs.....
@@ -206,6 +241,12 @@ export default {
       let message = fireSetupEmailMessage(subject, composeTo, this.responseHTML, this.messages[0].threadId);
       if (message === undefined){return;}
       fireSendMessage(message);
+      this.returnToInbox();
+    },
+    firebaseDraftSend(subject, composeTo){
+      let message = fireSetupEmailMessage(subject, composeTo, this.responseHTML, this.messages[0].threadId);
+      if (message === undefined){return;}
+      fireSendDraft(message);
       this.returnToInbox();
     },
     replySend() {
@@ -219,10 +260,6 @@ export default {
       if (this.replyingAll){
         composeTo = this.allReplyRecipients
       }
-      if(this.messages[0].isFireMessage){
-        this.firebaseReplySend(reSubj, composeTo);
-        return;
-      }
       const {headers, body} = setupEmailBody(reSubj, composeTo, this.responseHTML, this.sender);
       // console.log("Headers: ", headers);
       // console.log("Body: ", body);
@@ -230,6 +267,10 @@ export default {
       this.threadId = threadID;
       //FIXME: add condition for drafts
       if (!this.isDraft) {
+        if(this.messages[0].isFireMessage){
+          this.firebaseReplySend(reSubj, composeTo);
+          return;
+        }
         sendReply(headers, body, threadID);
       }
       else { // this handles cases where we are sending a draft
@@ -241,6 +282,10 @@ export default {
             draftId = draft.id;
             break;
           }
+        }
+        if(this.messages[0].isFireMessage){
+          this.firebaseDraftSend(reSubj, composeTo);
+          return;
         }
         sendDraft(headers, body, draftId, threadID);
       }
@@ -289,6 +334,10 @@ export default {
       let threadID = this.messages[0].threadId;
       //FIXME: add condition for drafts
       if (!this.isDraft) {
+        if(this.messages[0].isFireMessage){
+          this.firebaseReplySend(forSubj, this.forwardingRecipient);
+          return;
+        }
         sendReply(headers, body, threadID);
       }
       else {
@@ -300,6 +349,10 @@ export default {
             draftId = draft.id;
             break;
           }
+        }
+        if(this.messages[0].isFireMessage){
+          this.firebaseDraftSend(forSubj, this.forwardingRecipient);
+          return;
         }
         sendDraft(headers, body, draftId);
       }

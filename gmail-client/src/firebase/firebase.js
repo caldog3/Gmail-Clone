@@ -160,9 +160,26 @@ const fireSendMessage = (message) => {
     fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).set(message);
 }
 
-const fireSaveDraft = (message) => {
-    let sender = base64url(store.state.currentUser.w3.U3);
+const fireSendDraft = (message) => {
+    let currentUser = base64url(store.state.currentUser.w3.U3);
+    fireRef.child(users).child(currentUser).child(drafts).child(message.threadId).remove();
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(folders).child(drafts).remove();
+    fireSendMessage(message);
+}
 
+const fireSaveDraft = (message) => {
+    let currentUser = base64url(store.state.currentUser.w3.U3);
+    fireRef.child(users).child(currentUser).child(drafts).child(message.threadId).set(true);
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(isRead).set(true);
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(folders).child(drafts).set(true);
+    fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).set(message);
+}
+
+const fireDeleteDraft = (threadId) => {
+    let currentUser = base64url(store.state.currentUser.w3.U3);
+    fireRef.child(users).child(currentUser).child(drafts).child(message.threadId).remove();
+    fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(folders).child(drafts).remove();
+    fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).remove();
 }
 
 //One-time call. This function will notify you when you receive a new email.
@@ -251,7 +268,7 @@ const fireTrashThread = (threadId) => {
 }
 
 const fireUpdateMessage = (message) => {
-    fireRef.child(threads).child(message.threadId).child(message.messageId).set(message);
+    fireRef.child(threads).child(message.threadId).child(messages).child(message.messageId).set(message);
 }
 
 const fireMarkAsRead = (message) => {
@@ -272,27 +289,15 @@ const extractEmailFromDetail = (detailedFrom) =>{
     return email[0];
 }
 
-const testFirebase = () =>{
-    fireRetrieveMessages('how.d.65@gmail.com');
-    //fireSendMessage(responseMessage1);
-    //fireSendMessage(responseMessage2);
-}
-
-const testTwoFirebase = () =>{
-    // fireSendMessage(message1);
-    // fireSendMessage(message2);
-    // fireSendMessage(message3);
-    // fireSendMessage(responseMessage3);
-}
-
 export{
     fireSendMessage,
+    fireSendDraft,
+    fireSaveDraft,
+    fireDeleteDraft,
     fireRetrieveMessages,
     fireGetMessagesByLabel,
     fireTrashThread,
     fireUpdateMessage,
     fireMarkAsRead,
     fireMarkAsUnread,
-    testFirebase,
-    testTwoFirebase
 };
