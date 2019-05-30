@@ -29,6 +29,9 @@
       &emsp;|&emsp;
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
+    <div class="section" v-if="hasPassword">
+      <input class="full2" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
+    </div>
 
     <div @focus="focusOnSection('body')">
       <quill-editor v-model="composeMessage"/>
@@ -115,6 +118,9 @@ export default {
   },
   data() {
     return {
+      hasPassword: false,
+      password: '',
+
       composeTo: '',
       composeSubject: '',
       composeMessage: '',
@@ -279,14 +285,17 @@ export default {
       return (x) => {
         return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
       };
-    }
+    },
   },
   mounted() {
     this.reset();
   },
   created() {
-    eventBus.$on('BODY_CLICK', this.close)
-    eventBus.$on('KEYUP_ESCAPE', this.close)
+    eventBus.$on('BODY_CLICK', this.close);
+    eventBus.$on('KEYUP_ESCAPE', this.close);
+    eventBus.$on("COMPOSE_PASSWORD", payload => {
+      this.hasPassword = payload;
+    });
     eventBus.$on('COMPOSE_OPEN', this.open);
     eventBus.$on('COMPOSE_TIDY', this.composeTidy);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
