@@ -72,29 +72,37 @@
           <div class="recipients">to {{message.to | getFirstNames}}</div>
           <i class="down"></i>
         </div>
-        
-        <!-- here's the body; need to break the body into 2 pieces -->
-        <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
-
-        <div v-if="images.length > 0" >
-          <v-gallery :images="images" :dark="true"></v-gallery>
+        <div v-if="message.messageExpiryUnixTime">
+          {{ timeToMessageExpiry }}
         </div>
-        <div v-if="attachments.length > 0" >
-          <p><b>Attachments:</b></p>
-          <div v-for="(attachment, index) in attachments" :key="attachment.url">
-            <div v-if="attachment.url.includes('application/pdf')">
-              <template v-if="!attachment.url.includes('null')">
-                <button @click="openModal(index)">{{ attachment.filename }}</button>
-              </template>
-              <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
-                <object :data="attachment.url" :name="attachment.filename" width="80%" height="800"></object>
-              </sweet-modal>
-            </div>
-            <div v-else>
-              <button><a :href="attachment.url" :download="attachment.filename">{{ attachment.filename }}</a></button>
+        <template v-if="!messageExpired">
+          <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
+
+          <div v-if="images.length > 0" >
+            <v-gallery :images="images" :dark="true"></v-gallery>
+          </div>
+
+          <div v-if="attachments.length > 0" >
+            <p><b>Attachments:</b></p>
+            <div v-for="(attachment, index) in attachments" :key="attachment.url">
+              <div v-if="attachment.url.includes('application/pdf')">
+                <template v-if="!attachment.url.includes('null')">
+                  <button @click="openModal(index)">{{ attachment.filename }}</button>
+                </template>
+                <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
+                  <object :data="attachment.url" :name="attachment.filename" width="80%" height="800"></object>
+                </sweet-modal>
+              </div>
+              <div v-else>
+                <button><a :href="attachment.url" :download="attachment.filename">{{ attachment.filename }}</a></button>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <div style="color: red"> &lt;Message timed out&gt;</div>
+        </template>        
       </div>
       
     </div>
@@ -108,7 +116,9 @@ import { SweetModal } from 'sweet-modal-vue';
 import linkifyString from 'linkifyjs/string';
 import linkifyHtml from 'linkifyjs/html';
 import timeago from 'epoch-timeago';
+import moment from "moment";
 import isHtml from 'is-html';
+import { setInterval, clearInterval, setTimeout } from 'timers';
 
 export default {
   name: 'MessageBody',
@@ -121,7 +131,10 @@ export default {
     return {
       timeAgo: "...",
       notExpanded: false,
-      attachmentsFetched: false
+      attachmentsFetched: false,
+      currentUnixTime: this.getCurrentUnixTime(),
+      messageExpired: false,
+      timeToMessageExpiry: ""
     };
   },
   filters: {
@@ -168,7 +181,7 @@ export default {
       }
       
       return messageBody;
-    }
+    },
   },
   computed: {
     attachments(){
@@ -225,6 +238,15 @@ export default {
     unexpand() {
       this.notExpanded = true;
     },
+    getCurrentUnixTime(){
+      return moment(new Date()).unix();
+    },
+    setMessageExpiryTimeText(){
+      const selfDestructText = "This message will self-destruct";
+      const unixTime = this.message.messageExpiryUnixTime;
+      const timeFromNow = moment(unixTime * 1000).fromNow();
+      this.timeToMessageExpiry = `${selfDestructText} ${timeFromNow}`;
+    },
     starredLabelToggle(thread) {
       thread.starred = !thread.starred;
       if(thread.starred === true) {
@@ -239,11 +261,45 @@ export default {
     },
     setTimeAgo(){
       this.timeAgo = timeago(this.message.unixTime * 1000);
+    },
+    isExpired(){
+      const secondAheadUnixTime = this.currentUnixTime + 1;
+      if(secondAheadUnixTime > this.message.messageExpiryUnixTime){
+        this.clearMessageSnippet();
+        return true;
+      }
+
+      return false;
+    },
+    clearMessageSnippet(){
+      const expiredMessageSnippet = '<span style="color: red"> &lt;Message timed out&gt;</span>';
+      this.message.snippet = expiredMessageSnippet;
     }
   },
   created(){
     this.setTimeAgo();
     this.unexpand();
+
+    if (this.message.messageExpiryUnixTime){
+      if (this.isExpired()){
+        this.messageExpired = true;
+      } else {
+        this.setMessageExpiryTimeText();
+
+        const unixTimeInterval = setInterval(()=>{
+          this.currentUnixTime = this.getCurrentUnixTime();
+
+          if (this.isExpired()){
+            this.messageExpired = true;
+            clearInterval(unixTimeInterval);
+          } else {
+            this.setMessageExpiryTimeText();
+          }
+        }, 1000);
+      }
+    }
+    
+    
   },
   mounted(){
     if (this.isLastMessage){
