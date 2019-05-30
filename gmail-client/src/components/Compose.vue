@@ -1,23 +1,32 @@
 /* eslint-disable */
 
 <template>
-  <div class="compose" v-if="active" @click.stop>
+  <div class="compose composeWindow" v-if="active" @click.stop>
     <div class="headerSection">
       <div class="head">
         <h2>New Message</h2>
       </div>
+      
+      <span class="dropDownArea">
+        <custom-drop-down/>
+      </span>
+      
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
       </div>
     </div>
 
     <div class="sectionTop">
-      <div class="unselected">
+      <span class="unselected">
         <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
-      </div>
+      </span>
     </div>
 
     <div class="section">
+      <span class="securityDropDown">
+        <security-level-drop-down/>
+      </span>
+      &emsp;|&emsp;
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
 
@@ -25,6 +34,48 @@
       <quill-editor v-model="composeMessage"/>
     </div>
     
+    <!-- Start of Upload -->
+    <div v-if="!uploading">
+      <p>
+        <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
+      </p>
+    </div>
+    <div v-else>
+      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+        <h1>Upload Images</h1>
+        <div class="dropbox">
+          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
+            accept="image/*" class="input-file">
+            <p v-if="isInitial">
+              Drag your file(s) here to begin<br> or click to browse
+            </p>
+            <p v-if="isSaving">
+              Uploading {{ fileCount }} files...
+            </p>
+        </div>
+      </form>
+      <!--SUCCESS-->
+      <div v-if="isSuccess">
+        <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
+        </p>
+        <ul class="list-unstyled">
+          <li v-for="item in uploadedFiles" :key="item.originalName">
+            <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
+          </li>
+        </ul>
+      </div>
+      <!--FAILED-->
+      <div v-if="isFailed">
+        <h2>Uploaded failed.</h2>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Try again</a>
+        </p>
+        <pre>{{ uploadError }}</pre>
+      </div>
+    </div>
+    <!--End Upload -->
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="fireSendCompose">
@@ -45,16 +96,22 @@ import { sendMessage, createDraft, updateDraft } from './../store-utility-files/
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
-import { setupEmailBody } from '../store-utility-files/email';
 import { fireSendMessage, fireSaveDraft, fireUpdateMessage } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
-
+import CustomDropDown from './CustomDropDown';
+import SecurityLevelDropDown from './SecurityLevelDropDown';
+import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
+import { upload } from '../file-upload.service';
+import { setTimeout } from 'timers';
+import { resolve } from 'url';
 
 export default {
   name: 'Compose',
   components: {
     Icon,
-    QuillEditor
+    QuillEditor,
+    CustomDropDown,
+    SecurityLevelDropDown,
   },
   data() {
     return {
@@ -72,9 +129,71 @@ export default {
       isFireMessage: false,
       draftId: "",
       threadId: "",
+
+      uploading: false,
+      hasAttachments: false,
+      uploadedFiles: [],
+      uploadError: null,
+      currentStatus: null,
+      uploadFieldName: "photos",
+    }
+  },
+  computed: {
+    isInitial() {
+      return this.currentStatus === 'STATUS_INITIAL';
+    },
+    isSaving() {
+      return this.currentStatus === 'STATUS_SAVING';
+    },
+    isSuccess() {
+      return this.currentStatus === 'STATUS_SUCCESS';
+    },
+    isFailed() {
+      return this.currentStatus === 'STATUS_FAILED';
     }
   },
   methods: {
+    // uploader start
+    reset() {
+      // reset form to initial stater
+      this.currentStatus = 'STATUS_INITIAL';
+      this.uploadedFiles = [];
+      this.uploadError = null;
+      this.hasAttachments = false;
+    },
+    save(formData) { //might be out of the scope of our client
+      //upload data
+      this.currentStatus = 'STATUS_SAVING';
+      upload(formData)
+        .then(this.waitForUpload(2500)) //wait for uploads to reslove
+        .then(x => {
+          this.uploadedFiles = [].concat(x);
+          this.currentStatus = 'STATUS_SUCCESS';
+          // console.log("COMPARE: ", this.uploadedFiles[0].id === this.uploadedFiles[1].id);
+          console.log("UPLOADED FILES: ", this.uploadedFiles);
+          this.hasAttachments = true;
+        })
+        .catch(err => {
+          this.uploadError = err.response;
+          this.currentStatus = 'STATUS_FAILED';
+          console.log("UPLOAD FAILED");
+        });
+    },
+    filesChange(fieldName, fileList) {
+      // handle file changes
+      const formData = new FormData();
+      if (!fileList.length) return;
+
+      // append the files to FormData
+      Array
+        .from(Array(fileList.length).keys())
+        .map(x => {
+          formData.append(fieldName, fileList[x], fileList[x].name);
+        });
+      // save it
+      this.save(formData);
+    },
+    //uploader finish
     open() {
       this.active = true
       //need to clear values if this is a basic compose...
@@ -83,6 +202,9 @@ export default {
       if(this.existingDraft){ this.draftUpdate() }
       else { this.createDraft() }
       this.active = false
+      setTimeout(() => {      
+        this.composeTidy();
+      }, 250);
       // this.composeTidy();
     },
     fireSendCompose(){
@@ -92,23 +214,28 @@ export default {
       this.close();
     },
     sendCompose() {
-
-      console.log("TO access test:", this.composeTo);
-      var sender = this.$store.state.currentUser.w3.U3;
-
-      const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
-      console.log("SEND COMPOSE: hope this works ", headers);
-      console.log("BODY before Base64: ", body);
-      //function to decode it
-      sendMessage(headers, body);
+      // var sender = this.$store.state.currentUser.w3.U3;
+      // if (this.hasAttachments) { //if there are attachments
+      //   var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+      //   const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
+      //   // console.log("SEND COMPOSE: hope this works ", headers);
+      //   // console.log("BODY before Base64: ", body); //long string if attachments are included
+      //   sendMessage(headers, body);
+      // }
+      // else {
+      //   const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
+      //   sendMessage(headers, body);
+      // }
       this.close();
       //Tidy needs to wait for this to finish
-      // this.composeTidy();
     },
     composeTidy() {
+      console.log("COMPOSE TIDY");
       this.composeTo = '';
       this.composeSubject = '';
       this.composeMessage = '';
+      this.reset();
+      this.uploading = false;
     },
     focusOnSection(section) {
       this.activeSection = section;
@@ -141,6 +268,17 @@ export default {
         updateDraft(headers, body, this.draftId, this.threadId);
       }
     },
+    toggleUploading() {
+      this.uploading = !this.uploading;
+    },
+    waitForUpload(miliseconds) {
+      return (x) => {
+        return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
+      };
+    }
+  },
+  mounted() {
+    this.reset();
   },
   created() {
     eventBus.$on('BODY_CLICK', this.close)
@@ -157,7 +295,7 @@ export default {
       } else {this.composeSubject = ""}
       if (payload.body != null) { 
         this.composeMessage = payload.body;
-        console.log("payloadval:", payload);
+        // console.log("payloadval:", payload);
         //common quill problem where quill resets the value we want to instantiate here. Need some kind of workaround
       } else {this.composeMessage = ""}
 
@@ -195,7 +333,7 @@ export default {
   flex-direction: column;
   align-content: stretch;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 60px;
   z-index: 999;
 }
 .flexFrom {
@@ -206,17 +344,24 @@ export default {
   align-items: center;
 }
 .head {
-  width: 470px;
+  width: 250px;
+}
+.dropDownArea{
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
 .headerSection {
   background: #404040;
-  height: 35px;
+  min-height: 35px;
   display: flex;
   flex-direction: row;
   align-content: stretch;
   align-items: center;
   padding: 4px;
   width: 100%;
+  
 }
 h2 {
   color: white;
@@ -248,6 +393,9 @@ a:not([href]):not([tabindex]) {
   border-bottom: 1px solid #CFCFCF;
   padding: 4px;
   height: 35px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 .sectionText {
   width: 100%;
@@ -289,7 +437,7 @@ textarea {
   resize: none;
 }
 .footerSection {
-  overflow: hidden;
+  /* overflow: hidden; */
   width: 510px;
   margin: 4px;
   height: 55px;
@@ -319,6 +467,55 @@ textarea {
   float: left;
   padding: 3px;
   margin: 4px;
+}
+.composeWindow {
+  /* margin-right: 22px; */
+  overflow: hidden;
+  border-bottom: solid;
+  border-color: rgba(255, 255, 255, 0.4);
+  overflow-y: scroll;
+  /* min-height: 500px; */
+  max-height: 80vh;
+  /* height: 100%; */
+
+}
+.composeWindow:hover {
+  /* overflow-y: scroll; */
+  /* margin-right: 10px; */
+}
+
+/* styling for the image uploader */
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  min-height: 200px; /* minimum height */
+  position: relative;
+  cursor: pointer;
+}
+.input-file {
+  opacity: 0; /* invisible but it's there! */
+  width: 100%;
+  min-height: 200px;
+  margin-left: -140px; /* adjust the input location to match the visual box */
+  margin-top: -10px;
+  position: absolute;
+  cursor: pointer;
+}
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
+}
+/* end image uploader styling */
+.securityDropDown {
+  position:relative;
+  text-align: left;
 }
 
 </style>

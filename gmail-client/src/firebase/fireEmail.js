@@ -15,7 +15,7 @@ const extractSnippet = (composeMessage) => {
   });
   return snippet;
 }
-  
+
 const extractConciseTo = (firstParticipant) => {
   firstParticipant = firstParticipant.split('@');
   firstParticipant = firstParticipant[0].split(' ');
@@ -27,8 +27,8 @@ const fireSetupEmailMessage = (composeSubject, composeTo, composeMessage, thread
   composeTo = composeTo.toLowerCase();
   const uuidv1 = require('uuid/v1');
   let allParticipants = [];
-  let sender = store.state.currentUser.w3.U3;
-  let senderName = store.state.currentUser.w3.ig;
+  let sender = store.state.userEmail;
+  let senderName = store.state.userName;
   let detailedFrom = senderName + ' <' + sender + '>';
   let recipients = composeTo.split(', ');
 

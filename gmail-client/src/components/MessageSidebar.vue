@@ -372,16 +372,16 @@ export default {
     },
 
     generalHandle(folder) {
-      const labelsToBeUpperCased = ["Starred", "Important", "Sent", "Spam", "Trash"];
+      // const labelsToBeUpperCased = ["Starred", "Important", "Sent", "Spam", "Trash"];
 
-      if(labelsToBeUpperCased.includes(folder)){
-        this.getFolderLabels(folder.toUpperCase());
-      } else if (folder === "Drafts"){
-        this.getFolderLabels("DRAFT");
-        this.getListOfDraftIds();
-      } else if (folder !== "Inbox"){
-        this.getFolderLabels(folder);
-      }
+      // if(labelsToBeUpperCased.includes(folder)){
+      //   this.getFolderLabels(folder.toUpperCase());
+      // } else if (folder === "Drafts"){
+      //   this.getFolderLabels("DRAFT");
+      //   this.getListOfDraftIds();
+      // } else if (folder !== "Inbox"){
+      //   this.getFolderLabels(folder);
+      // }
       
       this.loadFolder(folder);
       this.activateFolder(folder);
@@ -424,7 +424,7 @@ export default {
       this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
     }
 
-    getLabels();
+    // getLabels();
     // Probably a much better way to do this
     eventBus.$on("CUSTOM_FOLDERS", customs => {
 

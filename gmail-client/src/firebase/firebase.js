@@ -6,7 +6,7 @@ import config from './firebase.config';
 // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/database";
-import { networkInterfaces } from 'os';
+
 firebase.initializeApp(config);
 
 let fireRef = firebase.database().ref()
@@ -143,7 +143,7 @@ const responseMessage3 = {
 
 //within "message" object, format the "to" field as follows: "email@gmail.com, otheremail@gmail.com, anotheremail@gmail.com"
 const fireSendMessage = (message) => {
-    let sender = base64url(store.state.currentUser.w3.U3);
+    let sender = base64url(store.state.userEmail);
     //fireRef.child(users).child(sender).child(drafts).child(message.threadId).remove();
     fireRef.child(users).child(sender).child(sent).child(message.threadId).set(true);
     fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(isRead).set(true);
@@ -184,7 +184,9 @@ const fireDeleteDraft = (threadId) => {
 
 //One-time call. This function will notify you when you receive a new email.
 const fireRetrieveMessages = () => {
-    let currentUser = base64url(store.state.currentUser.w3.U3);
+    store.commit('addLabelId', "PRIMARY");
+    store.commit('addLabelId', "SENT");
+    let currentUser = base64url(store.state.userEmail);
     fireRef.child(users).child(currentUser).child(primary).once('value').then((userShot) => {
         if(!userShot.exists()){
             return fireRef.child(users).child(currentUser).child(primary).set("Welcome!");//.child('Welcome!').set(true);
@@ -227,7 +229,7 @@ const fireRetrieveMessages = () => {
 } 
 
 const fireGetMessagesByLabel = (labelId) => {
-    let currentUser = base64url(store.state.currentUser.w3.U3);
+    let currentUser = base64url(store.state.userEmail);
     fireRef.child(users).child(currentUser).child(labelId).once('value').then((labelShot) => {
         labelShot.forEach((threadId) => {
             threadId = threadId.key;
@@ -256,7 +258,7 @@ const fireGetMessagesByLabel = (labelId) => {
 }
 
 const fireTrashThread = (threadId) => {
-    let currentUser = base64url(store.state.currentUser.w3.U3);
+    let currentUser = base64url(store.state.userEmail);
     fireRef.child(threads).child(threadId).child(participants).child(currentUser).child(folders).once("value").then((folderShot) => {
         return folderShot.forEach((labelId) => {
             fireRef.child(users).child(currentUser).child(labelId.key).child(threadId).remove();
@@ -272,12 +274,12 @@ const fireUpdateMessage = (message) => {
 }
 
 const fireMarkAsRead = (message) => {
-    let currentUser = base64url(store.state.currentUser.w3.U3);
+    let currentUser = base64url(store.state.userEmail);
     fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(isRead).set(true);
 }
 
 const fireMarkAsUnread = (message) => {
-    let currentUser = base64url(store.state.currentUser.w3.U3);
+    let currentUser = base64url(store.state.userEmail);
     fireRef.child(threads).child(message.threadId).child(participants).child(currentUser).child(isRead).set(false);
 }
 

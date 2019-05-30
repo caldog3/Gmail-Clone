@@ -92,14 +92,14 @@ import { getDraftListOfIds } from '../store-utility-files/gmail-api-calls';
     },
    },
    created() {
-      this.getInboxLabels('PRIMARY').then(()=>{
-        eventBus.$emit('DATA_FETCHING_COMPLETE');
-        fireRetrieveMessages();
-      })
+      // this.getInboxLabels('PRIMARY').then(()=>{
+        // eventBus.$emit('DATA_FETCHING_COMPLETE');
+        // fireRetrieveMessages();
+      // })
 
      
-      this.getInboxLabels('SOCIAL');
-      this.getInboxLabels('PROMOTIONS');
+      // this.getInboxLabels('SOCIAL');
+      // this.getInboxLabels('PROMOTIONS');
    },
  }
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <!-- LOG-IN SCREEN -->
-    <div class="notLoggedIn" v-if="!loggedIn">
+    <div class="notLoggedIn" v-if="!loading">
       <login-page/>
     </div>
 
-      <!-- OUR ACTUAL EMAIL -->
-    <div class="loggedIn" v-else-if="loggedIn && this.loading">
+    <!-- OUR ACTUAL EMAIL -->
+    <div class="loggedIn" v-else-if="loading">
 
       <div id="header" ref="appHeader"><app-header/></div>
 
@@ -17,7 +17,7 @@
         <div class="emailList" :style="emailListHeight">
           <router-view/>
           <div class="termsUnderneath">
-            <br><br>
+             <br><br>
             <p>
               <a href="https://policies.google.com/terms" rel="noopener noreferrer" target="_blank">Terms</a> 
               - 
@@ -30,7 +30,7 @@
       </div>
 
       <Compose/>
-      
+
     </div>
 
     <!-- LOADING SCREEN - NOTE: has to be here because of v-else-if evaluation order -->
@@ -51,6 +51,7 @@ import MessageSidebar from "./components/MessageSidebar";
 import UtilityBar from "./components/UtilityBar";
 import LoginPage from "./components/LoginPage";
 import LoadingScreen from "./components/LoadingScreen";
+import { setInterval, clearInterval } from 'timers';
 
 export default {
   name: "App",
@@ -58,7 +59,7 @@ export default {
     return {
       emailListHeight: {},
       initialHeightCalculated: false,
-      loading: false,
+      loading: false
     };
   },
   components: {
@@ -112,13 +113,19 @@ export default {
     if (!this.initialHeightCalculated){
       this.setEmailListHeight();
     }
-    
+
     this.$nextTick(function() {
       window.addEventListener("resize", this.setEmailListHeight);
     });
   },
   mounted() {
-    this.setEmailListHeight();
+    this.updateLoading();
+    const appHeaderTimer = setInterval(()=>{
+      if (this.$refs.appHeader !== undefined){
+        this.setEmailListHeight();
+        clearInterval(appHeaderTimer);
+      }
+    }, 1000);
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })
@@ -193,11 +200,11 @@ body {
 }
 /* Handle */
 .emailList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .emailList::-webkit-scrollbar-thumb:hover {
- background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 /* Scroll Bar for SideBar */
@@ -211,10 +218,28 @@ body {
 }
 /* Handle */
 .optionsA::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.5); 
+  background: rgba(255, 255, 255, 0.5);
 }
 /* Handle on hover */
 .optionsA::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Scroll Bar for Compose Window */
+/* width */
+.composeWindow::-webkit-scrollbar {
+  /* width: 6px; */
+}
+/* Track */
+.composeWindow::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* Handle */
+.composeWindow::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5); 
+}
+/* Handle on hover */
+.composeWindow::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
 }
 
