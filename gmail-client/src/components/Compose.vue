@@ -23,14 +23,16 @@
     </div>
 
     <div class="section">
-      <span class="securityDropDown">
+      <span class="securityDropDown full2">
         <security-level-drop-down/>
       </span>
-      &emsp;|&emsp;
+      |&emsp;
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="section" v-if="hasPassword">
       <input class="full2" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
+      |&emsp;
+      <input class="full2" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword" @focus="focusOnSection('confirmPassword')">
     </div>
 
     <div @focus="focusOnSection('body')">
@@ -120,6 +122,7 @@ export default {
     return {
       hasPassword: false,
       password: '',
+      confirmPassword: '',
 
       composeTo: '',
       composeSubject: '',
@@ -211,6 +214,10 @@ export default {
       // this.composeTidy();
     },
     fireSendCompose(){
+      if (this.password !== this.confirmPassword) {
+        alert("The passwords do not match");
+        return;
+      }
       let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage);
       if(message === undefined){return;}
       fireSendMessage(message);
