@@ -32,7 +32,7 @@
           <!-- This needs to be the last message's snippet not the first... -->
           <div v-html="message.snippet"></div>
         </div>
-        <div v-if="message.messageExpiryUnixTime" class="messageExpiry rightAlign">
+        <div v-if="message.messageExpiryUnixTime && !messageExpired" class="messageExpiry rightAlign">
             <small><b>{{ timeToMessageExpiry }}</b></small>
           </div>    
       </div>
@@ -74,12 +74,12 @@
         <div>
           <div class="recipients">to {{message.to | getFirstNames}}</div>
           <i class="down"></i>
-          <div v-if="message.messageExpiryUnixTime" class="messageExpiry rightAlign">
+          <div v-if="message.messageExpiryUnixTime && !messageExpired" class="messageExpiry rightAlign">
             <small><b>{{ timeToMessageExpiry }}</b></small>
           </div>
         </div>
         
-        <template v-if="!messageExpired">
+        <template v-if="!messageExpired && unlocked">
           <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
           <div v-if="images.length > 0" >
@@ -104,9 +104,17 @@
           </div>
         </template>
 
-        <template v-else>
+        <template v-else-if="messageExpired">
           <div style="color: red"> &lt;Message timed out&gt;</div>
         </template>        
+        
+        <template v-else-if="!unlocked">
+          <!-- password stuff -->
+          <div class="passwordInfo"> This message is password protected. To access this content,
+             please request the password from the sender and enter it below.</div>
+          <input type="enter" class="password" v-model="checkPassword" placeholder="Password" id="checkPassword" @focus="focusOnSection('checkPassword')">
+          <button @click="enterPassword">Enter</button>
+        </template>
       </div>
       
     </div>
@@ -138,7 +146,10 @@ export default {
       attachmentsFetched: false,
       currentUnixTime: this.getCurrentUnixTime(),
       messageExpired: false,
-      timeToMessageExpiry: ""
+      timeToMessageExpiry: "",
+      unlocked: true,
+      checkPassword: '',
+      realPassword: '',
     };
   },
   filters: {
@@ -231,6 +242,11 @@ export default {
     },
   },
   methods: {
+    enterPassword() {
+      if (this.checkPassword === this.realPassword) {
+        this.unlocked = true;
+      }
+    },
     expand() {
       this.notExpanded = false;
 
@@ -301,6 +317,10 @@ export default {
           }
         }, 1000);
       }
+    }
+    if (this.message.password !== null) {
+      this.unlocked = false;
+      this.realPassword = this.message.password;
     }
     
     
@@ -502,6 +522,10 @@ h4 {
 }
 
 .close:hover { background: #00d9ff; }
+
+.passwordInfo {
+  font-weight: bold;
+}
 
 @-moz-document url-prefix() {
   .theRestoftheTime {
