@@ -141,6 +141,8 @@ export default {
       uploadError: null,
       currentStatus: null,
       uploadFieldName: "photos",
+
+      messageExpiryUnixTime: null
     }
   },
   computed: {
@@ -211,7 +213,12 @@ export default {
       // this.composeTidy();
     },
     fireSendCompose(){
-      let message = fireSetupEmailMessage(this.composeSubject, this.composeTo, this.composeMessage);
+      let message = fireSetupEmailMessage({
+        composeSubject: this.composeSubject, 
+        composeTo: this.composeTo, 
+        composeMessage: this.composeMessage,
+        messageExpiryUnixTime: this.messageExpiryUnixTime
+      });
       if(message === undefined){return;}
       fireSendMessage(message);
       this.close();
@@ -297,6 +304,9 @@ export default {
       this.hasPassword = payload;
     });
     eventBus.$on('COMPOSE_OPEN', this.open);
+    eventBus.$on("SET_EXPIRY_TIME", unixTime => {
+      this.messageExpiryUnixTime = unixTime;
+    })
     eventBus.$on('COMPOSE_TIDY', this.composeTidy);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {
       this.existingDraft = true;
