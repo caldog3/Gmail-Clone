@@ -167,16 +167,16 @@ export default {
           return messageBody;
         }
         return hyperlinkedHTML;
-      } else if(messageBody !== undefined){
+      } else if(messageBody !== undefined) {
         return linkifyString(messageBody, {});
       } else {
         return messageBody;
       }
     },
     deletePreviousMessageBodies(messageBody){
-      const replyRegex = /On[\s\S]+<[\s\S]+> wrote:/g
-      const index = messageBody.search(replyRegex);
-      if (index !== -1){
+      const replyRegex = /On[\s\S]+<[\s\S]+> wrote:/g  //FIXME is this correct Ammon?
+      const index = messageBody.search(replyRegex); // this .search breaks sometimes
+      if (index !== -1) {
         messageBody = messageBody.substring(0, index);
       }
       
