@@ -168,6 +168,7 @@ export default {
       uploadError: null,
       currentStatus: null,
       uploadFieldName: "photos",
+      messageExpiryUnixTime: null
     };
   },
   computed: {
@@ -255,7 +256,12 @@ export default {
       // createDraft(headers, body);
     },
     firebaseReplySend(subject, composeTo){
-      let message = fireSetupEmailMessage(subject, composeTo, this.responseHTML, this.messages[0].threadId);
+      let message = fireSetupEmailMessage({
+        composeSubject: subject,
+        composeTo, 
+        composeMessage: this.responseHTML,
+        messageExpiryUnixTime: this.messageExpiryUnixTime
+      }, this.messages[0].threadId);
       if (message === undefined){return;}
       fireSendMessage(message);
       this.returnToInbox();
@@ -264,7 +270,7 @@ export default {
       if (this.replying && !this.replyingAll) {
         this.replySend();
       }
-      else if (!replying && replyingAll) {
+      else if (!this.replying && this.replyingAll) {
         this.replyAllSend();
       }
     },

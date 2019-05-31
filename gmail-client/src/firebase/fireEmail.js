@@ -22,7 +22,12 @@ const extractConciseTo = (firstParticipant) => {
   return firstParticipant[0];
 }
 
-const fireSetupEmailMessage = (composeSubject, composeTo, composeMessage, threadId) => {
+const fireSetupEmailMessage = ({
+  composeSubject, 
+  composeTo, 
+  composeMessage,
+  messageExpiryUnixTime
+}, threadId) => {
   //conciseTo for group emails only requires one name
   composeTo = composeTo.toLowerCase();
   const uuidv1 = require('uuid/v1');
@@ -60,7 +65,8 @@ const fireSetupEmailMessage = (composeSubject, composeTo, composeMessage, thread
     unread: false,
     starred: false,
     attachmentIds: [],
-    isFireMessage: true
+    isFireMessage: true,
+    messageExpiryUnixTime
   };
 
   return message;

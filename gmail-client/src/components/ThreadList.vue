@@ -166,6 +166,7 @@ import { archiveMessage, markAsStarred, unMarkAsStarred,
 import { getTimeFormat, markEmailAsRead, markEmailAsUnread, trashEmailThread } from './../store-utility-files/email';
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
+import moment from "moment";
 import Vue from 'vue';
 
 export default {
@@ -342,6 +343,34 @@ export default {
       }
 
     },
+    getCurrentUnixTime(){
+      return moment(new Date()).unix();
+    },
+    isExpired(messageExpiryUnixTime){
+      if(this.getCurrentUnixTime() > messageExpiryUnixTime){
+        return true;
+      }
+      
+      return false;
+    },
+    clearMessageSnippet(){
+      return'<span style="color: red">&lt;Message timed out&gt;</span>';
+    },
+    waitForMessageTimeout(messageExpiryUnixTime, snippet){
+      const messageExpiryInterval = setInterval(()=>{
+        if (this.isExpired(messageExpiryUnixTime)){
+          for (const thread of this.threads){
+            if (thread.snippet === snippet){
+              thread.snippet = this.clearMessageSnippet();
+              break;
+            }
+          }
+          
+          this.$forceUpdate();
+          clearInterval(messageExpiryInterval);
+        }
+      }, 1000);
+    }
   },
   computed: {
     threads() {
@@ -364,14 +393,22 @@ export default {
 
 
           if (numberOfMessages > 0) {
-            // for(var i = numberOfMessages - 1; i > 0; i--){
-            //   if(!threadMessages[i].detailedFrom.contains(this.$store.state.currentUser.w3.U3)){break;}
-            // }
-            const { from, starred, conciseTo, to, body, subject, snippet, unread, isFireMessage } = threadMessages[numberOfMessages - 1];
+            
+            const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime } = threadMessages[numberOfMessages - 1];
+            
+            let { snippet } = threadMessages[numberOfMessages - 1];
+            if(messageExpiryUnixTime){
+              if(this.isExpired(messageExpiryUnixTime)){
+                snippet = this.clearMessageSnippet();
+              } else {
+                this.waitForMessageTimeout(messageExpiryUnixTime, snippet);
+              }
+            }
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
-          
+            
+            
             return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage};
           }
         });
