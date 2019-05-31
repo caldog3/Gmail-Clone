@@ -31,7 +31,10 @@
         <div class="overflow center">
           <!-- This needs to be the last message's snippet not the first... -->
           <div v-html="message.snippet"></div>
-        </div>    
+        </div>
+        <div v-if="message.messageExpiryUnixTime" class="messageExpiry rightAlign">
+            <small><b>{{ timeToMessageExpiry }}</b></small>
+          </div>    
       </div>
 
     <div class="expandedBody" v-else>
@@ -71,10 +74,11 @@
         <div>
           <div class="recipients">to {{message.to | getFirstNames}}</div>
           <i class="down"></i>
+          <div v-if="message.messageExpiryUnixTime" class="messageExpiry rightAlign">
+            <small><b>{{ timeToMessageExpiry }}</b></small>
+          </div>
         </div>
-        <div v-if="message.messageExpiryUnixTime">
-          {{ timeToMessageExpiry }}
-        </div>
+        
         <template v-if="!messageExpired">
           <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
@@ -515,6 +519,10 @@ i {
 .down {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+}
+.messageExpiry {
+  color: blue;
+  font-weight: 350;
 }
 </style>
 
