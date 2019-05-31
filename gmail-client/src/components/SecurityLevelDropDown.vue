@@ -1,6 +1,6 @@
 /*This is here for the meantime */
 <template>
-  <dropdown>
+  <dropdown ref="dropdown">
     <template slot="btn">
       <small class="passwordText">
         <font-awesome-icon style="color:black;" class="Icon" icon="lock" v-if="lockActive" />
@@ -63,9 +63,8 @@ export default {
         this.lockActive = false;
         this.hasPassword = false;
       }
-      console.log("Before");
       eventBus.$emit("COMPOSE_PASSWORD", this.hasPassword);
-      console.log("after");
+      this.$refs.dropdown.isHidden = true;
     },
   },
 };

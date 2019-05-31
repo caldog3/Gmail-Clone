@@ -356,6 +356,9 @@ export default {
     clearMessageSnippet(){
       return'<span style="color: red">&lt;Message timed out&gt;</span>';
     },
+    snippetForPassword(){
+      return'<span style="color: black">&lt;Message is password protected&gt;</span>';
+    },
     waitForMessageTimeout(messageExpiryUnixTime, snippet){
       const messageExpiryInterval = setInterval(()=>{
         if (this.isExpired(messageExpiryUnixTime)){
@@ -394,7 +397,7 @@ export default {
 
           if (numberOfMessages > 0) {
             
-            const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime } = threadMessages[numberOfMessages - 1];
+            const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime, password } = threadMessages[numberOfMessages - 1];
             
             let { snippet } = threadMessages[numberOfMessages - 1];
             if(messageExpiryUnixTime){
@@ -403,6 +406,9 @@ export default {
               } else {
                 this.waitForMessageTimeout(messageExpiryUnixTime, snippet);
               }
+            }
+            if(password != null) {
+              snippet = this.snippetForPassword();
             }
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];

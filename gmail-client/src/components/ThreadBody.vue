@@ -78,9 +78,7 @@
         </button>
       </div>
     </div>
-    <!-- <div> {{responseHTML}} </div>  just for testing purposes-->
 
-    <!-- FORWARING might not need 3 separate slots for all options, but we'll try it anyway for now-->
     <div class="quill" @focus="focusOnSection('body')" v-if="forwarding">
       <div>&emsp;</div>
       <textarea rows="1" v-model="forwardingRecipient" class="recipients"></textarea>
@@ -168,7 +166,8 @@ export default {
       uploadError: null,
       currentStatus: null,
       uploadFieldName: "photos",
-      messageExpiryUnixTime: null
+      messageExpiryUnixTime: null,
+      password: null,
     };
   },
   computed: {
@@ -410,6 +409,7 @@ export default {
     },
     getMessages() {
       let messages = this.$store.state.threadMessages;
+      console.log(messages);
       const threadMessages = messages[this.$route.params.id];
       this.messages = sortBy(threadMessages, m => m.unixTime);
       //remove

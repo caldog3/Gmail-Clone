@@ -30,9 +30,9 @@
       <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="section" v-if="hasPassword">
-      <input class="full2" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
+      <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
       |&emsp;
-      <input class="full2" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword" @focus="focusOnSection('confirmPassword')">
+      <input class="full2" type="password" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword" @focus="focusOnSection('confirmPassword')">
     </div>
 
     <div @focus="focusOnSection('body')">
@@ -216,15 +216,18 @@ export default {
       // this.composeTidy();
     },
     fireSendCompose(){
-      if (this.password !== this.confirmPassword) {
-        alert("The passwords do not match");
+      let finalPassword = null;
+      if (!this.password || this.password !== this.confirmPassword) {
+        alert("The password does not match or is invalid");
         return;
       }
+      else {finalPassword = this.password;}
       let message = fireSetupEmailMessage({
         composeSubject: this.composeSubject, 
         composeTo: this.composeTo, 
         composeMessage: this.composeMessage,
-        messageExpiryUnixTime: this.messageExpiryUnixTime
+        messageExpiryUnixTime: this.messageExpiryUnixTime,
+        password: finalPassword,
       });
       if(message === undefined){return;}
       fireSendMessage(message);
