@@ -76,8 +76,12 @@
                     <i><span v-html="thread.snippet">...</span></i>
                 </div>
               </div>
+              
+              <template v-if="thread.messageExpiryUnixTime && !isExpired(thread.messageExpiryUnixTime)">
+                <div class="rightAlign messageExpiry"><small><b>{{ thread.timeToMessageExpiry }}</b></small></div>
+              </template>
 
-              <div class="dateTime"> 
+              <div v-else class="dateTime"> 
                 <div class="rightAlign">{{ thread.time }}</div>
               </div>
 
@@ -346,6 +350,12 @@ export default {
     getCurrentUnixTime(){
       return moment(new Date()).unix();
     },
+    setMessageExpiryTimeText(messageExpiryUnixTime){
+      const selfDestructText = "This message will self-destruct";
+      const timeFromNow = moment(messageExpiryUnixTime * 1000).fromNow();
+
+      return `${selfDestructText} ${timeFromNow}`;
+    },
     isExpired(messageExpiryUnixTime){
       if(this.getCurrentUnixTime() > messageExpiryUnixTime){
         return true;
@@ -371,6 +381,14 @@ export default {
           
           this.$forceUpdate();
           clearInterval(messageExpiryInterval);
+        } else {
+          for (const thread of this.threads){
+            if (thread.messageExpiryUnixTime === messageExpiryUnixTime){
+              thread.timeToMessageExpiry = this.setMessageExpiryTimeText(messageExpiryUnixTime);
+              this.$forceUpdate();
+              break;
+            }
+          }
         }
       }, 1000);
     }
@@ -400,10 +418,12 @@ export default {
             const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime, password } = threadMessages[numberOfMessages - 1];
             
             let { snippet } = threadMessages[numberOfMessages - 1];
+            let timeToMessageExpiry = null;
             if(messageExpiryUnixTime){
               if(this.isExpired(messageExpiryUnixTime)){
                 snippet = this.clearMessageSnippet();
               } else {
+                timeToMessageExpiry = this.setMessageExpiryTimeText(messageExpiryUnixTime);
                 this.waitForMessageTimeout(messageExpiryUnixTime, snippet);
               }
             }
@@ -415,7 +435,7 @@ export default {
             const time = getTimeFormat(unixTime * 1000).time;
             
             
-            return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage};
+            return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage, timeToMessageExpiry, messageExpiryUnixTime};
           }
         });
         return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
@@ -466,7 +486,7 @@ export default {
   margin: 0;
 }
 .blue {
-  color: #297be6;
+  color: #505357;
   cursor: pointer;
   }
 .red {
@@ -720,6 +740,11 @@ export default {
   padding-left: auto;
   padding-top: 10px;
   
+}
+.messageExpiry {
+  padding-top: 10px;
+  color: blue;
+  font-weight: 350;
 }
 .snippit {
   overflow: hidden;
