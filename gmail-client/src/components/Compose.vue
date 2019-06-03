@@ -27,7 +27,7 @@
         <security-level-drop-down/>
       </span>
       |&emsp;
-      <input class="full2" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
+      <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="section" v-if="hasPassword">
       <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
@@ -82,8 +82,11 @@
     </div>
     <!--End Upload -->
     <div class="footerSection">
-      <div class="sendButton">
+      <div class="sendButton" >
         <input type="submit" class="SendButton1" value="Send" @click="fireSendCompose">
+      </div>
+      <div class="sendButton">
+        <input type="submit" class="SendButton1" value="Send Encrypted" @click="fireSendCompose">
       </div>
       
       <div v-if="!existingDraft">
@@ -123,6 +126,7 @@ export default {
       hasPassword: false,
       password: '',
       confirmPassword: '',
+      isEncrypted: false,
 
       composeTo: '',
       composeSubject: '',
@@ -228,6 +232,7 @@ export default {
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
+        encrypted: this.isEncrypted,
       });
       if(message === undefined){return;}
       fireSendMessage(message);
@@ -310,8 +315,9 @@ export default {
   created() {
     eventBus.$on('BODY_CLICK', this.close);
     eventBus.$on('KEYUP_ESCAPE', this.close);
-    eventBus.$on("COMPOSE_PASSWORD", payload => {
-      this.hasPassword = payload;
+    eventBus.$on("COMPOSE_SECURITY", payload => {
+      this.hasPassword = payload.hasPassword;
+      this.isEncrypted = payload.isEncrypted;
     });
     eventBus.$on('COMPOSE_OPEN', this.open);
     eventBus.$on("SET_EXPIRY_TIME", unixTime => {
@@ -543,6 +549,9 @@ textarea {
 .securityDropDown {
   position:relative;
   text-align: left;
+}
+.subjectLeft {
+  /* margin-left: -4em; */
 }
 
 </style>

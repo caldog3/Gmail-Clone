@@ -55,13 +55,14 @@ import {
   faFolder,
   faUsers,
   faLock,
+  faUnlock,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBars, faSearch, faInbox, faStar, faClock, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,
   faRetweet, faSquare, faCheckSquare, faArrowLeft, faEllipsisV, faReply, faLongArrowAltRight, faReplyAll,
   faCog, faKeyboard, faCaretDown, faChevronRight, faChevronLeft, faPlus, faEnvelope, faPrint, faFolder,
-  faUsers, faTag, faLock);
+  faUsers, faTag, faLock, faUnlock);
 
 dom.watch()
 

@@ -167,7 +167,6 @@ export default {
       currentStatus: null,
       uploadFieldName: "photos",
       messageExpiryUnixTime: null,
-      password: null,
     };
   },
   computed: {

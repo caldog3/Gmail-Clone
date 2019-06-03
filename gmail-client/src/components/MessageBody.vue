@@ -75,6 +75,10 @@
         <div v-if="message.messageExpiryUnixTime">
           {{ timeToMessageExpiry }}
         </div>
+        <div class="passwordInfo" v-if="unlocked && realPassword!==''">
+          <font-awesome-icon style="color:black;" class="Icon" icon="unlock" />
+          Message Unlocked
+        </div>
         <template v-if="!messageExpired && unlocked">
           <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
@@ -106,9 +110,13 @@
         
         <template v-else-if="!unlocked">
           <!-- password stuff -->
-          <div class="passwordInfo"> This message is password protected. To access this content,
-             please request the password from the sender and enter it below.</div>
-          <input type="enter" class="password" v-model="checkPassword" placeholder="Password" id="checkPassword" @focus="focusOnSection('checkPassword')">
+          <span class="passwordInfo"> 
+            <font-awesome-icon style="color:black;" class="Icon" icon="lock" />
+            This message is password protected. To access this content,
+            please request the password from the sender and enter it below.
+          </span>
+          <br>
+          <input type="enter" class="password" v-model="checkPassword" placeholder="Password" id="checkPassword">
           <button @click="enterPassword">Enter</button>
         </template>
       </div>
@@ -143,6 +151,7 @@ export default {
       currentUnixTime: this.getCurrentUnixTime(),
       messageExpired: false,
       timeToMessageExpiry: "",
+
       unlocked: true,
       checkPassword: '',
       realPassword: '',
@@ -314,12 +323,10 @@ export default {
         }, 1000);
       }
     }
-    if (this.message.password !== null) {
+    if (this.message.password) {
       this.unlocked = false;
       this.realPassword = this.message.password;
     }
-    
-    
   },
   mounted(){
     if (this.isLastMessage){

@@ -43,6 +43,7 @@ export default {
       selection: "Non-Encrypted",
       lockActive: false,
       hasPassword: false,
+      isEncrypted: false,
     };
   },
   methods: {
@@ -52,18 +53,21 @@ export default {
         this.selection = "Password Protected";
         this.lockActive = true;
         this.hasPassword = true;
+        this.isEncrypted = false;
       }
       else if (option === "encryption") {
         this.selection = "Encrypted";
         this.lockActive = true;
         this.hasPassword = false;
+        this.isEncrypted = true;
       }
       else if (option === "noSecurity") {
         this.selection = "Non-Encrypted"
         this.lockActive = false;
         this.hasPassword = false;
+        this.isEncrypted = false;
       }
-      eventBus.$emit("COMPOSE_PASSWORD", this.hasPassword);
+      eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       this.$refs.dropdown.isHidden = true;
     },
   },
@@ -73,6 +77,7 @@ export default {
 <style>
 .passwordText {
   color: black;
+  font-size: 1em;
 }
 .listedItems:hover{
   background-color: rgb(168, 168, 168);
