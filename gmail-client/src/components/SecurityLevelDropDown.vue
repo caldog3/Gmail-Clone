@@ -44,13 +44,14 @@ export default {
       lockActive: false,
       hasPassword: false,
       isEncrypted: false,
+      rightDomain: true,
     };
   },
   methods: {
     setSecurity(option) {
       console.log("setting security");
       if (option === "password") {
-        this.selection = "Password Protected";
+        this.selection = "Password";
         this.lockActive = true;
         this.hasPassword = true;
         this.isEncrypted = false;
@@ -70,6 +71,12 @@ export default {
       eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       this.$refs.dropdown.isHidden = true;
     },
+  },
+  created() {
+    eventBus.$on("SWAP_SECURITY", payload => {
+      this.rightDomain = payload.rightDomain;
+      console.log("dropdown getting the domain", this.rightDomain);
+    });
   },
 };
 </script>

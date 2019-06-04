@@ -18,12 +18,12 @@
 
     <div class="sectionTop">
       <span class="unselected">
-        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
+        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')" @click="recipientDomain()">
       </span>
     </div>
 
     <div class="section">
-      <span class="securityDropDown full2">
+      <span class="securityDropDown full3">
         <security-level-drop-down/>
       </span>
       |&emsp;
@@ -108,7 +108,7 @@ import CustomDropDown from './CustomDropDown';
 import SecurityLevelDropDown from './SecurityLevelDropDown';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
-import { setTimeout } from 'timers';
+import { setTimeout, setInterval, clearInterval } from 'timers';
 import { resolve } from 'url';
 
 export default {
@@ -121,6 +121,7 @@ export default {
   },
   data() {
     return {
+      registeredRecipient: true,
       hasPassword: false,
       password: '',
       confirmPassword: '',
@@ -215,10 +216,10 @@ export default {
       setTimeout(() => {      
         this.composeTidy();
       }, 250);
-      // this.composeTidy();
     },
     fireSendCompose(){
       let finalPassword = null;
+      
       if (this.hasPassword) {
         if (!this.password || this.password !== this.confirmPassword) {
           alert("The password does not match or is invalid");
@@ -255,13 +256,23 @@ export default {
       //Tidy needs to wait for this to finish
     },
     composeTidy() {
-      console.log("COMPOSE TIDY");
       this.composeTo = '';
       this.composeSubject = '';
       this.composeMessage = '';
       this.reset();
       this.uploading = false;
     },
+    recipientDomain() {
+      const changingRecipient = setInterval(()=>{
+        const containsDomain = this.composeTo.includes("@gmail.com");
+        if (containsDomain !== this.registeredRecipient) {
+          console.log("swap permissions");
+          this.registeredRecipient = containsDomain;
+          eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
+        }
+      }, 1000);
+    },
+
     focusOnSection(section) {
       this.activeSection = section;
       // this.ccActive = this.message.cc !== '';
@@ -319,6 +330,7 @@ export default {
       this.hasPassword = payload.hasPassword;
       this.isEncrypted = payload.isEncrypted;
     });
+
     eventBus.$on('COMPOSE_OPEN', this.open);
     eventBus.$on("SET_EXPIRY_TIME", unixTime => {
       this.messageExpiryUnixTime = unixTime;
@@ -440,6 +452,13 @@ a:not([href]):not([tabindex]) {
 }
 .TO {
   width: 15px;
+}
+.full3 {
+  width: 40%;
+  height: 30px;
+  border: none;
+  outline: none;
+  overflow: hidden;
 }
 .full2 {
   width: 100%;
