@@ -85,6 +85,10 @@
           <font-awesome-icon style="color:black;" class="Icon" icon="unlock" />
           Message Unlocked
         </div>
+        <div class="passwordInfo" v-if="isEncrypted">
+          <font-awesome-icon style="color:black;" class="Icon" icon="unlock" />
+          Message Decrypted
+        </div>
         <template v-if="!messageExpired && unlocked">
           <div v-html="$options.filters.highlightUrls(message.body)" class=""></div>
 
@@ -161,6 +165,7 @@ export default {
       unlocked: true,
       checkPassword: '',
       realPassword: '',
+      isEncrypted: false,
     };
   },
   filters: {
@@ -332,6 +337,9 @@ export default {
     if (this.message.password) {
       this.unlocked = false;
       this.realPassword = this.message.password;
+    }
+    if (this.message.isEncrypted) {
+      this.isEncrypted = true;
     }
   },
   mounted(){

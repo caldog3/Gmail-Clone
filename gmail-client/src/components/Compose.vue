@@ -85,9 +85,7 @@
       <div class="sendButton" >
         <input type="submit" class="SendButton1" value="Send" @click="fireSendCompose">
       </div>
-      <div class="sendButton">
-        <input type="submit" class="SendButton1" value="Send Encrypted" @click="fireSendCompose">
-      </div>
+
       
       <div v-if="!existingDraft">
         <input class="SaveButton" type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
@@ -221,18 +219,20 @@ export default {
     },
     fireSendCompose(){
       let finalPassword = null;
-      if (!this.password || this.password !== this.confirmPassword) {
-        alert("The password does not match or is invalid");
-        return;
+      if (this.hasPassword) {
+        if (!this.password || this.password !== this.confirmPassword) {
+          alert("The password does not match or is invalid");
+          return;
+        }
+        else {finalPassword = this.password;}
       }
-      else {finalPassword = this.password;}
       let message = fireSetupEmailMessage({
         composeSubject: this.composeSubject, 
         composeTo: this.composeTo, 
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
-        encrypted: this.isEncrypted,
+        isEncrypted: this.isEncrypted,
       });
       if(message === undefined){return;}
       fireSendMessage(message);

@@ -69,7 +69,8 @@ const fireSetupEmailMessage = ({
     attachmentIds: [],
     isFireMessage: true,
     messageExpiryUnixTime,
-    password
+    password,
+    isEncrypted
   };
 
   return message;

@@ -171,6 +171,7 @@ import { getTimeFormat, markEmailAsRead, markEmailAsUnread, trashEmailThread } f
 import { setTimeout } from 'timers';
 import { sortBy } from 'lodash';
 import moment from "moment";
+import base64url from 'base64url';
 import Vue from 'vue';
 
 export default {
@@ -369,6 +370,9 @@ export default {
     snippetForPassword(){
       return'<span style="color: black">&lt;Message is password protected&gt;</span>';
     },
+    snippetForEncryption(body){
+      return base64url(body);
+    },
     waitForMessageTimeout(messageExpiryUnixTime, snippet){
       const messageExpiryInterval = setInterval(()=>{
         if (this.isExpired(messageExpiryUnixTime)){
@@ -412,10 +416,8 @@ export default {
           // console.log("ThreadMessages:", threadMessages);
           const numberOfMessages = threadMessages.length;
 
-
           if (numberOfMessages > 0) {
-            
-            const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime, password } = threadMessages[numberOfMessages - 1];
+            const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime, password, isEncrypted } = threadMessages[numberOfMessages - 1];
             
             let { snippet } = threadMessages[numberOfMessages - 1];
             let timeToMessageExpiry = null;
@@ -430,6 +432,9 @@ export default {
             if(password != null) {
               snippet = this.snippetForPassword();
             }
+            if(isEncrypted) {
+              snippet = this.snippetForEncryption(snippet);
+            }
 
             const unixTime = this.$store.getters.getLatestThreadMessageTime[threadId];
             const time = getTimeFormat(unixTime * 1000).time;
@@ -438,6 +443,7 @@ export default {
             return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage, timeToMessageExpiry, messageExpiryUnixTime};
           }
         });
+        console.log("Do I have the data: ", fullThreadData);
         return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
       }
     },
