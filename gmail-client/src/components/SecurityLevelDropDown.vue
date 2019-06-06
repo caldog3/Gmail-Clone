@@ -7,13 +7,13 @@
         {{selection}}
       </small>
     </template>
-    <template slot="body">
+    <template slot="body" v-if="rightDomain">
       <div class="listedItems" @click="setSecurity('encryption')"> 
         <font-awesome-icon style="color:black;" class="Icon" icon="lock" />
         Encryption
       </div>
     </template>
-    <template slot="body" >
+    <template slot="body" v-if="!rightDomain">
       <div class="listedItems" @click="setSecurity('password')">
         <font-awesome-icon style="color:black;" class="Icon" icon="lock" />
         Password Protection

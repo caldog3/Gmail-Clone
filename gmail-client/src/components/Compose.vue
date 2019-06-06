@@ -216,6 +216,8 @@ export default {
       setTimeout(() => {      
         this.composeTidy();
       }, 250);
+      clearInterval(this.changingRecipientInterval);
+
     },
     fireSendCompose(){
       let finalPassword = null;
@@ -263,8 +265,8 @@ export default {
       this.uploading = false;
     },
     recipientDomain() {
-      const changingRecipient = setInterval(()=>{
-        const containsDomain = this.composeTo.includes("@gmail.com");
+      this.changingRecipientInterval = setInterval(()=>{
+        containsDomain = this.composeTo.includes("@gmail.com");
         if (containsDomain !== this.registeredRecipient) {
           console.log("swap permissions");
           this.registeredRecipient = containsDomain;
