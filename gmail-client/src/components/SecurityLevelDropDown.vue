@@ -76,6 +76,19 @@ export default {
     eventBus.$on("SWAP_SECURITY", payload => {
       this.rightDomain = payload.rightDomain;
       console.log("dropdown getting the domain", this.rightDomain);
+      if (this.lockActive) {
+        console.log("actively swapping");
+        if (this.rightDomain) {
+          this.selection = "Encrypted";
+          this.hasPassword = false;
+          this.isEncrypted = true;
+        }
+        else {
+          this.selection = "Password";
+          this.hasPassword = true;
+          this.isEncrypted = false;
+        }
+      }
     });
   },
 };
