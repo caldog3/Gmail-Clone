@@ -127,7 +127,7 @@
           </span>
           <br>
           <input type="enter" class="password" v-model="checkPassword" placeholder="Password" id="checkPassword">
-          <button @click="enterPassword">Enter</button>
+          <button @click="enterPassword">Unlock</button>
         </template>
       </div>
       
