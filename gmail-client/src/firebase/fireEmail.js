@@ -29,6 +29,7 @@ const fireSetupEmailMessage = ({
   messageExpiryUnixTime,
   password,
   isEncrypted,
+  attachObj
 }, threadId) => {
   //conciseTo for group emails only requires one name
   composeTo = composeTo.toLowerCase();
@@ -70,7 +71,8 @@ const fireSetupEmailMessage = ({
     isFireMessage: true,
     messageExpiryUnixTime,
     password,
-    isEncrypted
+    isEncrypted,
+    attachObj,
   };
 
   return message;

@@ -88,6 +88,7 @@ export default {
           this.hasPassword = true;
           this.isEncrypted = false;
         }
+        eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       }
     });
   },

@@ -236,6 +236,7 @@ export default {
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
         isEncrypted: this.isEncrypted,
+        attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
       if(message === undefined){return;}
       fireSendMessage(message);
@@ -266,7 +267,7 @@ export default {
     },
     recipientDomain() {
       this.changingRecipientInterval = setInterval(()=>{
-        const containsDomain = this.composeTo.includes("@gmail.com");
+        var containsDomain = this.composeTo.includes("@gmail.com");
         if (containsDomain !== this.registeredRecipient) {
           console.log("swap permissions");
           this.registeredRecipient = containsDomain;
