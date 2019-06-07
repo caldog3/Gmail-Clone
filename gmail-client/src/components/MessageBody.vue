@@ -110,10 +110,11 @@
               <div v-else>
                 <!-- <img :src="attach.url" :name="attach.fileName" /> -->
                 <a :href="attach.url" @click="downloadImg(attach.url)">
-                  <img :src="attach.url" :name="attach.fileName" />
+                  <img class="attachmentView" :src="attach.url" :name="attach.fileName" />
                   {{ attach.filename }}
                 </a>
               </div>
+              <br>
             </div>
           </div>
         </template>
@@ -589,6 +590,11 @@ i {
   color: blue;
   font-weight: 350;
 }
+.attachmentView {
+  max-width: 300px;
+  max-height: 300px;
+}
+
 </style>
 
 

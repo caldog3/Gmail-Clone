@@ -40,7 +40,7 @@
     </div>
     
     <!-- Start of Upload -->
-    <div v-if="!uploading">
+    <!-- <div v-if="!uploading">
       <p>
         <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
       </p>
@@ -59,7 +59,7 @@
             </p>
         </div>
       </form>
-      <!--SUCCESS-->
+      
       <div v-if="isSuccess">
         <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
         <p>
@@ -71,7 +71,7 @@
           </li>
         </ul>
       </div>
-      <!--FAILED-->
+      
       <div v-if="isFailed">
         <h2>Uploaded failed.</h2>
         <p>
@@ -79,8 +79,12 @@
         </p>
         <pre>{{ uploadError }}</pre>
       </div>
-    </div>
+    </div> -->
     <!--End Upload -->
+    <div>
+      <FilePond/>
+    </div>
+
     <div class="footerSection">
       <div class="sendButton" >
         <input type="submit" class="SendButton1" value="Send" @click="fireSendCompose">
@@ -110,6 +114,8 @@ import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/ema
 import { upload } from '../file-upload.service';
 import { setTimeout, setInterval, clearInterval } from 'timers';
 import { resolve } from 'url';
+import vueFilePond from 'vue-filepond';
+// import 'filepond/dist/filepond.min.css';
 
 export default {
   name: 'Compose',
@@ -118,6 +124,7 @@ export default {
     QuillEditor,
     CustomDropDown,
     SecurityLevelDropDown,
+    // FilePond: vueFilePond(),
   },
   data() {
     return {
