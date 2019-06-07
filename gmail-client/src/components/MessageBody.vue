@@ -96,19 +96,23 @@
             <v-gallery :images="images" :dark="true"></v-gallery>
           </div>
 
-          <div v-if="attachments.length > 0" >
+          <div v-if="hasAttachment" >
             <p><b>Attachments:</b></p>
-            <div v-for="(attachment, index) in attachments" :key="attachment.url">
-              <div v-if="attachment.url.includes('application/pdf')">
-                <template v-if="!attachment.url.includes('null')">
-                  <button @click="openModal(index)">{{ attachment.filename }}</button>
+            <div v-for="attach in attachmentArray" :key="attach.url">
+              <div v-if="attach.url.includes('application/pdf')">
+                <template v-if="!attach.url.includes('null')">
+                  <button @click="openModal(index)">{{ attach.filename }}</button>
                 </template>
                 <sweet-modal modal-theme="dark" overlay-theme="dark" ref="modal" width="80%">
-                  <object :data="attachment.url" :name="attachment.filename" width="80%" height="800"></object>
+                  <object :data="attach.url" :name="attach.filename" width="80%" height="800"></object>
                 </sweet-modal>
               </div>
               <div v-else>
-                <button><a :href="attachment.url" :download="attachment.filename">{{ attachment.filename }}</a></button>
+                <!-- <img :src="attach.url" :name="attach.fileName" /> -->
+                <a :href="attach.url" @click="downloadImg(attach.url)">
+                  <img :src="attach.url" :name="attach.fileName" />
+                  {{ attach.filename }}
+                </a>
               </div>
             </div>
           </div>
@@ -145,6 +149,8 @@ import timeago from 'epoch-timeago';
 import moment from "moment";
 import isHtml from 'is-html';
 import { setInterval, clearInterval, setTimeout } from 'timers';
+import base64url from 'base64url';
+
 
 export default {
   name: 'MessageBody',
@@ -161,6 +167,8 @@ export default {
       currentUnixTime: this.getCurrentUnixTime(),
       messageExpired: false,
       timeToMessageExpiry: "",
+      hasAttachment: false,
+      attachmentArray: [],
 
       unlocked: true,
       checkPassword: '',
@@ -310,7 +318,17 @@ export default {
     clearMessageSnippet(){
       const expiredMessageSnippet = '<span style="color: red"> &lt;Message timed out&gt;</span>';
       this.message.snippet = expiredMessageSnippet;
-    }
+    },
+    decryptAttachments() {
+      for (let i = 0; i < this.attachmentArray.length; i++) {
+        this.attachmentArray[i].id = base64url.decode(this.attachmentArray[i].url.substring('22')); // decrypt the base64 here from 22 character
+      }
+      console.log("Attachment Array", this.attachmentArray);
+    },
+    downloadImg(data) {
+      var newTab = window.open();
+      newTab.document.body.innerHTML = '<img src="' + data + '">';
+    },
   },
   created(){
     this.setTimeAgo();
@@ -340,6 +358,12 @@ export default {
     }
     if (this.message.isEncrypted) {
       this.isEncrypted = true;
+    }
+    console.log("this.message ", this.message);
+    if (this.message.attachObj.hasAttachments) {
+      this.hasAttachment = true;
+      this.attachmentArray = this.message.attachObj.uploadData;
+      // this.decryptAttachments();
     }
   },
   mounted(){
