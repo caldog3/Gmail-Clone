@@ -40,17 +40,17 @@
     </div>
     
     <!-- Start of Upload -->
-    <!-- <div v-if="!uploading">
+    <div v-if="!uploading">
       <p>
-        <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
+        <a href="javascript:void(0)" @click="toggleUploading()">Uploads</a>
       </p>
     </div>
     <div v-else>
       <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload Images</h1>
+        <h1>Upload Files</h1>
         <div class="dropbox">
           <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-            accept="image/*,application/pdf" class="input-file">
+            accept="image/*, application/pdf" class="input-file">
             <p v-if="isInitial">
               Drag your file(s) here to begin<br> or click to browse
             </p>
@@ -79,11 +79,19 @@
         </p>
         <pre>{{ uploadError }}</pre>
       </div>
-    </div> -->
-    <!--End Upload -->
-    <div>
-      <FilePond/>
     </div>
+    <!--End Upload -->
+    <!-- <div>
+      <file-pond
+        name="test"
+        ref="pond"
+        label-idle="Drop files here..."
+        allow-multiple="true"
+        accepted-file-types="image/jpeg, image/png, application/pdf"
+        server="/api"
+        v-bind:files="uploadedFiles"
+        v-on:init="handleFilePondInit"></file-pond>
+    </div> -->
 
     <div class="footerSection">
       <div class="sendButton" >
@@ -114,8 +122,13 @@ import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/ema
 import { upload } from '../file-upload.service';
 import { setTimeout, setInterval, clearInterval } from 'timers';
 import { resolve } from 'url';
-import vueFilePond from 'vue-filepond';
-// import 'filepond/dist/filepond.min.css';
+// import vueFilePond from 'vue-filepond';
+// import 'filepond/dist/filepond.css';
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+// import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+
+// const FilePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 export default {
   name: 'Compose',
@@ -124,7 +137,7 @@ export default {
     QuillEditor,
     CustomDropDown,
     SecurityLevelDropDown,
-    // FilePond: vueFilePond(),
+    // FilePond,
   },
   data() {
     return {
@@ -173,6 +186,9 @@ export default {
     }
   },
   methods: {
+    handleFilePondInit() {
+      console.log("File pond is initiated");
+    },
     // uploader start
     reset() {
       // reset form to initial stater
