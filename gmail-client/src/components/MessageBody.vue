@@ -98,7 +98,7 @@
 
           <div v-if="hasAttachment" >
             <p><b>Attachments:</b></p>
-            <div v-for="attach in attachmentArray" :key="attach.url">
+            <div v-for="(attach, index) in attachmentArray" :key="attach.url">
               <div v-if="attach.url.includes('application/pdf')">
                 <template v-if="!attach.url.includes('null')">
                   <button @click="openModal(index)">{{ attach.filename }}</button>
@@ -302,6 +302,7 @@ export default {
       }
     },
     openModal(index){
+      // this.$refs.modal[index].open();
       this.$refs.modal[index].open();
     },
     setTimeAgo(){

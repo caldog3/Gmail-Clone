@@ -40,7 +40,7 @@
     </div>
     
     <!-- Start of Upload -->
-    <div v-if="!uploading">
+    <!-- <div v-if="!uploading">
       <p>
         <a href="javascript:void(0)" @click="toggleUploading()">Uploads</a>
       </p>
@@ -79,9 +79,9 @@
         </p>
         <pre>{{ uploadError }}</pre>
       </div>
-    </div>
+    </div> -->
     <!--End Upload -->
-    <input id="inputPDF" type="file" @change="convertToBase64();" />
+    <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
     <!-- <div>
       <file-pond
         name="test"
@@ -188,21 +188,32 @@ export default {
   },
   methods: {
     convertToBase64() {
-      var selectedFile = document.getElementById("inputPDF").files;
-      if(selectedFile.length > 0) {
-        var fileToLoad = selectedFile[0];
-        var fileReader = new FileReader();
-        var base64;
-        fileReader.onload = function(fileLoadedEvent) {
-          base64 = fileLoadedEvent.target.result;
-          console.log(base64);
-        };
-        fileReader.readAsDataURL(fileToLoad);
+      var selectedFiles = document.getElementById("inputPDF").files;
+      var array = [];
+      if(selectedFiles.length > 0) {
+        for(var i = 0; i < selectedFiles.length; i++) {
+          var fileToLoad = selectedFiles[i];
+          var fileReader = new FileReader();
+          var base64;
+          fileReader.onload = function(fileLoadedEvent) {
+            base64 = fileLoadedEvent.target.result;
+            console.log(fileLoadedEvent.target);
+            console.log("selected files", fileToLoad);
+            array.push({url: base64, filename: fileToLoad.name});
+          };
+          // fileReader.onload = function() {
+          //   array.push(fileReader.result);
+          // }
+          fileReader.readAsDataURL(fileToLoad);
+        }
+        console.log("the array: ", array);
+        this.uploadedFiles = array;
+        this.hasAttachments = true;
       }
     },
     // uploader start
     reset() {
-      // reset form to initial stater
+      // reset form to initial state
       this.currentStatus = 'STATUS_INITIAL';
       this.uploadedFiles = [];
       this.uploadError = null;
