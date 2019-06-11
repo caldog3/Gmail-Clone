@@ -81,6 +81,7 @@
       </div>
     </div>
     <!--End Upload -->
+    <input id="inputPDF" type="file" @change="convertToBase64();" />
     <!-- <div>
       <file-pond
         name="test"
@@ -186,8 +187,18 @@ export default {
     }
   },
   methods: {
-    handleFilePondInit() {
-      console.log("File pond is initiated");
+    convertToBase64() {
+      var selectedFile = document.getElementById("inputPDF").files;
+      if(selectedFile.length > 0) {
+        var fileToLoad = selectedFile[0];
+        var fileReader = new FileReader();
+        var base64;
+        fileReader.onload = function(fileLoadedEvent) {
+          base64 = fileLoadedEvent.target.result;
+          console.log(base64);
+        };
+        fileReader.readAsDataURL(fileToLoad);
+      }
     },
     // uploader start
     reset() {
@@ -218,6 +229,7 @@ export default {
     filesChange(fieldName, fileList) {
       // handle file changes
       const formData = new FormData();
+      console.log(new FormData());
       if (!fileList.length) return;
 
       // append the files to FormData
