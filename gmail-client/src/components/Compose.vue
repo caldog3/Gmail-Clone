@@ -197,16 +197,10 @@ export default {
           var base64;
           fileReader.onload = function(fileLoadedEvent) {
             base64 = fileLoadedEvent.target.result;
-            console.log(fileLoadedEvent.target);
-            console.log("selected files", fileToLoad);
             array.push({url: base64, filename: fileToLoad.name});
           };
-          // fileReader.onload = function() {
-          //   array.push(fileReader.result);
-          // }
           fileReader.readAsDataURL(fileToLoad);
         }
-        console.log("the array: ", array);
         this.uploadedFiles = array;
         this.hasAttachments = true;
       }
