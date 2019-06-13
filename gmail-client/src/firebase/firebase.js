@@ -171,11 +171,13 @@ const fireRetrieveMessages = () => {
     store.commit('addLabelId', "SENT");
     console.log("THE STORE FOLDERS", store.state.labelMessages);
     let currentUser = base64url(store.state.userEmail);
+    console.log("The state: ", store.state);
     fireRef.child(users).child(currentUser).child(primary).once('value').then((userShot) => {
         if(!userShot.exists()){
             return fireRef.child(users).child(currentUser).child(primary).set("Welcome!");//.child('Welcome!').set(true);
         }
     }).then(() => {
+        //primary inbox folder start
         fireRef.child(users).child(currentUser).child(primary).on("child_added", function(threadShot){
             var threadId = threadShot.key;
             store.commit('initializeThreadTime', {threadId});
@@ -209,6 +211,42 @@ const fireRetrieveMessages = () => {
                 });
             });
         });
+        //end primary inbox folder
+        //sent folder start
+        fireRef.child(users).child(currentUser).child(sent).on("child_added", function(threadShot){
+            var threadId = threadShot.key;
+            store.commit('initializeThreadTime', {threadId});
+            store.commit('addThreadId', {threadId, labelId:sent});
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).once("value").then((userInfoShot) => {
+                var isEmailRead = userInfoShot.child(isRead).val();
+                var newFolderLabels = [];
+                userInfoShot.child(folders).forEach((folder) => {
+                    newFolderLabels.push(folder.key);
+                });
+                return {isEmailRead, newFolderLabels};
+            }).then(({isEmailRead, newFolderLabels}) => {
+                fireRef.child(threads).child(threadId).child(participants).child(currentUser).on("child_changed", function(userInfoUpdate){
+                    if(userInfoUpdate.key == isRead){
+                        isEmailRead = userInfoUpdate.val();
+                    }
+                    else{
+                        newFolderLabels = [];
+                        userInfoUpdate.child(folders).forEach((folder) => {
+                            newFolderLabels.push(folder.key);
+                        });
+                    }
+                });
+                fireRef.child(threads).child(threadId).child(messages).on("child_added", function(messageShot){
+                    let newMessage = messageShot.val();
+                    let unixTime = newMessage.unixTime;
+                    newMessage.unread = isEmailRead;
+                    newMessage.labelId = newFolderLabels;
+                    store.commit('setThreadTime', {threadId, unixTime});
+                    store.commit('addMessage', newMessage);
+                });
+            });
+        });
+        //end sent folder
     });
     //SENT TESTING
     // fireRef.child(users).child(currentUser).child(sent).once('value').then((userShot) => {
