@@ -169,6 +169,8 @@ const fireSaveDraft = (message) => {
 const fireRetrieveMessages = () => {
     store.commit('addLabelId', "PRIMARY");
     store.commit('addLabelId', "SENT");
+    store.commit('addLabelId', "TRASH");
+    store.commit('addLabelId', "DRAFT");
     console.log("THE STORE FOLDERS", store.state.labelMessages);
     let currentUser = base64url(store.state.userEmail);
     console.log("The state: ", store.state);

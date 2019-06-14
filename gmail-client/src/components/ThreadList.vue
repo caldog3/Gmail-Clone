@@ -34,7 +34,7 @@
               </div>
 
               <div class="largeOnly" v-if="labelId !== 'TRASH'">
-                <div class="highlightArea">
+                <!-- <div class="highlightArea">
                   <div class="theRestoftheTime">
                     <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
                   </div>
@@ -43,7 +43,7 @@
                     <label for="ffstar" style="font-size: 22px" class="notchecked">&#X2606;</label>
                     <label for="ffstar" style="color:gold;font-size: 22px" class="checked">&#X2605;</label>
                   </div>
-                </div>
+                </div> -->
               </div>
 
               <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
@@ -90,13 +90,13 @@
             <div class="hoverView">
               <div class="item">
 
-                <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
+                <!-- <div class="highlightArea" tooltip="Archive" v-on:click="archiveThread(thread)">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="archive"/> 
-                </div>
+                </div> -->
 
-                <div class="highlightArea" tooltip="Spam">
+                <!-- <div class="highlightArea" tooltip="Spam">
                   <font-awesome-icon style="color:grey;" class="Icon"  icon="exclamation-circle" /> 
-                </div>
+                </div> -->
 
                 <div class="highlightAreaRead" tooltip="Mark unread" tooltip-persistent v-on:click="toggleUnread(thread)" v-if="thread.unread">
                   <font-awesome-icon style="color:grey;" class="Icon" icon="envelope" />  

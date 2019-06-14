@@ -41,19 +41,19 @@
               <!-- with checkeditems -->
               <span v-if="checkedEmails">
                 <div class="wrapper large">
-                  <div class="item">
+                  <!-- <div class="item">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
                       <span class="tooltiptext">Archive</span>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- <div class="item" v-on:click="areYouSure()"> -->
-                  <div class="item" v-on:click="spammingSet()">
+                  <!-- <div class="item" v-on:click="spammingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
                       <span class="tooltiptext">Report Spam</span>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="item" v-on:click="trashingSet()">
                     <div class="highlightArea">
@@ -84,12 +84,12 @@
                     |
                   </div>
 
-                  <div class="item">
+                  <!-- <div class="item">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
                       <span class="tooltiptext">Move to</span>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="item">
                     <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
@@ -153,7 +153,7 @@
                 </div>
               </div>
 
-              <div class="item">
+              <!-- <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="archive"/> 
                   <span class="tooltiptext">Archive</span>
@@ -165,7 +165,7 @@
                   <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-circle" /> 
                   <span class="tooltiptext">Move to Spam</span>
                 </div>
-              </div>
+              </div> -->
 
               <div class="item" v-on:click="trashing()">
                 <div class="highlightArea">
@@ -189,12 +189,12 @@
                 |
               </div>
 
-              <div class="item">
+              <!-- <div class="item">
                 <div class="highlightArea">
                   <font-awesome-icon style="color:white;" class="Icon" icon="arrow-circle-right" /> 
                   <span class="tooltiptext">Move to</span>
                 </div>
-              </div>
+              </div> -->
 
               <div class="item">
                 <div class="highlightArea" v-on:click="ellipsesDropdownFunction()" >
@@ -225,7 +225,7 @@
         <div class="right-side-utility">
           <div class="flexIcons">
 
-            <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
+            <!-- <div class="rightTopPad" v-if="(parseFloat(totalMessages.replace(/,/g, ''))) - 50 > (pageNum()) * 50">
               {{((pageNum()-1)*50)+1}}-{{pageNum() * 50}} of {{totalMessages}}
             </div>
             <div class="rightTopPad" v-else-if="totalMessages == 'many'">
@@ -234,7 +234,7 @@
             <div class="rightTopPad" v-else-if="totalMessages == 'unknown'">
               search results
             </div>
-            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div>
+            <div class="rightTopPad" v-else>{{pageNum()}}-{{totalMessages}} of {{totalMessages}}</div> -->
 
             <div class="paddingNeeded" v-if="this.$store.state.currentPage > 1" v-on:click="lastPageLoad">
               <font-awesome-icon style="color:white;" class="Icon" icon="chevron-left"/>
@@ -261,15 +261,15 @@
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry">Some kind of setting</div>
+                    <div class="dropdownEntry">Setting 1</div>
                     <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
+                    <div class="dropdownEntry">Setting 2</div>
                     <hr>
-                    <div class="dropdownEntry">Maybe a security mode</div>
+                    <div class="dropdownEntry">Setting 3</div>
                     <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
+                    <div class="dropdownEntry">Setting 4</div>
                     <hr>
-                    <div class="dropdownEntry">Some kind of setting</div>
+                    <div class="dropdownEntry">Setting 5</div>
                   </div> 
                 </div>
               </div>
@@ -417,7 +417,7 @@ export default {
       this.$router.go(-1);
     },
     ellipsisList() {
-      console.log("routing?");
+      // console.log("routing?");
     },
     markAllAsRead() {
       //route to EmailList probably and loop through all and if they are marked as unread, send to 
@@ -427,15 +427,15 @@ export default {
     /* When the user clicks on the button, 
     toggle between hiding and showing the dropdown content */
     ellipsesDropdownFunction() {
-      console.log("ellipses");
+      // console.log("ellipses");
       document.getElementById("ellipsesDropdown").classList.toggle("show");
     },
     caretDropdownFunction() {
-      console.log("caret");
+      // console.log("caret");
       document.getElementById("caretDropdown").classList.toggle("show");
     },
     cogDropdownFunction() { 
-      console.log("cog");
+      // console.log("cog");
       document.getElementById("cogDropdown").classList.toggle("show");
     },
     // Close the dropdown if the user clicks outside of it
@@ -447,7 +447,6 @@ export default {
           var openDropdown = dropdowns[i];
           if (openDropdown.classList.contains('show')) {
             openDropdown.classList.remove('show');
-            console.log("It closed this dropdown?");
           }
         }
       }
