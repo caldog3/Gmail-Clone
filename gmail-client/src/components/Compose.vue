@@ -101,7 +101,7 @@
 
       
       <div v-if="!existingDraft">
-        <input class="SaveButton" type="button" value="Save New Draft" @click="createDraft"> <!-- FIXME styling needs to be adjusted -->
+        <input class="SaveButton" type="button" value="Save New Draft" @click="makeFireDraft"> <!-- FIXME styling needs to be adjusted -->
       </div>
       <div v-else>
         <input class="SaveButton" type="button" value="Save Changes" @click="draftUpdate">
@@ -354,13 +354,36 @@ export default {
       // }
       this.close();
     },
-    toggleUploading() {
-      this.uploading = !this.uploading;
-    },
-    waitForUpload(miliseconds) {
-      return (x) => {
-        return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
-      };
+    // toggleUploading() {
+    //   this.uploading = !this.uploading;
+    // },
+    // waitForUpload(miliseconds) {
+    //   return (x) => {
+    //     return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
+    //   };
+    // },
+    makeFireDraft() {
+      let finalPassword = null;
+      
+      if (this.hasPassword) {
+        if (!this.password || this.password !== this.confirmPassword) {
+          alert("The password does not match or is invalid");
+          return;
+        }
+        else {finalPassword = this.password;}
+      }
+      let message = fireSetupEmailMessage({
+        composeSubject: this.composeSubject, 
+        composeTo: this.composeTo, 
+        composeMessage: this.composeMessage,
+        messageExpiryUnixTime: this.messageExpiryUnixTime,
+        password: finalPassword,
+        isEncrypted: this.isEncrypted,
+        attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
+      });
+      if(message === undefined){return;}
+      fireSaveDraft(message);
+      // this.close();
     },
   },
   mounted() {
