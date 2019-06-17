@@ -162,7 +162,7 @@ const fireSendMessage = (message) => {
 
 const fireSaveDraft = (message) => {
     let sender = base64url(store.state.userEmail);
-
+    fireRef.child(users).child(sender).child(drafts).child(message.threadId).set(true);
 }
 
 //One-time call. This function will notify you when you receive a new email.

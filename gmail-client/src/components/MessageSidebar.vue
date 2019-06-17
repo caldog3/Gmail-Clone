@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
+      <!-- <div class="normalRow" v-bind:class="activeFolderClass('Starred')" v-on:click="generalHandle('Starred')">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="star" />
@@ -34,7 +34,7 @@
             <p class="notificationPill" v-if="labels[1].unreadCount > 0">{{labels[1].unreadCount}}</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
 <!-- I think we should just get rid of this Snoozed tab altogether -->
       <!-- <div v-bind:class="activeFolderClass('Snoozed')">
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
+      <!-- <div class="normalRow" v-bind:class="activeFolderClass('Important')" v-on:click="generalHandle('Important')">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="arrow-right" />
@@ -85,7 +85,7 @@
             <p class="notificationPill" v-if="labels[5].unreadCount > 0">{{labels[5].unreadCount}}</p>
           </div>  
         </div>
-      </div>
+      </div> -->
 
       <div class="fullLength" v-for="label in customLabels" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
@@ -103,7 +103,7 @@
         </div>
       </div>
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
+      <!-- <div class="normalRow" v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="exclamation-circle"/>
@@ -115,7 +115,7 @@
             <p class="notificationPill" v-if="labels[7].unreadCount > 0">{{labels[7].unreadCount}}</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="normalRow" v-bind:class="activeFolderClass('Trash')" v-on:click="generalHandle('Trash')">
         <div id="sidebarFlex">
@@ -128,7 +128,7 @@
         </div>
       </div>
       
-      <div class="altRow">
+      <!-- <div class="altRow">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="cog" />
@@ -137,7 +137,7 @@
             Manage Labels
           </div>
         </div>
-      </div>
+      </div> -->
 
 
     </div>

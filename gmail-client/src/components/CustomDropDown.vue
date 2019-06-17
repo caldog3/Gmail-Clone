@@ -124,4 +124,8 @@ export default {
   background-color: rgb(168, 168, 168);
   color: white;
 }
+.dropdown {
+  position: fixed;
+  z-index: 999;
+}
 </style>

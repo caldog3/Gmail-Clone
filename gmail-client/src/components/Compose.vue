@@ -439,6 +439,9 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  position: relative;
+  z-index: 999;
+  padding-right: 60px;
 }
 .headerSection {
   background: #404040;
