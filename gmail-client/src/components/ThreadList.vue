@@ -443,7 +443,7 @@ export default {
             return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage, timeToMessageExpiry, messageExpiryUnixTime};
           }
         });
-        console.log("Do I have the data: ", fullThreadData);
+        // console.log("Do I have the data: ", fullThreadData);
         return fullThreadData.includes(undefined) ? fullThreadData : sortBy(fullThreadData, 'unixTime').reverse();
       }
     },
