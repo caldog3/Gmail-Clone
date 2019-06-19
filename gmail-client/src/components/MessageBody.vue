@@ -33,7 +33,7 @@
           <div v-html="message.snippet"></div>
         </div>
         <div v-if="message.messageExpiryUnixTime && !messageExpired" class="messageExpiry rightAlign">
-            <small><b>{{ timeToMessageExpiry }}</b></small>
+            <small><b>{{ timeToMessageExpiry }}</b><br></small>
           </div>    
       </div>
 

@@ -110,7 +110,8 @@ export default {
   background-color: #404040 !important;
 }
 .bp-dropdown__btn {
-  border: 1px solid #404040 !important;
+  /* border: 1px solid #404040 !important; */
+  border: none !important;
   padding: 0px 0px !important;
   color: white;
 }

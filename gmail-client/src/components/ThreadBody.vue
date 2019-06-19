@@ -17,53 +17,21 @@
     <!-- Quill for replies -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replying || replyingAll">
       <div>&emsp;</div>
-      <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
-      <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
+      <span class="topBar">
+        <span class="securityDropDown">
+          <security-level-drop-down/>
+      </span>
+        <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
+        <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
+        <span class="dropDownArea">
+          <custom-drop-down/>
+        </span>
+      </span>
       <quill-editor v-model="responseHTML"/>
 
       <div class="quill-spacing">
-      <!-- Start of Upload -->
-      <div v-if="!uploading">
-        <p>
-          <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
-        </p>
-      </div>
-      <div v-else>
-        <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-          <!-- <h1>Upload Images</h1> -->
-          <div class="dropbox">
-            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-              accept="image/*" class="input-file">
-              <!-- <p v-if="isInitial">
-                Drag your file(s) here to begin<br> or click to browse
-              </p> -->
-              <p v-if="isSaving">
-                Uploading {{ fileCount }} files...
-              </p>
-          </div>
-        </form>
-        <!--SUCCESS-->
-        <div v-if="isSuccess">
-          <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
-          <p>
-            <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
-          </p>
-          <ul class="list-unstyled">
-            <li v-for="item in uploadedFiles" :key="item.originalName">
-              <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
-            </li>
-          </ul>
-        </div>
-        <!--FAILED-->
-        <div v-if="isFailed">
-          <h2>Uploaded failed.</h2>
-          <p>
-            <a href="javascript:void(0)" @click="reset()">Try again</a>
-          </p>
-          <pre>{{ uploadError }}</pre>
-        </div>
-      </div>
-      <!--End Upload -->
+        Attachments: <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
+        <br><br>
         <button class="sendBar" type="button" v-on:click="replySort">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
@@ -123,6 +91,8 @@ import MessageBody from "./MessageBody";
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus';
 import { sortBy } from 'lodash';
+import CustomDropDown from './CustomDropDown';
+import SecurityLevelDropDown from './SecurityLevelDropDown';
 import { setupEmailBody, markEmailAsRead, markEmailAsUnread, trashEmailThread } from '../store-utility-files/email';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import { fireSendMessage } from '../firebase/firebase';
@@ -139,6 +109,8 @@ export default {
     FontAwesomeIcon,
     MessageBody,
     QuillEditor,
+    CustomDropDown,
+    SecurityLevelDropDown,
   },
   data() {
     return {
@@ -167,6 +139,13 @@ export default {
       currentStatus: null,
       uploadFieldName: "photos",
       messageExpiryUnixTime: null,
+
+      registeredRecipient: true,
+      hasPassword: false,
+      password: '',
+      confirmPassword: '',
+      isEncrypted: false,
+      
     };
   },
   computed: {
@@ -184,6 +163,35 @@ export default {
     }
   },
   methods: {
+    convertToBase64() {
+      var selectedFiles = document.getElementById("inputPDF").files;
+      var array = [];
+      if(selectedFiles.length > 0) {
+        for(var i = 0; i < selectedFiles.length; i++) {
+          var fileToLoad = selectedFiles[i];
+          var fileReader = new FileReader();
+          var base64;
+          fileReader.onload = function(fileLoadedEvent) {
+            base64 = fileLoadedEvent.target.result;
+            array.push({url: base64, filename: fileToLoad.name});
+          };
+          fileReader.readAsDataURL(fileToLoad);
+        }
+        this.uploadedFiles = array;
+        this.hasAttachments = true;
+      }
+    },
+    // recipientDomain() {
+    //   this.changingRecipientInterval = setInterval(()=>{
+    //     this.recipient = "Calvin";
+    //     var containsDomain = this.recipient.includes("@gmail.com");
+    //     if (containsDomain !== this.registeredRecipient) {
+    //       console.log("swap permissions");
+    //       this.registeredRecipient = containsDomain;
+    //       eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
+    //     }
+    //   }, 1000);
+    // },
     returnToInbox(){
       this.$router.push({ path: "/" });
       this.$store.state.viewFolder = "Inbox";
@@ -254,11 +262,23 @@ export default {
       // createDraft(headers, body);
     },
     firebaseReplySend(subject, composeTo){
+      let finalPassword = null;
+      
+      if (this.hasPassword) {
+        if (!this.password || this.password !== this.confirmPassword) {
+          alert("The password does not match or is invalid");
+          return;
+        }
+        else {finalPassword = this.password;}
+      }
       let message = fireSetupEmailMessage({
         composeSubject: subject,
         composeTo, 
         composeMessage: this.responseHTML,
-        messageExpiryUnixTime: this.messageExpiryUnixTime
+        messageExpiryUnixTime: this.messageExpiryUnixTime,
+        password: finalPassword,
+        isEncrypted: this.isEncrypted,
+        attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       }, this.messages[0].threadId);
       if (message === undefined){return;}
       fireSendMessage(message);
@@ -537,6 +557,18 @@ export default {
     eventBus.$on('TRASHING_THREAD', this.trash);
     eventBus.$on('ENTER_DRAFT', this.draftSetup);
     eventBus.$on('MARK_THREAD_AS_UNREAD', this.markThreadAsUnread);
+    eventBus.$on("COMPOSE_SECURITY", payload => {
+      this.hasPassword = payload.hasPassword;
+      this.isEncrypted = payload.isEncrypted;
+    });
+    eventBus.$on("SET_EXPIRY_TIME", unixTime => {
+      this.messageExpiryUnixTime = unixTime;
+    });
+    var registeredRecipient = this.recipient.includes("@gmail.com");
+    if (registeredRecipient) {
+      console.log("registeredRecipient: ", registeredRecipient);
+      eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient})
+    };
   },
   beforeDestroy() {
     eventBus.$off('TRASHING_THREAD', this.trash);
@@ -546,6 +578,15 @@ export default {
 </script>
 
 <style scoped>
+.dropDownArea{
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 999;
+  background:  dimgray;
+}
 .quill {
   align-content: center;
   padding-left: -10px;
@@ -638,4 +679,17 @@ button:hover {
   padding: 50px 0;
 }
 /* end image uploader styling */
+
+.topBar {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 25px;
+  border: 1px black;
+}
+.securityDropDown {
+  position:relative;
+  text-align: left;
+  width: 250px;
+  border: 1px black;
+}
 </style>

@@ -2,9 +2,10 @@
 <template>
   <dropdown ref="dropdown">
     <template slot="btn">
-      <small class="passwordText">
+      <small v-bind:class="passwordTextClass()">
         <font-awesome-icon style="color:black;" class="Icon" icon="lock" v-if="lockActive" />
         {{selection}}
+        <font-awesome-icon style="color:black;" class="Icon" icon="caret-down" />
       </small>
     </template>
     <template slot="body" v-if="rightDomain">
@@ -71,6 +72,11 @@ export default {
       eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       this.$refs.dropdown.isHidden = true;
     },
+    passwordTextClass() {
+      let passwordClass = "passwordText";
+      // passwordClass = "threadPasswordText";
+      return passwordClass;
+    },
   },
   created() {
     eventBus.$on("SWAP_SECURITY", payload => {
@@ -99,6 +105,10 @@ export default {
 .passwordText {
   color: black;
   font-size: 1em;
+}
+.threadPasswordText {
+  color: black;
+  font-size: .8em;
 }
 .listedItems:hover{
   background-color: rgb(168, 168, 168);

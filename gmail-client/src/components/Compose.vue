@@ -386,6 +386,9 @@ export default {
       // this.close();
     },
   },
+  beforeDestroy() {
+    eventBus.$off("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
+  },
   mounted() {
     this.reset();
   },
