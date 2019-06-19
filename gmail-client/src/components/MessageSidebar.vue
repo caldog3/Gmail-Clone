@@ -59,7 +59,7 @@
       </div>
       
 
-      <div class="normalRow" v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('Drafts')">
+      <div class="normalRow" v-bind:class="activeFolderClass('Drafts')" v-on:click="generalHandle('DRAFTS')">
         <div id="sidebarFlex">
           <div class="Icon">
             <font-awesome-icon style="color:white;" icon="file"/>
@@ -87,7 +87,7 @@
         </div>
       </div> -->
 
-      <div class="fullLength" v-for="label in customLabels" :key="label.folder">
+      <!-- <div class="fullLength" v-for="label in customLabels" :key="label.folder">
         <div v-bind:class="activeFolderClass(label.id)" v-on:click="generalHandle(label.id)">
           <div id="sidebarFlexfull">
             <div class="Icon">
@@ -101,7 +101,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="normalRow" v-bind:class="activeFolderClass('Spam')" v-on:click="generalHandle('Spam')">
         <div id="sidebarFlex">
@@ -145,121 +145,6 @@
   </div>
 </template>
 
-<style scoped>
-.sideBar {
-  float: left;
-  /* padding-right: -100px; */
-}
-img {
-  width: 30px;
-}
-button {
-  margin: 20px 90px 20px 5px;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: white;
-}
-.button {
-  padding: 13px 15px;
-  border-radius: 40px;
-  outline: none;
-  border: none;
-  line-height: 28px;
-}
-.optionsA {
-  color: white;
-  text-shadow: .5px -1px 2px #333;
-  /* margin-right: 22px; */
-  font-size: .9em;
-  width: 260px;
-  height: 300px;
-  overflow: hidden;
-  border-bottom: solid;
-  border-width: 1px;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.optionsA:hover {
-  overflow-y: scroll;
-  margin-right: 10px;
-}
-.normalRow {
-  width: 253px;
-  height: 35px;
-  padding-left: 25px;
-  border-radius: 0px 20px 20px 0px;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.altRow {
-  width: 253px;
-  height: 35px;
-  padding-left: 25px;
-  border-radius: 0px 20px 20px 0px;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.fullLength {
-  padding-left: 0;
-  border-radius: 0px 20px 20px 0px;
-  height: 35px;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.normalRow:hover {
-  /* background: rgba(153, 153, 153, 0.4); */
-  background: rgba(255, 255, 255, 0.4);
-}
-.fullLength:hover {
-  /* background: rgba(153, 153, 153, 0.4); */
-  background: rgba(255, 255, 255, 0.4);
-}
-.activeFolder {
-  background: rgba(255, 255, 255, 0.5);
-}
-.activeFolder:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-
-
-#sidebarFlex {
-  display: flex;
-  flex-direction: row;
-  padding-left: 5px;
-  padding-right: 10px;
-  text-shadow: none;
-  height: 100%;
-  padding-top: 7px;
-}
-.unreadCount {
-  margin-left: auto;
-}
-#sidebarFlexfull {
-  display: flex;
-  flex-direction: row;
-  padding-left: 31px;
-  padding-right: 10px;
-  text-shadow: none;
-  padding-top: 7px;
-}
-.Icon {
-  padding-right: 10px;
-  width: 30px;
-}
-#bootstrap-overrides {
-  text-align: left;
-}
-.notificationPill {
-  text-align: right;
-}
-.activeFolder {
-  height: 35px;
-}
-</style>
 
 <script>
 import { getLabelsForUnread, getLabels } from "./../store-utility-files/gmail-api-calls";
@@ -390,6 +275,7 @@ export default {
       this.$router.push({ path: "/Folder/" + folder.toUpperCase() + "/" });
       let previousFolder = this.$store.state.currentFolder;
       if (folder == "Drafts") {
+        console.log("not here");
         folder = "Draft";
       }
       if(folder.includes("Label_")) {
@@ -420,9 +306,9 @@ export default {
 
   },
   created() {
-    if(this.$store.getters.getLabelMessages["DRAFT"] !== undefined){
-      this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
-    }
+    // if(this.$store.getters.getLabelMessages["DRAFT"] !== undefined){
+    //   this.draftNum = this.$store.getters.getLabelMessages["DRAFT"].length;
+    // }
 
     // getLabels();
     // Probably a much better way to do this
@@ -448,3 +334,119 @@ export default {
 
 };
 </script>
+
+<style scoped>
+.sideBar {
+  float: left;
+  /* padding-right: -100px; */
+}
+img {
+  width: 30px;
+}
+button {
+  margin: 20px 90px 20px 5px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: white;
+}
+.button {
+  padding: 13px 15px;
+  border-radius: 40px;
+  outline: none;
+  border: none;
+  line-height: 28px;
+}
+.optionsA {
+  color: white;
+  text-shadow: .5px -1px 2px #333;
+  /* margin-right: 22px; */
+  font-size: .9em;
+  width: 260px;
+  height: 300px;
+  overflow: hidden;
+  border-bottom: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.optionsA:hover {
+  overflow-y: scroll;
+  margin-right: 10px;
+}
+.normalRow {
+  width: 253px;
+  height: 35px;
+  padding-left: 25px;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.altRow {
+  width: 253px;
+  height: 35px;
+  padding-left: 25px;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.fullLength {
+  padding-left: 0;
+  border-radius: 0px 20px 20px 0px;
+  height: 35px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.normalRow:hover {
+  /* background: rgba(153, 153, 153, 0.4); */
+  background: rgba(255, 255, 255, 0.4);
+}
+.fullLength:hover {
+  /* background: rgba(153, 153, 153, 0.4); */
+  background: rgba(255, 255, 255, 0.4);
+}
+.activeFolder {
+  background: rgba(255, 255, 255, 0.5);
+}
+.activeFolder:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+
+
+#sidebarFlex {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+  padding-right: 10px;
+  text-shadow: none;
+  height: 100%;
+  padding-top: 7px;
+}
+.unreadCount {
+  margin-left: auto;
+}
+#sidebarFlexfull {
+  display: flex;
+  flex-direction: row;
+  padding-left: 31px;
+  padding-right: 10px;
+  text-shadow: none;
+  padding-top: 7px;
+}
+.Icon {
+  padding-right: 10px;
+  width: 30px;
+}
+#bootstrap-overrides {
+  text-align: left;
+}
+.notificationPill {
+  text-align: right;
+}
+.activeFolder {
+  height: 35px;
+}
+</style>

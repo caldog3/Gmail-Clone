@@ -115,7 +115,7 @@ import { sendMessage, createDraft, updateDraft } from './../store-utility-files/
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
 import Icon from './icon';
-import { fireSendMessage } from '../firebase/firebase';
+import { fireSendMessage, fireSaveDraft } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
 import CustomDropDown from './CustomDropDown';
 import SecurityLevelDropDown from './SecurityLevelDropDown';

@@ -144,7 +144,7 @@ const responseMessage3 = {
 //within "message" object, format the "to" field as follows: "email@gmail.com, otheremail@gmail.com, anotheremail@gmail.com"
 const fireSendMessage = (message) => {
     let sender = base64url(store.state.userEmail);
-    //fireRef.child(users).child(sender).child(drafts).child(message.threadId).remove();
+    fireRef.child(users).child(sender).child(drafts).child(message.threadId).remove();
     fireRef.child(users).child(sender).child(sent).child(message.threadId).set(true);
     fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(isRead).set(true);
     fireRef.child(threads).child(message.threadId).child(participants).child(sender).child(folders).child(sent).set(true);
@@ -174,7 +174,7 @@ const fireRetrieveMessages = () => {
     store.commit('addLabelId', "PRIMARY");
     store.commit('addLabelId', "SENT");
     store.commit('addLabelId', "TRASH");
-    store.commit('addLabelId', "DRAFT");
+    store.commit('addLabelId', "DRAFTS");
     console.log("THE STORE FOLDERS", store.state.labelMessages);
     let currentUser = base64url(store.state.userEmail);
     console.log("The state: ", store.state);
@@ -253,6 +253,76 @@ const fireRetrieveMessages = () => {
             });
         });
         //end sent folder
+        //draft folder start
+        fireRef.child(users).child(currentUser).child(drafts).on("child_added", function(threadShot){
+            var threadId = threadShot.key;
+            store.commit('initializeThreadTime', {threadId});
+            store.commit('addThreadId', {threadId, labelId:drafts});
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).once("value").then((userInfoShot) => {
+                var isEmailRead = userInfoShot.child(isRead).val();
+                var newFolderLabels = [];
+                userInfoShot.child(folders).forEach((folder) => {
+                    newFolderLabels.push(folder.key);
+                });
+                return {isEmailRead, newFolderLabels};
+            }).then(({isEmailRead, newFolderLabels}) => {
+                fireRef.child(threads).child(threadId).child(participants).child(currentUser).on("child_changed", function(userInfoUpdate){
+                    if(userInfoUpdate.key == isRead){
+                        isEmailRead = userInfoUpdate.val();
+                    }
+                    else{
+                        newFolderLabels = [];
+                        userInfoUpdate.child(folders).forEach((folder) => {
+                            newFolderLabels.push(folder.key);
+                        });
+                    }
+                });
+                fireRef.child(threads).child(threadId).child(messages).on("child_added", function(messageShot){
+                    let newMessage = messageShot.val();
+                    let unixTime = newMessage.unixTime;
+                    newMessage.unread = isEmailRead;
+                    newMessage.labelId = newFolderLabels;
+                    store.commit('setThreadTime', {threadId, unixTime});
+                    store.commit('addMessage', newMessage);
+                });
+            });
+        });
+        //end draft folder
+        //trash folder start
+        fireRef.child(users).child(currentUser).child(trash).on("child_added", function(threadShot){
+            var threadId = threadShot.key;
+            store.commit('initializeThreadTime', {threadId});
+            store.commit('addThreadId', {threadId, labelId:trash});
+            fireRef.child(threads).child(threadId).child(participants).child(currentUser).once("value").then((userInfoShot) => {
+                var isEmailRead = userInfoShot.child(isRead).val();
+                var newFolderLabels = [];
+                userInfoShot.child(folders).forEach((folder) => {
+                    newFolderLabels.push(folder.key);
+                });
+                return {isEmailRead, newFolderLabels};
+            }).then(({isEmailRead, newFolderLabels}) => {
+                fireRef.child(threads).child(threadId).child(participants).child(currentUser).on("child_changed", function(userInfoUpdate){
+                    if(userInfoUpdate.key == isRead){
+                        isEmailRead = userInfoUpdate.val();
+                    }
+                    else{
+                        newFolderLabels = [];
+                        userInfoUpdate.child(folders).forEach((folder) => {
+                            newFolderLabels.push(folder.key);
+                        });
+                    }
+                });
+                fireRef.child(threads).child(threadId).child(messages).on("child_added", function(messageShot){
+                    let newMessage = messageShot.val();
+                    let unixTime = newMessage.unixTime;
+                    newMessage.unread = isEmailRead;
+                    newMessage.labelId = newFolderLabels;
+                    store.commit('setThreadTime', {threadId, unixTime});
+                    store.commit('addMessage', newMessage);
+                });
+            });
+        });
+        //trash folder end
     });
     //SENT TESTING
     // fireRef.child(users).child(currentUser).child(sent).once('value').then((userShot) => {
@@ -375,6 +445,7 @@ const testTwoFirebase = () =>{
 
 export{
     fireSendMessage,
+    fireSaveDraft,
     fireRetrieveMessages,
     fireGetMessagesByLabel,
     fireTrashThread,
