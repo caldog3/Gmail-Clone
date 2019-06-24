@@ -383,7 +383,7 @@ export default {
       });
       if(message === undefined){return;}
       fireSaveDraft(message);
-      // this.close();
+      this.close();
     },
   },
   beforeDestroy() {
