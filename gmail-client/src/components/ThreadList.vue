@@ -33,7 +33,7 @@
                 </label>
               </div>
 
-              <div class="largeOnly" v-if="labelId !== 'TRASH'">
+              <div class="largeOnly" v-if="labelId !== 'TRASH' && !thread.locked">
                 <!-- <div class="highlightArea">
                   <div class="theRestoftheTime">
                     <input v-on:click="starredLabelToggle(thread)" class="star" type="checkbox" :checked="thread.starred" title="bookmark page">
@@ -45,7 +45,7 @@
                   </div>
                 </div> -->
               </div>
-
+              <div v-else-if="thread.locked"> <font-awesome-icon class="Icon" icon="lock" /></div>
               <div v-else> <font-awesome-icon class="Icon" icon="trash" /> </div>
 
             </div>
@@ -418,7 +418,10 @@ export default {
 
           if (numberOfMessages > 0) {
             const { from, starred, conciseTo, to, body, subject, unread, isFireMessage, messageExpiryUnixTime, password, isEncrypted } = threadMessages[numberOfMessages - 1];
-            
+            var locked = false;
+            if (password || isEncrypted) {
+              locked = true;
+            }
             let { snippet } = threadMessages[numberOfMessages - 1];
             let timeToMessageExpiry = null;
             if(messageExpiryUnixTime){
@@ -440,7 +443,7 @@ export default {
             const time = getTimeFormat(unixTime * 1000).time;
             
             
-            return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage, timeToMessageExpiry, messageExpiryUnixTime};
+            return {threadId, from, starred, conciseTo, to, body, labelId, subject, snippet, time, unread, numberOfMessages, unixTime, isFireMessage, timeToMessageExpiry, messageExpiryUnixTime, locked};
           }
         });
         // console.log("Do I have the data: ", fullThreadData);
