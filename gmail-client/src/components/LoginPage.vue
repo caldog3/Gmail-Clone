@@ -65,7 +65,7 @@ import eventBus from './../event_bus';
       this.email = "";
       this.name = "";
       eventBus.$emit('DATA_FETCHING_COMPLETE');
-      fireRetrieveMessages(); //maybe an extra function call for retreiving the sent folder
+      fireRetrieveMessages();
      }
    }
  }
