@@ -261,7 +261,7 @@
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry">Setting 1</div>
+                    <div class="dropdownEntry" @click="openSecurityModal">See Security Tutorial</div>
                     <hr>
                     <div class="dropdownEntry">Setting 2</div>
                     <hr>
@@ -513,7 +513,11 @@ export default {
         }
 
       });
+    },
+    openSecurityModal() {
+      eventBus.$emit("SHOW_INTRO_MODAL");
     }
+
   },
   created() {
     eventBus.$on("REFRESH", this.refreshing);

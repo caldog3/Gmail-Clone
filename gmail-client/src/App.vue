@@ -43,7 +43,7 @@
 
       <!-- app -->
       <div id="app">
-        <button id="show-modal" @click="showModal = true">Show Modal</button>
+        <!-- <button id="show-modal" @click="showModal = true">Show Modal</button> -->
         <!-- use the modal component, pass in the prop -->
         <modal v-if="showModal" @close="showModal = false">
           <h3 slot="header">Privacy Features Intro</h3>
@@ -164,7 +164,9 @@ export default {
         });
       }
     },
-
+    toggleModal() {
+      this.showModal = true;
+    }
   },
   beforeUpdate() {
     if (!this.initialHeightCalculated){
@@ -186,6 +188,9 @@ export default {
     eventBus.$on("RESET_APP_STATE", ()=>{
       this.loading = false
     })
+  },
+  created() {
+    eventBus.$on("SHOW_INTRO_MODAL", this.toggleModal);
   }
 };
 </script>

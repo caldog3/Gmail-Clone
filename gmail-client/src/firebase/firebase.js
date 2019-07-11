@@ -175,9 +175,7 @@ const fireRetrieveMessages = () => {
     store.commit('addLabelId', "SENT");
     store.commit('addLabelId', "TRASH");
     store.commit('addLabelId', "DRAFTS");
-    console.log("THE STORE FOLDERS", store.state.labelMessages);
     let currentUser = base64url(store.state.userEmail);
-    console.log("The state: ", store.state);
     fireRef.child(users).child(currentUser).child(primary).once('value').then((userShot) => {
         if(!userShot.exists()){
             return fireRef.child(users).child(currentUser).child(primary).set("Welcome!");//.child('Welcome!').set(true);
