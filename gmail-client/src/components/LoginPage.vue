@@ -5,12 +5,18 @@
       <img src="./../assets/gmailLogo.png" alt="" class="responsive">
     </div>
     <br>
+    <div>
+      <!-- It's here
+      <boardal/> -->
+    </div>
     <input v-model="name" placeholder="First and Last Name">
     <input v-model="email" placeholder="email address">
     <button @click="login">Log In</button>
 
     <!-- <button @click="authenticate()">Sign In</button> -->
     <div class="whiteSpace"></div>
+
+    
   </div>
 </template>
 
@@ -36,6 +42,7 @@
 <script>
 import { fireRetrieveMessages } from '../firebase/firebase';
 import eventBus from './../event_bus';
+// import Boardal from './OnboardingModal';
 
  export default {
    name: 'LoginPage',
@@ -44,6 +51,9 @@ import eventBus from './../event_bus';
        name: "",
        email: ""
      };
+   },
+   components: {
+    //  Boardal,
    },
    methods: {
     authenticate(){
