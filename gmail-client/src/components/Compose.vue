@@ -307,7 +307,7 @@ export default {
     },
     recipientDomain() {
       this.changingRecipientInterval = setInterval(()=>{
-        var containsDomain = this.composeTo.includes("@gmail.com");
+        var containsDomain = this.composeTo.includes("@2040mail.com");
         if (containsDomain !== this.registeredRecipient) {
           console.log("swap permissions");
           this.registeredRecipient = containsDomain;

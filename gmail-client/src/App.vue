@@ -337,7 +337,8 @@ body {
 }
 
 .modal-container {
-  width: 500px;
+  min-width: 500px;
+  max-width: 900px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
