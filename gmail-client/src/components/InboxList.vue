@@ -15,7 +15,7 @@
         <thread-list labelId="PRIMARY"/>
       </b-tab>
 
-      <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
+      <!-- <b-tab v-on:click="updateCurrentFolder('SOCIAL')">
         <template slot="title">
           <div class="backdrop">
             <div class="tabSize">
@@ -35,7 +35,7 @@
           </div>
         </template>
         <thread-list labelId="PROMOTIONS"/>
-      </b-tab>
+      </b-tab> -->
 
     </b-tabs>
   </div>

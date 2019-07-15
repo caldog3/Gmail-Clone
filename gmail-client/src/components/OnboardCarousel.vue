@@ -2,24 +2,15 @@
     <carousel id="carousel"> 
         <!-- slides work in sets of two (one shown on the left and one shown on the right) -->
         <slide class="sideText">
-            
-            This quick introduction will show the various security features that are available for
-            use in this email provider. 
+            <h2></h2>
+            &emsp;We have added two new optional features that you can use when you send emails. Recipients will not need 
+            to sign up for new services or install any software to read the messages you send.
         </slide>
         <slide>
-            <h1>2040 Mail Security</h1>
+            <!-- <h1>2040 Mail Security</h1> -->
             <img src="../assets/2040.png" width="400">
         </slide>
-        <slide class="sideText">
-            
-            When sending a message you may use this feature.  "Set Expiring Message" allows you to
-            designate how long from now you want the message to still be accessible.  Once that timer
-            runs out, the message will expire, and no one (including yourself) will have access to the
-            message's contents anymore.
-        </slide>
-        <slide>
-            <img src="../assets/MessageExpiryOnboard.png" width="400">
-        </slide>
+        <!--
         <slide class="sideText">
             
             Next to the line for entering the subject of the message chain is a dropdown menu with selections
@@ -28,27 +19,36 @@
         </slide>
         <slide>
             <img src="../assets/SecurityDropdownOnboard.png" width="400">
-        </slide>
+        </slide> -->
         <slide class="sideText">
-            
-            If the recipient you are emailing has an email with an "@2040mail.com" domain, the security setting you can
-            select from the dropdown is to send the message encrypted.  An encrypted message is sent as an indecipherable
-            message that can only be decrypted by the recipient(s) you sent the message to.
+            <h3>Encryption</h3>
+            &emsp;By default, email messages are not protected while being sent, and your email company or any government 
+            conducting surveillance can read their contents. Moreover, once they have been received, anyone with access
+             to those emails -- such as a hacker -- will be able to read them.
+            <br>
+            &emsp;Encryption gives you control over who can read your emails. It can't guarantee you perfect protection, but 
+            practically speaking, enabling encryption means that even if a third party -- such as your email company -- 
+            has access to your email, no one except you and your contact will be able to actually read its contents.
+
         </slide>
         <slide>
             <img src="../assets/EncryptedDomainOnboard.png" width="400">
         </slide>
         <slide class="sideText">
-            
-            If the recipient you are emailing does not have an "@2040mail.com" domain, the security setting you can
-            select from the dropdown is to send the message password protected.  In order for the receiver to view the 
-            message they will need to enter this password.  It will be up to you to determine how you will get this password
-            to them so they can access your message's contents.
+            <h3>Self-Destructing Messages</h3>
+            &emsp;By default, emails in your inbox are always accessible unless you manually delete them. Even then, they are still
+             accessible by the other party in the conversation. If a third party ever gains access to undeleted emails you 
+             have either sent or received, any sensitive information in these emails will be available to them.
+            <br>
+            &emsp;Self-destructing messages allow you to control how long you want an email to stay around. If you're concerned about 
+            sensitive information staying around in your or your contact's inbox longer than you think it needs to, you can set 
+            an expiration timer to be *sure* that the information is deleted when you want it to be. Once the timer runs out, 
+            no one -- including you and your contact -- will be able to read its contents.
         </slide>
-        <!-- might want to add some kind of styled spacer right here -->
         <slide>
-            <img src="../assets/PasswordDomainOnboard.png" width="400">
+            <img src="../assets/MessageExpiryOnboard.png" width="400">
         </slide>
+        
     </carousel>
 </template>
 
@@ -78,7 +78,7 @@ export default {
         min-width: 200px;
         padding-right: 30px;
         padding-left: 30px;
-        text-align: center;
+        text-align: left;
         line-height: 2;
     }
 </style>

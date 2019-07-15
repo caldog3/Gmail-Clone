@@ -262,14 +262,14 @@
                   <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
                     <div class="dropdownEntry" @click="openSecurityModal">See Security Tutorial</div>
-                    <hr>
+                    <!-- <hr>
                     <div class="dropdownEntry">Setting 2</div>
                     <hr>
                     <div class="dropdownEntry">Setting 3</div>
                     <hr>
                     <div class="dropdownEntry">Setting 4</div>
                     <hr>
-                    <div class="dropdownEntry">Setting 5</div>
+                    <div class="dropdownEntry">Setting 5</div> -->
                   </div> 
                 </div>
               </div>

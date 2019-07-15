@@ -9,8 +9,8 @@
 
         <div class="brand">
           <b-navbar-brand href="#">
-            <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV">
-            Gmail
+            <!-- <img src="./../assets/gmail.png" class="d-inline-block align-top" alt="BV"> -->
+            2040Mail
           </b-navbar-brand>
         </div>
 

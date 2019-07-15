@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      text: "Set Expiring Message",
+      text: "Set Self-Destructing Message",
       minutes: [1, 2, 4, 5, 10, 15, 20, 30, 45],
       hours: [1, 2, 4, 6, 12, 18],
       days: [1, 2, 3, 4, 5, 6, 7, 10, 14, 20, 21, 28]
@@ -74,7 +74,7 @@ export default {
     setExpiryTime(timeValue, timeUnit) {
       const time = this.$options.filters.formatTimeUnit(timeValue, timeUnit);
       this.$refs.dropdown.isHidden = true;
-      this.text = `This message will expire in ${time}`;
+      this.text = `This message will self-destruct in ${time}`;
       this.getExpiryUnixTime(timeValue, timeUnit);
     },
     getExpiryUnixTime(timeValue, timeUnit) {

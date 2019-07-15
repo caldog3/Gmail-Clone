@@ -579,7 +579,7 @@ export default {
 
 <style scoped>
 .dropDownArea{
-  width: 350px;
+  width: 460px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -645,6 +645,9 @@ button:hover {
   text-align: left;
   align-content: left;
   width: 100%;
+  overflow:hidden;
+  
+  
 }
 /* styling for the image uploader */
 .dropbox {

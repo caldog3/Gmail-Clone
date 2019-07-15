@@ -10,6 +10,9 @@
       <span class="dropDownArea">
         <custom-drop-down/>
       </span>
+      <div @click="expiryHelp">
+        <font-awesome-icon class="Icon help" icon="question-circle"/>
+      </div>
       
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
@@ -26,7 +29,9 @@
       <span class="securityDropDown full3">
         <security-level-drop-down/>
       </span>
-      |&emsp;
+      <font-awesome-icon style="color:black" class="Icon" icon="question-circle" @click="encryptionHelp"/>
+      
+      &emsp;|&emsp;
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
     <div class="section" v-if="hasPassword">
@@ -114,6 +119,7 @@
 import { sendMessage, createDraft, updateDraft } from './../store-utility-files/gmail-api-calls';
 import QuillEditor from './QuillEditor';
 import eventBus from '../event_bus.js';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Icon from './icon';
 import { fireSendMessage, fireSaveDraft } from '../firebase/firebase';
 import { fireSetupEmailMessage } from '../firebase/fireEmail';
@@ -138,6 +144,7 @@ export default {
     QuillEditor,
     CustomDropDown,
     SecurityLevelDropDown,
+    FontAwesomeIcon,
     // FilePond,
   },
   data() {
@@ -257,7 +264,12 @@ export default {
         this.composeTidy();
       }, 250);
       clearInterval(this.changingRecipientInterval);
-
+    },
+    expiryHelp() {
+      eventBus.$emit("SELF_DESTRUCT_HELP");
+    },
+    encryptionHelp() {
+      eventBus.$emit("ENCRYPTION_HELP");
     },
     fireSendCompose(){
       let finalPassword = null;
@@ -461,13 +473,13 @@ export default {
   width: 250px;
 }
 .dropDownArea{
-  width: 250px;
+  width: 400px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   position: relative;
   z-index: 999;
-  padding-right: 60px;
+  padding-right:10px;
 }
 .headerSection {
   background: #404040;
@@ -643,6 +655,18 @@ textarea {
 }
 .subjectLeft {
   /* margin-left: -4em; */
+}
+.Icon {
+  cursor: pointer;
+  
+}
+.help {
+  color: white;
+  cursor: pointer;
+  /* margin-left: -30px; */
+  margin-right: 30px;
+  font-size: 1em;
+  z-index: 999;
 }
 
 </style>

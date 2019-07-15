@@ -49,6 +49,28 @@
           <h3 slot="header">Privacy Features Intro</h3>
           <onboard-carousel slot="body"/>
         </modal>
+        <modal v-if="showExpiryHelpModal" @close="showExpiryHelpModal=false">
+          <h3 slot="header"> Help - Self-Destructing Messages</h3>
+          <!-- maybe make a component for the helps -->
+          <div class="helpModal" slot="body">
+            &emsp;Self-destructing messages allow you to choose how long you want an email to be accessible. 
+            The timer starts counting once you **send** the message, not once it's been read. This means 
+            you should either set it long enough to give your contact time to read the message, or be 
+            ready to resend the message, if necessary.
+          </div>
+        </modal>
+        <modal v-if="showEncryptionHelpModal" @close="showEncryptionHelpModal=false">
+          <h3 slot="header"> Help - Encrypting Messages</h3>
+          <!-- maybe make a component for the helps -->
+          <div class="helpModal" slot="body">
+            &emsp;When sending an email to someone using the same email service, encryption will be enabled 
+            by default, but can be disabled by selecting "Non-encrypted" from the dropdown.
+            <br>
+            &emsp;If you would like to encrypt an email to someone who is not on the same email service, you can select 
+            password-based encryption from the dropdown. If you choose this option, you will have to communicate this 
+            password to your contact because they will be unable to read your message without it.
+          </div>
+        </modal>
       </div>
       <!-- end of modal -->
 
@@ -60,7 +82,7 @@
         <utility-bar/>
         <div class="emailList" :style="emailListHeight">
           <router-view/>
-          <div class="termsUnderneath">
+          <!-- <div class="termsUnderneath">
              <br><br>
             <p>
               <a href="https://policies.google.com/terms" rel="noopener noreferrer" target="_blank">Terms</a> 
@@ -70,7 +92,7 @@
               <a href="https://www.google.com/gmail/about/policy/" rel="noopener noreferrer" target="_blank">Program Policies</a>
             </p>
             
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -114,6 +136,8 @@ export default {
       initialHeightCalculated: false,
       loading: false,
       showModal: false,
+      showExpiryHelpModal: false,
+      showEncryptionHelpModal: false,
     };
   },
   components: {
@@ -166,6 +190,12 @@ export default {
     },
     toggleModal() {
       this.showModal = true;
+    },
+    helpExpiryToggle() {
+      this.showExpiryHelpModal = true;
+    },
+    helpEncryptionToggle() {
+      this.showEncryptionHelpModal = true;
     }
   },
   beforeUpdate() {
@@ -191,6 +221,8 @@ export default {
   },
   created() {
     eventBus.$on("SHOW_INTRO_MODAL", this.toggleModal);
+    eventBus.$on("SELF_DESTRUCT_HELP", this.helpExpiryToggle);
+    eventBus.$on("ENCRYPTION_HELP", this.helpEncryptionToggle);
   }
 };
 </script>
@@ -389,4 +421,9 @@ body {
   transform: scale(1.1);
 }
 /* end modal onboarding */
+.helpModal {
+  text-align: left;
+  line-height: 2em;
+}
+
 </style>
