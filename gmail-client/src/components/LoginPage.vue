@@ -1,8 +1,8 @@
 <template>
   <div class="column">
-    <h1>Gmail Clone</h1>
+    <!-- <h1>Gmail Clone</h1> -->
     <div class="logo">
-      <img src="./../assets/gmailLogo.png" alt="" class="responsive">
+      <img src="./../assets/2040.png" alt="" class="responsive">
     </div>
     <br>
     <div>

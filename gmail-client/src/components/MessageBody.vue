@@ -12,7 +12,7 @@
               <span>{{message.time}} ({{timeAgo}})</span>
               <!-- need to fix the styling here FIXME -->
               <div v-on:click.stop>
-                <div class="starBound">
+                <!-- <div class="starBound">
                   <div class="theRestoftheTime">
                     <span class="highlightArea">
                       <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
@@ -23,7 +23,7 @@
                     <label for="ffstar" class="notchecked">&#X2606;</label>
                     <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
               <div>
                 {{message.time}} ({{ timeAgo }})
               </div>
-              <div class="starBound" v-on:click.stop>
+              <!-- <div class="starBound" v-on:click.stop>
                 <div class="theRestoftheTime">
                   <span class="highlightArea">
                     <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
@@ -59,13 +59,13 @@
                   <label for="ffstar" class="notchecked">&#X2606;</label>
                   <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
                 </div>
-              </div>
-              <div v-on:click.stop>
+              </div> -->
+              <!-- <div v-on:click.stop>
                 <font-awesome-icon class="Icon" icon="reply" />
               </div>
               <div v-on:click.stop>
                 <font-awesome-icon class="Icon" icon="ellipsis-v" />
-              </div>
+              </div> -->
           </div>
         </div>
       </div>

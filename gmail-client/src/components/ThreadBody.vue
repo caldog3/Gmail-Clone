@@ -19,11 +19,16 @@
       <div>&emsp;</div>
       <span class="topBar">
         <span class="securityDropDown">
-          <security-level-drop-down/>
-      </span>
+          <security-level-drop-down/>          
+        </span>
+        
+        <font-awesome-icon class="help" icon="question-circle" @click="encryptionHelp"/>
         <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
         <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
         <span class="dropDownArea">
+          <div @click="expiryHelp">
+            <font-awesome-icon style="color:white" class="icon" icon="question-circle"/>
+          </div>
           <custom-drop-down/>
         </span>
       </span>
@@ -499,6 +504,15 @@ export default {
     draftSetup() { //This is not reached anymore
       console.log("Is this still reached?");
     },
+    expiryHelp() {
+      eventBus.$emit("SELF_DESTRUCT_HELP");
+    },
+    encryptionHelp() {
+      eventBus.$emit("ENCRYPTION_HELP");
+    },
+
+
+
     // uploader start
     reset() {
       // reset form to initial stater
@@ -579,7 +593,7 @@ export default {
 
 <style scoped>
 .dropDownArea{
-  width: 460px;
+  width: 500px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -646,7 +660,8 @@ button:hover {
   align-content: left;
   width: 100%;
   overflow:hidden;
-  
+  /* padding-left: 100px; */
+  margin-left: 10px;
   
 }
 /* styling for the image uploader */
@@ -694,5 +709,13 @@ button:hover {
   text-align: left;
   width: 250px;
   border: 1px black;
+}
+.help {
+  cursor: pointer;
+  /* margin-left: 5px; */
+}
+.icon {
+  cursor: pointer;
+  margin-right: 35px;
 }
 </style>
