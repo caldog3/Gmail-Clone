@@ -615,10 +615,10 @@ textarea {
   /* height: 100%; */
 
 }
-.composeWindow:hover {
-  /* overflow-y: scroll; */
-  /* margin-right: 10px; */
-}
+/* .composeWindow:hover {
+  overflow-y: scroll;
+  margin-right: 10px;
+} */
 
 /* styling for the image uploader */
 .dropbox {
@@ -653,9 +653,7 @@ textarea {
   position:relative;
   text-align: left;
 }
-.subjectLeft {
-  /* margin-left: -4em; */
-}
+
 .Icon {
   cursor: pointer;
   

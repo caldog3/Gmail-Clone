@@ -321,9 +321,9 @@ body {
 
 /* Scroll Bar for Compose Window */
 /* width */
-.composeWindow::-webkit-scrollbar {
-  /* width: 6px; */
-}
+/* .composeWindow::-webkit-scrollbar {
+  width: 6px;
+} */
 /* Track */
 .composeWindow::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
