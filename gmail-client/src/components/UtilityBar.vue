@@ -261,7 +261,10 @@
                   <div v-on:click="cogDropdownFunction()" class="dropbtn"><font-awesome-icon style="color:white;" class="Icon" icon="cog"/></div>
                   <span class="tooltiptext">Settings</span>
                   <div id="cogDropdown" class="cog dropdown-content">
-                    <div class="dropdownEntry" @click="openSecurityModal">See Security Tutorial</div>
+                    <div v-if="isTutorialUser" class="dropdownEntry" @click="openSecurityModal">See Security Tutorial</div>
+                    <hr>
+                    <div v-if="!isTutorialUser" class="dropdownEntry" @click="toggleTutorialUser">I'm A Tutorial User</div>
+                    <div v-else class="dropdownEntry" @click="toggleTutorialUser">I'm Not A Tutorial User</div>
                     <!-- <hr>
                     <div class="dropdownEntry">Setting 2</div>
                     <hr>
@@ -303,6 +306,7 @@ export default {
       totalMessages: "50",
       check: false,
       refreshingFolder: "",
+      isTutorialUser: false,
     }
   },
   methods: {
@@ -513,6 +517,10 @@ export default {
         }
 
       });
+    },
+    toggleTutorialUser() {
+      this.isTutorialUser = !this.isTutorialUser;
+      eventBus.$emit("TOGGLE_TUTORIAL_USER");
     },
     openSecurityModal() {
       eventBus.$emit("SHOW_INTRO_MODAL");

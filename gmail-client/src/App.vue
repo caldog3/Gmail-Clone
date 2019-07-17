@@ -138,6 +138,7 @@ export default {
       showModal: false,
       showExpiryHelpModal: false,
       showEncryptionHelpModal: false,
+      tutorialUser: false,
     };
   },
   components: {
@@ -189,13 +190,18 @@ export default {
       }
     },
     toggleModal() {
-      this.showModal = true;
+      if (this.tutorialUser) {
+        this.showModal = true;
+      }
     },
     helpExpiryToggle() {
       this.showExpiryHelpModal = true;
     },
     helpEncryptionToggle() {
       this.showEncryptionHelpModal = true;
+    },
+    toggleTutorialUser() {
+      this.tutorialUser = !this.tutorialUser;
     }
   },
   beforeUpdate() {
@@ -223,6 +229,7 @@ export default {
     eventBus.$on("SHOW_INTRO_MODAL", this.toggleModal);
     eventBus.$on("SELF_DESTRUCT_HELP", this.helpExpiryToggle);
     eventBus.$on("ENCRYPTION_HELP", this.helpEncryptionToggle);
+    eventBus.$on("TOGGLE_TUTORIAL_USER", this.toggleTutorialUser);
   }
 };
 </script>
@@ -376,6 +383,7 @@ body {
 .modal-container {
   min-width: 500px;
   max-width: 900px;
+  max-height: 600px;  
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -383,6 +391,7 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  overflow-y: scroll;
 }
 
 .modal-header h3 {
