@@ -11,6 +11,8 @@
     </div>
     <input v-model="name" placeholder="First and Last Name">
     <input v-model="email" placeholder="email address">
+    <br>
+    <input type="checkbox" name="tutorial" value="true" v-model="tutorialUser"> I'm a tutorial user
     <button @click="login">Log In</button>
 
     <!-- <button @click="authenticate()">Sign In</button> -->
@@ -49,7 +51,8 @@ import eventBus from './../event_bus';
    data(){
      return {
        name: "",
-       email: ""
+       email: "",
+       tutorialUser: false,
      };
    },
    components: {
@@ -75,6 +78,11 @@ import eventBus from './../event_bus';
       this.email = "";
       this.name = "";
       eventBus.$emit('DATA_FETCHING_COMPLETE');
+      if (this.tutorialUser) {
+        this.$store.state.tutorialUser = true;
+        // eventBus.$emit('TOGGLE_TUTORIAL_USER');
+      }
+      
       fireRetrieveMessages();
      }
    }

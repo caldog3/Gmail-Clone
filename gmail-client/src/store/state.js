@@ -16,5 +16,6 @@ export default {
     totalMessages: "0",
     draftIdsArray: [],
     userEmail: "",
-    userName: ""
+    userName: "",
+    tutorialUser: false,
 }

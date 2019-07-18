@@ -190,9 +190,10 @@ export default {
       }
     },
     toggleModal() {
-      if (this.tutorialUser) {
-        this.showModal = true;
-      }
+      // if (this.tutorialUser) {
+      //   this.showModal = true;
+      // }
+      this.showModal = true;
     },
     helpExpiryToggle() {
       this.showExpiryHelpModal = true;
@@ -201,7 +202,8 @@ export default {
       this.showEncryptionHelpModal = true;
     },
     toggleTutorialUser() {
-      this.tutorialUser = !this.tutorialUser;
+      this.tutorialUser = true;
+      console.log("toggling");
     }
   },
   beforeUpdate() {
