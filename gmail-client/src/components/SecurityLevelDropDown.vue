@@ -95,6 +95,14 @@ export default {
           this.isEncrypted = false;
         }
         eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
+        return;
+      }
+      if (this.rightDomain) {
+        console.log("hitting this");
+        this.selection = "Encrypted";
+        this.hasPassword = false;
+        this.isEncrypted = true;
+        eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       }
     });
   },

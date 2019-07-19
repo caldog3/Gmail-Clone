@@ -578,7 +578,7 @@ export default {
     eventBus.$on("SET_EXPIRY_TIME", unixTime => {
       this.messageExpiryUnixTime = unixTime;
     });
-    var registeredRecipient = this.recipient.includes("@gmail.com");
+    var registeredRecipient = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
     if (registeredRecipient) {
       console.log("registeredRecipient: ", registeredRecipient);
       eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient})

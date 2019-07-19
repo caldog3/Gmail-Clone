@@ -319,10 +319,12 @@ export default {
     },
     recipientDomain() {
       this.changingRecipientInterval = setInterval(()=>{
-        var containsDomain = this.composeTo.includes("@2040mail.com");
+        var containsDomain = (this.composeTo.includes("@2040mail.com") || this.composeTo.includes("@2040Mail.com"));
+        console.log("contains the domain: ", containsDomain);
         if (containsDomain !== this.registeredRecipient) {
-          console.log("swap permissions");
+          // console.log("swap permissions");
           this.registeredRecipient = containsDomain;
+          
           eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
         }
       }, 1000);

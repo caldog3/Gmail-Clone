@@ -432,10 +432,10 @@ export default {
                 this.waitForMessageTimeout(messageExpiryUnixTime, snippet);
               }
             }
-            if(password != null) {
+            if(password != null && !this.isExpired(messageExpiryUnixTime)) {
               snippet = this.snippetForPassword();
             }
-            if(isEncrypted) {
+            if(isEncrypted && !this.isExpired(messageExpiryUnixTime)) {
               snippet = this.snippetForEncryption(snippet);
             }
 
