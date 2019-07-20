@@ -127,6 +127,7 @@ import CustomDropDown from './CustomDropDown';
 import SecurityLevelDropDown from './SecurityLevelDropDown';
 import { setupEmailBody, setupEmailBodyAttach } from '../store-utility-files/email';
 import { upload } from '../file-upload.service';
+import moment from 'moment';
 import { setTimeout, setInterval, clearInterval } from 'timers';
 import { resolve } from 'url';
 // import vueFilePond from 'vue-filepond';
@@ -176,7 +177,8 @@ export default {
       currentStatus: null,
       uploadFieldName: "photos",
 
-      messageExpiryUnixTime: null
+      messageExpiryUnixTime: null,
+      baseTime: null,
     }
   },
   computed: {
@@ -271,6 +273,15 @@ export default {
     encryptionHelp() {
       eventBus.$emit("ENCRYPTION_HELP");
     },
+    adjustExpiryTime() {
+      console.log("Adjusting the expiry time");
+      let difference = moment().unix() - this.baseTime;
+      console.log("difference: ", difference);
+      console.log("Old: ", this.messageExpiryUnixTime);
+      this.messageExpiryUnixTime = this.messageExpiryUnixTime + difference;
+      console.log("New:", this.messageExpiryUnixTime);
+      
+    },
     fireSendCompose(){
       let finalPassword = null;
       
@@ -280,6 +291,9 @@ export default {
           return;
         }
         else {finalPassword = this.password;}
+      }
+      if (this.messageExpiryUnixTime != null) {
+        this.adjustExpiryTime();
       }
       let message = fireSetupEmailMessage({
         composeSubject: this.composeSubject, 
@@ -320,11 +334,11 @@ export default {
     recipientDomain() {
       this.changingRecipientInterval = setInterval(()=>{
         var containsDomain = (this.composeTo.includes("@2040mail.com") || this.composeTo.includes("@2040Mail.com"));
-        console.log("contains the domain: ", containsDomain);
+        // console.log("contains the domain: ", containsDomain);
         if (containsDomain !== this.registeredRecipient) {
           // console.log("swap permissions");
           this.registeredRecipient = containsDomain;
-          
+
           eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
         }
       }, 1000);
@@ -415,8 +429,9 @@ export default {
     });
 
     eventBus.$on('COMPOSE_OPEN', this.open);
-    eventBus.$on("SET_EXPIRY_TIME", unixTime => {
-      this.messageExpiryUnixTime = unixTime;
+    eventBus.$on("SET_EXPIRY_TIME", payload => {
+      this.messageExpiryUnixTime = payload.unixTime;
+      this.baseTime = payload.currentTime;
     })
     eventBus.$on('COMPOSE_TIDY', this.composeTidy);
     eventBus.$on('COMPOSE_OPEN_DRAFT', payload => {

@@ -144,6 +144,7 @@ export default {
       currentStatus: null,
       uploadFieldName: "photos",
       messageExpiryUnixTime: null,
+      baseTime: null,
 
       registeredRecipient: true,
       hasPassword: false,
@@ -266,6 +267,10 @@ export default {
       //values aren't defined in scope outside of the ifs and else-ifs.....
       // createDraft(headers, body);
     },
+    adjustExpiryTime() {
+      let difference = moment().unix() - this.baseTime;
+      this.messageExpiryUnixTime = this.messageExpiryUnixTime + difference;
+    },
     firebaseReplySend(subject, composeTo){
       let finalPassword = null;
       
@@ -275,6 +280,9 @@ export default {
           return;
         }
         else {finalPassword = this.password;}
+      }
+      if (messageExpiryUnixTime != null) {
+        this.adjustExpiryTime();
       }
       let message = fireSetupEmailMessage({
         composeSubject: subject,
@@ -575,8 +583,9 @@ export default {
       this.hasPassword = payload.hasPassword;
       this.isEncrypted = payload.isEncrypted;
     });
-    eventBus.$on("SET_EXPIRY_TIME", unixTime => {
-      this.messageExpiryUnixTime = unixTime;
+    eventBus.$on("SET_EXPIRY_TIME", payload => {
+      this.messageExpiryUnixTime = payload.unixTime;
+      this.baseTime = payload.currentTime;
     });
     var registeredRecipient = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
     if (registeredRecipient) {

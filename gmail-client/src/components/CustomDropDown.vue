@@ -95,8 +95,12 @@ export default {
           break;
       }
 
-      const unixTime = moment(date).unix();
-      eventBus.$emit("SET_EXPIRY_TIME", unixTime);
+      var unixTime = moment(date).unix();
+      var currentTime = moment().unix();
+      console.log("CurrentTime: ", currentTime);
+      let payload;
+      eventBus.$emit("SET_EXPIRY_TIME", payload = {unixTime: unixTime, currentTime: currentTime});
+      console.log("Past the emission");
     }
   }
 };
