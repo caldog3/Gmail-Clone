@@ -80,6 +80,7 @@ import eventBus from './../event_bus';
       eventBus.$emit('DATA_FETCHING_COMPLETE');
       if (this.tutorialUser) {
         this.$store.state.tutorialUser = true;
+        eventBus.$emit("SHOW_INTRO_MODAL");
         // eventBus.$emit('TOGGLE_TUTORIAL_USER');
       }
       

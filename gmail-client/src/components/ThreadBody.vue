@@ -281,7 +281,7 @@ export default {
         }
         else {finalPassword = this.password;}
       }
-      if (messageExpiryUnixTime != null) {
+      if (this.messageExpiryUnixTime != null) {
         this.adjustExpiryTime();
       }
       let message = fireSetupEmailMessage({
@@ -295,6 +295,7 @@ export default {
       }, this.messages[0].threadId);
       if (message === undefined){return;}
       fireSendMessage(message);
+      this.messageExpiryUnixTime = null;
       this.returnToInbox();
     },
     replySort() {

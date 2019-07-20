@@ -274,12 +274,8 @@ export default {
       eventBus.$emit("ENCRYPTION_HELP");
     },
     adjustExpiryTime() {
-      console.log("Adjusting the expiry time");
       let difference = moment().unix() - this.baseTime;
-      console.log("difference: ", difference);
-      console.log("Old: ", this.messageExpiryUnixTime);
       this.messageExpiryUnixTime = this.messageExpiryUnixTime + difference;
-      console.log("New:", this.messageExpiryUnixTime);
       
     },
     fireSendCompose(){
@@ -306,6 +302,7 @@ export default {
       });
       if(message === undefined){return;}
       fireSendMessage(message);
+      this.messageExpiryUnixTime = null;
       this.close();
     },
     sendCompose() {
