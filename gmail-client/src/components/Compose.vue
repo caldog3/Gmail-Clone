@@ -327,18 +327,30 @@ export default {
       this.composeMessage = '';
       this.reset();
       this.uploading = false;
+      //FIXME emit a reset of the security level Dropdown
+      this.registeredRecipient = true;
+      this.hasPassword = false;
+      this.isEncrypted = false;
+      this.hasAttachments = false;
+      // console.log("About to emit reset_security");
+      // eventBus.$emit("RESET_SECURITY");
     },
     recipientDomain() {
       this.changingRecipientInterval = setInterval(()=>{
         var containsDomain = (this.composeTo.includes("@2040mail.com") || this.composeTo.includes("@2040Mail.com"));
-        // console.log("contains the domain: ", containsDomain);
+        console.log("contains the domain: ", containsDomain);
         if (containsDomain !== this.registeredRecipient) {
-          // console.log("swap permissions");
+          console.log("swap permissions");
           this.registeredRecipient = containsDomain;
 
           eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
         }
       }, 1000);
+      // if (this.registeredRecipient !== containsDomain && !containsDomain) {
+      //   console.log("my catcher");
+      //   this.registeredRecipient = containsDomain;
+      //   eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient});
+      // }
     },
 
     focusOnSection(section) {

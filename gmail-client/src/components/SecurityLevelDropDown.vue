@@ -72,6 +72,9 @@ export default {
       eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       this.$refs.dropdown.isHidden = true;
     },
+    preSetSecurity() {
+      this.setSecurity("noSecurity");
+    },
     passwordTextClass() {
       let passwordClass = "passwordText";
       // passwordClass = "threadPasswordText";
@@ -97,14 +100,23 @@ export default {
         eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
         return;
       }
-      else if (this.rightDomain) {
-        console.log("hitting this");
-        this.selection = "Encrypted";
-        this.hasPassword = false;
-        this.isEncrypted = true;
+      else {
+        if (this.rightDomain) {
+          console.log("hitting this");
+          this.selection = "Encrypted";
+          this.hasPassword = false;
+          this.isEncrypted = true;
+        }
+        else {
+          console.log("Getting used"); 
+          this.selection = "Non-Encrypted";
+          this.hasPassword = false;
+          this.isEncrypted = false;
+        }
         eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       }
     });
+    // eventBus.$on("RESET_SECURITY", this.preSetSecurity);
   },
 };
 </script>

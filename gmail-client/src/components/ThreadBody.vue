@@ -296,7 +296,16 @@ export default {
       if (message === undefined){return;}
       fireSendMessage(message);
       this.messageExpiryUnixTime = null;
+      // console.log("About to emit reset_security");
+      // eventBus.$emit("RESET_SECURITY");
+      postSendTidy();
       this.returnToInbox();
+    },
+    postSendTidy() {
+      this.registeredRecipient = true;
+      this.hasPassword = false;
+      this.isEncrypted = false;
+      this.hasAttachments = false;
     },
     replySort() {
       if (this.replying && !this.replyingAll) {
