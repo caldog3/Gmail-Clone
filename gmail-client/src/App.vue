@@ -46,7 +46,7 @@
         <!-- <button id="show-modal" @click="showModal = true">Show Modal</button> -->
         <!-- use the modal component, pass in the prop -->
         <modal v-if="showModal" @close="showModal = false">
-          <h3 slot="header">Privacy Features Intro</h3>
+          <h4 slot="header">Privacy Features Intro</h4>
           <onboard-carousel slot="body"/>
         </modal>
         <modal v-if="showExpiryHelpModal" @close="showExpiryHelpModal=false">

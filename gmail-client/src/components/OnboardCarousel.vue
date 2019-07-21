@@ -1,5 +1,5 @@
-<template>
-    <carousel id="carousel"> 
+    <template>
+    <carousel id="carousel" ref="my-carousel"> 
         <!-- slides work in sets of two (one shown on the left and one shown on the right) -->
         <slide class="sideText">
             <h2></h2>
@@ -7,19 +7,11 @@
             to sign up for new services or install any software to read the messages you send.
         </slide>
         <slide>
-            <!-- <h1>2040 Mail Security</h1> -->
             <img src="../assets/2040.png" width="400">
+            <!-- next button here --> 
+            <br><br>  
+            <button class="nextButton" @click="SlideCarousel('next')">Next</button>
         </slide>
-        <!--
-        <slide class="sideText">
-            
-            Next to the line for entering the subject of the message chain is a dropdown menu with selections
-            for other privacy settings. It defaults to be sent non-encrypted (ie as a regular email)
-            These settings are to send a message "ENCRYPTED", "Password protected", or as a regular email.
-        </slide>
-        <slide>
-            <img src="../assets/SecurityDropdownOnboard.png" width="400">
-        </slide> -->
         <slide class="sideText">
             <h3>Encryption</h3>
             &emsp;By default, email messages are not protected while being sent, and your email company or any government 
@@ -29,10 +21,12 @@
             &emsp;Encryption gives you control over who can read your emails. It can't guarantee you perfect protection, but 
             practically speaking, enabling encryption means that even if a third party -- such as your email company -- 
             has access to your email, no one except you and your contact will be able to actually read its contents.
-
         </slide>
         <slide>
             <img src="../assets/EncryptedDomainOnboard.png" width="400">
+            <!-- next button here -->
+            <br><br>
+            <button class="nextButton" @click="SlideCarousel('next')">Next</button>
         </slide>
         <slide class="sideText">
             <h3>Self-Destructing Messages</h3>
@@ -54,6 +48,8 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 
 export default {
     name: "OnboardCarousel",
@@ -62,10 +58,30 @@ export default {
 
         };
     },
+    props: [
+        'productDetails'
+    ],
     components: {
         Carousel,
         Slide,
+        FontAwesomeIcon,
     },
+    methods: {
+        SlideCarousel(value) {
+            const carousel = this.$refs['my-carousel'];
+            const currentPage = carousel.currentPage;
+            const pageCount = carousel.pageCount;
+            if (value == 'prev') {
+                currentPage != 0 ? carousel.goToPage(currentPage - 1) : carousel.goToPage(pageCount - 1);
+            } else {
+                currentPage < pageCount - 1 ? carousel.goToPage(currentPage + 1) : carousel.goToPage(0);
+            }
+        },
+    },
+    // computed: {
+    //     navigationNext: function() { return `<i class="fas fa-chevron-right"></i>` },
+    //     navigationPrev: function() { return `<i class="fas fa-chevron-left"></i>` },
+    // }
 }
 </script>
 
@@ -76,9 +92,13 @@ export default {
     .sideText {
         max-width: 500px;
         min-width: 200px;
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 25px;
+        padding-left: 25px;
         text-align: left;
         line-height: 2;
+        font-size: 1em;
+    }
+    .nextButton {
+        margin-left: 80%;
     }
 </style>
