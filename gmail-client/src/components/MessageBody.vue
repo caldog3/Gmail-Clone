@@ -11,8 +11,8 @@
             <div class="flexRight">
               <span>{{message.time}} ({{timeAgo}})</span>
               <!-- need to fix the styling here FIXME -->
-              <div v-on:click.stop>
-                <!-- <div class="starBound">
+              <!-- <div v-on:click.stop>
+                <div class="starBound">
                   <div class="theRestoftheTime">
                     <span class="highlightArea">
                       <input class="star" v-on:click="starredLabelToggle(message)" type="checkbox" :checked="message.starred" title="bookmark page">
@@ -23,14 +23,17 @@
                     <label for="ffstar" class="notchecked">&#X2606;</label>
                     <label for="ffstar" style="color:gold" class="checked">&#X2605;</label>
                   </div>
-                </div> -->
-              </div>
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
         <div class="overflow center">
           <!-- This needs to be the last message's snippet not the first... -->
-          <div v-html="message.snippet"></div>
+          <div v-if="!unlocked"> 
+            <font-awesome-icon style="color:black;" class="Icon" icon="unlock" />
+          </div>
+          <div v-else v-html="message.snippet"></div>
         </div>
         <div v-if="message.messageExpiryUnixTime && !messageExpired" class="messageExpiry rightAlign">
             <small><b>{{ timeToMessageExpiry }}</b><br></small>

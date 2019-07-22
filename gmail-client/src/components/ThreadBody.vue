@@ -32,8 +32,17 @@
           <custom-drop-down/>
         </span>
       </span>
-      <quill-editor v-model="responseHTML"/>
+      <!-- PASSWORD -->
+      <div class="section" v-if="hasPassword">
+        Password
+        <input class="full2" type="password" v-model="password" placeholder="Password" id="password">
+        |&emsp;
+        <input class="full2" type="password" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword">
+      </div>
+      <!-- END PASSWORD -->
 
+      <quill-editor v-model="responseHTML"/>
+      
       <div class="quill-spacing">
         Attachments: <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
         <br><br>
@@ -212,7 +221,6 @@ export default {
       this.replying = !this.replying;
       this.changingRecipientInterval = setInterval(()=>{
         var containsDomain = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
-        console.log("contains the domain: ", containsDomain);
         if (containsDomain !== this.registeredRecipient) {
           console.log("swap permissions");
           this.registeredRecipient = containsDomain;
@@ -595,7 +603,6 @@ export default {
     //uploader finish
     domainChecking() {
       var registeredRecipient = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
-      console.log("registeredRec: ", registeredRecipient);
       if (!registeredRecipient) {
         console.log("registeredRecipient: ", registeredRecipient);
         eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient});
