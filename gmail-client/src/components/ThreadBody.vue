@@ -298,10 +298,11 @@ export default {
       this.messageExpiryUnixTime = null;
       // console.log("About to emit reset_security");
       // eventBus.$emit("RESET_SECURITY");
-      postSendTidy();
+      this.postSendTidy();
       this.returnToInbox();
     },
     postSendTidy() {
+      // console.log("in post send tidy");
       this.registeredRecipient = true;
       this.hasPassword = false;
       this.isEncrypted = false;
