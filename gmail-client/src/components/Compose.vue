@@ -332,6 +332,8 @@ export default {
       this.hasPassword = false;
       this.isEncrypted = false;
       this.hasAttachments = false;
+      this.password = '';
+      this.confirmPassword = '';
       // console.log("About to emit reset_security");
       // eventBus.$emit("RESET_SECURITY");
     },

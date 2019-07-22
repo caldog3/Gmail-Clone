@@ -80,8 +80,13 @@ export default {
       // passwordClass = "threadPasswordText";
       return passwordClass;
     },
+    toggleLockActive() {
+      this.lockActive = false;
+      console.log("In toggle lock active");
+    }
   },
   created() {
+    
     eventBus.$on("SWAP_SECURITY", payload => {
       this.rightDomain = payload.rightDomain;
       console.log("dropdown getting the domain", this.rightDomain);
@@ -102,13 +107,13 @@ export default {
       }
       else {
         if (this.rightDomain) {
-          console.log("hitting this");
+          console.log("no lock right domain");
           this.selection = "Encrypted";
           this.hasPassword = false;
           this.isEncrypted = true;
         }
         else {
-          console.log("Getting used"); 
+          console.log("no lock no domain"); 
           this.selection = "Non-Encrypted";
           this.hasPassword = false;
           this.isEncrypted = false;
@@ -116,6 +121,7 @@ export default {
         eventBus.$emit("COMPOSE_SECURITY", {hasPassword: this.hasPassword, isEncrypted: this.isEncrypted});
       }
     });
+    // eventBus.$on("TOGGLE_LOCK_ACTIVE", this.toggleLockActive);
     // eventBus.$on("RESET_SECURITY", this.preSetSecurity);
   },
 };

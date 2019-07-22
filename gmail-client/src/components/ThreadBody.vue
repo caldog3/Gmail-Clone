@@ -210,6 +210,16 @@ export default {
     },
     toggleReply() {
       this.replying = !this.replying;
+      this.changingRecipientInterval = setInterval(()=>{
+        var containsDomain = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
+        console.log("contains the domain: ", containsDomain);
+        if (containsDomain !== this.registeredRecipient) {
+          console.log("swap permissions");
+          this.registeredRecipient = containsDomain;
+
+          eventBus.$emit("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
+        }
+      }, 1000);
     },
     toggleReplyAll() {
       this.replyingAll = !this.replyingAll;
@@ -307,6 +317,8 @@ export default {
       this.hasPassword = false;
       this.isEncrypted = false;
       this.hasAttachments = false;
+      clearInterval(this.changingRecipientInterval);
+      // eventBus.$emit("TOGGLE_LOCK_ACTIVE");
     },
     replySort() {
       if (this.replying && !this.replyingAll) {
@@ -579,8 +591,16 @@ export default {
       return (x) => {
         return new Promise(resolve => setTimeout(() => resolve(x), miliseconds));
       };
-    }
+    },
     //uploader finish
+    domainChecking() {
+      var registeredRecipient = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
+      console.log("registeredRec: ", registeredRecipient);
+      if (!registeredRecipient) {
+        console.log("registeredRecipient: ", registeredRecipient);
+        eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient});
+      }
+    }
   },
   mounted() {
     this.reset();
@@ -598,11 +618,8 @@ export default {
       this.messageExpiryUnixTime = payload.unixTime;
       this.baseTime = payload.currentTime;
     });
-    var registeredRecipient = (this.recipient.includes("@2040mail.com") || this.recipient.includes("@2040Mail.com"));
-    if (registeredRecipient) {
-      console.log("registeredRecipient: ", registeredRecipient);
-      eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient})
-    };
+    this.domainChecking();
+    
   },
   beforeDestroy() {
     eventBus.$off('TRASHING_THREAD', this.trash);
