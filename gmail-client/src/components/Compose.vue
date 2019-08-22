@@ -25,48 +25,8 @@
       <quill-editor v-model="composeMessage"/>
     </div>
     
-    <!-- Start of Upload -->
-    <div v-if="!uploading">
-      <p>
-        <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
-      </p>
-    </div>
-    <div v-else>
-      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload Images</h1>
-        <div class="dropbox">
-          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-            accept="image/*" class="input-file">
-            <p v-if="isInitial">
-              Drag your file(s) here to begin<br> or click to browse
-            </p>
-            <p v-if="isSaving">
-              Uploading {{ fileCount }} files...
-            </p>
-        </div>
-      </form>
-      <!--SUCCESS-->
-      <div v-if="isSuccess">
-        <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
-        </p>
-        <ul class="list-unstyled">
-          <li v-for="item in uploadedFiles" :key="item.originalName">
-            <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
-          </li>
-        </ul>
-      </div>
-      <!--FAILED-->
-      <div v-if="isFailed">
-        <h2>Uploaded failed.</h2>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Try again</a>
-        </p>
-        <pre>{{ uploadError }}</pre>
-      </div>
-    </div>
-    <!--End Upload -->
+    <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
+
     <div class="footerSection">
       <div class="sendButton">
         <input type="submit" class="SendButton1" value="Send" @click="sendCompose">
@@ -137,7 +97,24 @@ export default {
     }
   },
   methods: {
-    // uploader start
+    convertToBase64() {
+      var selectedFiles = document.getElementById("inputPDF").files;
+      var array = [];
+      if(selectedFiles.length > 0) {
+        for(var i = 0; i < selectedFiles.length; i++) {
+          var fileToLoad = selectedFiles[i];
+          var fileReader = new FileReader();
+          var base64;
+          fileReader.onload = function(fileLoadedEvent) {
+            base64 = fileLoadedEvent.target.result;
+            array.push({url: base64, fileName: fileToLoad.name});
+          };
+          fileReader.readAsDataURL(fileToLoad);
+        }
+        this.uploadedFiles = array;
+        this.hasAttachments = true;
+      }
+    },
     reset() {
       // reset form to initial stater
       this.currentStatus = 'STATUS_INITIAL';
@@ -145,38 +122,38 @@ export default {
       this.uploadError = null;
       this.hasAttachments = false;
     },
-    save(formData) { //might be out of the scope of our client
-      //upload data
-      this.currentStatus = 'STATUS_SAVING';
-      upload(formData)
-        .then(this.waitForUpload(2500)) //wait for uploads to reslove
-        .then(x => {
-          this.uploadedFiles = [].concat(x);
-          this.currentStatus = 'STATUS_SUCCESS';
-          // console.log("COMPARE: ", this.uploadedFiles[0].id === this.uploadedFiles[1].id);
-          console.log("UPLOADED FILES: ", this.uploadedFiles);
-          this.hasAttachments = true;
-        })
-        .catch(err => {
-          this.uploadError = err.response;
-          this.currentStatus = 'STATUS_FAILED';
-          console.log("UPLOAD FAILED");
-        });
-    },
-    filesChange(fieldName, fileList) {
-      // handle file changes
-      const formData = new FormData();
-      if (!fileList.length) return;
+    // save(formData) { //might be out of the scope of our client
+    //   //upload data
+    //   this.currentStatus = 'STATUS_SAVING';
+    //   upload(formData)
+    //     .then(this.waitForUpload(2500)) //wait for uploads to reslove
+    //     .then(x => {
+    //       this.uploadedFiles = [].concat(x);
+    //       this.currentStatus = 'STATUS_SUCCESS';
+    //       // console.log("COMPARE: ", this.uploadedFiles[0].id === this.uploadedFiles[1].id);
+    //       console.log("UPLOADED FILES: ", this.uploadedFiles);
+    //       this.hasAttachments = true;
+    //     })
+    //     .catch(err => {
+    //       this.uploadError = err.response;
+    //       this.currentStatus = 'STATUS_FAILED';
+    //       console.log("UPLOAD FAILED");
+    //     });
+    // },
+    // filesChange(fieldName, fileList) {
+    //   // handle file changes
+    //   const formData = new FormData();
+    //   if (!fileList.length) return;
 
-      // append the files to FormData
-      Array
-        .from(Array(fileList.length).keys())
-        .map(x => {
-          formData.append(fieldName, fileList[x], fileList[x].name);
-        });
-      // save it
-      this.save(formData);
-    },
+    //   // append the files to FormData
+    //   Array
+    //     .from(Array(fileList.length).keys())
+    //     .map(x => {
+    //       formData.append(fieldName, fileList[x], fileList[x].name);
+    //     });
+    //   // save it
+    //   this.save(formData);
+    // },
     //uploader finish
     open() {
       this.active = true
@@ -193,12 +170,12 @@ export default {
       var sender = this.$store.state.currentUser.w3.U3;
       if (this.hasAttachments) { //if there are attachments
         var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        console.log("SEE IF IT HAS FILE TYPE", this.uploadedFiles[0]);
         const {headers, body} = setupEmailBodyAttach(this.composeSubject, this.composeTo, this.composeMessage, sender, attachObj);
-        // console.log("SEND COMPOSE: hope this works ", headers);
-        // console.log("BODY before Base64: ", body); //long string if attachments are included
         sendMessage(headers, body);
       }
       else {
+        console.log("no attachment");
         const {headers, body} = setupEmailBody(this.composeSubject, this.composeTo, this.composeMessage, sender);
         sendMessage(headers, body);
       }

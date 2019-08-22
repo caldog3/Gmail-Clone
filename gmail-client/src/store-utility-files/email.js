@@ -391,8 +391,10 @@ const setupEmailBodyAttach = (Subject, To, Message, Sender, attachObj) => { // n
   body += 'Content-Transfer-Encoding: quoted-printable\n\n';
   body += Message + "\n\n";
   //for loop
+  console.log("What is attachOBj doing??", attachObj);
   for (var i = 0; i < attachObj.uploadData.length; i++) {
-    body += setupAttachmentBody(attachObj.uploadData[i].originalName, randBoundary, attachObj.uploadData[i].id);
+    //FIXME: need to access this data differently now that there's a different file handler
+    body += setupAttachmentBody(attachObj.uploadData[i].fileName, randBoundary, attachObj.uploadData[i].url);
   }
   body += "--" + randBoundary + "--"; // shows that the email is done
   return {
@@ -402,21 +404,74 @@ const setupEmailBodyAttach = (Subject, To, Message, Sender, attachObj) => { // n
 }
 
 // If we need a separate function for setting up an attachment's format
-const setupAttachmentBody = (fileName, randBoundary, pngData) => { //not entirely sure what we're gonna need here
+const setupAttachmentBody = (fileName, randBoundary, base64data) => { //not entirely sure what we're gonna need here
   // Have to format the png Data in base64;
-  pngData = pngData.substring(pngData.search(",") + 1); //gets relevant data for sending
+  console.log("fileName: ", fileName);
+  base64data = base64data.substring(base64data.search(",") + 1); //gets relevant data for sending
 
   let attachBody = "--" + randBoundary + "\n";
-  attachBody += "Content-type: image/png\r\n";
+  attachBody += "Content-type: " + getContentTypeFormat(fileName) + "\r\n";
+  // attachBody += "Content-type: image/png\r\n"; // might make a whole file for a wide swath of content-types
   attachBody += "MIME-Version: 1.0\r\n";
   attachBody += "Content-Transfer-Encoding: base64\r\n";
   attachBody += 'Content-Disposition: attachment; filename = "' + fileName + '"\r\n\r\n';
 
-  attachBody += pngData + "\r\n\r\n";
+  attachBody += base64data + "\r\n\r\n";
 
   return attachBody;
-
 }
+
+const getContentTypeFormat = (fileName) => {
+
+  //This has most all content types, can be added as needed:
+  //https://www.freeformatter.com/mime-types-list.html
+
+  var contentFormat = "";
+  var type = fileName.substring(fileName.lastIndexOf("."));
+  switch(type) {
+    case ".docx": //Microsoft Office: Word Doc
+      contentFormat = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+      break;
+    case ".pptx": //Microsoft Office: Powerpoint
+      contentFormat = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+      break;
+    case ".xlsx": //Microsoft Office: Spreadsheet
+      contentFormat = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      break;
+    case ".ppt": // Microsoft Powerpoint
+      contentFormat = "application/vnd.ms-powerpoint";
+      break;
+    case ".xls": //Microsoft Excel
+      contentFormat = "application/vnd.ms-excel";
+      break;
+    case ".qt": //Quicktime Video
+      contentFormat = "video/quicktime";
+      break;
+    case ".xml": //XML - Extensible Markup Language
+      contentFormat = "application/xml";
+      break;
+    case ".jpeg" || ".jpg": //JPEG Image
+      contentFormat = "image/jpeg";
+      break;
+    case ".jpgv": //JPGVideo
+      contentFormat = "video/jpeg";
+      break;
+    case ".png":
+      contentFormat = "image/png";
+      break;
+    case ".js": //JavaScript
+      contentFormat = "application/javascript";
+      break;
+    case ".json": //Javascript Object Notation (JSON)
+      contentFormat = "application/json";
+      break;
+    case ".pdf": //Adobe Portable Document Format
+      contentFormat = "application/pdf";
+      break;
+  }
+  return contentFormat;
+}
+
 // End of attachemnt setup
 
 const markEmailAsUnread = (threadId) => {
