@@ -25,7 +25,7 @@
       <quill-editor v-model="composeMessage"/>
     </div>
     
-    <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
+    <input id="inputAttachment" type="file" @change="convertToBase64();" multiple />
 
     <div class="footerSection">
       <div class="sendButton">
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     convertToBase64() {
-      var selectedFiles = document.getElementById("inputPDF").files;
+      var selectedFiles = document.getElementById("inputAttachment").files;
       var array = [];
       if(selectedFiles.length > 0) {
         for(var i = 0; i < selectedFiles.length; i++) {

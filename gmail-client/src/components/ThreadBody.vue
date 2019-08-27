@@ -22,48 +22,10 @@
       <quill-editor v-model="responseHTML"/>
 
       <div class="quill-spacing">
-      <!-- Start of Upload -->
-      <div v-if="!uploading">
-        <p>
-          <a href="javascript:void(0)" @click="toggleUploading()">Upload images</a>
-        </p>
-      </div>
-      <div v-else>
-        <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-          <!-- <h1>Upload Images</h1> -->
-          <div class="dropbox">
-            <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-              accept="image/*" class="input-file">
-              <!-- <p v-if="isInitial">
-                Drag your file(s) here to begin<br> or click to browse
-              </p> -->
-              <p v-if="isSaving">
-                Uploading {{ fileCount }} files...
-              </p>
-          </div>
-        </form>
-        <!--SUCCESS-->
-        <div v-if="isSuccess">
-          <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
-          <p>
-            <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
-          </p>
-          <ul class="list-unstyled">
-            <li v-for="item in uploadedFiles" :key="item.originalName">
-              <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
-            </li>
-          </ul>
-        </div>
-        <!--FAILED-->
-        <div v-if="isFailed">
-          <h2>Uploaded failed.</h2>
-          <p>
-            <a href="javascript:void(0)" @click="reset()">Try again</a>
-          </p>
-          <pre>{{ uploadError }}</pre>
-        </div>
-      </div>
-      <!--End Upload -->
+      
+
+        <input id="inputAttachment" type="file" @change="convertToBase64();" multiple />
+
         <button class="sendBar" type="button" v-on:click="replySort">
           <font-awesome-icon class="Icon" icon="reply" /> Send
         </button>
@@ -183,6 +145,24 @@ export default {
     }
   },
   methods: {
+    convertToBase64() {
+      var selectedFiles = document.getElementById("inputAttachment").files;
+      var array = [];
+      if(selectedFiles.length > 0) {
+        for(var i = 0; i < selectedFiles.length; i++) {
+          var fileToLoad = selectedFiles[i];
+          var fileReader = new FileReader();
+          var base64;
+          fileReader.onload = function(fileLoadedEvent) {
+            base64 = fileLoadedEvent.target.result;
+            array.push({url: base64, filename: fileToLoad.name});
+          };
+          fileReader.readAsDataURL(fileToLoad);
+        }
+        this.uploadedFiles = array;
+        this.hasAttachments = true;
+      }
+    },
     returnToInbox(){
       this.$router.push({ path: "/" });
       this.$store.state.viewFolder = "Inbox";
@@ -192,6 +172,7 @@ export default {
     resetMessage() {
       this.replying = false;
       this.replyingAll = false;
+      this.hasAttachments = false;
     },
     toggleReply() {
       this.replying = !this.replying;
@@ -235,7 +216,7 @@ export default {
       }
       updateDraft(headers, body, draftId, threadId);
     },
-    draftCreate() {
+    draftCreate() { // need the if (this.hasAttachments)
       var sender = this.$store.state.currentUser.w3.U3; //do I handle reply all and reply one?
       if (this.replying && !this.replyingAll) {
         const {headers, body} = setupEmailBody(this.subject, this.recipient, this.responseHTML, sender);
@@ -253,10 +234,10 @@ export default {
       // createDraft(headers, body);
     },
     replySort() {
-      if (replying && !replyingAll) {
+      if (this.replying && !this.replyingAll) {
         this.replySend();
       }
-      else if (!replying && replyingAll) {
+      else if (!this.replying && this.replyingAll) {
         this.replyAllSend();
       }
     },
@@ -267,12 +248,21 @@ export default {
       if (!this.subject.startsWith("Re:")) {
         reSubj = "Re: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
-      // console.log("Headers: ", headers);
-      // console.log("Body: ", body);
       let threadID = this.messages[0].threadId;
       this.threadId = threadID;
-      //FIXME: add condition for drafts
+      var headers, body; //
+      if (this.hasAttachments) {
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers1, body1} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender, attachObj);
+        headers = headers1;
+        body = body1;
+      }
+      else {
+        const {headers1, body1} = setupEmailBody(reSubj, this.recipient, this.responseHTML, this.sender);
+        headers = headers1;
+        body = body1;
+      }
+      
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
@@ -295,10 +285,21 @@ export default {
       if (!this.subject.startsWith("Re:")) {
         reSubj = "Re: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
-      console.log("HEaders: ", headers);
       let threadID = this.messages[0].threadId;
-      //FIXME: add condition for drafts
+      this.threadId = threadID;
+      var headers, body; 
+      if (this.hasAttachments) {
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers1, body1} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender, attachObj);
+        headers = headers1;
+        body = body1;
+      }
+      else {
+        const {headers1, body1} = setupEmailBody(reSubj, this.allReplyRecipients, this.responseHTML, this.sender);
+        headers = headers1;
+        body = body1;
+      }
+
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
@@ -322,10 +323,23 @@ export default {
       if (!this.subject.startsWith("Fwd:")) {
         forSubj = "Fwd: " + this.subject;
       }
-      const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
-      console.log("headers: ", headers);
       let threadID = this.messages[0].threadId;
-      //FIXME: add condition for drafts
+      // const {headers, body} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
+      
+      this.threadId = threadID;
+      var headers, body; 
+      if (this.hasAttachments) {
+        var attachObj = {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles};
+        const {headers1, body1} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender, attachBody);
+        headers = headers1;
+        body = body1;
+      }
+      else {
+        const {headers1, body1} = setupEmailBody(forSubj, this.forwardingRecipient, this.forwardHTML, this.sender);
+        headers = headers1;
+        body = body1;
+      }
+
       if (!this.isDraft) {
         sendReply(headers, body, threadID);
       }
