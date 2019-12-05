@@ -2,20 +2,42 @@
 
 <template>
   <div class="compose composeWindow" v-if="active" @click.stop>
-    <div class="headerSection">
+    <!-- <div class="headerSection"> -->
+    <div class="unsafeHeader headerBorder" v-if="!isPrivate">
       <div class="head">
-        <h2>New Message</h2>
+        <h2 class="headerMessage">Your email provider and the recipient's email provider can read this message</h2>
+        <!-- insert warning icon here -->
       </div>
       
-      <span class="dropDownArea">
+      <!-- <span class="dropDownArea">
         <custom-drop-down/>
-      </span>
-      <div @click="expiryHelp">
-        <font-awesome-icon class="Icon help" icon="question-circle"/>
-      </div>
-      
+      </span> -->  
       <div class="alterCompose">
         <a class="close" @click="close">×</a>
+      </div>
+    </div>
+    <div class="safeHeader headerBorder" v-else>
+      <div class="head">
+        <h2 class="headerMessage">Only you and the recipient will be able to read this message</h2>
+      </div>
+      
+      <!-- <span class="dropDownArea">
+        <custom-drop-down/>
+      </span> -->  
+      <div class="alterCompose">
+        <a class="close" @click="close">×</a>
+      </div>
+    </div>
+
+    <div class="safeHeader headerBorder" v-if="isSelfDestruct"> <!-- safeHeader controls alert color -->
+      <div class="head"> 
+        <h2 class="headerMessage">This message will automatically delete from your inbox and theirs</h2>
+      </div>
+    </div>
+    <div class="blankHeader headerBorder" v-else> <!-- safeHeader controls alert color -->
+      <div class="head"> 
+        <!-- <h2 class="headerMessage"> This message will not automatically delete</h2> -->
+        <!-- <h2 class="headerMessage">This message will automatically delete from your inbox and theirs</h2> -->
       </div>
     </div>
 
@@ -26,14 +48,18 @@
     </div>
 
     <div class="section">
+      <!--  THIS IS THE DROPDOWN, NEED TO STEAL SOME OF ITS IMPLEMENTATION 
       <span class="securityDropDown full3">
         <security-level-drop-down/>
-      </span>
-      <font-awesome-icon style="color:black" class="Icon" icon="question-circle" @click="encryptionHelp"/>
+      </span> -->
       
-      &emsp;|&emsp;
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
     </div>
+    <span class="toggleButtons">
+      <input type="button" value="Privacy" @click="togglePrivacy">
+      &emsp;
+      <input type="button" value="Self-Destruct" @click="toggleSelfDestruct">
+    </span>
     <div class="section" v-if="hasPassword">
       <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
       |&emsp;
@@ -43,61 +69,6 @@
     <div @focus="focusOnSection('body')">
       <quill-editor v-model="composeMessage"/>
     </div>
-    
-    <!-- Start of Upload -->
-    <!-- <div v-if="!uploading">
-      <p>
-        <a href="javascript:void(0)" @click="toggleUploading()">Uploads</a>
-      </p>
-    </div>
-    <div v-else>
-      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload Files</h1>
-        <div class="dropbox">
-          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length"
-            accept="image/*, application/pdf" class="input-file">
-            <p v-if="isInitial">
-              Drag your file(s) here to begin<br> or click to browse
-            </p>
-            <p v-if="isSaving">
-              Uploading {{ fileCount }} files...
-            </p>
-        </div>
-      </form>
-      
-      <div v-if="isSuccess">
-        <h2>Uploaded {{ uploadedFiles.length }} file(s) successfully.</h2>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Clear uploads</a>
-        </p>
-        <ul class="list-unstyled">
-          <li v-for="item in uploadedFiles" :key="item.originalName">
-            <img :src="item.url" class="img-responsive img-thumbnail" :alt="item.originalName">
-          </li>
-        </ul>
-      </div>
-      
-      <div v-if="isFailed">
-        <h2>Uploaded failed.</h2>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Try again</a>
-        </p>
-        <pre>{{ uploadError }}</pre>
-      </div>
-    </div> -->
-    <!--End Upload -->
-    <input id="inputPDF" type="file" @change="convertToBase64();" multiple />
-    <!-- <div>
-      <file-pond
-        name="test"
-        ref="pond"
-        label-idle="Drop files here..."
-        allow-multiple="true"
-        accepted-file-types="image/jpeg, image/png, application/pdf"
-        server="/api"
-        v-bind:files="uploadedFiles"
-        v-on:init="handleFilePondInit"></file-pond>
-    </div> -->
 
     <div class="footerSection">
       <div class="sendButton" >
@@ -156,6 +127,9 @@ export default {
       confirmPassword: '',
       isEncrypted: false,
 
+      isPrivate: false,
+      isSelfDestruct: false, //will be false by default
+
       composeTo: '',
       composeSubject: '',
       composeMessage: '',
@@ -179,6 +153,8 @@ export default {
 
       messageExpiryUnixTime: null,
       baseTime: null,
+
+
     }
   },
   computed: {
@@ -424,6 +400,13 @@ export default {
       fireSaveDraft(message);
       this.close();
     },
+    togglePrivacy() {
+      this.isPrivate = !this.isPrivate;
+    },
+    toggleSelfDestruct() {
+      console.log("Was: ", this.isSelfDestruct);
+      this.isSelfDestruct = !this.isSelfDestruct;
+    },
   },
   beforeDestroy() {
     eventBus.$off("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
@@ -518,11 +501,46 @@ export default {
   align-items: center;
   padding: 4px;
   width: 100%;
-  
+}
+.safeHeader {
+  background: #78acff;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.unsafeHeader {
+  background: #db5248;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.blankHeader {
+  background: lightgray; /* white, gray, or what looks best? */
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.headerBorder {
+  border-bottom: 2px solid darkgray;
+}
+.headerMessage {
+  width: 200%;
 }
 h2 {
   color: white;
-  font-size: 15px;
+  font-size: 12px;
   padding: 8px;
   text-align: left;
   margin: 0px;
@@ -533,20 +551,26 @@ a:not([href]):not([tabindex]) {
   height: 100%;
 }
 .alterCompose {
-  margin-right: auto;
+  /* margin-right: 100em; */
   font: 16px/27px sans-serif;
   height: 100%;
   margin-left: 5px;
   margin-right: 4px;
+  /* text-align: right; */
+}
+.close {
+  margin-right: -230px;
 }
 .sectionTop {
-  width: 100%;
+  width: 60%;
+  margin-right: auto;
   border-bottom: 1px solid #CFCFCF;
   padding: 4px;
   height: 35px;
 }
 .section {
-  width: 100%;
+  width: 60%;
+  margin-right: auto;
   border-bottom: 1px solid #CFCFCF;
   padding: 4px;
   height: 35px;
@@ -600,6 +624,10 @@ textarea {
   min-height: 285px;
   resize: none;
 }
+.toggleButtons {
+  margin-left: auto;
+}
+
 .footerSection {
   /* overflow: hidden; */
   width: 510px;
