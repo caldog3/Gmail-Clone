@@ -5,7 +5,8 @@
     <!-- <div class="headerSection"> -->
     <div class="unsafeHeader headerBorder" v-if="!isPrivate">
       <div class="head">
-        <h2 class="headerMessage">Your email provider and the recipient's email provider can read this message</h2>
+        <h2 class="headerMessage">Your email provider and the recipient's email provider can read this message
+        <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-triangle"/> </h2>
         <!-- insert warning icon here -->
       </div>
       
@@ -46,7 +47,12 @@
         <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')" @click="recipientDomain()">
       </span>
     </div>
-
+    <div class="section" v-if="isPrivate">
+      <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
+    </div>
+    <div class="section" v-if="isPrivate">
+      <input class="full2" type="text" v-model="passwordHint" placeholder="Hint (opt)" id="passwordHint" @focus="focusOnSection('passwordHint')">
+    </div>
     <div class="section">
       <!--  THIS IS THE DROPDOWN, NEED TO STEAL SOME OF ITS IMPLEMENTATION 
       <span class="securityDropDown full3">
@@ -60,11 +66,11 @@
       &emsp;
       <input type="button" value="Self-Destruct" @click="toggleSelfDestruct">
     </span>
-    <div class="section" v-if="hasPassword">
+    <!-- <div class="section" v-if="isPrivate">
       <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
       |&emsp;
-      <input class="full2" type="password" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword" @focus="focusOnSection('confirmPassword')">
-    </div>
+      <input class="full2" type="text" v-model="passwordHint" placeholder="Hint (opt)" id="passwordHint" @focus="focusOnSection('passwordHint')">
+    </div> -->
 
     <div @focus="focusOnSection('body')">
       <quill-editor v-model="composeMessage"/>
@@ -125,6 +131,7 @@ export default {
       hasPassword: false,
       password: '',
       confirmPassword: '',
+      passwordHint: null,
       isEncrypted: false,
 
       isPrivate: false,
@@ -257,9 +264,9 @@ export default {
     fireSendCompose(){
       let finalPassword = null;
       
-      if (this.hasPassword) {
-        if (!this.password || this.password !== this.confirmPassword) {
-          alert("The password does not match or is invalid");
+      if (this.hasPassword) { //FIXME, don't have confirmPassword anymore
+        if (!this.password) {
+          alert("The password is invalid");
           return;
         }
         else {finalPassword = this.password;}
@@ -273,6 +280,7 @@ export default {
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
+        hint: passwordHint,
         isEncrypted: this.isEncrypted,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
@@ -310,6 +318,7 @@ export default {
       this.hasAttachments = false;
       this.password = '';
       this.confirmPassword = '';
+      this.passwordHint = '';
       // console.log("About to emit reset_security");
       // eventBus.$emit("RESET_SECURITY");
     },
@@ -381,8 +390,8 @@ export default {
       let finalPassword = null;
       
       if (this.hasPassword) {
-        if (!this.password || this.password !== this.confirmPassword) {
-          alert("The password does not match or is invalid");
+        if (!this.password) {
+          alert("The password is invalid");
           return;
         }
         else {finalPassword = this.password;}
@@ -393,6 +402,7 @@ export default {
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
+        hint: passwordHint,
         isEncrypted: this.isEncrypted,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
