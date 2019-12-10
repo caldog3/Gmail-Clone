@@ -44,7 +44,8 @@
 
     <div class="sectionTop">
       <span class="unselected">
-        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')" @click="recipientDomain()">
+        <!-- <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')" @click="recipientDomain()"> -->
+        <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')">
       </span>
     </div>
     <div class="section" v-if="isPrivate">
@@ -60,6 +61,7 @@
       </span> -->
       
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
+      
     </div>
     <span class="toggleButtons">
       <input type="button" value="Privacy" @click="togglePrivacy">
@@ -76,19 +78,18 @@
       <quill-editor v-model="composeMessage"/>
     </div>
 
-    <div class="footerSection">
+    <span class="footerSection">
+      <span v-if="!existingDraft">
+        <input class="SaveButton" type="button" value="Save New Draft" @click="makeFireDraft"> <!-- FIXME styling needs to be adjusted -->
+      </span>
+      <span v-else>
+        <input class="SaveButton" type="button" value="Save Changes" @click="draftUpdate">
+      </span>
+
       <div class="sendButton" >
         <input type="submit" class="SendButton1" value="Send" @click="fireSendCompose">
       </div>
-
-      
-      <div v-if="!existingDraft">
-        <input class="SaveButton" type="button" value="Save New Draft" @click="makeFireDraft"> <!-- FIXME styling needs to be adjusted -->
-      </div>
-      <div v-else>
-        <input class="SaveButton" type="button" value="Save Changes" @click="draftUpdate">
-      </div>
-    </div>  
+    </span>  
   </div>
 </template>
 
@@ -636,13 +637,16 @@ textarea {
 }
 .toggleButtons {
   margin-left: auto;
+  margin-top: -30px;
+  margin-right: 4px;
 }
 
 .footerSection {
   /* overflow: hidden; */
-  width: 510px;
+  /* width: 510px; */
   margin: 4px;
   height: 55px;
+  margin-left: auto;
 }
 .sendButton {
   float: right;
