@@ -63,6 +63,24 @@
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
       
     </div>
+    <select class="comboBox">
+      <option value="0">Pick expiry time:</option>
+      <option value="1">30 minutes</option>
+      <option value="2">1 hour</option>
+      <option value="3">2 hours</option>
+      <option value="4">4 hours</option>
+      <option value="5">6 hours</option>
+      <option value="6">8 hours</option>
+      <option value="7">10 hours</option>
+      <option value="8">12 hours</option>
+      <option value="9">18 hours</option>
+      <option value="10">24 hours</option>
+      <option value="11">32 hours</option>
+      <option value="12">48 hours</option>
+      <option value="13">60 hours</option>
+      <option value="14">72 hours</option>
+      <option value="15">1 week</option>
+    </select>
     <span class="toggleButtons">
       <input type="button" value="Privacy" @click="togglePrivacy">
       &emsp;
@@ -283,6 +301,8 @@ export default {
         password: finalPassword,
         hint: passwordHint,
         isEncrypted: this.isEncrypted,
+        isPrivate: this.isPrivate,
+        isSelfDestruct: this.isSelfDestruct,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
       if(message === undefined){return;}
@@ -320,6 +340,8 @@ export default {
       this.password = '';
       this.confirmPassword = '';
       this.passwordHint = '';
+      this.isSelfDestruct = false;
+      this.isPrivate = false;
       // console.log("About to emit reset_security");
       // eventBus.$emit("RESET_SECURITY");
     },
@@ -405,6 +427,8 @@ export default {
         password: finalPassword,
         hint: passwordHint,
         isEncrypted: this.isEncrypted,
+        isPrivate: this.isPrivate,
+        isSelfDestruct: this.isSelfDestruct,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
       if(message === undefined){return;}
@@ -415,7 +439,6 @@ export default {
       this.isPrivate = !this.isPrivate;
     },
     toggleSelfDestruct() {
-      console.log("Was: ", this.isSelfDestruct);
       this.isSelfDestruct = !this.isSelfDestruct;
     },
   },
@@ -736,5 +759,16 @@ textarea {
   font-size: 1em;
   z-index: 999;
 }
+.comboBox {
+  margin-left: auto;
+  /* margin-top: -30px; */
+  position: relative;
+  bottom: 35px;
+  width: 108px;
+  height: 30px;
+  margin-right: 4px;
+}
+
+
 
 </style>

@@ -216,6 +216,7 @@ export default {
     resetMessage() {
       this.replying = false;
       this.replyingAll = false;
+      
     },
     toggleReply() {
       this.replying = !this.replying;
