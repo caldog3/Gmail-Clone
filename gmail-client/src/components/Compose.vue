@@ -94,8 +94,8 @@
       <!-- <input type="button" value="Self-Destruct" @click="toggleSelfDestruct"> -->
       <button v-bind:class="selfDestructButtonCheck()" @click="toggleSelfDestruct">
         <div style="text-align:center">
-          <font-awesome-icon style="color:black;" class="Icon" icon="hourglass" v-if="!isSelfDestruct"/>
-          <font-awesome-icon style="color:black;" class="Icon" icon="hourglassHalf" v-else/>
+          <font-awesome-icon style="color:black;" class="Icon" icon="hourglass"/>
+          <!-- <font-awesome-icon style="color:black;" class="Icon" icon="hourglassStart" v-else/> -->
           <br>
           <span class="head-mini-text">Self Destruct</span>
         </div>
@@ -213,6 +213,14 @@ export default {
       return this.currentStatus === 'STATUS_FAILED';
     }
   },
+  filters: {
+    formatTimeUnit(timeValue, timeUnit) {
+      if (timeValue > 1) {
+        timeUnit = timeUnit.concat("s");
+      }
+      return `${timeValue} ${timeUnit}`;
+    }
+  },
   methods: {
     convertToBase64() {
       var selectedFiles = document.getElementById("inputPDF").files;
@@ -315,7 +323,7 @@ export default {
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
-        hint: passwordHint,
+        hint: this.passwordHint,
         isEncrypted: this.isEncrypted,
         isPrivate: this.isPrivate,
         isSelfDestruct: this.isSelfDestruct,
@@ -451,11 +459,47 @@ export default {
       fireSaveDraft(message);
       this.close();
     },
+    setExpiryTime(timeValue, timeUnit) {
+      const time = this.$options.filters.formatTimeUnit(timeValue, timeUnit);
+      // this.$refs.dropdown.isHidden = true;
+      this.text = `This message will self-destruct in ${time}`;
+      this.getExpiryUnixTime(timeValue, timeUnit);
+    },
+    getExpiryUnixTime(timeValue, timeUnit) {
+      const date = new Date();
+
+      switch (timeUnit) {
+        case "minute":
+          const minute = date.getMinutes();
+          date.setMinutes(minute + timeValue);
+          break;
+        case "hour":
+          const hour = date.getHours();
+          date.setHours(hour + timeValue);
+          break;
+        case "day":
+          const day = date.getDate();
+          date.setDate(day + timeValue);
+          break;
+      }
+      var unixTime = moment(date).unix();
+      var currentTime = moment().unix();
+      console.log("CurrentTime: ", currentTime);
+      this.messageExpiryUnixTime = unixTime
+      this.baseTime = currentTime;
+    },
     togglePrivacy() {
       this.isPrivate = !this.isPrivate;
     },
     toggleSelfDestruct() {
       this.isSelfDestruct = !this.isSelfDestruct;
+      if (this.isSelfDestruct) {
+        let timeString = this.setTime;
+        let timeQuantity = timeString.substring(0, timeString.find(" "));
+        let timeUnit = timeString.substring(timeString.find(" ") + 1);
+        setExpiryTime();
+      }
+      else {this.messageExpiryUnixTime = null;}
     },
     privacyButtonCheck() {
       let newClass = "securityButton";

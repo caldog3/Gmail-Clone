@@ -35,6 +35,8 @@ const fireSetupEmailMessage = ({
   attachObj,
 }, threadId) => {
   //conciseTo for group emails only requires one name
+  console.log("Message EXPIRY unix time: ", messageExpiryUnixTime);
+  return;
   composeTo = composeTo.toLowerCase();
   const uuidv1 = require('uuid/v1');
   let allParticipants = [];
