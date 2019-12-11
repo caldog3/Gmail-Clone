@@ -58,13 +58,15 @@ import {
   faUnlock,
   faQuestionCircle,
   faExclamationTriangle,
+  faHourglass,
+  faHourglassStart,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBars, faSearch, faInbox, faStar, faClock, faArrowRight, faPaperPlane,
   faFile, faTrash, faExclamationCircle, faArchive, faEnvelopeOpen, faArrowCircleRight, faTag,
   faRetweet, faSquare, faCheckSquare, faArrowLeft, faEllipsisV, faReply, faLongArrowAltRight, faReplyAll,
   faCog, faKeyboard, faCaretDown, faChevronRight, faChevronLeft, faPlus, faEnvelope, faPrint, faFolder,
-  faUsers, faTag, faLock, faUnlock, faQuestionCircle, faExclamationTriangle);
+  faUsers, faTag, faLock, faUnlock, faQuestionCircle, faExclamationTriangle, faHourglass, faHourglassStart);
 
 dom.watch()
 

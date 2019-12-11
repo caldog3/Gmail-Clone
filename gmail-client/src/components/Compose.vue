@@ -32,7 +32,7 @@
 
     <div class="safeHeader headerBorder" v-if="isSelfDestruct"> <!-- safeHeader controls alert color -->
       <div class="head"> 
-        <h2 class="headerMessage">This message will automatically delete from your inbox and theirs</h2>
+        <h2 class="headerMessage">This message will automatically delete from your inbox and theirs in {{setTime}}</h2>
       </div>
     </div>
     <div class="blankHeader headerBorder" v-else> <!-- safeHeader controls alert color -->
@@ -63,28 +63,43 @@
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
       
     </div>
-    <select class="comboBox">
-      <option value="0">Pick expiry time:</option>
-      <option value="1">30 minutes</option>
-      <option value="2">1 hour</option>
-      <option value="3">2 hours</option>
-      <option value="4">4 hours</option>
-      <option value="5">6 hours</option>
-      <option value="6">8 hours</option>
-      <option value="7">10 hours</option>
-      <option value="8">12 hours</option>
-      <option value="9">18 hours</option>
-      <option value="10">24 hours</option>
-      <option value="11">32 hours</option>
-      <option value="12">48 hours</option>
-      <option value="13">60 hours</option>
-      <option value="14">72 hours</option>
-      <option value="15">1 week</option>
+    <select class="comboBox" v-model="setTime" v-if="isSelfDestruct">
+      <option value="30 minutes">30 minutes</option>
+      <option value="1 hour">1 hour</option>
+      <option value="2 hours">2 hours</option>
+      <option value="4 hours">4 hours</option>
+      <option value="6 hours">6 hours</option>
+      <option value="8 hours">8 hours</option>
+      <option value="10 hours">10 hours</option>
+      <option value="12 hours" selected>12 hours</option> <!-- default could be anything, 12 just seemed like a comfortable default -->
+      <option value="18 hours">18 hours</option>
+      <option value="24 hours">24 hours</option>
+      <option value="32 hours">32 hours</option>
+      <option value="48 hours">48 hours</option>
+      <option value="60 hours">60 hours</option>
+      <option value="72 hours">72 hours</option>
+      <option value="1 week">1 week</option>
     </select>
     <span class="toggleButtons">
-      <input type="button" value="Privacy" @click="togglePrivacy">
+      <!-- <input type="button" value="Privacy" @click="togglePrivacy"> -->
+      <button v-bind:class="privacyButtonCheck()" @click="togglePrivacy">
+        <div style="text-align:center">
+          <font-awesome-icon style="color:black;" class="Icon" icon="lock" v-if="isPrivate"/>
+          <font-awesome-icon style="color:black;" class="Icon" icon="unlock" v-else/>
+          <br>
+          <span class="head-mini-text">Privacy</span>
+        </div>
+      </button>
       &emsp;
-      <input type="button" value="Self-Destruct" @click="toggleSelfDestruct">
+      <!-- <input type="button" value="Self-Destruct" @click="toggleSelfDestruct"> -->
+      <button v-bind:class="selfDestructButtonCheck()" @click="toggleSelfDestruct">
+        <div style="text-align:center">
+          <font-awesome-icon style="color:black;" class="Icon" icon="hourglass" v-if="!isSelfDestruct"/>
+          <font-awesome-icon style="color:black;" class="Icon" icon="hourglassHalf" v-else/>
+          <br>
+          <span class="head-mini-text">Self Destruct</span>
+        </div>
+      </button>
     </span>
     <!-- <div class="section" v-if="isPrivate">
       <input class="full2" type="password" v-model="password" placeholder="Password" id="password" @focus="focusOnSection('password')">
@@ -154,7 +169,8 @@ export default {
       isEncrypted: false,
 
       isPrivate: false,
-      isSelfDestruct: false, //will be false by default
+      isSelfDestruct: false, 
+      setTime: "12 hours",
 
       composeTo: '',
       composeSubject: '',
@@ -441,6 +457,20 @@ export default {
     toggleSelfDestruct() {
       this.isSelfDestruct = !this.isSelfDestruct;
     },
+    privacyButtonCheck() {
+      let newClass = "securityButton";
+      if (this.isPrivate) {
+        newClass = "securityButton2";
+      }
+      return newClass;
+    },
+    selfDestructButtonCheck() {
+      let newClass = "securityButton";
+      if (this.isSelfDestruct) {
+        newClass = "securityButton2";
+      }
+      return newClass;
+    }
   },
   beforeDestroy() {
     eventBus.$off("SWAP_SECURITY", {rightDomain: this.registeredRecipient})
@@ -688,14 +718,15 @@ textarea {
 }
 .SaveButton {
   text-align: left;
-  background-color: coral;
+  background-color: darkGray;
+  border-radius: 5px;
   color: white;
   border: none;
   outline: none;
   height: 2.2em;
   float: left;
-  padding: 3px;
-  margin: 4px;
+  /* padding: 3px; */
+  margin: 7px;
 }
 .composeWindow {
   /* margin-right: 22px; */
@@ -767,6 +798,18 @@ textarea {
   width: 108px;
   height: 30px;
   margin-right: 4px;
+}
+.securityButton:active {
+  background-color:#78acff;
+}
+.securityButton {
+  border-radius: 5px;
+  border: 1px solid black;
+}
+.securityButton2 {
+  background-color: #78acff;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 
