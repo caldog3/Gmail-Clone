@@ -31,12 +31,10 @@ const fireSetupEmailMessage = ({
   hint,
   isEncrypted,
   isPrivate,
-  isSelfDestruct,
   attachObj,
 }, threadId) => {
   //conciseTo for group emails only requires one name
   console.log("Message EXPIRY unix time: ", messageExpiryUnixTime);
-  return;
   composeTo = composeTo.toLowerCase();
   const uuidv1 = require('uuid/v1');
   let allParticipants = [];
@@ -76,6 +74,7 @@ const fireSetupEmailMessage = ({
     isFireMessage: true,
     messageExpiryUnixTime,
     password,
+    hint,
     isEncrypted,
     isPrivate,
     attachObj,

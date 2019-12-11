@@ -131,11 +131,16 @@
           <span class="passwordInfo"> 
             <font-awesome-icon style="color:black;" class="Icon" icon="lock" />
             This message is password protected. To access this content,
-            please request the password from the sender and enter it below.
+            please enter the password below.  If you don't know the password, request it from the sender.
           </span>
           <br>
+          
           <input type="enter" class="password" v-model="checkPassword" placeholder="Password" id="checkPassword">
           <button @click="enterPassword">Unlock</button>
+          <br>
+          <span class="passwordInfo" v-if="passwordHint != null">
+            Hint: {{passwordHint}}
+          </span>
         </template>
       </div>
       
@@ -178,6 +183,7 @@ export default {
       checkPassword: '',
       realPassword: '',
       isEncrypted: false,
+      passwordHint: null,
     };
   },
   filters: {
@@ -360,6 +366,7 @@ export default {
     if (this.message.password) {
       this.unlocked = false;
       this.realPassword = this.message.password;
+      this.passwordHint = this.message.hint;
     }
     if (this.message.isEncrypted) {
       this.isEncrypted = true;

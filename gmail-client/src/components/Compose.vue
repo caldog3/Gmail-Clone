@@ -5,8 +5,11 @@
     <!-- <div class="headerSection"> -->
     <div class="unsafeHeader headerBorder" v-if="!isPrivate">
       <div class="head">
-        <h2 class="headerMessage">Your email provider and the recipient's email provider can read this message
-        <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-triangle"/> </h2>
+        
+        <h2 class="headerMessage">
+          <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-triangle"/>
+          Your email provider and the recipient's email provider can read this message
+         </h2>
         <!-- insert warning icon here -->
       </div>
       
@@ -63,7 +66,7 @@
       <input class="full2 subjectLeft" v-model="composeSubject" placeholder="Subject" id="composeSubject" @focus="focusOnSection('subject')">
       
     </div>
-    <select class="comboBox" v-model="setTime" v-if="isSelfDestruct">
+    <select class="comboBox" v-model="setTime" @change="parseExpiryTimeString()" v-if="isSelfDestruct">
       <option value="30 minutes">30 minutes</option>
       <option value="1 hour">1 hour</option>
       <option value="2 hours">2 hours</option>
@@ -75,10 +78,9 @@
       <option value="18 hours">18 hours</option>
       <option value="24 hours">24 hours</option>
       <option value="32 hours">32 hours</option>
-      <option value="48 hours">48 hours</option>
-      <option value="60 hours">60 hours</option>
-      <option value="72 hours">72 hours</option>
-      <option value="1 week">1 week</option>
+      <option value="2 days">2 days</option>
+      <option value="3 days">3 days</option>
+      <option value="7 days">7 days</option>
     </select>
     <span class="toggleButtons">
       <!-- <input type="button" value="Privacy" @click="togglePrivacy"> -->
@@ -307,7 +309,7 @@ export default {
     fireSendCompose(){
       let finalPassword = null;
       
-      if (this.hasPassword) { //FIXME, don't have confirmPassword anymore
+      if (this.isPrivate) { //FIXME, don't have confirmPassword anymore
         if (!this.password) {
           alert("The password is invalid");
           return;
@@ -326,7 +328,6 @@ export default {
         hint: this.passwordHint,
         isEncrypted: this.isEncrypted,
         isPrivate: this.isPrivate,
-        isSelfDestruct: this.isSelfDestruct,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
       if(message === undefined){return;}
@@ -436,7 +437,7 @@ export default {
     makeFireDraft() {
       let finalPassword = null;
       
-      if (this.hasPassword) {
+      if (this.isPrivate) {
         if (!this.password) {
           alert("The password is invalid");
           return;
@@ -452,7 +453,6 @@ export default {
         hint: passwordHint,
         isEncrypted: this.isEncrypted,
         isPrivate: this.isPrivate,
-        isSelfDestruct: this.isSelfDestruct,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       });
       if(message === undefined){return;}
@@ -488,16 +488,21 @@ export default {
       this.messageExpiryUnixTime = unixTime
       this.baseTime = currentTime;
     },
+    parseExpiryTimeString() {
+      let timeString = this.setTime;
+        let timeQuantity = timeString.substring(0, timeString.search(" "));
+        let timeUnit = timeString.substring(timeString.search(" ") + 1);
+        console.log("TimeQuantity ", timeQuantity);
+        console.log("TimeUnit ", timeUnit);
+        this.setExpiryTime(timeQuantity, timeUnit);
+    },
     togglePrivacy() {
       this.isPrivate = !this.isPrivate;
     },
     toggleSelfDestruct() {
       this.isSelfDestruct = !this.isSelfDestruct;
       if (this.isSelfDestruct) {
-        let timeString = this.setTime;
-        let timeQuantity = timeString.substring(0, timeString.find(" "));
-        let timeUnit = timeString.substring(timeString.find(" ") + 1);
-        setExpiryTime();
+        this.parseExpiryTimeString();
       }
       else {this.messageExpiryUnixTime = null;}
     },
