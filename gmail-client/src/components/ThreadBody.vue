@@ -17,20 +17,46 @@
     <!-- Quill for replies -->
     <div class="quill" @focus="focusOnSection('body')" v-if="replying || replyingAll">
       <div>&emsp;</div>
-      <span class="topBar">
-        <span class="securityDropDown">
-          <security-level-drop-down/>          
-        </span>
+
+<!-- ////////////////////////////////////////// -->
+
+        <div class="unsafeHeader headerBorder" v-if="!isPrivate">
+      <div class="head">
         
-        <font-awesome-icon class="help" icon="question-circle" @click="encryptionHelp"/>
+        <h2 class="headerMessage">
+          <font-awesome-icon style="color:white;" class="Icon" icon="exclamation-triangle"/>
+          Your email provider and the recipient's email provider can read this message
+         </h2>
+      </div>
+    </div>
+    <div class="safeHeader headerBorder" v-else>
+      <div class="head">
+        <h2 class="headerMessage">Only you and the recipient will be able to read this message</h2>
+      </div>
+      
+      <div class="alterCompose">
+        <a class="close" @click="close">×</a>
+      </div>
+    </div>
+
+    <div class="safeHeader headerBorder" v-if="isSelfDestruct"> <!-- safeHeader controls alert color -->
+      <div class="head"> 
+        <h2 class="headerMessage">This message will automatically delete from your inbox and theirs in {{setTime}}</h2>
+      </div>
+    </div>
+    <div class="blankHeader headerBorder" v-else> <!-- safeHeader controls alert color -->
+      <div class="head"> 
+        <!-- <h2 class="headerMessage"> This message will not automatically delete</h2> -->
+        <!-- <h2 class="headerMessage">This message will automatically delete from your inbox and theirs</h2> -->
+      </div>
+    </div>
+
+        <!-- ////////////////////////////////////////// -->
+
+      <span class="topBar">
+        
         <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
         <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
-        <span class="dropDownArea">
-          <div @click="expiryHelp">
-            <font-awesome-icon style="color:white" class="icon" icon="question-circle"/>
-          </div>
-          <custom-drop-down/>
-        </span>
       </span>
       <!-- PASSWORD -->
       <div class="section" v-if="hasPassword">
@@ -160,6 +186,11 @@ export default {
       password: '',
       confirmPassword: '',
       isEncrypted: false,
+
+      isPrivate: false,
+      isSelfDestruct: false, 
+      setTime: "12 hours",
+      passwordHint: null,
       
     };
   },
@@ -762,5 +793,59 @@ button:hover {
 .icon {
   cursor: pointer;
   margin-right: 35px;
+}
+.headerSection {
+  background: #404040;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.safeHeader {
+  background: #78acff;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.unsafeHeader {
+  background: #db5248;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.blankHeader {
+  background: lightgray; /* white, gray, or what looks best? */
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+  align-items: center;
+  padding: 4px;
+  width: 100%;
+}
+.headerBorder {
+  border-bottom: 2px solid darkgray;
+}
+.headerMessage {
+  width: 200%;
+}
+h2 {
+  color: white;
+  font-size: 12px;
+  padding: 8px;
+  text-align: left;
+  margin: 0px;
+  font-weight: bold;
 }
 </style>

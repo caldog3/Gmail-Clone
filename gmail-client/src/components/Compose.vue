@@ -844,7 +844,7 @@ textarea {
   /* margin-top: -30px; */
   position: relative;
   bottom: 35px;
-  width: 108px;
+  width: 98px;
   height: 30px;
   margin-right: 4px;
 }
@@ -854,11 +854,17 @@ textarea {
 .securityButton {
   border-radius: 5px;
   border: 1px solid black;
+  cursor: pointer;
+  /* padding-left: -100px; */
+  -webkit-transform: scale(.85); /* scales button and all child elements */
 }
 .securityButton2 {
   background-color: #78acff;
   border: 1px solid black;
   border-radius: 5px;
+  cursor: pointer;
+  -webkit-transform: scale(.8);
+
 }
 
 
