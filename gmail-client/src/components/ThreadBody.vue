@@ -33,10 +33,6 @@
       <div class="head">
         <h2 class="headerMessage">Only you and the recipient will be able to read this message</h2>
       </div>
-      
-      <div class="alterCompose">
-        <a class="close" @click="close">×</a>
-      </div>
     </div>
 
     <div class="safeHeader headerBorder" v-if="isSelfDestruct"> <!-- safeHeader controls alert color -->
@@ -51,21 +47,74 @@
       </div>
     </div>
 
+
+    <div class="sectionTop">
+      <span class="unselected">
+        <!-- <input class="full" type="email" v-model="composeTo" placeholder="Recipients" @focus="focusOnSection('to')" @click="recipientDomain()"> -->
+        <input class="full" type="email" v-model="recipient" placeholder="Recipients"  v-if="replying">
+        <input class="full" type="email" v-model="allReplyRecipients" placeholder="Recipients"  v-if="replyingAll">
+      </span>
+    </div>
+    <div class="section" v-if="isPrivate">
+      <input class="full2" type="password" v-model="password" placeholder="Password" id="password">
+    </div>
+    <div class="section" v-if="isPrivate">
+      <input class="full2" type="text" v-model="passwordHint" placeholder="Hint (opt)" id="passwordHint">
+    </div>
+
+
+    <select class="comboBox" v-model="setTime" @change="parseExpiryTimeString()" v-if="isSelfDestruct">
+      <option value="30 minutes">30 minutes</option>
+      <option value="1 hour">1 hour</option>
+      <option value="2 hours">2 hours</option>
+      <option value="4 hours">4 hours</option>
+      <option value="6 hours">6 hours</option>
+      <option value="8 hours">8 hours</option>
+      <option value="10 hours">10 hours</option>
+      <option value="12 hours" selected>12 hours</option> <!-- default could be anything, 12 just seemed like a comfortable default -->
+      <option value="18 hours">18 hours</option>
+      <option value="24 hours">24 hours</option>
+      <option value="32 hours">32 hours</option>
+      <option value="2 days">2 days</option>
+      <option value="3 days">3 days</option>
+      <option value="7 days">7 days</option>
+    </select>
+    <span class="toggleButtons">
+      <!-- <input type="button" value="Privacy" @click="togglePrivacy"> -->
+      <button v-bind:class="privacyButtonCheck()" @click="togglePrivacy">
+        <div style="text-align:center">
+          <font-awesome-icon style="color:black;" class="Icon" icon="lock" v-if="isPrivate"/>
+          <font-awesome-icon style="color:black;" class="Icon" icon="unlock" v-else/>
+          <br>
+          <span class="head-mini-text">Privacy</span>
+        </div>
+      </button>
+      &emsp;
+      <!-- <input type="button" value="Self-Destruct" @click="toggleSelfDestruct"> -->
+      <button v-bind:class="selfDestructButtonCheck()" @click="toggleSelfDestruct">
+        <div style="text-align:center">
+          <font-awesome-icon style="color:black;" class="Icon" icon="hourglass"/>
+          <!-- <font-awesome-icon style="color:black;" class="Icon" icon="hourglassStart" v-else/> -->
+          <br>
+          <span class="head-mini-text">Self Destruct</span>
+        </div>
+      </button>
+    </span>
         <!-- ////////////////////////////////////////// -->
 
-      <span class="topBar">
+      <!-- <span class="topBar">
         
         <textarea rows="1" v-model="recipient" class="recipients" v-if="replying"></textarea>
         <textarea rows="1" v-model="allReplyRecipients" class="recipients" v-if="replyingAll"></textarea>
       </span>
-      <!-- PASSWORD -->
+      
       <div class="section" v-if="hasPassword">
         Password
         <input class="full2" type="password" v-model="password" placeholder="Password" id="password">
         |&emsp;
         <input class="full2" type="password" v-model="confirmPassword" placeholder="Confirm Password" id="confirmPassword">
-      </div>
-      <!-- END PASSWORD -->
+      </div> -->
+      
 
       <quill-editor v-model="responseHTML"/>
       
@@ -193,6 +242,14 @@ export default {
       passwordHint: null,
       
     };
+  },
+  filters: {
+    formatTimeUnit(timeValue, timeUnit) {
+      if (timeValue > 1) {
+        timeUnit = timeUnit.concat("s");
+      }
+      return `${timeValue} ${timeUnit}`;
+    }
   },
   computed: {
     isInitial() {
@@ -639,7 +696,68 @@ export default {
         console.log("registeredRecipient: ", registeredRecipient);
         eventBus.$emit("SWAP_SECURITY", {rightDomain: registeredRecipient});
       }
-    }
+    },
+    setExpiryTime(timeValue, timeUnit) {
+      const time = this.$options.filters.formatTimeUnit(timeValue, timeUnit);
+      // this.$refs.dropdown.isHidden = true;
+      this.text = `This message will self-destruct in ${time}`;
+      this.getExpiryUnixTime(timeValue, timeUnit);
+    },
+    getExpiryUnixTime(timeValue, timeUnit) {
+      const date = new Date();
+
+      switch (timeUnit) {
+        case "minute":
+          const minute = date.getMinutes();
+          date.setMinutes(minute + timeValue);
+          break;
+        case "hour":
+          const hour = date.getHours();
+          date.setHours(hour + timeValue);
+          break;
+        case "day":
+          const day = date.getDate();
+          date.setDate(day + timeValue);
+          break;
+      }
+      var unixTime = moment(date).unix();
+      var currentTime = moment().unix();
+      console.log("CurrentTime: ", currentTime);
+      this.messageExpiryUnixTime = unixTime
+      this.baseTime = currentTime;
+    },
+    parseExpiryTimeString() {
+      let timeString = this.setTime;
+        let timeQuantity = timeString.substring(0, timeString.search(" "));
+        let timeUnit = timeString.substring(timeString.search(" ") + 1);
+        console.log("TimeQuantity ", timeQuantity);
+        console.log("TimeUnit ", timeUnit);
+        this.setExpiryTime(timeQuantity, timeUnit);
+    },
+    togglePrivacy() {
+      this.isPrivate = !this.isPrivate;
+    },
+    toggleSelfDestruct() {
+      this.isSelfDestruct = !this.isSelfDestruct;
+      if (this.isSelfDestruct) {
+        this.parseExpiryTimeString();
+      }
+      else {this.messageExpiryUnixTime = null;}
+    },
+    privacyButtonCheck() {
+      let newClass = "securityButton";
+      if (this.isPrivate) {
+        newClass = "securityButton2";
+      }
+      return newClass;
+    },
+    selfDestructButtonCheck() {
+      let newClass = "securityButton";
+      if (this.isSelfDestruct) {
+        newClass = "securityButton2";
+      }
+      return newClass;
+    },
   },
   mounted() {
     this.reset();
@@ -848,4 +966,60 @@ h2 {
   margin: 0px;
   font-weight: bold;
 }
+.full {
+  width: 100%;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+.sectionTop {
+  width: 60%;
+  margin-right: auto;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  height: 35px;
+}
+.section {
+  width: 60%;
+  margin-right: auto;
+  border-bottom: 1px solid #CFCFCF;
+  padding: 4px;
+  height: 35px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.full2 {
+  width: 100%;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+.securityButton:active {
+  background-color:#78acff;
+}
+.securityButton {
+  border-radius: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+  /* padding-left: -100px; */
+  -webkit-transform: scale(.85); /* scales button and all child elements */
+}
+.securityButton2 {
+  background-color: #78acff;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transform: scale(.8);
+}
+.comboBox {
+  margin-left: auto;
+  /* margin-top: -30px; */
+  position: relative;
+  bottom: 35px;
+  width: 98px;
+  height: 30px;
+  margin-right: 4px;
+}
+
 </style>
