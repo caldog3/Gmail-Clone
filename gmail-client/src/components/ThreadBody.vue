@@ -1019,7 +1019,7 @@ h2 {
   bottom: 35px;
   width: 98px;
   height: 30px;
-  margin-right: 4px;
+  margin-right: auto;
 }
 
 </style>
