@@ -466,25 +466,29 @@ export default {
       this.getExpiryUnixTime(timeValue, timeUnit);
     },
     getExpiryUnixTime(timeValue, timeUnit) {
+      console.log("TimeValue", timeValue);
+      console.log("TimeUnit", timeUnit);
       const date = new Date();
+      console.log("new date", date);
 
       switch (timeUnit) {
-        case "minute":
+        case "minutes":
           const minute = date.getMinutes();
           date.setMinutes(minute + timeValue);
           break;
-        case "hour":
+        case "hours":
           const hour = date.getHours();
           date.setHours(hour + timeValue);
           break;
-        case "day":
+        case "days":
           const day = date.getDate();
           date.setDate(day + timeValue);
           break;
       }
       var unixTime = moment(date).unix();
-      var currentTime = moment().unix();
+      var currentTime = moment().unix();   // FIXME - I think the unix time is getting too far ahead here...need to test some mores
       console.log("CurrentTime: ", currentTime);
+      console.log("ExpiryTime", unixTime);
       this.messageExpiryUnixTime = unixTime
       this.baseTime = currentTime;
     },

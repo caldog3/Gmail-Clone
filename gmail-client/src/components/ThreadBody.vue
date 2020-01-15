@@ -711,15 +711,15 @@ export default {
       const date = new Date();
 
       switch (timeUnit) {
-        case "minute":
+        case "minutes":
           const minute = date.getMinutes();
           date.setMinutes(minute + timeValue);
           break;
-        case "hour":
+        case "hours":
           const hour = date.getHours();
           date.setHours(hour + timeValue);
           break;
-        case "day":
+        case "days":
           const day = date.getDate();
           date.setDate(day + timeValue);
           break;
