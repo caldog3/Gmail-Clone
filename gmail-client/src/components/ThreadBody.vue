@@ -61,25 +61,26 @@
     <div class="section" v-if="isPrivate">
       <input class="full2" type="text" v-model="passwordHint" placeholder="Hint (opt)" id="passwordHint">
     </div>
-
-
-    <select class="comboBox" v-model="setTime" @change="parseExpiryTimeString()" v-if="isSelfDestruct">
-      <option value="30 minutes">30 minutes</option>
-      <option value="1 hour">1 hour</option>
-      <option value="2 hours">2 hours</option>
-      <option value="4 hours">4 hours</option>
-      <option value="6 hours">6 hours</option>
-      <option value="8 hours">8 hours</option>
-      <option value="10 hours">10 hours</option>
-      <option value="12 hours" selected>12 hours</option> <!-- default could be anything, 12 just seemed like a comfortable default -->
-      <option value="18 hours">18 hours</option>
-      <option value="24 hours">24 hours</option>
-      <option value="32 hours">32 hours</option>
-      <option value="2 days">2 days</option>
-      <option value="3 days">3 days</option>
-      <option value="7 days">7 days</option>
-    </select>
-    <span class="toggleButtons">
+    <div class="comboBoxShell">
+      <select class="comboBox" v-model="setTime" @change="parseExpiryTimeString()" v-if="isSelfDestruct">
+        <option value="30 minutes">30 minutes</option>
+        <option value="1 hour">1 hour</option>
+        <option value="2 hours">2 hours</option>
+        <option value="4 hours">4 hours</option>
+        <option value="6 hours">6 hours</option>
+        <option value="8 hours">8 hours</option>
+        <option value="10 hours">10 hours</option>
+        <option value="12 hours" selected>12 hours</option> <!-- default could be anything, 12 just seemed like a comfortable default -->
+        <option value="18 hours">18 hours</option>
+        <option value="24 hours">24 hours</option>
+        <option value="32 hours">32 hours</option>
+        <option value="2 days">2 days</option>
+        <option value="3 days">3 days</option>
+        <option value="7 days">7 days</option>
+      </select>
+    </div>
+    <div class="toggleButtons">
+      
       <!-- <input type="button" value="Privacy" @click="togglePrivacy"> -->
       <button v-bind:class="privacyButtonCheck()" @click="togglePrivacy">
         <div style="text-align:center">
@@ -99,7 +100,8 @@
           <span class="head-mini-text">Self Destruct</span>
         </div>
       </button>
-    </span>
+    </div>
+    
         <!-- ////////////////////////////////////////// -->
 
       <!-- <span class="topBar">
@@ -397,7 +399,9 @@ export default {
         composeMessage: this.responseHTML,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
+        hint: this.passwordHint,
         isEncrypted: this.isEncrypted,
+        isPrivate: this.isPrivate,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
       }, this.messages[0].threadId);
       if (message === undefined){return;}
@@ -1012,14 +1016,26 @@ h2 {
   cursor: pointer;
   -webkit-transform: scale(.8);
 }
-.comboBox {
-  margin-left: auto;
-  /* margin-top: -30px; */
+.comboBoxShell {
+  /* margin-left: auto; */
+  width: 100%;
   position: relative;
-  bottom: 35px;
+}
+.comboBox {
+  float: none;
+  margin-left: auto;  
+  margin-top: -30px;
+  position: absolute;
+  left: 600px;
+  /* bottom: 30px; */
   width: 98px;
   height: 30px;
-  margin-right: 4px;
+  /* margin-right: 4px; */
+}
+.toggleButtons {
+  text-align: right;
+  /* margin-top: -30px; */
+  margin-left: auto !important;
 }
 
 </style>
