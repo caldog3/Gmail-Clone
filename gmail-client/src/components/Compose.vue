@@ -475,20 +475,27 @@ export default {
         case "minutes":
           const minute = date.getMinutes();
           date.setMinutes(minute + timeValue);
+          console.log("date min");
+          console.log(date);
           break;
         case "hours":
           const hour = date.getHours();
           date.setHours(hour + timeValue);
+          console.log("date hour");
+          console.log(date);
           break;
         case "days":
           const day = date.getDate();
           date.setDate(day + timeValue);
+          console.log("date day");
+          console.log(date);
           break;
       }
       var unixTime = moment(date).unix();
-      var currentTime = moment().unix();   // FIXME - I think the unix time is getting too far ahead here...need to test some mores
+      var currentTime = moment().unix();   // FIXME - I think the unix time is getting too far ahead here...need to test some more
       console.log("CurrentTime: ", currentTime);
       console.log("ExpiryTime", unixTime);
+
       this.messageExpiryUnixTime = unixTime
       this.baseTime = currentTime;
     },
