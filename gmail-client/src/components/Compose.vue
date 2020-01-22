@@ -474,6 +474,8 @@ export default {
       switch (timeUnit) {
         case "minutes":
           const minute = date.getMinutes();
+          console.log("current minute: ", minute);
+          console.log("minute amount ", timeValue + minute);
           date.setMinutes(minute + timeValue);
           console.log("date min");
           console.log(date);
@@ -505,7 +507,8 @@ export default {
         let timeUnit = timeString.substring(timeString.search(" ") + 1);
         console.log("TimeQuantity ", timeQuantity);
         console.log("TimeUnit ", timeUnit);
-        this.setExpiryTime(timeQuantity, timeUnit);
+
+        this.setExpiryTime(parseInt(timeQuantity), timeUnit);
     },
     togglePrivacy() {
       this.isPrivate = !this.isPrivate;
