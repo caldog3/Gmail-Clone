@@ -1017,9 +1017,13 @@ h2 {
   -webkit-transform: scale(.8);
 }
 .comboBoxShell {
-  /* margin-left: auto; */
-  width: 100%;
+  margin-left: auto;
+  /* width: 100%; */
   position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
 }
 .comboBox {
   float: none;
