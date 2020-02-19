@@ -1018,19 +1018,24 @@ h2 {
 }
 .comboBoxShell {
   margin-left: auto;
-  /* width: 100%; */
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  /* flex-wrap: nowrap; */
+  align-content: stretch;
   justify-content: flex-end;
+  right: 20px;
+}
+.comboBoxShell div:last-child {
+  margin-left: auto;
 }
 .comboBox {
   float: none;
   margin-left: auto;  
-  margin-top: -30px;
-  position: absolute;
-  left: 600px;
+  /* margin-top: -30px; */
+  /* position: absolute; */
+  /* left: 600px; */
   /* bottom: 30px; */
   width: 98px;
   height: 30px;
