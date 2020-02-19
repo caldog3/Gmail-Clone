@@ -54,7 +54,10 @@
                       <span class="tooltiptext">Report Spam</span>
                     </div>
                   </div> -->
-
+                  <div class="break">
+                    |
+                  </div>
+                  
                   <div class="item" v-on:click="trashingSet()">
                     <div class="highlightArea">
                       <font-awesome-icon style="color:white;" class="Icon" icon="trash" />

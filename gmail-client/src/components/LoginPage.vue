@@ -12,7 +12,7 @@
     <input v-model="name" placeholder="First and Last Name">
     <input v-model="email" placeholder="email address">
     <br>
-    <input type="checkbox" name="tutorial" value="true" v-model="tutorialUser"> I'm a tutorial user
+    <!-- <input type="checkbox" name="tutorial" value="true" v-model="tutorialUser"> I'm a tutorial user -->
     <button @click="login">Log In</button>
 
     <!-- <button @click="authenticate()">Sign In</button> -->
