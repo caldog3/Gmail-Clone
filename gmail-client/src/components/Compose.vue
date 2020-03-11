@@ -114,6 +114,7 @@
     </div>
 
     <span class="footerSection">
+      <span>Attachments: <input id="inputPDF" type="file" @change="convertToBase64();" multiple /></span>
       <span v-if="!existingDraft">
         <input class="SaveButton" type="button" value="Save New Draft" @click="makeFireDraft"> <!-- FIXME styling needs to be adjusted -->
       </span>
@@ -450,7 +451,7 @@ export default {
         composeMessage: this.composeMessage,
         messageExpiryUnixTime: this.messageExpiryUnixTime,
         password: finalPassword,
-        hint: passwordHint,
+        hint: this.passwordHint,
         isEncrypted: this.isEncrypted,
         isPrivate: this.isPrivate,
         attachObj: {hasAttachments: this.hasAttachments, uploadData: this.uploadedFiles},
